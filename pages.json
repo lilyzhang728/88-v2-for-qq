@@ -1,0 +1,376 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app",
+				"navigationStyle": "custom", //禁用uni-app默认的头部导航
+				"app-plus": {
+					"bounce": "none" // 将回弹属性关掉
+				},
+				"disableScroll": true // 禁止滑动（防止下拉出现白边）
+			}
+		}
+		, {
+			"path": "pages/guide/guide",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom", 
+				"enablePullDownRefresh": false
+			}
+		}
+	    ,{
+            "path" : "pages/news/news",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+				"navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/bbs/bbs",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+				"navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/infos/infos",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+				"navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"subPackages": [{
+			"root": "page_editPersonalInfo",
+			"pages": [{
+				"path": "editPersonalInfo/editPersonalInfo",
+				"style": {
+					"navigationBarTitleText": "编辑个人信息",
+					"enablePullDownRefresh": false,
+					"navigationStyle": "custom"
+				}
+
+			}, {
+				"path": "addTimelineItem/addTimelineItem",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false,
+					"navigationStyle": "custom"
+				}
+
+			}, {
+                    "path" : "selectAchievement/selectAchievement",
+                    "style" : {
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false,
+						"navigationStyle": "custom"
+					}
+                }
+                ,{
+                    "path" : "commonSearch/commonSearch",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
+		},
+		{
+			"root": "page_aboutBadge",
+			"pages": [{
+					"path": "moreBadge/moreBadge",
+					"style": {
+						"navigationBarTitleText": "所有徽章",
+						"enablePullDownRefresh": false
+					}
+
+				},
+				{
+					"path": "myBadgeAndBadgeLibrary/myBadgeAndBadgeLibrary",
+					"style": {
+						"navigationBarTitleText": "待定",
+						"navigationStyle": "custom",
+						"enablePullDownRefresh": false,
+						"disableScroll": true // 禁止滑动（防止下拉出现白边）
+					}
+
+				}, {
+					"path": "makeBadge/makeBadge",
+					"style": {
+						"navigationBarTitleText": "制作徽章",
+						"enablePullDownRefresh": false,
+						"navigationStyle": "custom"
+					}
+
+				}
+			    ,{
+                    "path" : "badgeSearchResult/badgeSearchResult",
+                    "style" :  {
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
+					}
+                
+                }
+            ]
+		},
+		{
+			"root": "page_guide",
+			"pages": [{
+				"path": "guideDetail/guideDetail",
+				"style": {
+					"navigationBarTitleText": "攻略详情",
+					"navigationStyle": "custom", 
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "guideEdit/guideEdit",
+				"style": {
+					"navigationBarTitleText": "编辑攻略",
+					"navigationStyle": "custom",
+					"enablePullDownRefresh": false
+				}
+
+			}    ,{
+                    "path" : "guideDraft/guideDraft",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "草稿箱",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "guideSearchResult/guideSearchResult",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
+		},{
+			"root": "page_news",
+			"pages": [{
+				"path": "newsDetail/newsDetail",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false,
+					"navigationStyle": "custom"
+				}
+			
+			}    ,{
+                    "path" : "newsSearchResult/newsSearchResult",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "newsLink/newsLink",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
+		},
+		{
+			"root": "page_bbs",
+			"pages": [{
+			    "path" : "bbsPostDetail/bbsPostDetail",
+			    "style" :                                                                                    
+			    {
+			        "navigationBarTitleText": "帖子",
+					"navigationStyle": "custom",
+			        "enablePullDownRefresh": false
+			    }
+			    
+			}
+			,{
+			    "path" : "bbsTopicDetail/bbsTopicDetail",
+			    "style" :                                                                                    
+			    {
+			        "navigationBarTitleText": "",
+					"navigationStyle": "custom",
+			        "enablePullDownRefresh": false
+			    }
+			    
+			}
+			,{
+			    "path" : "bbsCommentReply/bbsCommentReply",
+			    "style" :                                                                                    
+			    {
+			        "navigationBarTitleText": "",
+			        "enablePullDownRefresh": false
+			    }
+			    
+			}
+			,{
+			    "path" : "addNewPost/addNewPost",
+			    "style" :                                                                                    
+			    {
+			        "navigationBarTitleText": "",
+					"navigationStyle": "custom",
+			        "enablePullDownRefresh": false
+			    }
+			    
+			}
+			,{
+			    "path" : "addPostTopic/addPostTopic",
+			    "style" :                                                                                    
+			    {
+			        "navigationBarTitleText": "",
+					"navigationStyle": "custom",
+			        "enablePullDownRefresh": false
+			    }
+			    
+			}    ,{
+                    "path" : "bbsSearchResult/bbsSearchResult",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "bbsSearchTopicResult/bbsSearchTopicResult",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
+		},
+		{
+			"root": "page_infos",
+			"pages": [{
+			    "path" : "infosLikeList/infosLikeList",
+			    "style" :                                                                                    
+			    {
+			        "navigationBarTitleText": "",
+			        "enablePullDownRefresh": false
+			    }
+			    
+			},
+			{
+			    "path" : "infosCommentList/infosCommentList",
+			    "style" :                                                                                    
+			    {
+			        "navigationBarTitleText": "",
+			        "enablePullDownRefresh": false
+			    }
+			    
+			}
+			,{
+			    "path" : "infosFocusList/infosFocusList",
+			    "style" :                                                                                    
+			    {
+			        "navigationBarTitleText": "",
+			        "enablePullDownRefresh": false
+			    }
+			    
+			}
+			,{
+			    "path" : "infosCollectList/infosCollectList",
+			    "style" :                                                                                    
+			    {
+			        "navigationBarTitleText": "",
+			        "enablePullDownRefresh": false
+			    }
+			    
+			}
+			,{
+			    "path" : "infosChat/infosChat",
+			    "style" :                                                                                    
+			    {
+			        "navigationBarTitleText": "",
+			        "enablePullDownRefresh": false
+			    }
+			    
+			}
+			    ,{
+                    "path" : "homepage/homepage",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+					"navigationStyle": "custom",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+		// "usingComponents": {
+		// 	"van-tabs": "/wxcomponents/vant/tabs/index",
+		// 	"van-tab": "/wxcomponents/vant/tab/index"
+		// }
+	},
+	"uniIdRouter": {},
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"van-(.*)": "@/wxcomponents/vant/$1/index"
+		}
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#3cc51f",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/img/tabbar/tabIcon1.png",
+			"selectedIconPath": "static/img/tabbar/tabIcon1Active.png",
+			"text": "档案"
+		}, {
+			"pagePath": "pages/guide/guide",
+			"iconPath": "static/img/tabbar/tabIcon2.png",
+			"selectedIconPath": "static/img/tabbar/tabIcon2Active.png",
+			"text": "秘籍"
+		}, {
+			"pagePath": "pages/news/news",
+			"iconPath": "static/img/tabbar/tabIcon3.png",
+			"selectedIconPath": "static/img/tabbar/tabIcon3Active.png",
+			"text": "公告"
+		}, {
+			"pagePath": "pages/bbs/bbs",
+			"iconPath": "static/img/tabbar/tabIcon4.png",
+			"selectedIconPath": "static/img/tabbar/tabIcon4Active.png",
+			"text": "社区"
+		}, {
+			"pagePath": "pages/infos/infos",
+			"iconPath": "static/img/tabbar/tabIcon5.png",
+			"selectedIconPath": "static/img/tabbar/tabIcon5Active.png",
+			"text": "消息"
+		}
+		]
+	}
+
+}

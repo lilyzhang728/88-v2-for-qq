@@ -1,0 +1,55 @@
+@import '../common/index.wxss';
+
+.van-swipe-cell {
+	overflow: hidden;
+	position: relative
+}
+
+.van-swipe-cell__left,
+.van-swipe-cell__right {
+	height: 100%;
+	position: absolute;
+	top: 0
+}
+
+.van-swipe-cell__left {
+	left: 0;
+	transform: translate3d(-100%, 0, 0)
+}
+
+.van-swipe-cell__right {
+	right: 0;
+	transform: translate3d(100%, 0, 0)
+}
+
+.van-swipe-cell__left {
+	/* width: 130rpx; */
+	height: 100%;
+	font-size: 30rpx;
+	color: #fff;
+	text-align: center;
+	/* background-color: #f44; */
+	word-wrap: break-word;
+	padding: 0 22rpx;
+	box-sizing: border-box;
+	/*文本垂直居中*/
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.van-swipe-cell__right {
+	/* width: 130rpx; */
+	height: 100%;
+	font-size: 30rpx;
+	color: #fff;
+	text-align: center;
+	/* background-color: #f44; */
+	word-wrap: break-word;
+	padding: 0 22rpx;
+	box-sizing: border-box;
+	/*文本垂直居中*/
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

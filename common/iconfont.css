@@ -1,0 +1,50 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3706492 */
+  src: url('@/static/iconfont/iconfont.eot?t=1666785926296'); /* IE9 */
+  src: url('@/static/iconfont/iconfont.eot?t=1666785926296#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('@/static/iconfont/iconfont.woff2?t=1666785926296') format('woff2'),
+       url('@/static/iconfont/iconfont.woff?t=1666785926296') format('woff'),
+       url('@/static/iconfont/iconfont.ttf?t=1666785926296') format('truetype'),
+       url('@/static/iconfont/iconfont.svg?t=1666785926296#iconfont') format('svg');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-marqueeplus:before {
+  content: "\e6aa";
+}
+
+.icon-plus_app:before {
+  content: "\e87a";
+}
+
+.icon-004plus02:before {
+  content: "\e79d";
+}
+
+.icon-plus-square:before {
+  content: "\e64c";
+}
+
+.icon-plusdoto:before {
+  content: "\e7b5";
+}
+
+.icon-plus-circle:before {
+  content: "\e781";
+}
+
+.icon-plus-circle-fill:before {
+  content: "\e845";
+}
+
+.icon-editor:before {
+  content: "\e6f6";
+}
+
