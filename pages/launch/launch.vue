@@ -5,10 +5,12 @@
 </template>
 
 <script>
+	import { login } from "@/network/api_login.js"
 	export default {
 		data() {
 			return {
-				showLaunch: false
+				showLaunch: false,
+				userId: ''
 			}
 		},
 		onLoad() {
@@ -18,13 +20,34 @@
 				// this.showLaunch = true
 				// 老用户，直接跳转index页
 				this.showLaunch = false
-				uni.switchTab({
-					url: '/pages/index/index'
+				// uni.switchTab({
+				// 	url: '/pages/mine/mine'
+				// })
+				uni.navigateTo({
+					url: '/pages/mine/mine'
 				})
 			}, 2000)
+			this.login()
 		},
 		methods: {
-			
+			login() {
+				login().then(res => {
+					if(res.code === 0 && Object.keys(res.data).length) {
+						// 存token，user_id
+						uni.setStorageSync('token', res.data.token);
+						uni.setStorageSync('userId', res.data.user_id);
+						this.userId = res.data.user_id
+						console.log('userid: ', res.data.user_id)
+					} else {
+						uni.showToast({
+							title: '登录失败，请重新打开小程序',
+							icon:'none'
+						});
+					}
+				}, err => {
+					console.log(err)
+				})
+			},
 		}
 	}
 </script>

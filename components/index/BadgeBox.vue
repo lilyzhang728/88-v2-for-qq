@@ -45,6 +45,11 @@
 				}
 			}
 		},
+		created() {
+			if(this.userId) {
+				this.getUserBadgeList()
+			}
+		},
 		methods: {
 			getUserBadgeList() {
 				getBadgeList({
@@ -65,7 +70,7 @@
 				});
 			},
 			showDetail(item) {
-				uni.$emit('showBadgeDetail', item)
+				this.$emit('showBadgeDetail', item)
 			}
 		}
 	}

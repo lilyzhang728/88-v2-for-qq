@@ -57,6 +57,11 @@
 				}
 			}
 		},
+		created() {
+			if(this.userId) {
+				this.getUserInfo()
+			}
+		},
 		methods: {
 			//查询个人信息
 			getUserInfo() {

@@ -90,7 +90,7 @@
 				showRadarImg: false,
 				radarImg: '',
 				moveLeft: false,
-				showRadar: false
+				showRadar: this.userId
 			}
 		},
 		watch: {

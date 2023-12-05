@@ -44,6 +44,18 @@
 			statusBar() {
 				return uni.getStorageSync('statusBar')
 			}
+		},
+		methods: {
+			//tabs通知swiper切换
+			changeTab(e) {
+				this.active = e.detail.index;
+				// 更新list
+				// this.$refs.swiperItem[e.detail.index].$refs.paging.reload()
+			},
+			//swiper滑动结束
+			swiperAnimationfinish(e) {
+				this.active = e.detail.current;
+			},
 		}
 	}
 </script>

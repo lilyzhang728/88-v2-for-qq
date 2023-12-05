@@ -1,34 +1,44 @@
 <!-- 档案页：包含：档案，我的 2个子tab -->
 <template>
-	<view class="mine" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/guideBg.png?sign=71e600a50a8b225db7fbee09ef45653e&t=1687920580');background-size: 100%;background-color: #F8F8F8;background-repeat: no-repeat;">
+	<view  class="mine" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/guideBg.png?sign=71e600a50a8b225db7fbee09ef45653e&t=1687920580');background-size: 100%;background-color: #F8F8F8;background-repeat: no-repeat;">
 		<page-tabs :titleList="titleList" :slotName="slotName">
-			<template v-slot:index> 
-				<index></index>
+			<template v-slot:myAbility> 
+				<!-- 档案 -->
+				<my-ability ref="myAbility"></my-ability>			
 			</template>
-			<template v-slot:guide>
-				<guide></guide>
+			<template v-slot:myProduction>
+				<!-- 我的 -->
+				<my-production></my-production>
 			</template>
 		</page-tabs>
-		
 	</view>
 </template>
 
 <script>
 	import PageTabs from '@/components/common/PageTabs.vue'
-	import index from '@/pages/index/index.vue'
-	import guide from '@/pages/guide/guide.vue'
+	import myAbility from '@/components/mine/myAbility.vue'
+	import myProduction from '@/components/mine/myProduction.vue'
 	export default {
 		components: {
 			PageTabs,
-			index,
-			guide
+			myAbility,
+			myProduction
 		},
 		data() {
 			return {
 				active: 0,
 				titleList: ['档案', '我的'],
-				slotName: ['index', 'guide']
+				slotName: ['myAbility', 'myProduction'],
 			}	
+		},
+		computed: {
+			
+		},
+		watch: {
+			
+		},
+		onLoad() {
+			
 		},
 		methods: {
 			

@@ -1,7 +1,7 @@
 <!-- 编辑个人信息 -->
 <template>
 	<view class="edit-personal-info" :style="{backgroundImage: 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)',backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<back-topbar title="编辑个人信息" refName="portraitInfo" functionName="getUserInfo"></back-topbar>
+		<back-topbar title="编辑个人信息" refName="myAbility" functionName="reloadPortraitInfo"></back-topbar>
 		<van-cell-group inset class="edit-personal-info-group" custom-class="edit-personal-info-wrap">
 			<!-- 头像 -->
 			<view class="edit-personal-info-avatar">

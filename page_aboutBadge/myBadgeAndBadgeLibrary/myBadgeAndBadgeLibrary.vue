@@ -1,7 +1,7 @@
 <!-- 我的徽章+徽章库 -->
 <template>
 	<view class="my-badge-and-badge-library" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/badgeLibraryBg.png?sign=c56c0c7a5e5f279e9a47efa12f40f4cc&t=1687658695');background-size: 100%;background-color: #F8F8F8;background-repeat: no-repeat;">
-		<back-topbar title="所有徽章" refName="badgeBox" functionName="getUserBadgeList"></back-topbar>
+		<back-topbar title="所有徽章" refName="myAbility" functionName="reloadBadge"></back-topbar>
 		<z-paging-swiper :swiper-style="{'top': customBar + 'px'}">
 			<template #top>
 				<van-tabs :active="active" animated @change.native="tabsChange" ref="tabs"
