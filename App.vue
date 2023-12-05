@@ -11,7 +11,6 @@
 		onShow: function() {
 			console.log('App Show')
 			// 计算自定义返回头的样式
-			let _this = this
 			uni.getSystemInfo({
 				success: (e) => {
 					// #ifdef MP-WEIXIN
@@ -21,6 +20,7 @@
 					uni.setStorageSync('customBarTop', custom.top)		//topbar的 padding-top
 					uni.setStorageSync('customBarHeight', custom.height)	//topbar标题的高度、line-height
 					uni.setStorageSync('customBarIconBottom', custom.bottom - e.statusBarHeight - custom.height)	//topbar的icon的bottom
+					uni.setStorageSync('statusBar', e.statusBarHeight)
 					// #endif
 				}
 			})
