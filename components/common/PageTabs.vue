@@ -37,6 +37,7 @@
 		},
 		data() {
 			return {
+				active: 1,
 			}
 		},
 		computed: {
