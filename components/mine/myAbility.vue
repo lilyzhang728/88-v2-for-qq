@@ -1,11 +1,21 @@
 <!-- 档案 -->
 <template>
-	<view class="content index" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/indexBg.png?sign=b371a636ad933c82f4188e6986e68d87&t=1687658284');background-size: 100%;background-color: #fff;background-repeat: no-repeat;">
-		<z-paging ref="paging" v-model="dataList"  :paging-style="{'top': customBar + 'px'}">
+	<view class="content index">
+		<z-paging ref="paging" :paging-style="{'top': '45rpx', 'left': '25rpx', 'right': '25rpx'}">
 			<!-- 个人信息 -->
 			<view class="userInfo" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/userInfoBg.png?sign=ffd748d25d6721cb672e63b6ff4b2625&t=1687599098');background-size: 100% 100%;background-repeat: no-repeat;" >
 				<skill-radar :userId="userId" class="skill-radar" ref="skillRadar"></skill-radar>
 				<portrait-info :userId="userId" class="portrait-info" ref="portraitInfo" @getTimeRange="getTimeRange"></portrait-info>
+				<img class="chain-icon chain-icon-left" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
+				<img class="chain-icon chain-icon-right" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
+			</view>
+			
+			<!-- 我的标签 -->
+			<view class="my-label">
+				<view class="my-label-title">我的标签</view>
+				<view class="my-label-content">
+					<view class="my-label-item" v-for="(item, index) in labelList" :key="index">{{item}}</view>
+				</view>
 			</view>
 			
 			<!-- 徽章 -->
@@ -49,11 +59,9 @@
 		data() {
 			return {
 				dataList: [],	//大事年表-事件列表
-				pageNo: 1,		//分页-第几页
-				pageSize: 8,	//分页-一页多少条
 				start_year: new Date().getFullYear(),
 				graduate_year: new Date().getFullYear(),
-				showPage: false,
+				labelList: ['软萌妹子', '人皮话多', '御姐范', '成熟大叔', '社恐患者'],
 			}
 		},
 		computed: {
@@ -138,7 +146,7 @@
 		height: 100%;
 		.userInfo {
 			height: 647rpx;
-			margin: 0 25rpx;
+			position: relative;
 			.skill-radar {
 				display: block;
 				height: 420rpx;
@@ -151,13 +159,49 @@
 				background: rgba(255,255,255,0.1);
 				height: 166rpx;
 			}
+			.chain-icon {
+				position: absolute;
+				bottom: -40rpx;
+				width: 17rpx;
+				height: 60rpx;
+			}
+			.chain-icon-left {
+				left: 22rpx;
+			}
+			.chain-icon-right {
+				right: 22rpx;
+			}
 		}
 		.badge {
-			margin: 0 25rpx;
 			margin-top: 50rpx;
 		}
-		.timeline {
-			margin-top: 50rpx;
+		
+		.my-label {
+			margin-top: 20rpx;
+			background: linear-gradient(180deg, #E5FFFC 0%, #FFFFFF 100%);
+			box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(56,201,171,0.15);
+			border-radius: 20rpx;
+			padding: 30rpx 25rpx;
+			.my-label-title {
+				padding: 0 5rpx;
+				font-size: 30rpx;
+				font-weight: 600;
+				color: rgba(0,0,0);
+				line-height: 42rpx;
+			}
+			.my-label-content {
+				.my-label-item {
+					margin-top: 20rpx;
+					display: inline-block;
+					padding: 14rpx 33rpx;
+					font-size: 26rpx;
+					color: rgba(0,0,0,0.8);
+					line-height: 37rpx;
+					border-radius: 33rpx;
+					border: 1rpx solid #D3D3D3;
+					margin-right: 20rpx;
+				}
+			}
 		}
 	}
 </style>
