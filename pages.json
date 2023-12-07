@@ -69,6 +69,16 @@
             }
             
         }
+        ,{
+            "path" : "pages/useful/useful",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+				"navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"subPackages": [{
 			"root": "page_editPersonalInfo",
