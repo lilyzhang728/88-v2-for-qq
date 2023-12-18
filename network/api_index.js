@@ -163,3 +163,28 @@ export function searchTopic(params) {
 		data: params
 	})
 }
+
+//获取标签列表
+export function tagsList(params) {
+	return getRequest({
+		path: `/api/user/${userId}/collected-tags`,
+		data: params
+	})
+}
+
+// 我的-收藏
+export function myCollectionList(params) {
+	return getRequest({
+		path: `/api/user/${userId}/collected-posts`,
+		data: params
+	})
+}
+
+// 我的-干货，问答，动态  参数：干货1，问答4，动态3
+export function myProductionList(params) {
+	return getRequest({
+		path: `/api/user/${userId}/posts`,
+		data: params
+	})
+}
+

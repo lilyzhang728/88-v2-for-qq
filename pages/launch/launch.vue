@@ -15,29 +15,40 @@
 		},
 		onLoad() {
 			// 查询是否是新用户
-			setTimeout(() => {
-				// 新用户，显示引导页
-				// this.showLaunch = true
-				// 老用户，直接跳转index页
-				this.showLaunch = false
-				// uni.switchTab({
-				// 	url: '/pages/mine/mine'
-				// })
-				uni.navigateTo({
-					url: '/pages/mine/mine'
-				})
-			}, 2000)
+			// setTimeout(() => {
+			// 	// 新用户，显示引导页
+			// 	// this.showLaunch = true
+			// 	// 老用户，直接跳转index页
+			// 	this.showLaunch = false
+			// 	// uni.switchTab({
+			// 	// 	url: '/pages/mine/mine'
+			// 	// })
+			// 	uni.navigateTo({
+			// 		url: '/pages/mine/mine'
+			// 	})
+			// }, 2000)
 			this.login()
 		},
 		methods: {
 			login() {
 				login().then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
+						// res.data.is_new = true
+						if(res.data.is_new) {
+							// 新用户，显示引导页
+							this.showLaunch = true
+						}
 						// 存token，user_id
 						uni.setStorageSync('token', res.data.token);
 						uni.setStorageSync('userId', res.data.user_id);
 						this.userId = res.data.user_id
 						console.log('userid: ', res.data.user_id)
+						if(!res.data.is_new) {
+							// 老用户，跳首页
+							uni.navigateTo({
+								url: '/pages/mine/mine'
+							})
+						}
 					} else {
 						uni.showToast({
 							title: '登录失败，请重新打开小程序',

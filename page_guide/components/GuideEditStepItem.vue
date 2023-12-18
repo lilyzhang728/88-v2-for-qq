@@ -146,7 +146,7 @@
 				}, err => {
 					uni.showModal({
 						title: '提示',
-						content: '鉴黄不通过',
+						content: '您发布的图片可能包括敏感信息，请重新发布',
 						success: function(res) {
 							if (res.confirm) {
 								// 执行确认后的操作

@@ -11,17 +11,17 @@
 			<view class="my-production-list">
 				<view class="my-production-list-count">4篇内容</view>
 				<view class="my-production-list-content">
-					<view class="my-production-list-item" v-for="(item, index) in dataList1" :key="index">
+					<view class="my-production-list-item" v-for="(item, index) in dataList" :key="index">
 						<view class="my-production-list-item-title">
 							<view class="my-production-list-item-label">问答</view>
 							<view class="my-production-list-item-text">{{item.title}}</view>
 						</view>
-						<view class="my-production-list-item-body">{{item.body}}</view>
-						<view class="my-production-list-item-time">{{item.time}}</view>
+						<view class="my-production-list-item-body">{{item.post_type === 1 && !item.body.body ? item.body.summary : item.body.body}}</view>
+						<view class="my-production-list-item-time">{{item.timestamp}}</view>
 						<view class="my-production-list-item-footer">
-							<view class="my-production-list-item-footer-item my-production-list-item-footer-read">{{item.read}} 阅读</view>
-							<view class="my-production-list-item-footer-item my-production-list-item-footer-like">{{item.like}} 点赞</view>
-							<view class="my-production-list-item-footer-item my-production-list-item-footer-comment">{{item.comment}} 评论</view>
+							<view class="my-production-list-item-footer-item my-production-list-item-footer-read">{{item.views}} 阅读</view>
+							<view class="my-production-list-item-footer-item my-production-list-item-footer-like">{{item.likers_count}} 点赞</view>
+							<view class="my-production-list-item-footer-item my-production-list-item-footer-comment">{{item.comments_count}} 评论</view>
 						</view>
 					</view>
 				</view>
@@ -31,22 +31,13 @@
 </template>
 
 <script>
+	import { myCollectionList, myProductionList } from '@/network/api_index.js'
 	export default {
 		data() {
 			return {
 				dataList: [],
-				dataList1: [{
-					title: '你的专业让你明白了什么人生道理你的专业让你明白了什么人生道理q？',
-					body: '我看过很多婚姻，我觉得七八成都没那么幸福，整天在为些鸡毛蒜皮的小事吵来吵去挺内耗的，浪费时间精力于毫无价值的事上。我之前相亲过一个人，我最初感受到什么是…',
-					time: '2023-10-23 18:32',
-					read: 423,
-					like: 123,
-					comment: 234
-				}],
+				active: 0,
 				btnImgList: [{
-					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/iconAllMy.png',
-					name: '全部'
-				},{
 					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/iconMyGuide.png',
 					name: '攻略'
 				},{
@@ -63,10 +54,60 @@
 		},
 		methods: {
 			queryList(pageNo, pageSize) {
+				if(this.active > 2) {
+					this.getMyCollectionList(pageNo, pageSize).then(res => {
+						this.$refs.paging.complete(res);
+					})
+				} else {
+					this.getMyProductionList(pageNo, pageSize).then(res => {
+						this.$refs.paging.complete(res);
+					})
+				}
+				
+			},
+			getMyProductionList(pageNo, pageSize) {
+				//参数：干货1，问答4，动态3
+				const type_map = [1, 4, 3]
+				return new Promise((resolve, reject) => {
+					myProductionList({
+						'post_type': type_map[this.active],
+						'per_page':1,
+						'page':1
+					}).then(res => {
+						if(res.code === 0 && Object.keys(res.data).length) {
+							resolve(res.data.items)
+						} else {
+							resolve([])
+						}
+					}, err => {
+						resolve([])
+						console.log('myProductionList: ', err)
+					})
+				})
+			},
+			getMyCollectionList(pageNo, pageSize) {
+				return new Promise((resolve, reject) => {
+					myCollectionList({
+						'post_type': -1,
+						'per_page':1,
+						'page':1
+					}).then(res => {
+						//post_type  1:干货-攻略  2: 干货-资讯  3：动态  4：问答  
+						if(res.code === 0 && Object.keys(res.data).length) {
+							resolve(res.data.items)
+						} else {
+							resolve([])
+						}
+					}, err => {
+						resolve([])
+						console.log('myCollectionList: ', err)
+					})
+				})
 				
 			},
 			clickTypeBtn(index) {
-				
+				this.active = index
+				this.$refs.paging.reload()
 			}
 		},
 	}

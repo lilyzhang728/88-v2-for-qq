@@ -79,6 +79,16 @@
             }
             
         }
+        ,{
+            "path" : "pages/qa/qa",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+				"navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"subPackages": [{
 			"root": "page_editPersonalInfo",
@@ -346,6 +356,28 @@
                     "navigationBarTitleText": "",
 					"navigationStyle": "custom",
                     "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
+		},
+		{
+				"root": "page_qa",
+				"pages": [{
+					"path": "askQuestion/askQuestion",
+					"style": {
+						"navigationBarTitleText": "向ta提问",
+						"enablePullDownRefresh": false,
+						"navigationStyle": "custom"
+					}
+		
+				}    ,{
+                    "path" : "questionDetail/questionDetail",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false,
+					"navigationStyle": "custom"
                 }
                 
                 }

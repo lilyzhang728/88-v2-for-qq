@@ -6,15 +6,15 @@
 			<view class="userInfo" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/userInfoBg.png?sign=ffd748d25d6721cb672e63b6ff4b2625&t=1687599098');background-size: 100% 100%;background-repeat: no-repeat;" >
 				<skill-radar :userId="userId" class="skill-radar" ref="skillRadar"></skill-radar>
 				<portrait-info :userId="userId" class="portrait-info" ref="portraitInfo" @getTimeRange="getTimeRange"></portrait-info>
-				<img class="chain-icon chain-icon-left" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
-				<img class="chain-icon chain-icon-right" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
+				<img v-if="labelList.length" class="chain-icon chain-icon-left" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
+				<img v-if="labelList.length" class="chain-icon chain-icon-right" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
 			</view>
 			
 			<!-- 我的标签 -->
-			<view class="my-label">
+			<view class="my-label" v-if="labelList.length">
 				<view class="my-label-title">我的标签</view>
 				<view class="my-label-content">
-					<view class="my-label-item" v-for="(item, index) in labelList" :key="index">{{item}}</view>
+					<view class="my-label-item" v-for="(item, index) in labelList" :key="index">{{item.body}}</view>
 				</view>
 			</view>
 			
@@ -45,7 +45,7 @@
 	// import TimelineAddOption from "@/components/timeline/TimelineAddOption.vue"
 	import Dialog from "@/wxcomponents/vant/dialog/dialog"
 	import Toast from '@/wxcomponents/vant/toast/toast'
-	import { login } from "@/network/api_login.js"	
+	import { tagsList } from "@/network/api_index.js"	
 	import ZPInterceptor from '@/uni_modules/z-paging/components/z-paging/js/z-paging-interceptor'
 	
 	let _this = null
@@ -61,7 +61,7 @@
 				dataList: [],	//大事年表-事件列表
 				start_year: new Date().getFullYear(),
 				graduate_year: new Date().getFullYear(),
-				labelList: ['软萌妹子', '人皮话多', '御姐范', '成熟大叔', '社恐患者'],
+				labelList: [],
 			}
 		},
 		computed: {
@@ -83,6 +83,9 @@
 				return [pageNo, pageSize, from];
 			})
 		},
+		created() {
+			this.getTagsList()
+		},
 		mounted() {
 			
 			uni.$on('showDialog', function(){
@@ -93,6 +96,19 @@
 			uni.$off('showDialog')
 		},
 		methods: {
+			// 获取标签列表
+			getTagsList() {
+				tagsList({
+					'page':1,
+					'per_page':10
+				}).then(res => {
+					if(res.code === 0 && Object.keys(res.data).length) {
+						this.labelList = res.data.items
+					}
+				}, err => {
+					console.log('tagsList: ', err)
+				})
+			},
 			// 刷新个人信息
 			reloadPortraitInfo() {
 				this.$refs.portraitInfo.getUserInfo()

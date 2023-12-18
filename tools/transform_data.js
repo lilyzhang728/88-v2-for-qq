@@ -64,6 +64,15 @@ export const type_value_key_map = {
 	'reputation': '声望'
 }
 
+export const skill_color_map = {
+	'academic': '#FFA849',
+	'grade': '#FF5454',
+	'interest': '#33E1CB',
+	'practice': '#3E8BFF',
+	'reputation': '#FC489F',
+	'skill': '#AD54FF'
+}
+
 //重要程度
 export const importance_list = [{
 	name: '非常重要',

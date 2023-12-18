@@ -1,31 +1,34 @@
-<!-- 发布新帖子 -->
+<!-- 提问页面 -->
 <template>
-	<view class="add-new-post" :style="{backgroundImage: backgroundImage,backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
+	<view class="ask-question" :style="{backgroundImage: backgroundImage,backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
 		<back-topbar title="发布帖子"></back-topbar>
-		<!-- 入口 -->
-		<view class="add-new-post-entrance" v-if="!showEdit">
-			<view class="add-new-post-header">
-				<text class="add-new-post-header-title">新的动态</text>
-				<!-- <van-button size="small" class="add-new-post-header-btn-wrap" custom-class="add-new-post-header-btn">发布</van-button> -->
-			</view>
-			<view class="add-new-post-topic" @click="editAddTopic">#试试添加话题</view>
-			<view class="add-new-post-content" @click="handleInput">
-				<view class="add-new-post-content-line">
-					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg" class="add-new-post-content-avatar" alt="">
-					<text class="add-new-post-content-placeholder">交流，但不强求共鸣…</text>
-				</view>
-				<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/bbs/addImgIcon.png" alt="" class="add-new-post-content-img-icon">
-			</view>
-		</view>
 		
 		<!-- 编辑 -->
-		<view class="add-new-post-edit" v-else>
+		<view class="add-new-post-edit">
+			<!-- 问题标题 -->
+			<view class="add-new-post-edit-title">
+				<van-field
+					class="add-new-post-edit-title-wrap"
+					input-class="add-new-post-edit-title"
+					:value="title"
+					placeholder="请输入标题"
+					auto-focus
+					:border="false"
+					@change.native="inputTitle($event)"
+					@focus.native="inputBindFocus"
+					@blur.native="inputBindBlur"
+				  />
+			</view>
+			
+			<view class="add-new-post-edit-title-split"></view>
+			
+			<!-- 问题正文 -->
 			<van-field
 				class="add-new-post-edit-textarea-wrap"
 				input-class="add-new-post-edit-textarea"
 				:value="postVal"
 				type="textarea"
-				placeholder="请输入留言"
+				placeholder="请输入问题"
 				autosize
 				auto-focus
 				:border="false"
@@ -45,22 +48,12 @@
 		
 		<!-- 弹起键盘 -->
 		<view class="add-new-post-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
-			<view class="add-new-post-keyboard-topic" @click.native="addTopic">
+			<view class="add-new-post-keyboard-topic">
 				<img class="add-new-post-keyboard-topic-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
-				<text class="add-new-post-keyboard-topic-text">{{selectedTopic ? (addedTopicContent.body ? addedTopicContent.body : '') : topicPlaceholder}}</text>
+				<text class="add-new-post-keyboard-topic-text">{{userName}}</text>
 				<van-icon v-if="!selectedTopic" name="arrow" size="20px" color="#d9d9d9" />
 				<van-icon v-else name="cross" size="20px" color="#d9d9d9" @click.native.stop="clearTopic($event)" />
 			</view>
-			<!-- <view class="add-new-post-keyboard-img">
-				<van-uploader ref="imgUploader" v-if="showUploader" class="img-uploader" 
-				:file-list="postImgList" deletable="true" max-count="9" 
-				:preview-size="imageWidth" image-fit="aspectFit"
-				use-before-read @beforeRead.native="beforeRead"
-				@afterRead.native="afterRead" @delete.native="deleteImg">
-					<van-icon name="photo-o" size="30px" color="#6d6d6d" />
-				</van-uploader>
-				<van-icon v-else name="photo-o" size="30px" color="#6d6d6d" />
-			</view> -->
 			
 			<!-- 发布按钮 -->
 			<view class="view-btn-box">
@@ -84,66 +77,37 @@
 		},
 		data() {
 			return {
-				showEdit: false,	//是否显示编辑页
-				postVal: '',		//发帖内容
-				showKeyboard: false,	//是否显示键盘上的话题
+				postVal: '',	//提问内容
 				bottomVal: '0px',	//键盘上话题bottom
-				keyboardHeight: '85px',	//键盘上话题height	1行54px，2行85px
-				selectedTopic: false,	//是否已经选好话题
-				addedTopicContent: {
-					body: '',
-					field: '',
-					id: '',
-					posts_count: 0,
-					timestamp: '',
-					views: 0
-				},	//选好的话题内容
-				topicPlaceholder: '添加话题',	//默认提示
 				postImgList: [],	//上传图片list
-				screenWidth: null,		//屏幕宽度
+				showKeyboard: true,
+				keyboardHeight: '85px',	//键盘上话题height	1行54px，2行85px
+				userName: ''
 			}
 		},
 		computed: {
 			backgroundImage() {
-				return this.showEdit ? 'none' : 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)'
+				return 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)'
 			},
 			imageWidth() {
 				// 两边padding: 25*2+30*2=110; 图片margin-right:8px 8*3=24; 计算误差多-5
 				return this.screenWidth ? ((this.screenWidth - this.rpxToPx(110) - 24 - 5) / 3) + 'px' : 0
+			},
+			screenWidth() {
+				return uni.getStorageSync('screenWidth')
 			}
 		},
 		onLoad(option) {
-			if(option.topicInfo) {
-				this.addedTopicContent = JSON.parse(decodeURIComponent(option.topicInfo))
-				this.selectedTopic = true
-			}
-		},
-		onShow() {
-			let that = this
-			uni.getSystemInfo({
-				success: (e) => {
-					// #ifdef MP-WEIXIN
-					this.statusBar = e.statusBarHeight
-					this.screenWidth = e.screenWidth
-					// #endif
-				}
-			})
+			this.userName = option.userName
 		},
 		methods: {
 			// rpx转px
 			rpxToPx(rpx) {
 			  return (this.screenWidth * Number.parseInt(rpx)) / 750
 			},
-			//切换为编辑页面并跳转添加话题页
-			editAddTopic() {
-				uni.navigateTo({
-					url: '/page_bbs/addPostTopic/addPostTopic?showEdit=1'
-				})
-			},
-			//切换为编辑页面
-			handleInput() {
-				this.showEdit = true
-				this.showKeyboard = true
+			//输入标题
+			inputTitle(e) {
+				this.title = e.detail
 			},
 			//编辑输入帖子
 			inputPost(e) {
@@ -156,27 +120,6 @@
 			inputBindBlur() {
 				this.bottomVal = 0
 			},
-			//去话题列表页
-			addTopic() {
-				uni.navigateTo({
-					url: '/page_bbs/addPostTopic/addPostTopic'
-				})
-			},
-			//清空已选话题
-			clearTopic(e) {
-				e.preventDefault();
-				this.selectedTopic = false
-				this.addedTopicContent = {
-					body: '',
-					field: '',
-					id: '',
-					posts_count: 0,
-					timestamp: '',
-					views: 0
-				}
-			},
-			
-			
 			//before-read 事件可以在上传前进行校验，调用 callback 方法传入 true 表示校验通过，传入 false 表示校验失败。
 			beforeRead(event) {
 				const {
@@ -212,11 +155,11 @@
 				//回显
 				this.postImgList.push({})
 				this.$set(this.postImgList[this.postImgList.length-1], 'status', 'uploading')
-				// 上传至云存储, 文件路径为 bbs/userid/时间戳/index.png: index为第几张图片
+				// 上传至云存储, 文件路径为 qa/userid/时间戳/index.png: index为第几张图片
 				const userId = uni.getStorageSync('userId')
 				this.timestamp = this.timestamp ? this.timestamp : new Date().getTime()
 				wx.cloud.uploadFile({
-				  cloudPath: `bbs/${userId}/${this.timestamp}/${this.postImgList.length-1}.png`, // 对象存储路径，根路径直接填文件名，文件夹例子 test/文件名，不要 / 开头
+				  cloudPath: `qa/${userId}/${this.timestamp}/${this.postImgList.length-1}.png`, // 对象存储路径，根路径直接填文件名，文件夹例子 test/文件名，不要 / 开头
 				  filePath: file.url, 
 				  config: {
 				    env: 'prod-4gkvfp8b0382845d' // 需要替换成自己的微信云托管环境ID
@@ -257,12 +200,12 @@
 			send() {
 				if(this.postVal) {
 					addGuide({
-						'title': 'title',
+						'title': this.title,
 						'body': {
 							'body': this.postVal,
 							'urls': this.transformImg()
 						},
-						'post_type': 3,
+						'post_type': 4,
 						'status': 1,
 						'topics': this.selectedTopic ? [this.addedTopicContent.id] : []
 					}).then(res => {
@@ -273,8 +216,8 @@
 							    success: () => {
 							         let page = getCurrentPages().pop();//跳转页面成功之后
 							         if (page) {
-										 page.$vm.active = 0
-							             page.$vm.$refs.swiperItem[0].$refs.paging.reload()
+										 page.$vm.$refs.pageTabs.active = 0
+							             page.$vm.$refs.questionAndAnswer.$refs.paging.reload()
 							         } 
 							    },
 							})
@@ -289,95 +232,34 @@
 					// this.val = '';
 				}
 			}
-			
 		}
 	}
 </script>
 
 <style lang="less" scoped>
-.add-new-post {
+.ask-question {
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
 	padding: 0 25rpx;
-	.add-new-post-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-top: 50rpx;
-		.add-new-post-header-title {
-			font-size: 38rpx;
-			font-weight: 600;
-			color: #000000;
-			line-height: 53rpx;
-		}
-		.add-new-post-header-btn-wrap {
-			/deep/ .add-new-post-header-btn {
-				padding: 4rpx 26rpx !important;
-				line-height: 43rpx !important;
-				font-weight: 600 !important;
-				font-size: 26rpx !important;
-				background: linear-gradient(135deg, #2FC2C5 0%, #37C9A3 100%) !important;
-				border-radius: 8rpx !important;
-				border: none !important;
-				color: #fff !important;
-			}
-		}
-	}
-	.add-new-post-topic {
-		margin-top: 23rpx;
-		background: #FFFFFF;
-		border-radius: 20rpx;
-		border: 1rpx solid #E1E1E1;
-		padding: 30rpx;
-		color: #000000;
-		line-height: 42rpx;
-		font-size: 30rpx;
-	}
-	.add-new-post-content {
-		margin-top: 30rpx;
-		height: 624rpx;
-		background: #FFFFFF;
-		border-radius: 20rpx;
-		border: 1rpx solid #E1E1E1;
-		padding: 30rpx;
-		box-sizing: border-box;
-		position: relative;
-		.add-new-post-content-line {
-			display: flex;
-			align-items: center;
-			.add-new-post-content-avatar {
-				width: 50rpx;
-				height: 50rpx;
-				border-radius: 50%;
-				margin-right: 20rpx;
-			}
-			.add-new-post-content-placeholder {
-				font-size: 30rpx;
-				color: rgba(0,0,0,0.2);
-				line-height: 42rpx;
-			}
-		}
-		.add-new-post-content-img-icon {
-			width: 110rpx;
-			height: 110rpx;
-			position: absolute;
-			left: 30rpx;
-			bottom: 30rpx;
-		}
-	}
-	
 	.add-new-post-edit {
 		.add-new-post-edit-textarea-wrap {
 			/deep/ .add-new-post-edit-textarea{
 				min-height: 100px;
 			}
 		}
-		
+		.add-new-post-edit-title-wrap {
+			.add-new-post-edit-title {
+			}
+		}
+		.add-new-post-edit-title-split {
+			height: 1px;
+			border-bottom: 1px solid #EAEAEA;
+			margin: 0 25rpx;
+		}
 	}
-	
 	.add-new-post-keyboard {
 		position: fixed;
 		left: 0;
