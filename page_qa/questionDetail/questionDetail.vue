@@ -66,6 +66,9 @@
 		<van-overlay :show="showReply" @click.native="onClickHide" :custom-style="'height:auto;bottom: '+(bottomVal)+'; '" />
 		<bbs-comment-keyboard :showReply="showReply" 
 		@submit="submit" @changeBottomVal="changeBottomVal"></bbs-comment-keyboard>
+	
+		<!-- 邀请用户列表弹窗 -->
+		<invite-user-list ref="inviteUserList" v-if="showInviteUserList"></invite-user-list>
 	</view>
 </template>
 
@@ -82,11 +85,13 @@
 	import { utf16toEntities, uncodeUtf16 } from '@/tools/transform_emoji.js'
 	import { transformMaxNum } from '@/tools/transform_time.js'
 	import { invideUserAnswer } from '@/network/api_qa.js'
+	import InviteUserList from '@/page_qa/components/InviteUserList.vue'
 	export default {
 		components: {
 			BbsPostComment,
 			BackTopbar,
-			BbsCommentKeyboard
+			BbsCommentKeyboard,
+			InviteUserList
 		},
 		data() {
 			return {
@@ -116,6 +121,7 @@
 				curGetCommentUrl: '',	//获取评论接口URL
 				startGetComment: false,	//开始请求评论
 				dataList: [],		//评论数据
+				showInviteUserList: false
 			}
 		},
 		computed: {
@@ -297,12 +303,13 @@
 			
 			// 邀请回答
 			invideUser() {
-				invideUserAnswer({
-					'user_id': userId,
-					'id': this.id
-				}).then(res => {}, err => {
-					console.log('invideUserAnswer: ', err)
-				})
+				// invideUserAnswer({
+				// 	'user_id': userId,
+				// 	'id': this.id
+				// }).then(res => {}, err => {
+				// 	console.log('invideUserAnswer: ', err)
+				// })
+				this.showInviteUserList = true
 			}
 		}
 	}
