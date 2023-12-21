@@ -71,6 +71,7 @@
 	import Toast from '@/wxcomponents/vant/toast/toast'
 	import { guideDetail, addGuide, editGuide } from '@/network/api_guide.js'
 	import { imgSecCheck } from "@/tools/sec_check.js"
+	import { invideUserAnswer } from '@/network/api_qa.js'
 	export default {
 		components: {
 			BackTopbar
@@ -82,7 +83,8 @@
 				postImgList: [],	//上传图片list
 				showKeyboard: true,
 				keyboardHeight: '85px',	//键盘上话题height	1行54px，2行85px
-				userName: ''
+				userName: '',
+				userId: ''
 			}
 		},
 		computed: {
@@ -99,6 +101,7 @@
 		},
 		onLoad(option) {
 			this.userName = option.userName
+			this.userId = option.userId
 		},
 		methods: {
 			// rpx转px
@@ -209,29 +212,43 @@
 						'status': 1,
 						'topics': this.selectedTopic ? [this.addedTopicContent.id] : []
 					}).then(res => {
-						if(res.code === 0) {
-							//发布成功，回到列表页，并刷新列表
-							Toast('发布成功！')
-							uni.navigateBack({
-							    success: () => {
-							         let page = getCurrentPages().pop();//跳转页面成功之后
-							         if (page) {
-										 page.$vm.$refs.pageTabs.active = 0
-							             page.$vm.$refs.questionAndAnswer.$refs.paging.reload()
-							         } 
-							    },
+						if(res.code === 0 && Object.keys(res.data).length) {
+							// 关联被邀请人
+							invideUserAnswer({
+								'user_id': this.userId,
+								'id': res.data.id
+							}).then(res2 => {
+								if(res2.code === 0) {
+									//发布成功，回到列表页，并刷新列表
+									uni.navigateBack({
+									    success: () => {
+									         let page = getCurrentPages().pop();//跳转页面成功之后
+									         if (page) {
+												page.$vm.$refs.pageTabs.active = 0
+									            page.$vm.$refs.questionAndAnswer.$refs.paging.reload()
+												page.$vm.$refs.questionAndAnswer.toastMsg(true)
+											 } 
+									    },
+									})
+								}  else {
+									Toast('邀请失败')
+								}
+							}, err => {
+								Toast('邀请失败')
+								console.log('invideUserAnswer: ', err)
 							})
+							
 						} else {
-							Toast('发布失败')
+							Toast('邀请失败')
 						}
 					}, err => {
-						Toast('发布失败')
+						Toast('邀请失败')
 						console.log('addGuide: ', err)
 					})
 					// this.$emit("submit",this.val)
 					// this.val = '';
 				}
-			}
+			},
 		}
 	}
 </script>

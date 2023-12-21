@@ -407,30 +407,25 @@
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
 		"list": [{
-			"pagePath": "pages/index/index",
-			"iconPath": "static/img/tabbar/tabIcon1.png",
-			"selectedIconPath": "static/img/tabbar/tabIcon1Active.png",
-			"text": "档案"
-		}, {
-			"pagePath": "pages/guide/guide",
-			"iconPath": "static/img/tabbar/tabIcon2.png",
-			"selectedIconPath": "static/img/tabbar/tabIcon2Active.png",
-			"text": "秘籍"
-		}, {
-			"pagePath": "pages/news/news",
-			"iconPath": "static/img/tabbar/tabIcon3.png",
-			"selectedIconPath": "static/img/tabbar/tabIcon3Active.png",
-			"text": "公告"
-		}, {
 			"pagePath": "pages/bbs/bbs",
 			"iconPath": "static/img/tabbar/tabIcon4.png",
 			"selectedIconPath": "static/img/tabbar/tabIcon4Active.png",
 			"text": "社区"
-		}, {
-			"pagePath": "pages/infos/infos",
-			"iconPath": "static/img/tabbar/tabIcon5.png",
-			"selectedIconPath": "static/img/tabbar/tabIcon5Active.png",
-			"text": "消息"
+		},{
+			"pagePath": "pages/useful/useful",
+			"iconPath": "static/img/tabbar/tabIcon4.png",
+			"selectedIconPath": "static/img/tabbar/tabIcon4Active.png",
+			"text": "干货"
+		},{
+			"pagePath": "pages/qa/qa",
+			"iconPath": "static/img/tabbar/tabIcon4.png",
+			"selectedIconPath": "static/img/tabbar/tabIcon4Active.png",
+			"text": "问答"
+		},{
+			"pagePath": "pages/mine/mine",
+			"iconPath": "static/img/tabbar/tabIcon1.png",
+			"selectedIconPath": "static/img/tabbar/tabIcon1Active.png",
+			"text": "档案"
 		}
 		]
 	}

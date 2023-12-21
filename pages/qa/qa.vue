@@ -4,13 +4,16 @@
 		<page-tabs :titleList="titleList" :slotName="slotName" ref="pageTabs">
 			<template v-slot:questionAndAnswer> 
 				<!-- 问答 -->
-				<question-and-answer ref="questionAndAnswer"></question-and-answer>			
+				<question-and-answer ref="questionAndAnswer" @toastMsg="toastMsg"></question-and-answer>			
 			</template>
 			<template v-slot:connections>
 				<!-- 人脉 -->
 				<connections ref="connections"></connections>
 			</template>
 		</page-tabs>
+		
+		<!-- toast提示 -->
+		<van-toast id="van-toast" />
 	</view>
 </template>
 
@@ -18,6 +21,7 @@
 	import PageTabs from '@/components/common/PageTabs.vue'
 	import QuestionAndAnswer from '@/components/qa/QuestionAndAnswer.vue'
 	import Connections from '@/components/qa/Connections.vue'
+	import Toast from '@/wxcomponents/vant/toast/toast'
 	export default {
 		components: {
 			PageTabs,
@@ -32,7 +36,13 @@
 			}
 		},
 		methods: {
-			
+			toastMsg(type) {
+				if(type) {
+					Toast('邀请成功！')
+				} else {
+					Toast('邀请失败')
+				}
+			}
 		}
 	}
 </script>

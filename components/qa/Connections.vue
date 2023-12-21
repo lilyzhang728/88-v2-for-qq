@@ -101,7 +101,7 @@
 			},
 			toAskQuestion(item) {
 				uni.navigateTo({
-					url: `/page_qa/askQuestion/askQuestion?userName=${item.name}`
+					url: `/page_qa/askQuestion/askQuestion?userName=${item.name}&userId=${item.id}`
 				})
 			}
 		},

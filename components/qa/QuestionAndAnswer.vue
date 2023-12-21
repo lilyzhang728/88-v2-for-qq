@@ -61,6 +61,9 @@
 				uni.navigateTo({
 					url: `/page_qa/questionDetail/questionDetail?id=${item.id}`
 				})
+			},
+			toastMsg(type) {
+				this.$emit('toastMsg', type)
 			}
 		},
 	}

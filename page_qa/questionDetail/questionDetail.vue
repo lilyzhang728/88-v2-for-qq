@@ -68,7 +68,11 @@
 		@submit="submit" @changeBottomVal="changeBottomVal"></bbs-comment-keyboard>
 	
 		<!-- 邀请用户列表弹窗 -->
-		<invite-user-list ref="inviteUserList" v-if="showInviteUserList"></invite-user-list>
+		<invite-user-list :postId="postData.id" ref="inviteUserList" @closePopup="closePopup" v-if="showInviteUserList"></invite-user-list>
+	
+		
+		<!-- toast提示 -->
+		<van-toast id="van-toast" />
 	</view>
 </template>
 
@@ -84,8 +88,8 @@
 	import { postComment } from "@/network/api_bbs.js"
 	import { utf16toEntities, uncodeUtf16 } from '@/tools/transform_emoji.js'
 	import { transformMaxNum } from '@/tools/transform_time.js'
-	import { invideUserAnswer } from '@/network/api_qa.js'
 	import InviteUserList from '@/page_qa/components/InviteUserList.vue'
+	import Toast from '@/wxcomponents/vant/toast/toast'
 	export default {
 		components: {
 			BbsPostComment,
@@ -300,16 +304,19 @@
 					url: `/page_infos/homepage/homepage?userId=${this.postData.author.id}`
 				})
 			},
-			
 			// 邀请回答
 			invideUser() {
-				// invideUserAnswer({
-				// 	'user_id': userId,
-				// 	'id': this.id
-				// }).then(res => {}, err => {
-				// 	console.log('invideUserAnswer: ', err)
-				// })
 				this.showInviteUserList = true
+				this.$refs.inviteUserList.showDetail = true
+			},
+			closePopup(success) {
+				this.showInviteUserList = false
+				this.$refs.inviteUserList.showDetail = false
+				if(success) {
+					Toast('邀请成功！')
+				} else {
+					Toast('邀请失败')
+				}
 			}
 		}
 	}

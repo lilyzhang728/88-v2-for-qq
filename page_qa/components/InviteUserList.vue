@@ -49,7 +49,7 @@
 </template>
 
 <script>
-	import { connections } from '@/network/api_qa.js'
+	import { connections, invideUserAnswer } from '@/network/api_qa.js'
 	import TopSearchBox from '@/components/common/TopSearchBox.vue'
 	import { target_value_key_map, type_value_key_map, skill_color_map } from '@/tools/transform_data.js'
 	export default {
@@ -57,7 +57,10 @@
 			styleIsolation: 'shared'
 		},
 		props: {
-
+			postId: {
+				type: String,
+				default: ''
+			}
 		},
 		components: {
 			TopSearchBox
@@ -113,7 +116,17 @@
 				
 			},
 			toAskQuestion(item) {
-				
+				invideUserAnswer({
+					'user_id': item.id,
+					'id': this.postId
+				}).then(res => {
+					if(res.code === 0) {
+						this.$emit('closePopup', true)
+					} else {
+					}
+				}, err => {
+					console.log('invideUserAnswer: ', err)
+				})
 			}
 		}
 	}
