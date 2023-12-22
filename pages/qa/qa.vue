@@ -14,6 +14,10 @@
 		
 		<!-- toast提示 -->
 		<van-toast id="van-toast" />
+		
+		<!-- 新增问答按钮 -->
+		<img class="guide-add-btn" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/editBtn.png" alt="" @click.stop="addNewQuestion($event)">
+		
 	</view>
 </template>
 
@@ -42,6 +46,12 @@
 				} else {
 					Toast('邀请失败')
 				}
+			},
+			addNewQuestion(e) {
+				e.preventDefault();
+				uni.navigateTo({
+					url: `/page_qa/askQuestion/askQuestion`
+				})
 			}
 		}
 	}
@@ -54,6 +64,14 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
+		
+		.guide-add-btn {
+			width: 128rpx;
+			height: 80rpx;
+			position: fixed;
+			right: 0;
+			bottom: 270rpx;
+		}
 	}
 
 </style>

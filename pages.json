@@ -359,6 +359,16 @@
                 }
                 
                 }
+                ,{
+                    "path" : "viewInfos/viewInfos",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+					"navigationStyle": "custom",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 		},
 		{

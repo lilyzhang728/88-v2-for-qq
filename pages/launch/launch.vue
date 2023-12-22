@@ -1,85 +1,139 @@
 <template>
-	<!-- <view class="launch" v-if="showLaunch"> -->
-		<view class="launch" v-if="showLaunch" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/qa/qaBg.png?sign=dea87806eae980fcf46c05d496c6f02f&t=1702015391');background-size: 100%;background-color: #FFFFFF;background-repeat: no-repeat;">
-		<!-- 性别 -->
-		<view class="launch-gender">
-			<view class="launch-gender-title">你的性别是</view>
-			<view class="launch-gender-img-box">
-				<!-- 女生 -->
-				<view class="launch-gender-img-box-item">
-					<img v-if="!gender" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/girlSelect.png" class="launch-gender-img" alt="">
-					<img v-else @click="selectGender(0)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/girlUnSelect.png" class="launch-gender-img" alt="">
-					<img v-if="!gender" class="launch-gender-img-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/iconSelect.png" alt="">
+	<view class="launch" v-if="showLaunch"  style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/qa/qaBg.png?sign=dea87806eae980fcf46c05d496c6f02f&t=1702015391');background-size: 100%;background-color: #FFFFFF;background-repeat: no-repeat;">
+		<!-- <view class="launch-step-box"> -->
+			<!-- 第一步 -->
+			<view class="launch-step" v-if="activeStep === 0">
+				<!-- 性别 -->
+				<view class="launch-gender">
+					<view class="launch-gender-title">你的性别是</view>
+					<view class="launch-gender-img-box">
+						<!-- 女生 -->
+						<view class="launch-gender-img-box-item">
+							<img v-if="!gender" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/girlSelect.png" class="launch-gender-img" alt="">
+							<img v-else @click="selectGender(0)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/girlUnSelect.png" class="launch-gender-img" alt="">
+							<img v-if="!gender" class="launch-gender-img-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/iconSelect.png" alt="">
+						</view>
+						
+						<!-- 男生 -->
+						<view class="launch-gender-img-box-item">
+							<img v-if="gender" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/boySelect.png" class="launch-gender-img" alt="">
+							<img v-else @click="selectGender(1)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/boyUnSelect.png" class="launch-gender-img" alt="">
+							<img v-if="gender" class="launch-gender-img-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/iconSelect.png" alt="">
+						</view>
+						
+					</view>
 				</view>
 				
-				<!-- 男生 -->
-				<view class="launch-gender-img-box-item">
-					<img v-if="gender" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/boySelect.png" class="launch-gender-img" alt="">
-					<img v-else @click="selectGender(1)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/boyUnSelect.png" class="launch-gender-img" alt="">
-					<img v-if="gender" class="launch-gender-img-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/iconSelect.png" alt="">
+				<!-- 性格标签 -->
+				<view class="launch-character">
+					<view class="launch-title" v-if="characterList.length">向大家介绍一下自己吧</view>
+					<view class="launch-labels" v-if="characterList.length">
+						<view @click="selectLabel(index, 'characterList')" class="launch-label-item" :class="{'launch-label-item-active': label.active}" v-for="(label, index) in characterList" :key="index">{{label.body}}</view>
+					</view>
 				</view>
-				
 			</view>
-		</view>
+			
+			<!-- 第二步 -->
+			<view class="launch-step launch-step2" v-if="activeStep === 1">
+				<!-- 学历 -->
+				<view class="launch-title">你的学历是</view>
+				<view class="launch-labels">
+					<view @click="selectLabelSingle(index, 'educationList')" class="launch-label-item" :class="{'launch-label-item-active': label.active}" v-for="(label, index) in educationList" :key="index">{{label.body}}</view>
+				</view>
+				
+				<!-- 在校状态 -->
+				<view class="launch-title">你目前的状态是</view>
+				<view class="launch-labels">
+					<view @click="selectLabelSingle(index, 'ifStudentList')" class="launch-label-item" :class="{'launch-label-item-active': label.active}" v-for="(label, index) in ifStudentList" :key="index">{{label.body}}</view>
+				</view>
+			</view>
+			
+			<!-- 第三步 -->
+			<view class="launch-step" v-if="activeStep === 2">
+				<!-- 目标 -->
+				<view class="launch-title">现阶段你的目标是</view>
+				<view class="launch-labels">
+					<view @click="selectLabelSingle(index, 'targetList')" class="launch-label-item" :class="{'launch-label-item-active': label.active}" v-for="(label, index) in targetList" :key="index">{{label.body}}</view>
+				</view>
+				
+				<!-- 成就 -->
+				<view class="launch-title" v-if="achievementList.length">已经达成了哪些成就？</view>
+				<view class="launch-labels" v-if="achievementList.length">
+					<view @click="selectLabel(index, 'achievementList')" class="launch-label-item" :class="{'launch-label-item-active': label.active}" v-for="(label, index) in achievementList" :key="index">{{label.name}}</view>
+				</view>
+			</view>
+			
+			<!-- 按钮 -->
+			<view class="launch-btn-box">
+				<van-button @click.native="clickNext"  class="launch-btn-wrap" custom-class="launch-btn">{{activeStep < 2 ? '下一步' : '保存'}}</van-button>
+			</view>
+		<!-- </view> -->
 		
-		<!-- 标签选项 -->
-		<view class="launch-labels">
-			<view @click="selectLabel(index)" class="launch-label-item" :class="{'launch-label-item-active': label.active}" v-for="(label, index) in labelslist" :key="index">{{label.name}}</view>
-		</view>
-		
-		<!-- 按钮 -->
-		<view class="launch-btn-box">
-			<van-button  class="launch-btn-wrap" custom-class="launch-btn">下一步</van-button>
-		</view>
 	</view>
 </template>
 
 <script>
-	import { login } from "@/network/api_login.js"
+	import { login, characterList, achievementsList, collectCharacterList } from "@/network/api_login.js"
+	import { updateProfile } from "@/network/api_index.js"
+	import { addToMyBadge } from '@/network/api_badge.js'
 	export default {
 		data() {
 			return {
-				showLaunch: false,
+				showLaunch: true,//false,
+				activeStep: 0,
 				userId: '',
 				gender: 0,	//0:女生  1：男生
-				labelslist: [{
-					name: '软萌妹子',
-					active: true
+				characterList: [],	//性格标签
+				educationList: [{
+					body: '博士',
+					active: false,
+					id: 4
 				},{
-					name: '人皮话多',
-					active: false
+					body: '硕士',
+					active: false,
+					id: 3
 				},{
-					name: '御姐范',
-					active: false
+					body: '本科',
+					active: false,
+					id: 2
 				},{
-					name: '善',
-					active: false
+					body: '大专',
+					active: false,
+					id: 1
+				}],	//学历
+				ifStudentList: [{
+					body: '在校学生',
+					active: false,
+					id: 0
 				},{
-					name: '善良',
-					active: false
+					body: '已经毕业',
+					active: false,
+					id: 1
+				}],
+				targetList: [{
+					body: '考研',
+					active: false,
+					id: 1
 				},{
-					name: '豪放不羁',
-					active: false
-				}]
+					body: '找工作',
+					active: false,
+					id: 2
+				},{
+					body: '出国',
+					active: false,
+					id: 3
+				},{
+					body: '考公/编',
+					active: false,
+					id: 4
+				}],		//目标
+				achievementList: [],	//成就
 			}
 		},
+		
 		onLoad() {
-			// 查询是否是新用户
-			// setTimeout(() => {
-			// 	// 新用户，显示引导页
-			// 	// this.showLaunch = true
-			// 	// 老用户，直接跳转index页
-			// 	this.showLaunch = false
-			// 	// uni.switchTab({
-			// 	// 	url: '/pages/mine/mine'
-			// 	// })
-			// 	uni.navigateTo({
-			// 		url: '/pages/mine/mine'
-			// 	})
-			// }, 2000)
-			
-			
 			this.login()
+			this.getCharacterList()
 		},
 		methods: {
 			login() {
@@ -95,12 +149,13 @@
 						uni.setStorageSync('userId', res.data.user_id);
 						this.userId = res.data.user_id
 						console.log('userid: ', res.data.user_id)
-						if(!res.data.is_new) {
-							// 老用户，跳首页
-							uni.switchTab({
-								url: '/pages/bbs/bbs'
-							})
-						}
+						this.getAchievementsList()
+						// if(!res.data.is_new) {
+						// 	// 老用户，跳首页
+						// 	uni.switchTab({
+						// 		url: '/pages/bbs/bbs'
+						// 	})
+						// }
 					} else {
 						uni.showToast({
 							title: '登录失败，请重新打开小程序',
@@ -111,12 +166,116 @@
 					console.log(err)
 				})
 			},
+			// 获取性格标签
+			getCharacterList() {
+				characterList({
+					'page':1,
+					'per_page':10
+				}).then(res => {
+					if(res.code === 0 && Object.keys(res.data).length) {
+						this.characterList = res.data.items
+					}
+				}, err => {
+					console.log('characterList: ', err)
+				})
+			},
+			// 获取成就标签（徽章库的官方徽章）
+			getAchievementsList() {
+				achievementsList({
+					'source': 'guide',		//官方徽章
+					'per_page': 20,
+					'page': 1,
+					'userId': this.userId
+				}).then(res => {
+					if(res.code === 0 && Object.keys(res.data).length) {
+						this.achievementList = res.data.items
+					}
+				}, err => {
+					console.log()
+				})
+			},
 			selectGender(val) {
 				this.gender = val
 				console.log(this.gender)
 			},
-			selectLabel(index) {
-				this.labelslist[index].active = !this.labelslist[index].active
+			selectLabel(index, list) {
+				if(this[list][index].active === undefined) {
+					this.$set(this[list][index], 'active', true)
+				} else {
+					this[list][index].active = !this[list][index].active
+				}
+			},
+			// 单选
+			selectLabelSingle(index, list) {
+				this[list].forEach(item => {
+					this.$set(item, 'active', false)
+				})
+				this[list][index].active = true
+			},
+			clickNext() {
+				if(this.activeStep < 2) {
+					this.activeStep++
+				} else {
+					//调保存接口
+					this.saveCollectCharacterList()
+					this.saveProfile()
+					this.saveAchievement()
+					//跳转到正文
+					uni.switchTab({
+						url: '/pages/bbs/bbs'
+					})
+				}
+			},
+			// 保存性格标签
+			saveCollectCharacterList() {
+				let temp = this.characterList.filter(item => item.active)
+				let characterId = temp.map(item => item.id)
+				if(characterId.length) {
+					collectCharacterList({
+						'tag_ids': characterId
+					}).then(res => {
+						if(res.code === 0) {
+							// 保存成功
+						}
+					}, err => {
+						console.log('collectCharacterList: ', err)
+					})
+				}
+			},
+			// 保存基本信息
+			saveProfile() {
+				let targetIds = this.targetList.filter(target => target.active).map(item => item.id)
+				let graduatedId = this.ifStudentList.filter(graduated => graduated.active).map(item => item.id)
+				let stageId = this.educationList.filter(stage => stage.active).map(item => item.id)
+				let params = {
+					'target': targetIds[0],
+					'gender': this.gender ? 'M' : 'F',
+					'is_graduated': graduatedId[0],
+					'stage': stageId[0]
+				}
+				updateProfile(params).then(res => {
+					if(res.code === 0) {
+						//保存成功
+					}
+				}, err => {
+					console.log('updateProfile: ', err)
+				})
+			},
+			// 保存成就
+			saveAchievement() {
+				let achievementId = this.achievementList.filter(achievement => achievement.active).map(item => item.id) 
+				if(achievementId.length) {
+					addToMyBadge({
+						'achievement_ids': achievementId
+					}).then(res => {
+						if(res.code === 0) {
+							//保存成功
+						}
+					}, err => {
+						console.log('addToMyBadge: ', err)
+					})
+				}
+				
 			}
 		}
 	}
@@ -131,6 +290,16 @@
 	left: 0;
 	right: 0;
 	z-index: 10000;
+	// .launch-step-box {
+		
+	// }
+	.launch-step {
+		width: 100vw;
+	}
+	.launch-step2 {
+		margin-top: 300rpx; 
+		
+	}
 	.launch-gender {
 		.launch-gender-title {
 			margin-top: 242rpx;
@@ -165,9 +334,16 @@
 			
 		}
 	}
-	
-	.launch-labels {
+	.launch-title {
 		margin-top: 105rpx;
+		text-align: center;
+		font-size: 34rpx;
+		font-weight: 500;
+		color: #000000;
+		line-height: 48rpx;
+	}
+	.launch-labels {
+		margin-top: 50rpx;
 		display: flex;
 		flex-wrap: wrap;
 		padding: 0 45rpx;
@@ -193,7 +369,10 @@
 	
 	.launch-btn-box {
 		text-align: center;
-		margin-top: 100rpx;
+		position: fixed;
+		bottom: 68rpx;
+		left: 0;
+		right: 0;
 		.launch-btn-wrap {
 			/deep/ .launch-btn {
 				font-size: 32rpx;

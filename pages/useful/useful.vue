@@ -35,6 +35,10 @@
 				</swiper-item>
 			</swiper>
 		</z-paging-swiper>
+		
+		<!-- 新增攻略按钮 -->
+		<img class="guide-add-btn" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/editBtn.png" alt="" @click.stop="addNewGuide($event)">
+		
 	</view>
 </template>
 
@@ -97,6 +101,13 @@
 				uni.navigateTo({
 					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=3&searchVal=${this.searchVal}`
 				})
+			},
+			// 创建guide
+			addNewGuide(e) {
+				e.preventDefault();
+				uni.navigateTo({
+					url: '/page_guide/guideEdit/guideEdit'
+				});
 			},
 		}
 	}
@@ -164,6 +175,14 @@
 	}
 	.swiper {
 		height: 100%;
+	}
+	
+	.guide-add-btn {
+		width: 128rpx;
+		height: 80rpx;
+		position: fixed;
+		right: 0;
+		bottom: 270rpx;
 	}
 }
 </style>

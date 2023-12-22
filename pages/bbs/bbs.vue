@@ -35,16 +35,21 @@
 		
 		<!-- 新增攻略按钮 -->
 		<img class="post-add-btn" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/editBtn.png" alt="" @click.stop="addNewPost($event)">
+	
+		<!-- 收信箱图标 -->
+		<side-message-box></side-message-box>
 	</view>
 </template>
 
 <script>
 	import BbsSwiperItem from "@/components/bbs/BbsSwiperItem.vue"
 	import TopSearchBox from '@/components/common/TopSearchBox.vue'
+	import SideMessageBox from '@/components/common/SideMessageBox.vue'
 	export default {
 		components: {
 			'swiper-list-item': BbsSwiperItem,
-			TopSearchBox
+			TopSearchBox,
+			SideMessageBox
 		},
 		data() {
 			return {

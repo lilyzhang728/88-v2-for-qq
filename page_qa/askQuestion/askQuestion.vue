@@ -100,8 +100,8 @@
 			}
 		},
 		onLoad(option) {
-			this.userName = option.userName
-			this.userId = option.userId
+			this.userName = option.userName ? option.userName : ''
+			this.userId = option.userId ? option.userId : ''
 		},
 		methods: {
 			// rpx转px
@@ -213,31 +213,44 @@
 						'topics': this.selectedTopic ? [this.addedTopicContent.id] : []
 					}).then(res => {
 						if(res.code === 0 && Object.keys(res.data).length) {
-							// 关联被邀请人
-							invideUserAnswer({
-								'user_id': this.userId,
-								'id': res.data.id
-							}).then(res2 => {
-								if(res2.code === 0) {
-									//发布成功，回到列表页，并刷新列表
-									uni.navigateBack({
-									    success: () => {
-									         let page = getCurrentPages().pop();//跳转页面成功之后
-									         if (page) {
-												page.$vm.$refs.pageTabs.active = 0
-									            page.$vm.$refs.questionAndAnswer.$refs.paging.reload()
-												page.$vm.$refs.questionAndAnswer.toastMsg(true)
-											 } 
-									    },
-									})
-								}  else {
+							if(this.userId) {
+								// 关联被邀请人
+								invideUserAnswer({
+									'user_id': this.userId,
+									'id': res.data.id
+								}).then(res2 => {
+									if(res2.code === 0) {
+										//发布成功，回到列表页，并刷新列表
+										uni.navigateBack({
+										    success: () => {
+										         let page = getCurrentPages().pop();//跳转页面成功之后
+										         if (page) {
+													page.$vm.$refs.pageTabs.active = 0
+										            page.$vm.$refs.questionAndAnswer.$refs.paging.reload()
+													page.$vm.$refs.questionAndAnswer.toastMsg(true)
+												 } 
+										    },
+										})
+									}  else {
+										Toast('邀请失败')
+									}
+								}, err => {
 									Toast('邀请失败')
-								}
-							}, err => {
-								Toast('邀请失败')
-								console.log('invideUserAnswer: ', err)
-							})
-							
+									console.log('invideUserAnswer: ', err)
+								})
+							} else {
+								//发布成功，回到列表页，并刷新列表
+								uni.navigateBack({
+								    success: () => {
+								         let page = getCurrentPages().pop();//跳转页面成功之后
+								         if (page) {
+											page.$vm.$refs.pageTabs.active = 0
+								            page.$vm.$refs.questionAndAnswer.$refs.paging.reload()
+											page.$vm.$refs.questionAndAnswer.toastMsg(true)
+										 } 
+								    },
+								})
+							}
 						} else {
 							Toast('邀请失败')
 						}
