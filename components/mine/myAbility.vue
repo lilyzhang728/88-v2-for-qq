@@ -161,7 +161,7 @@
 		width: 100%;
 		height: 100%;
 		.userInfo {
-			height: 647rpx;
+			height: 697rpx;
 			position: relative;
 			.skill-radar {
 				display: block;
@@ -173,7 +173,7 @@
 				border: 1rpx solid #FFFFFF;
 				border-radius: 20rpx;
 				background: rgba(255,255,255,0.1);
-				height: 166rpx;
+				height: 216rpx;
 			}
 			.chain-icon {
 				position: absolute;

@@ -81,6 +81,17 @@
 				:error="validator && !userInfo.target"
 				custom-style="background: transparent"
 			/>
+			<van-field
+			    :value="userInfo.about_me"
+			    placeholder="请输入个性签名"
+			    @change.native="onChange($event, 'about_me')"
+				label="个性签名"
+				required
+				name="about_me"
+				clearable
+				:error="validator && !userInfo.about_me"
+				custom-style="background: transparent"
+			/>
 			<!-- <van-field
 			    value=""
 				label="批量添加成就"
@@ -139,7 +150,8 @@
 					start_month: null,
 					startDay: '',
 					target: "",
-					id: ""
+					id: "",
+					about_me: ''
 				},
 				start_year_backup: null,
 				graduate_year_backup: null,

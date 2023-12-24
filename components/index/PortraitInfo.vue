@@ -1,20 +1,28 @@
 <!-- 头像 -->
 <template>
 	<view class="portrait-container">
-		<!-- <van-image class="portrait-img" width="130rpx" height="130rpx" fit="cover" round :src="userInfo.avatar" @click="changePotrait" /> -->
-		<button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar.native="onChooseAvatar">
-			<image :src="userInfo.avatar" mode="" slot="value" class="edit-personal-img"></image>
-		</button>
-		
-		<view class="portrait-content">
-			<view class="portrait-name">{{userInfo.name}}</view>
-			<view class="portrait-info">
-				<text class="portrait-info-item">学校：{{userInfo.school ? userInfo.school : '未填写'}}</text>
-				<text>目标：{{target}}</text>
+		<view class="portrait-container-top">
+			<!-- <van-image class="portrait-img" width="130rpx" height="130rpx" fit="cover" round :src="userInfo.avatar" @click="changePotrait" /> -->
+			<button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar.native="onChooseAvatar">
+				<image :src="userInfo.avatar" mode="" slot="value" class="edit-personal-img"></image>
+			</button>
+			
+			<view class="portrait-content">
+				<view class="portrait-name">{{userInfo.name}}</view>
+				<view class="portrait-info">
+					<text class="portrait-info-item">学校：{{userInfo.school ? userInfo.school : '未填写'}}</text>
+					<text>目标：{{target}}</text>
+				</view>
 			</view>
+			
+			<view class="portrait-icon"><text class="iconfont icon-editor portrait-icon-img" @tap="toEdit"></text></view>
 		</view>
 		
-		<view class="portrait-icon"><text class="iconfont icon-editor portrait-icon-img" @tap="toEdit"></text></view>
+		<!-- 个性签名 -->
+		<view class="portrait-container-about-me">
+			<van-icon class="portrait-container-about-me-icon" name="edit" color="#fff" />
+			<text class="portrait-container-about-me-text">个性签名: {{userInfo.about_me}}</text>
+		</view>
 		
 		<van-toast id="van-toast" />
 	</view>
@@ -165,55 +173,74 @@
 		color: #fff;
 		padding: 18rpx 25rpx;
 		position: relative;
-		display: flex;
-		.portrait-img {
-			width: 130rpx;
-			margin-right: 15rpx;
-		}
-		.avatar-wrapper {
-			width: 130rpx;
-			height: 130rpx;
-			padding: 0;
-			border-radius: 50%;
-			margin-right: 15rpx;
-		}
-		.edit-personal-img {
-			width: 130rpx;
-			height: 130rpx;
-			border-radius: 50%;
-		}
-		.portrait-content {
-			flex: 1;
+		.portrait-container-top {
 			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			overflow: hidden;
-			.portrait-name {
-				margin-bottom: 10rpx;
-				font-size: 30rpx;
-				font-weight: bold;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
+			.portrait-img {
+				width: 130rpx;
+				margin-right: 15rpx;
 			}
-			.portrait-info {
-				font-size: 20rpx;
+			.avatar-wrapper {
+				width: 130rpx;
+				height: 130rpx;
+				padding: 0;
+				border-radius: 50%;
+				margin-right: 15rpx;
+			}
+			.edit-personal-img {
+				width: 130rpx;
+				height: 130rpx;
+				border-radius: 50%;
+			}
+			.portrait-content {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
 				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-				.portrait-info-item {
-					margin-right: 35rpx;
+				.portrait-name {
+					margin-bottom: 10rpx;
+					font-size: 30rpx;
+					font-weight: bold;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+				.portrait-info {
+					font-size: 20rpx;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					.portrait-info-item {
+						margin-right: 35rpx;
+					}
+				}
+			}
+			
+			.portrait-icon {
+				width: 52rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				.portrait-icon-img {
+					font-size: 40rpx;
 				}
 			}
 		}
-		
-		.portrait-icon {
-			width: 52rpx;
+		.portrait-container-about-me {
+			font-size: 22rpx;
+			color: #FFFFFF;
+			line-height: 30rpx;
+			margin-top: 22rpx;
 			display: flex;
 			align-items: center;
-			justify-content: center;
-			.portrait-icon-img {
-				font-size: 40rpx;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			.portrait-container-about-me-icon {
+				margin-left: 15rpx;
+				margin-right: 10rpx;
+				height: 20rpx;
+				width: 20rpx;
 			}
 		}
 	}
