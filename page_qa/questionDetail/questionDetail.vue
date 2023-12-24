@@ -307,7 +307,9 @@
 			// 邀请回答
 			invideUser() {
 				this.showInviteUserList = true
-				this.$refs.inviteUserList.showDetail = true
+				if(this.$refs.inviteUserList) {
+					this.$refs.inviteUserList.showDetail = true
+				}
 			},
 			closePopup(success) {
 				this.showInviteUserList = false

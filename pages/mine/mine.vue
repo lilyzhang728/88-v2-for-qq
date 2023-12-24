@@ -8,9 +8,12 @@
 			</template>
 			<template v-slot:myProduction>
 				<!-- 我的 -->
-				<my-production></my-production>
+				<my-production ref="myProduction"></my-production>
 			</template>
 		</page-tabs>
+		
+		<!-- 侧边收信箱 -->
+		<side-message-box></side-message-box>
 	</view>
 </template>
 
@@ -18,17 +21,20 @@
 	import PageTabs from '@/components/common/PageTabs.vue'
 	import myAbility from '@/components/mine/myAbility.vue'
 	import myProduction from '@/components/mine/myProduction.vue'
+	import SideMessageBox from '@/components/common/SideMessageBox.vue'
 	export default {
 		components: {
 			PageTabs,
 			myAbility,
-			myProduction
+			myProduction,
+			SideMessageBox
 		},
 		data() {
 			return {
 				active: 0,
 				titleList: ['档案', '我的'],
 				slotName: ['myAbility', 'myProduction'],
+				
 			}	
 		},
 		computed: {
@@ -40,7 +46,9 @@
 		onLoad() {
 			
 		},
+		
 		methods: {
+			
 			
 		}
 	}
