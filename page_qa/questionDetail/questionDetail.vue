@@ -50,13 +50,23 @@
 			 @focus="noBomBox" @clickInput.native.stop="clickInput" /> -->
 			<view class="bbs-post-detail-operate-left" @click="clickInput">添加回答</view>
 			
-			<!-- 点赞/评论icon -->
+			<!-- 点赞icon -->
 			<view class="bbs-post-detail-operate-icon-box" v-if="!postData.is_like">
 				<van-icon name="good-job-o" size="44rpx" @click.native="clickLike(true)" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.likers_count)}}</text>
 			</view>
 			<view class="bbs-post-detail-operate-icon-box" v-else>
 				<van-icon name="good-job" size="44rpx" color="#2FC2C5" @click.native="clickLike(false)" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.likers_count)}}</text>
 			</view>
+			
+			<!-- 收藏icon -->
+			<view class="bbs-post-detail-operate-icon-box" v-if="!postData.is_collect">
+				<van-icon name="star-o" size="44rpx" @click.native="clickCollect(true)" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.collectors_count)}}</text>
+			</view>
+			<view class="bbs-post-detail-operate-icon-box" v-else>
+				<van-icon name="star" size="44rpx" color="#2FC2C5" @click.native="clickCollect(false)" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.collectors_count)}}</text>
+			</view>
+			
+			<!-- 评论icon -->
 			<view class="bbs-post-detail-operate-icon-box">
 				<van-icon name="comment-o" size="44rpx" @click.native="clickInput" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.comments_count)}}</text>
 			</view>
@@ -83,7 +93,7 @@
 	import BackTopbar from "@/components/common/BackTopbar.vue"
 	import BbsPostComment from '@/page_qa/components/BbsPostComment.vue'
 	import BbsCommentKeyboard from "@/page_qa/components/BbsCommentKeyboard.vue"
-	import { guideDetail, likeGuide, disLikeGuide } from '@/network/api_guide.js'
+	import { guideDetail, likeGuide, disLikeGuide, collectGuide, unCollectGuide } from '@/network/api_guide.js'
 	import { getRequest, postRequest, putRequest, deleteRequest } from '@/network/https.js'
 	import { postComment } from "@/network/api_bbs.js"
 	import { utf16toEntities, uncodeUtf16 } from '@/tools/transform_emoji.js'
@@ -281,6 +291,31 @@
 							//取消点赞成功，改变icon状态
 							this.postData.is_like = status
 							this.postData.likers_count--
+						}
+					}, err => {
+						console.log('disLikeGuide: ', err)
+					})
+				}
+			},
+			clickCollect(status) {
+				if(status) {
+					//unCollect ——> collect
+					collectGuide(this.postData.id).then(res => {
+						if(res.code === 0) {
+							//点赞成功，改变icon状态
+							this.postData.is_collect = status
+							this.postData.collectors_count++
+						}
+					}, err => {
+						console.log('likeGuide: ', err)
+					})
+				} else {
+					//collect ——> unCollect
+					unCollectGuide(this.postData.id).then(res => {
+						if(res.code === 0) {
+							//取消点赞成功，改变icon状态
+							this.postData.is_collect = status
+							this.postData.collectors_count--
 						}
 					}, err => {
 						console.log('disLikeGuide: ', err)
