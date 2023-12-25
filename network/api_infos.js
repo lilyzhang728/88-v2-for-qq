@@ -108,3 +108,11 @@ export function unfollow(params) {
 		path: `/api/user/unfollow/${params}`
 	})
 }
+
+// 获取新通知
+export function getNotifications(params) {
+	return getRequest({
+		path: `/api/user/${userId}/notifications`,
+		data: params
+	})
+}

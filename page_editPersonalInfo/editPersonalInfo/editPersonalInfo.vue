@@ -370,7 +370,7 @@
 									success: () => {
 									    let page = getCurrentPages().pop();//跳转页面成功之后
 										if (page) {
-										  page.$vm.$refs.portraitInfo.getUserInfo()
+										  page.$vm.$refs.myAbility.$refs.portraitInfo.getUserInfo()
 									    };
 									}
 								})
