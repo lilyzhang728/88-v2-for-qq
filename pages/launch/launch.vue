@@ -79,7 +79,7 @@
 	export default {
 		data() {
 			return {
-				showLaunch: true,//false,
+				showLaunch: false,
 				activeStep: 0,
 				userId: '',
 				gender: 0,	//0:女生  1：男生
@@ -150,12 +150,12 @@
 						this.userId = res.data.user_id
 						console.log('userid: ', res.data.user_id)
 						this.getAchievementsList()
-						// if(!res.data.is_new) {
-						// 	// 老用户，跳首页
-						// 	uni.switchTab({
-						// 		url: '/pages/bbs/bbs'
-						// 	})
-						// }
+						if(!res.data.is_new) {
+							// 老用户，跳首页
+							uni.switchTab({
+								url: '/pages/bbs/bbs'
+							})
+						}
 					} else {
 						uni.showToast({
 							title: '登录失败，请重新打开小程序',
