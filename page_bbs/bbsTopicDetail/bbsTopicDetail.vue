@@ -90,11 +90,11 @@
 			})
 		},
 		methods: {
-			tabsChange(e) {
-				this.active = e.detail.index;
-				// 更新list
-				this.$refs.swiperItem[e.detail.index].$refs.paging.reload()
-			},
+			// tabsChange(e) {
+			// 	this.active = e.detail.index;
+			// 	// 更新list
+			// 	this.$refs.swiperItem[e.detail.index].$refs.paging.reload()
+			// },
 			swiperAnimationfinish(e) {
 				this.active = e.detail.current;
 			},

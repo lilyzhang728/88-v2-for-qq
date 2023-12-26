@@ -143,13 +143,13 @@
 						if(res.data.is_new) {
 							// 新用户，显示引导页
 							this.showLaunch = true
+							this.getAchievementsList(res.data.user_id)
 						}
 						// 存token，user_id
 						uni.setStorageSync('token', res.data.token);
 						uni.setStorageSync('userId', res.data.user_id);
 						this.userId = res.data.user_id
 						console.log('userid: ', res.data.user_id)
-						this.getAchievementsList()
 						if(!res.data.is_new) {
 							// 老用户，跳首页
 							uni.switchTab({
@@ -180,12 +180,12 @@
 				})
 			},
 			// 获取成就标签（徽章库的官方徽章）
-			getAchievementsList() {
+			getAchievementsList(userId) {
 				achievementsList({
 					'source': 'guide',		//官方徽章
 					'per_page': 20,
 					'page': 1,
-					'userId': this.userId
+					'userId': userId
 				}).then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
 						this.achievementList = res.data.items

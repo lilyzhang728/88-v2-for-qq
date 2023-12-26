@@ -34,28 +34,41 @@
 <script>
 	import { recArticle } from '@/network/api_guide.js'
 	export default {
+		props: {
+			active: {
+				type: Number,
+				default: 0
+			},
+		},
 		data() {
 			return {
 				dataList: [],
 				defaultAvatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',
 			}
 		},
+		watch: {
+			active() {
+				this.$refs.paging.reload()
+			}
+		},
 		methods: {
 			queryList(pageNo, pageSize) {
-				recArticle({
-					'post_type': 4,	
-					'per_page': pageSize,
-					'page': pageNo
-				}).then(res => {
-					if(res.code === 0 && Object.keys(res.data).length) {
-						this.$refs.paging.complete(res.data.items)
-					} else {
+				if(this.active === 0) {
+					recArticle({
+						'post_type': 4,	
+						'per_page': pageSize,
+						'page': pageNo
+					}).then(res => {
+						if(res.code === 0 && Object.keys(res.data).length) {
+							this.$refs.paging.complete(res.data.items)
+						} else {
+							this.$refs.paging.complete([]);
+						}
+					}, err => {
 						this.$refs.paging.complete([]);
-					}
-				}, err => {
-					this.$refs.paging.complete([]);
-					console.log('recArticle: ', err)
-				})
+						console.log('recArticle: ', err)
+					})
+				}
 			},
 			toDetail(item) {
 				uni.navigateTo({

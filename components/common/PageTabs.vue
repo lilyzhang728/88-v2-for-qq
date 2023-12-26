@@ -50,6 +50,7 @@
 			//tabs通知swiper切换
 			changeTab(e) {
 				this.active = e.detail.index;
+				this.$emit('changeTab', e.detail.index)
 				// 更新list
 				// this.$refs.swiperItem[e.detail.index].$refs.paging.reload()
 			},

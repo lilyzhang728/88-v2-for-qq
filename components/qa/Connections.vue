@@ -4,7 +4,7 @@
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '30rpx', 'left': '25rpx', 'right': '25rpx'}">
 			<template #top>
 				<!-- 搜索 -->
-				<view class="connections-search">
+				<view class="connections-search" v-if="dataList.length">
 					<top-search-box  @toSearch="toSearch"></top-search-box>
 				</view>
 				
@@ -19,7 +19,7 @@
 			</template>
 			
 			<!-- connections列表 -->
-			<view class="connections-list">
+			<view class="connections-list" v-if="dataList.length">
 				<view class="connections-item-card" v-for="(item, index) in dataList" :key="index">
 					<view class="connections-item-card-content">
 						<view class="connections-item-card-avatar-box">
@@ -63,6 +63,12 @@
 		components: {
 			TopSearchBox
 		},
+		props: {
+			active: {
+				type: Number,
+				default: 0
+			},
+		},
 		data() {
 			return {
 				dataList: [],
@@ -72,14 +78,18 @@
 				skillColorMap: skill_color_map
 			}
 		},
-		computed: {
-			
+		watch: {
+			active() {
+				this.$refs.paging.reload()
+			}
 		},
 		methods: {
 			queryList(pageNo, pageSize) {
-				this.getConnections(pageNo, pageSize).then(res => {
-					this.$refs.paging.complete(res);
-				})
+				if(this.active === 1) {
+					this.getConnections(pageNo, pageSize).then(res => {
+						this.$refs.paging.complete(res);
+					})
+				}
 			},
 			getConnections(pageNo, pageSize) {
 				return new Promise((resolve, reject) => {
