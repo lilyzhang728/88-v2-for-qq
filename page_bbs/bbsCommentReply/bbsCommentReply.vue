@@ -284,7 +284,7 @@ page {
 	}
 	.item {
 		margin: 25rpx;
-		border-bottom: solid 2rpx #ccc;
+		// border-bottom: solid 2rpx #ccc;
 	}
 	.reply {
 		padding: 20rpx;

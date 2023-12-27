@@ -420,8 +420,8 @@
 						    success: () => {
 						         let page = getCurrentPages().pop();//跳转页面成功之后
 						         if (page) {
-									 page.$vm.active = 2
-						             page.$vm.$refs.swiperItem[2].$refs.paging.reload()
+									 page.$vm.active = 0
+						             page.$vm.$refs.guide.$refs.paging.reload()
 						         } 
 						    },
 						})

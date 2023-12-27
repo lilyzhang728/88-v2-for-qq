@@ -119,7 +119,7 @@
 			.right {
 				flex: 1;
 				font-size: 30rpx;
-				border-bottom: 1rpx solid #E8E8E8;
+				// border-bottom: 1rpx solid #E8E8E8;
 				.top {
 					display: flex;
 					justify-content: space-between;
