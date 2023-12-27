@@ -40,7 +40,8 @@
 							<news-item-card v-if="item.post_type === 2" :newsItem="item" :index="index"
 							@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></news-item-card>
 							<!-- 问答 -->
-							<my-question-card v-if="item.post_type === 4" :item="item" @toastMsg="toastMsg"></my-question-card>
+							<my-question-card v-if="item.post_type === 4" :item="item" :index="index" 
+							@toastMsg="toastMsg" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></my-question-card>
 						</view>
 					</view>
 				</view>

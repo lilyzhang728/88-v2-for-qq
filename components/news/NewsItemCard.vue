@@ -145,9 +145,12 @@
 
 <style lang="less" scoped>
 	.news-item-card {
-		padding: 25rpx 0;
+		padding: 30rpx;
 		padding-bottom: 0;
-		border-bottom: 1rpx solid #E8E8E8;
+		background: #fff;
+		box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.15);
+		border-radius: 20rpx;
+		margin-bottom: 20rpx;
 		.news-item-card-author {
 			height: 66rpx;
 			line-height: 66rpx;

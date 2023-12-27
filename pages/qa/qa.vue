@@ -1,6 +1,6 @@
 <!-- 问答页，包括：问答，人脉，2个子tab -->
 <template>
-	<view class="qa" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/qa/qaBg.png?sign=dea87806eae980fcf46c05d496c6f02f&t=1702015391');background-size: 100%;background-color: #F8F8F8;background-repeat: no-repeat;">
+	<view class="qa" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/qa/qaBg.png?sign=dea87806eae980fcf46c05d496c6f02f&t=1702015391');background-size: 100%;background-color: #f2f4f8;background-repeat: no-repeat;">
 		<page-tabs :titleList="titleList" :slotName="slotName" ref="pageTabs" @changeTab="changeTab">
 			<template v-slot:questionAndAnswer> 
 				<!-- 问答 -->

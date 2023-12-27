@@ -4,27 +4,33 @@
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '30rpx', 'left': '25rpx', 'right': '25rpx'}">
 			<view class="question-list">
 				<view class="question-item-card" @click="toDetail(item)" v-for="(item,index) in dataList">
-					<view class="question-item-card-title">{{item.title}}</view>
-					<view class="question-item-card-body">{{item.body.body}}</view>
-					<view class="bbs-post-img-box" v-if="item.body && item.body.urls && item.body.urls.length">
-						<van-image
-						  width="100%"
-						  height="100%"
-						  fit="contain"
-						  :src="pic"
-						  class="bbs-post-img-item"
-						  v-for="(pic, subIndex) in item.body.urls.slice(0, 3)"
-						  :key="subIndex"
-						/>
-					</view>
-					<view class="question-item-card-split"></view>
-					<view class="question-item-card-footer">
-						<view class="question-item-card-footer-author">
-							<img class="question-item-card-footer-author-avatar" :src="item.author.avatar ? item.author.avatar : defaultAvatar" alt="">
-							<text class="question-item-card-footer-author-name">{{item.author.name}} 说</text>
+					<view class="question-item-card-author">
+						<img :src="item.author.avatar ? item.author.avatar : defaultAvatar" alt="" class="question-item-card-author-img">
+						<view class="question-item-card-author-text">
+							<view class="question-item-card-author-name">{{item.author.name}}</view>
+							<view class="question-item-card-author-time">{{item.timestamp}}</view>
 						</view>
-						<view class="question-item-card-footer-count">阅读 {{item.views}}</view>
 					</view>
+					<view class="question-item-card-content" :class="{'question-item-card-content-haveImg': item.body.urls.length>0}">
+						<view class="question-item-card-content-left">
+							<view class="question-item-card-content-left-title van-multi-ellipsis--l3">{{item.title}}</view>
+							<view class="question-item-card-content-left-infos" v-if="item.body.body">{{item.body.body}}</view>
+						</view>
+						<view class="question-item-card-content-right" v-if="item.body.urls.length > 0">
+							<img :src="item.body.urls[0]" alt="" class="question-item-card-content-right-img">
+						</view>
+					</view>
+					<view class="question-item-card-operate" @click.native.stop="clickOperate($event)">
+						<view class="question-item-card-operate-item">
+							<van-icon name="good-job" size="34rpx" :color="item.is_like ? '#8B8B8B' : '#D7D7D7'" @click.native.stop="clickLike($event, index)" />
+							<view class="question-item-card-operate-num">{{handleTransform(item.likers_count)}}</view>
+						</view>
+						<view class="question-item-card-operate-item">
+							<van-icon name="star" size="34rpx" :color="item.is_collect ? '#8B8B8B' : '#D7D7D7'" @click.native.stop="clickStar($event, index)" />
+							<view class="question-item-card-operate-num">{{handleTransform(item.collectors_count)}}</view>
+						</view>
+					</view>
+					
 				</view>
 			</view>
 		</z-paging>
@@ -33,6 +39,8 @@
 
 <script>
 	import { recArticle } from '@/network/api_guide.js'
+	import { transformTime, transformMaxNum } from '@/tools/transform_time.js'
+	import { likeGuide, disLikeGuide, collectGuide, unCollectGuide } from '@/network/api_guide.js'
 	export default {
 		props: {
 			active: {
@@ -52,6 +60,10 @@
 			}
 		},
 		methods: {
+			// 点赞、评论 大数单位转化
+			handleTransform(val) {
+				return transformMaxNum(val)
+			},
 			queryList(pageNo, pageSize) {
 				if(this.active === 0) {
 					recArticle({
@@ -77,7 +89,67 @@
 			},
 			toastMsg(type) {
 				this.$emit('toastMsg', type)
-			}
+			},
+			clickOperate(e) {
+				//防止冒泡
+				e.preventDefault()
+			},
+			clickLike(e, index) {
+				//防止冒泡
+				e.preventDefault()
+				if(!this.dataList[index].is_like) {
+					//unlike ——> like
+					likeGuide(this.dataList[index].id).then(res => {
+						if(res.code === 0) {
+							//点赞成功，改变icon状态
+							this.dataList[index].is_like = true
+							this.dataList[index].likers_count++
+						}
+					}, err => {
+						console.log('likeGuide: ', err)
+					})
+				} else {
+					//like ——> unlike
+					disLikeGuide(this.dataList[index].id).then(res => {
+						if(res.code === 0) {
+							//取消点赞成功，改变icon状态
+							this.dataList[index].is_like = false
+							this.dataList[index].likers_count--
+						}
+					}, err => {
+						console.log('disLikeGuide: ', err)
+					})
+				}
+			},
+			// 收藏/取消收藏
+			clickStar(e, index) {
+				//防止冒泡
+				e.preventDefault()
+				if(!this.dataList[index].is_collect) {
+					//unstar ——> star
+					collectGuide(this.dataList[index].id).then(res => {
+						if(res.code === 0) {
+							//收藏成功，改变icon状态
+							this.dataList[index].is_collect = true
+							this.dataList[index].collectors_count++
+						}
+					}, err => {
+						console.log('collectGuide: ', err)
+					})
+				} else {
+					//star ——> unstar
+					unCollectGuide(this.dataList[index].id).then(res => {
+						if(res.code === 0) {
+							//取消收藏成功，改变icon状态
+							this.dataList[index].is_collect = false
+							this.dataList[index].collectors_count--
+						}
+					}, err => {
+						console.log('unCollectGuide: ', err)
+					})
+				}
+				
+			},
 		},
 	}
 </script>
@@ -86,65 +158,97 @@
 	.question-and-answer {
 		.question-list {
 			.question-item-card {
-				margin-top: 20rpx;
-				background: #FFFFFF;
-				box-shadow: 0rpx 0rpx 13rpx 0rpx rgba(81,211,184,0.15);
+				padding: 30rpx;
+				padding-bottom: 0;
+				background: #fff;
+				box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.15);
 				border-radius: 20rpx;
-				padding: 31rpx 30rpx 25rpx 30rpx;
-				.question-item-card-title {
-					font-size: 34rpx;
-					font-weight: 600;
-					color: #000000;
-					line-height: 48rpx;
-				}
-				.question-item-card-body {
-					margin-top: 13rpx;
-					font-size: 28rpx;
-					color: rgba(0,0,0,0.7);
-					line-height: 45rpx;
-				}
-				.bbs-post-img-box {
-					margin-top: 40rpx;
+				margin-bottom: 20rpx;
+				.question-item-card-author {
+					height: 66rpx;
+					line-height: 66rpx;
+					font-size: 24rpx;
+					color: rgba(0,0,0);
 					display: flex;
-					height: 200rpx;
-					.bbs-post-img-item {
-						flex: 1;
+					align-items: center;
+					.question-item-card-author-img {
+						width:66rpx;
+						height: 66rpx;
+						border-radius: 50%;
 						margin-right: 20rpx;
-						&:last-child {
-							margin-right: 0;
+					}
+					.question-item-card-author-text {
+						flex: 1;
+						.question-item-card-author-name {
+							font-size: 24rpx;
+							color: rgba(0,0,0);
+							line-height: 33rpx;
+							overflow: hidden;
+							height: 33rpx;
+						}
+						.question-item-card-author-time {
+							font-size: 20rpx;
+							color: rgba(0,0,0,0.4);
+							line-height: 28rpx;
+							margin-top: 5rpx;
 						}
 					}
 				}
-				.question-item-card-split {
-					height: 1rpx;
-					border-top: 1rpx solid #EAEAEA;
-					margin-top: 30rpx;
-				}
-				.question-item-card-footer {
-					margin-top: 24rpx;
+				.question-item-card-content {
 					display: flex;
-					justify-content: space-between;
-					align-items: center;
-					.question-item-card-footer-author {
+					margin-top: 20rpx;
+					.question-item-card-content-left {
+						flex: 3;
+						margin-right: 20rpx;
+						.question-item-card-content-left-title {
+							font-size: 30rpx;
+							margin-bottom: 10rpx;
+							color: #000;
+							line-height: 42rpx;
+							display: -webkit-box;
+							-webkit-box-orient: vertical;
+							-webkit-line-clamp: 2;
+							overflow: hidden;
+						}
+						.question-item-card-content-left-infos {
+							color: rgba(0, 0, 0, 0.4);
+							font-size: 22rpx;
+							line-height: 30rpx;
+							margin-bottom: 10rpx;
+							display: -webkit-box;
+							-webkit-box-orient: vertical;
+							-webkit-line-clamp: 2;
+							overflow: hidden;
+						}
+					}
+					.question-item-card-content-right {
+						flex: 1;
+						.question-item-card-content-right-img {
+							width: 100%;
+							height: 100%;
+						}
+					}
+				}
+				.question-item-card-content-haveImg {
+					min-height: 140rpx;
+				}
+				.question-item-card-operate {
+					display: flex;
+					justify-content: space-around;
+					margin-top: 10rpx;
+					padding-bottom: 25rpx;
+					.question-item-card-operate-item {
 						display: flex;
 						align-items: center;
-						.question-item-card-footer-author-avatar {
+						.question-item-card-operate-num {
+							margin-left: 16rpx;
+							font-size: 22rpx;
+							color: rgba(0,0,0,0.6);
+							line-height: 30rpx;
 							width: 50rpx;
-							height: 50rpx;
-							border-radius: 50%;
-						}
-						.question-item-card-footer-author-name {
-							font-size: 24rpx;
-							color: rgba(0,0,0,0.5);
-							line-height: 33rpx;
-							margin-left: 20rpx;
 						}
 					}
-					.question-item-card-footer-count {
-						font-size: 24rpx;
-						color: rgba(0,0,0,0.5);
-						line-height: 33rpx;
-					}
+					
 				}
 			}
 		}

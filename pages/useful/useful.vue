@@ -1,6 +1,6 @@
 <!-- 干货页，包含：攻略，资讯，2个子tab -->
 <template>
-	<view class="useful"  :style="{backgroundImage: 'url('+backgroundImgUrl+')',backgroundSize: '100% '+backgroundImgHeight,backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
+	<view class="useful"  :style="{backgroundImage: 'url('+backgroundImgUrl+')',backgroundSize: '100% '+backgroundImgHeight,backgroundColor: '#f2f4f8',backgroundRepeat: 'no-repeat'}">
 		<z-paging-swiper :swiper-style="{'top': statusBar + 'px'}">
 			<template #top>
 				<!-- 顶层tab -->

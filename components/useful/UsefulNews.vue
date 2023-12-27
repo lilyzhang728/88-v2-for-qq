@@ -93,5 +93,10 @@
 	}
 </script>
 
-<style>
+<style lang="less" scoped>
+	.useful-news {
+		.news-list {
+			margin-top: 20rpx;
+		}
+	}
 </style>

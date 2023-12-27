@@ -1,5 +1,5 @@
 <template>
-	<view class="bbs"  :style="{backgroundImage: 'url('+backgroundImgUrl+')',backgroundSize: '100% '+backgroundImgHeight,backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
+	<view class="bbs"  :style="{backgroundImage: 'url('+backgroundImgUrl+')',backgroundSize: '100% '+backgroundImgHeight,backgroundColor: '#f2f4f8',backgroundRepeat: 'no-repeat'}">
 		<z-paging-swiper :swiper-style="{'top': statusBar + 'px'}">
 			<template #top>
 				<!-- 顶层tab -->

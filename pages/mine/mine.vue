@@ -1,6 +1,6 @@
 <!-- 档案页：包含：档案，我的 2个子tab -->
 <template>
-	<view  class="mine" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/indexBg.png?sign=b371a636ad933c82f4188e6986e68d87&t=1687658284');background-size: 100%;background-color: #fff;background-repeat: no-repeat;">
+	<view  class="mine" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/indexBg.png?sign=b371a636ad933c82f4188e6986e68d87&t=1687658284');background-size: 100%;background-color: #f2f4f8;background-repeat: no-repeat;">
 		<page-tabs :titleList="titleList" :slotName="slotName">
 			<template v-slot:myAbility> 
 				<!-- 档案 -->

@@ -23,7 +23,7 @@
 			
 			<!-- 图片 -->
 			<view class="bbs-post-detail-img-box" v-if="postData.body.urls.length">
-				<van-image width="100%" height="100%" fit="contain" :src="pic"
+				<van-image width="100%" height="100%" fit="cover" :src="pic"
 				  class="bbs-post-detail-img-item" v-for="(pic, index) in postData.body.urls" :key="index" />
 			</view>
 			

@@ -17,11 +17,12 @@
 			<van-image
 			  width="100%"
 			  height="100%"
-			  fit="contain"
+			  fit="cover"
 			  :src="pic"
 			  class="bbs-post-img-item"
 			  v-for="(pic, index) in picList"
 			  :key="index"
+			  @click.native="previewImg($event, pic)"
 			/>
 		</view>
 		<view class="bbs-post-operate" @click.native.stop="clickOperate($event)">
@@ -85,6 +86,15 @@
 			}
  		},
 		methods: {
+			// 预览图片
+			previewImg(e, url) {
+				//防止冒泡
+				e.preventDefault()
+				uni.previewImage({
+					current: 0,
+					urls: [url]
+				});
+			},
 			// 点赞、评论 大数单位转化
 			handleTransform(val) {
 				return transformMaxNum(val)
@@ -150,7 +160,7 @@
 	.bbs-post-card {
 		padding: 30rpx;
 		padding-bottom: 0;
-		background: linear-gradient(180deg, #F1FFF7 0%, #FFFFFF 100%);
+		background: #fff;
 		box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.15);
 		border-radius: 20rpx;
 		margin-bottom: 20rpx;
@@ -200,9 +210,8 @@
 		}
 		.bbs-post-content {
 			margin-top: 20rpx;
-			background: #FAFAFA;
 			border-radius: 8rpx;
-			border: 20rpx solid #FAFAFA;
+			border: 20rpx solid #fff;
 			font-size: 26rpx;
 			color: #000;
 			line-height: 45rpx;
@@ -216,7 +225,8 @@
 			display: flex;
 			height: 200rpx;
 			.bbs-post-img-item {
-				flex: 1;
+				// flex: 1;
+				width: calc((100vw - 110rpx) / 3);
 				margin-right: 20rpx;
 				&:last-child {
 					margin-right: 0;
@@ -257,3 +267,4 @@
 		}
 	}
 </style>
+
