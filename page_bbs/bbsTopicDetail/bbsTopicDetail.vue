@@ -32,7 +32,8 @@
 		<van-dialog id="van-dialog" />
 		
 		<!-- 新增攻略按钮 -->
-		<img class="post-add-btn" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/editBtn.png" alt="" @click.stop="addNewPost($event)">
+		<side-add-btn @addNew="addNewPost"></side-add-btn>
+		
 	</view>
 </template>
 
@@ -41,11 +42,13 @@
 	import BbsTopicPostCard from '@/page_bbs/components/BbsTopicPostCard.vue'
 	import { topicDetail, focusTopic, unFocusTopic } from "@/network/api_bbs.js"
 	import Dialog from "@/wxcomponents/vant/dialog/dialog"
+	import SideAddBtn from '@/components/common/SideAddBtn.vue'
 
 	export default {
 		components: {
 			BackTopbar,
 			BbsTopicPostCard,
+			SideAddBtn
 		},
 		data() {
 			return {
@@ -237,12 +240,6 @@
 			}
 		} 
 	}
-	.post-add-btn {
-		width: 128rpx;
-		height: 80rpx;
-		position: fixed;
-		right: 0;
-		bottom: 270rpx;
-	}
+	
 }
 </style>

@@ -37,8 +37,7 @@
 		</z-paging-swiper>
 		
 		<!-- 新增攻略按钮 -->
-		<img class="guide-add-btn" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/editBtn.png" alt="" @click.stop="addNewGuide($event)">
-		
+		<side-add-btn @addNew="addNewGuide"></side-add-btn>		
 	</view>
 </template>
 
@@ -47,12 +46,14 @@
 	import UsefulGuide from '@/components/useful/UsefulGuide.vue'
 	import UsefulNews from '@/components/useful/UsefulNews.vue'
 	import TopSearchBox from '@/components/common/TopSearchBox.vue'
+	import SideAddBtn from '@/components/common/SideAddBtn.vue'
 	export default {
 		components: {
 			PageTabs,
 			UsefulGuide,
 			UsefulNews,
-			TopSearchBox
+			TopSearchBox,
+			SideAddBtn
 		},
 		data() {
 			return {
@@ -176,12 +177,5 @@
 		height: 100%;
 	}
 	
-	.guide-add-btn {
-		width: 128rpx;
-		height: 80rpx;
-		position: fixed;
-		right: 0;
-		bottom: 270rpx;
-	}
 }
 </style>

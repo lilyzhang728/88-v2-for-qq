@@ -34,7 +34,7 @@
 		</z-paging-swiper>
 		
 		<!-- 新增攻略按钮 -->
-		<img class="post-add-btn" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/editBtn.png" alt="" @click.stop="addNewPost($event)">
+		<side-add-btn @addNew="addNewPost"></side-add-btn>
 	
 	</view>
 </template>
@@ -42,10 +42,12 @@
 <script>
 	import BbsSwiperItem from "@/components/bbs/BbsSwiperItem.vue"
 	import TopSearchBox from '@/components/common/TopSearchBox.vue'
+	import SideAddBtn from '@/components/common/SideAddBtn.vue'
 	export default {
 		components: {
 			'swiper-list-item': BbsSwiperItem,
-			TopSearchBox
+			TopSearchBox,
+			SideAddBtn
 		},
 		data() {
 			return {
@@ -207,12 +209,5 @@
 		height: 100%;
 	}
 	
-	.post-add-btn {
-		width: 128rpx;
-		height: 80rpx;
-		position: fixed;
-		right: 0;
-		bottom: 270rpx;
-	}
 }
 </style>

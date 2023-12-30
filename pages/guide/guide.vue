@@ -26,7 +26,7 @@
 		</z-paging-swiper>
 		
 		<!-- 新增攻略按钮 -->
-		<img class="guide-add-btn" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/editBtn.png" alt="" @click.stop="addNewGuide($event)">
+		<side-add-btn @addNew="addNewGuide"></side-add-btn>		
 		
 		<!-- 选项面板:编辑/删除 -->
 		<van-action-sheet
@@ -48,10 +48,12 @@
 	import TopSearchBox from '@/components/common/TopSearchBox.vue'
 	import { deleteGuide } from '@/network/api_guide.js'
 	import Toast from '@/wxcomponents/vant/toast/toast'
+	import SideAddBtn from '@/components/common/SideAddBtn.vue'
 	export default {
 		components: {
 			'swiper-list-item': GuideSwiperItem,
-			TopSearchBox
+			TopSearchBox,
+			SideAddBtn
 		},
 		data() {
 			return {
@@ -222,14 +224,6 @@
 	
 	.swiper {
 		height: 100%;
-	}
-	
-	.guide-add-btn {
-		width: 128rpx;
-		height: 80rpx;
-		position: fixed;
-		right: 0;
-		bottom: 270rpx;
 	}
 	
 }

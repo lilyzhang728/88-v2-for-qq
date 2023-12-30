@@ -16,8 +16,7 @@
 		<van-toast id="van-toast" />
 		
 		<!-- 新增问答按钮 -->
-		<img class="guide-add-btn" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/editBtn.png" alt="" @click.stop="addNewQuestion($event)">
-		
+		<side-add-btn @addNew="addNewQuestion"></side-add-btn>		
 	</view>
 </template>
 
@@ -26,11 +25,13 @@
 	import QuestionAndAnswer from '@/components/qa/QuestionAndAnswer.vue'
 	import Connections from '@/components/qa/Connections.vue'
 	import Toast from '@/wxcomponents/vant/toast/toast'
+	import SideAddBtn from '@/components/common/SideAddBtn.vue'
 	export default {
 		components: {
 			PageTabs,
 			QuestionAndAnswer,
-			Connections
+			Connections,
+			SideAddBtn
 		},
 		data() {
 			return {
@@ -68,13 +69,6 @@
 		right: 0;
 		bottom: 0;
 		
-		.guide-add-btn {
-			width: 128rpx;
-			height: 80rpx;
-			position: fixed;
-			right: 0;
-			bottom: 270rpx;
-		}
 	}
 
 </style>
