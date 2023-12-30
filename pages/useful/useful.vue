@@ -1,4 +1,4 @@
-<!-- 干货页，包含：攻略，资讯，2个子tab -->
+<!-- 干货页，包含：攻略，情报，2个子tab -->
 <template>
 	<view class="useful"  :style="{backgroundImage: 'url('+backgroundImgUrl+')',backgroundSize: '100% '+backgroundImgHeight,backgroundColor: '#f2f4f8',backgroundRepeat: 'no-repeat'}">
 		<z-paging-swiper :swiper-style="{'top': statusBar + 'px'}">
@@ -7,7 +7,7 @@
 				<van-tabs :active="active" animated @change.native="tabsChange" ref="tabs"
 				line-height="8rpx" line-width="60rpx" class="useful-tabs" :swipeable="true">
 					<van-tab title="攻略"></van-tab>
-					<van-tab title="资讯"></van-tab>
+					<van-tab title="情报"></van-tab>
 				</van-tabs>
 				
 				<!-- 搜索 -->
@@ -57,7 +57,6 @@
 		data() {
 			return {
 				backgroundImgUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/news/newsBg.png?sign=8d29dfa78445d34a014f34744b633a8b&t=1688955606',
-				titleList: ['攻略', '资讯'],
 				slotName: ['guide', 'news'],
 				active: 0,
 				subActive: 0,

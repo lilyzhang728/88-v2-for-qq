@@ -29,8 +29,13 @@
 					'since': new Date().getTime()
 				}).then(res => {
 					if(res.code === 0 && res.data.length) {
-						// 有新消息
-						this.showNotification = true
+						res.data.forEach(item => {
+							if(item.payload > 0) {
+								// 有新消息
+								this.showNotification = true
+								return
+							}
+						})
 					} else {
 						this.showNotification = false
 					}

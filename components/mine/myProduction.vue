@@ -5,27 +5,27 @@
 			<view class="my-production-btn">
 				<view @click="clickTypeBtn(index)" class="my-production-btn-item" v-for="(item, index) in btnImgList" :key="index">
 					<img :src="item.url" alt="" class="my-production-btn-img">
-					<text class="my-production-btn-name">{{item.name}}</text>
+					<text class="my-production-btn-name" :class="{'my-production-btn-name-active': index === active}">{{item.name}}</text>
 				</view>
 			</view>
 			<view class="my-production-list">
 				<view class="my-production-list-count">{{dataList.length}}篇内容</view>
 				<view class="my-production-list-content">
+					<!-- 我的动态 -->
+					<view class="bbs" v-if="active === 0">
+						<bbs-post-card v-for="(item,index) in dataList" :key="index" :postData="item" :index="index"
+						@click.native="toPostDetail(item.id)" @checkoutLike="checkoutLike"></bbs-post-card>
+					</view>
+					
 					<!-- 我的攻略 -->
-					<view class="guide" v-if="active === 0">
+					<view class="guide" v-if="active === 1">
 						<my-guide-card v-for="(item, index) in dataList" :key="index" :index="index"
 						:guideItem="item" @openOptionSheet="openOptionSheet"></my-guide-card>
 					</view>
 					
 					<!-- 我的问答 -->
-					<view class="qa" v-if="active === 1">
+					<view class="qa" v-if="active === 2">
 						<my-question-card v-for="(item,index) in dataList" :key="index" :item="item" @toastMsg="toastMsg"></my-question-card>
-					</view>
-					
-					<!-- 我的动态 -->
-					<view class="bbs" v-if="active === 2">
-						<bbs-post-card v-for="(item,index) in dataList" :key="index" :postData="item" :index="index"
-						@click.native="toPostDetail(item.id)" @checkoutLike="checkoutLike"></bbs-post-card>
 					</view>
 					
 					<!-- 我的收藏 -->
@@ -87,14 +87,14 @@
 				dataList: [],
 				active: 0,
 				btnImgList: [{
+					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/iconMyPost.png',
+					name: '动态'
+				},{
 					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/iconMyGuide.png',
 					name: '攻略'
 				},{
 					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/iconMyQa.png',
 					name: '回答'
-				},{
-					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/iconMyPost.png',
-					name: '动态'
 				},{
 					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/iconMyCollection.png',
 					name: '收藏'
@@ -131,7 +131,7 @@
 			// 我的攻略、回答、动态
 			getMyProductionList(pageNo, pageSize) {
 				//参数：干货1，问答4，动态3
-				const type_map = [1, 4, 3]
+				const type_map = [3, 1, 4]
 				return new Promise((resolve, reject) => {
 					myProductionList({
 						'post_type': type_map[this.active],
@@ -262,6 +262,9 @@
 					font-size: 28rpx;
 					color: #000000;
 					line-height: 40rpx;
+				}
+				.my-production-btn-name-active {
+					font-weight: bold;
 				}
 			}
 		}

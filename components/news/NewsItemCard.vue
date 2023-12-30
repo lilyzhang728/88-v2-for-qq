@@ -7,12 +7,12 @@
 				<view class="news-item-card-author-time">{{timestamp}}</view>
 			</view>
 		</view>
-		<view class="news-item-card-content" :class="{'news-item-card-content-haveImg': newsItem.body.urls.length>0}">
+		<view class="news-item-card-content" :class="{'news-item-card-content-haveImg': newsItem.body.urls && newsItem.body.urls.length>0}">
 			<view class="news-item-card-content-left">
 				<view class="news-item-card-content-left-title van-multi-ellipsis--l3">{{newsItem.title}}</view>
 				<view class="news-item-card-content-left-infos" v-if="newsItem.body.summary">{{newsItem.body.summary}}</view>
 			</view>
-			<view class="news-item-card-content-right" v-if="newsItem.body.urls.length > 0">
+			<view class="news-item-card-content-right" v-if="newsItem.body.urls && newsItem.body.urls.length > 0">
 				<img :src="newsItem.body.urls[0]" alt="" class="news-item-card-content-right-img">
 			</view>
 		</view>
