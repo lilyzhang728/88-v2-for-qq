@@ -135,8 +135,8 @@
 				return new Promise((resolve, reject) => {
 					myProductionList({
 						'post_type': type_map[this.active],
-						'per_page':10,
-						'page':1
+						'per_page': pageSize,
+						'page': pageNo
 					}).then(res => {
 						if(res.code === 0 && Object.keys(res.data).length) {
 							resolve(res.data.items)
@@ -154,8 +154,8 @@
 				return new Promise((resolve, reject) => {
 					myCollectionList({
 						'post_type': -1,
-						'per_page':10,
-						'page':1
+						'per_page': pageSize,
+						'page': pageNo
 					}).then(res => {
 						//post_type  1:干货-攻略  2: 干货-资讯  3：动态  4：问答  
 						if(res.code === 0 && Object.keys(res.data).length) {

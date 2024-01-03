@@ -190,6 +190,7 @@
 		}
 		.badge {
 			margin-top: 50rpx;
+			margin-bottom: 100rpx;
 		}
 		
 		.my-label {
