@@ -8,7 +8,7 @@
 				<text class="add-new-post-header-title">新的动态</text>
 				<!-- <van-button size="small" class="add-new-post-header-btn-wrap" custom-class="add-new-post-header-btn">发布</van-button> -->
 			</view>
-			<view class="add-new-post-topic" @click="editAddTopic">#试试添加话题</view>
+			<view class="add-new-post-topic" @click="editAddTopic">#{{selectedTopic && addedTopicContent.body ? addedTopicContent.body : '试试添加话题'}}</view>
 			<view class="add-new-post-content" @click="handleInput">
 				<view class="add-new-post-content-line">
 					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg" class="add-new-post-content-avatar" alt="">

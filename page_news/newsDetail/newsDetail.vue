@@ -19,7 +19,7 @@
 			<view class="news-detail-content">{{newsData.body.body}}</view>
 			
 			<!-- 图片 -->
-			<view class="news-detail-img-box" v-if="newsData.body.urls.length">
+			<view class="news-detail-img-box" v-if="newsData.body.urls && newsData.body.urls.length">
 				<img v-for="(item, index) in newsData.body.urls" :index="index" :src="item" alt="" class="news-detail-img">
 			</view>
 			
