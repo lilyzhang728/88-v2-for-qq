@@ -229,7 +229,7 @@
 				getRequest({
 					path: url,
 					data: {
-						'post_type': 3,	//3 :tab4
+						'post_type': 2,
 						'per_page': pageSize,
 						'page': pageNo
 					}

@@ -67,9 +67,9 @@
 			</view>
 			
 			<!-- 评论icon -->
-			<view class="bbs-post-detail-operate-icon-box">
+			<!-- <view class="bbs-post-detail-operate-icon-box">
 				<van-icon name="comment-o" size="44rpx" @click.native="clickInput" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.comments_count)}}</text>
-			</view>
+			</view> -->
 		</view>
 		
 		<!-- 回复键盘 -->
@@ -91,8 +91,8 @@
 	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
 	// import BbsCommentItem from "@/page_bbs/components/BbsCommentItem.vue"
 	import BackTopbar from "@/components/common/BackTopbar.vue"
-	import BbsPostComment from '@/page_qa/components/BbsPostComment.vue'
-	import BbsCommentKeyboard from "@/page_qa/components/BbsCommentKeyboard.vue"
+	import BbsPostComment from '@/components/common/PostComment.vue'
+	import BbsCommentKeyboard from "@/components/common/CommentKeyboard.vue"
 	import { guideDetail, likeGuide, disLikeGuide, collectGuide, unCollectGuide } from '@/network/api_guide.js'
 	import { getRequest } from '@/network/https.js'
 	import { postComment } from "@/network/api_bbs.js"
