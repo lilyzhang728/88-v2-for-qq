@@ -1,7 +1,7 @@
 <template>
 	<view class="news-detail" :style="{backgroundImage: 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)',backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<back-topbar refName="swiperItem" functionName="reloadPage" tabIndex="1"></back-topbar>
-		<z-paging ref="paging" :paging-style="{'top': (customBar+20) + 'px', 'bottom': '66px', paddingLeft: '25rpx', paddingRight: '25rpx'}">
+		<back-topbar></back-topbar>
+		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': (customBar+20) + 'px', 'bottom': '66px', paddingLeft: '25rpx', paddingRight: '25rpx'}">
 			<!-- 资讯标题 -->
 			<view class="news-detail-title">{{newsData.title}}</view>
 			
@@ -16,7 +16,7 @@
 			<!-- <view class="news-detail-summary">{{newsData.body.summary}}</view> -->
 			
 			<!-- 资讯正文 -->
-			<view class="news-detail-content">{{newsData.body.body}}</view>
+			<view class="news-detail-content">{{newsBody}}</view>
 			
 			<!-- 图片 -->
 			<view class="news-detail-img-box" v-if="newsData.body.urls && newsData.body.urls.length">
@@ -40,26 +40,44 @@
 					</view>
 				</view>
 			</view>
+			
+			<!-- 评论区 -->
+			<view class="bbs-post-detail-comment">
+				<view class="bbs-post-detail-comment-total">共{{commentNum}}个回答</view>
+				<bbs-post-comment :commentData="dataList" @checkoutCommentLike="checkoutCommentLike"></bbs-post-comment>
+			</view>
 		</z-paging>
 		
 		<!-- 按钮 -->
 		<view class="news-detail-btn-box">
-			<van-button v-if="!newsData.is_record" block class="news-detail-btn-wrap" custom-class="news-detail-btn" @click.native="toAddTimeline">一键添加至我的大事年表</van-button>
-			<van-button v-else block disabled class="news-detail-btn-wrap news-detail-btn-wrap-grey" custom-class="news-detail-btn">已添加</van-button>
+			<view class="bbs-post-detail-operate-left" @click="clickInput">添加评论</view>
+			
 			<img v-if="newsData.is_like" @click="clickLike(false)" class="news-detail-btn-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/likeIcon.png" alt="">
 			<img v-if="!newsData.is_like" @click="clickLike(true)" class="news-detail-btn-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/unLikeIcon.png" alt="">
 			<img v-if="newsData.is_collect" @click="clickStar(false)" class="news-detail-btn-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/collectIcon.png" alt="" >
 			<img v-if="!newsData.is_collect" @click="clickStar(true)" class="news-detail-btn-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/unCollectIcon.png" alt="" >
 		</view>
+		
+		<!-- 回复键盘 -->
+		<van-overlay :show="showReply" @click.native="onClickHide" :custom-style="'height:auto;bottom: '+(bottomVal)+'; '" />
+		<bbs-comment-keyboard :showReply="showReply" 
+		@submit="submit" @changeBottomVal="changeBottomVal"></bbs-comment-keyboard>
 	</view>
 </template>
 
 <script>
 	import { guideDetail, likeGuide, disLikeGuide, collectGuide, unCollectGuide } from '@/network/api_guide.js'
 	import BackTopbar from "@/components/common/BackTopbar.vue"
+	import BbsCommentKeyboard from "@/components/common/CommentKeyboard.vue"
+	import { utf16toEntities, uncodeUtf16 } from '@/tools/transform_emoji.js'
+	import { postComment } from "@/network/api_bbs.js"
+	import { getRequest } from '@/network/https.js'
+	import BbsPostComment from '@/components/common/PostComment.vue'
 	export default {
 		components: {
-			BackTopbar
+			BackTopbar,
+			BbsCommentKeyboard,
+			BbsPostComment
 		},
 		data() {
 			return {
@@ -75,6 +93,7 @@
 						body: '',
 						summary: ''
 					},
+					bind_topics: [],
 					collectors_count: 0,
 					likers_count: 0,
 					title: "",
@@ -85,10 +104,26 @@
 					is_like: false,
 					is_collect: false
 				},
+				showReply: false,	//是否打开键盘
+				bottomVal: '115px',	//打开键盘后遮罩bottom（150：引用别人评论，115：不引用别人评论（发表1级评论））
+				dataList: [],		//评论数据
+				startGetComment: false,	//开始请求评论
 			}
+		},
+		computed: {
+			newsBody() {
+				return this.newsData.body.body ? uncodeUtf16(this.newsData.body.body) : this.newsData.body.body
+			},
+			//共xxx条评论
+			commentNum() {
+				return this.newsData.comments_count ? this.newsData.comments_count : 0
+			},
 		},
 		onLoad(option) {
 			this.id = option.id
+		},
+		onUnload() {
+			this.startGetComment = false
 		},
 		onShow() {
 			uni.getSystemInfo({
@@ -110,26 +145,26 @@
 				guideDetail(this.id).then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
 						this.newsData = res.data
+						//获取评论区数据
+						if(res.data._links.comments) {
+							this.curGetCommentUrl = res.data._links.comments
+							this.startGetComment = true
+							this.$refs.paging.reload()
+						}
 					} else {
 						//接口返回失败，返回上一页
 						uni.navigateBack({
 						    success: () => {
 						         let page = getCurrentPages().pop();//跳转页面成功之后
 						         if (page) {
-									 page.$vm.active = 2
-						             page.$vm.$refs.swiperItem[2].$refs.paging.reload()
+									 page.$vm.active = 1
+						             page.$vm.$refs.news.$refs.paging.reload()
 						         } 
 						    },
 						})
 					}
 				}, err => {
 					console.log('guideDetail: ', err)
-				})
-			},
-			// 去创建事件
-			toAddTimeline() {
-				uni.navigateTo({
-					url: `/page_editPersonalInfo/addTimelineItem/addTimelineItem?from=news&newsId=${this.newsData.id}`
 				})
 			},
 			clickLike(status) {
@@ -182,7 +217,76 @@
 					})
 				}
 				
-			}
+			},
+			//拿到评论接口后请求评论数据
+			queryList(pageNo, pageSize) {
+				if(this.startGetComment) {
+					this.getCommentData(this.curGetCommentUrl, pageSize, pageNo)
+				}
+			},
+			//获取评论区数据
+			getCommentData(url, pageSize, pageNo) {
+				getRequest({
+					path: url,
+					data: {
+						'post_type': 3,	//3 :tab4
+						'per_page': pageSize,
+						'page': pageNo
+					}
+				}).then(res => {
+					if(res.code === 0 && Object.keys(res.data).length) {
+						this.$refs.paging.complete(res.data.items);
+					} else {
+						this.$refs.paging.complete([])
+					}
+				}, err => {
+					this.$refs.paging.complete([])
+					console.log('getCommentData: ', err)
+				})
+			},
+			//关闭评论键盘
+			onClickHide() {
+				this.showReply = false
+			},
+			//计算遮罩bottom（val为键盘弹起后高度）
+			changeBottomVal(val) {
+				let height = 150-35
+				this.bottomVal = (height + val) + 'px'
+			},
+			//点击底部输入框（说点什么……）评论帖子（1级评论）
+			clickInput() {
+				//打开评论键盘
+				this.showReply = true
+			},
+			//发送评论（调评论接口）
+			submit(val) {
+				this.showReply = false
+				let params = {
+					body: utf16toEntities(val),
+					post_id: this.newsData.id
+				}
+				postComment(params).then(res => {
+					if(res.code === 0 && Object.keys(res.data).length) {
+						//评论成功，1级回显到第1条，2级回显到回复的评论下面
+						this.showReplyComment(res.data)
+					}
+				}, err => {
+					console.log('postComment: ', err)
+				})
+			},
+			// 处理发评论回显：回复0级回显到1级的第1条，回复1级回显到2级的第1条，回复2级回显到回复的评论下面
+			showReplyComment(comment) {
+				this.dataList.unshift(comment)
+			},
+			//评论区：（对评论）切换评论点赞状态
+			checkoutCommentLike(index, status) {
+				this.dataList[index].is_like = status
+				if(status) {
+					this.dataList[index].likers_count++
+				} else {
+					this.dataList[index].likers_count--
+				}
+			},
 		}
 	}
 </script>
@@ -281,6 +385,14 @@
 			}
 		}
 	}
+	.bbs-post-detail-comment {
+		margin-top: 80rpx;
+		.bbs-post-detail-comment-total {
+			font-size: 24rpx;
+			color: rgba(0,0,0,0.5);
+			line-height: 33rpx;
+		}
+	}
 	.news-detail-btn-box {
 		position: fixed;
 		bottom: 0;
@@ -290,24 +402,18 @@
 		padding: 11px 14px;   //因为z-paging只能设置px,所以这里都换算成px， button的height固定44px
 		display: flex;
 		align-items: center;
-		.news-detail-btn-wrap {
-			margin-right: 60rpx;
+		.bbs-post-detail-operate-left {
+			// width: 50%;
 			flex: 1;
-			/deep/ .news-detail-btn {		
-				font-size: 32rpx;
-				font-weight: 600;
-				color: #FFFFFF;
-				line-height: 45rpx;
-				padding: 18rpx 0;
-				background: linear-gradient(135deg, #2FC2C5 0%, #37C9A3 100%);
-				border-radius: 10rpx;
-			}
+			margin-right: 58rpx;
+			background-color: #F6F6F6;
+			border-radius: 20rpx;
+			padding: 8px 15px;
+			color: rgba(0,0,0,0.3);
+			font-size: 28rpx;
+			line-height: 40rpx;
 		}
-		.news-detail-btn-wrap-grey {
-			/deep/ .news-detail-btn {	
-				background: #DFDFDF;
-			}
-		}
+		
 		.news-detail-btn-icon {
 			height: 60rpx;
 			width: 60rpx;

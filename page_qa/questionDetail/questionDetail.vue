@@ -94,7 +94,7 @@
 	import BbsPostComment from '@/page_qa/components/BbsPostComment.vue'
 	import BbsCommentKeyboard from "@/page_qa/components/BbsCommentKeyboard.vue"
 	import { guideDetail, likeGuide, disLikeGuide, collectGuide, unCollectGuide } from '@/network/api_guide.js'
-	import { getRequest, postRequest, putRequest, deleteRequest } from '@/network/https.js'
+	import { getRequest } from '@/network/https.js'
 	import { postComment } from "@/network/api_bbs.js"
 	import { utf16toEntities, uncodeUtf16 } from '@/tools/transform_emoji.js'
 	import { transformMaxNum } from '@/tools/transform_time.js'
