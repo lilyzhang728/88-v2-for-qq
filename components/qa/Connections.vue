@@ -2,22 +2,6 @@
 <template>
 	<view class="connections">
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '30rpx', 'left': '25rpx', 'right': '25rpx'}">
-			<template #top>
-				<!-- 搜索 -->
-				<view class="connections-search" v-if="dataList.length">
-					<top-search-box  @toSearch="toSearch"></top-search-box>
-				</view>
-				
-				<!-- 子tab -->
-				<!-- <van-tabs :active="subActive" animated @change.native="subTabsChange" ref="subTabs"
-				line-height="0" line-width="0" class="connections-subTabs" :swipeable="false">
-					<van-tab title="考研"></van-tab>
-					<van-tab title="找工作"></van-tab>
-					<van-tab title="出国"></van-tab>
-					<van-tab title="考公/编"></van-tab>
-				</van-tabs> -->	
-			</template>
-			
 			<!-- connections列表 -->
 			<view class="connections-list" v-if="dataList.length">
 				<view class="connections-item-card" v-for="(item, index) in dataList" :key="index">
@@ -120,9 +104,6 @@
 
 <style lang="less" scoped>
 	.connections {
-		.connections-search {
-			margin: 25rpx 0;
-		}
 		.connections-subTabs {
 			margin-top: 25rpx;
 			/deep/ .van-tabs__scroll{
