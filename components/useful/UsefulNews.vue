@@ -39,7 +39,7 @@
 		methods: {
 			queryList(pageNo, pageSize) {
 				this.$emit('pageQuery', pageNo, pageSize)
-				if(this.currentIndex === 1) {
+				if(this.currentIndex === 0) {
 					console.log('开始请求： ', pageNo, pageSize)
 					this.pageNo = pageNo
 					this.pageSize = Number(pageSize)

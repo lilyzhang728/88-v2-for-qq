@@ -217,6 +217,15 @@
                     "enablePullDownRefresh": false
                 }
                 
+                },
+                {
+                	"path" : "addNews/addNews",
+                	"style" : 
+                	{
+                		"navigationBarTitleText" : "",
+						"navigationStyle": "custom",
+                		"enablePullDownRefresh" : false
+                	}
                 }
             ]
 		},

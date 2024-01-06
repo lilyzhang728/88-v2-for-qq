@@ -420,7 +420,7 @@
 						    success: () => {
 						         let page = getCurrentPages().pop();//跳转页面成功之后
 						         if (page) {
-									 page.$vm.active = 0
+									 page.$vm.active = 1
 						             page.$vm.$refs.guide.$refs.paging.reload()
 						         } 
 						    },

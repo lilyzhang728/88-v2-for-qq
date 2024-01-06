@@ -162,7 +162,6 @@
 		.bbs-topic-post-content {
 			margin-top: 20rpx;
 			padding: 20rpx;
-			background: #FAFAFA;
 			border-radius: 8rpx;
 			font-size: 26rpx;
 			color: #000;

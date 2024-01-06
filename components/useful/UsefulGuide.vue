@@ -42,7 +42,7 @@
 		methods: {
 			queryList(pageNo, pageSize) {
 				// this.$emit('pageQuery', pageNo, pageSize)
-				if(this.currentIndex === 0) {
+				if(this.currentIndex === 1) {
 					console.log('开始请求： ', pageNo, pageSize)
 					this.pageNo = pageNo
 					this.pageSize = Number(pageSize)
@@ -87,10 +87,6 @@
 					this.dataList[index].collectors_count++
 				} else {
 					this.dataList[index].collectors_count = this.dataList[index].collectors_count ? this.dataList[index].collectors_count-1 : 0
-				}
-				if(this.currentIndex === 1) {
-					// 如果当前为收藏页，需要刷新列表
-					this.$refs.paging.reload()
 				}
 			},
 		}
