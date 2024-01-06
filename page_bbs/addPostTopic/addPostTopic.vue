@@ -17,11 +17,11 @@
 					<van-field
 					    :value="newTopicVal"
 					    placeholder="请输入话题"
-					    :border="false"
+					    :border="true"
 					    @change.native="onChange($event)"
 					  />
 					  
-					<van-button color="#35C8A6" block @click.native="handleAddNewTopic">添加</van-button>
+					<van-button class="add-post-topic-new-topic-btn" color="#35C8A6" block @click.native="handleAddNewTopic">添加</van-button>
 				</view>
 			</van-action-sheet>
 		</view>
@@ -117,8 +117,7 @@
 			//发起话题
 			handleAddNewTopic() {
 				addNewTopic({
-					'body': this.newTopicVal,
-					'field': '考研'
+					'body': this.newTopicVal
 				}).then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
 						this.showAddPopup = false
@@ -174,6 +173,9 @@
 	.add-post-topic-new-popup {
 		.add-post-topic-new-topic-wrap {
 			padding: 0 25rpx;
+			/deep/ .van-cell {
+				margin-bottom: 50rpx;
+			}
 		}
 	}
 }

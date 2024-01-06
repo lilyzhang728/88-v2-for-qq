@@ -272,9 +272,9 @@
 							uni.navigateBack({
 							    success: () => {
 							         let page = getCurrentPages().pop();//跳转页面成功之后
-							         if (page) {
+									 if (page) {
 										 page.$vm.active = 0
-							             page.$vm.$refs.paging.reload()
+							             page.$vm.$refs.swiperItem[0].$refs.paging.reload()
 							         } 
 							    },
 							})

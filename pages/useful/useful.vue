@@ -97,9 +97,10 @@
 				this.active = e.detail.current;
 			},
 			toSearch() {
-				//tabIndex: 1-tab1, 2-tab2, 3-tab3, 4-tab4
+				//tabIndex: 3-news, 2-guide
+				let tabIndex = this.active ? 3 : 2
 				uni.navigateTo({
-					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=3&searchVal=${this.searchVal}`
+					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=${tabIndex}&searchVal=${this.searchVal}`
 				})
 			},
 			// 创建guide
