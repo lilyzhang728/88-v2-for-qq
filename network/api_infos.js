@@ -33,6 +33,14 @@ export function followerList(params) {
 	})
 }
 
+//返回收到的邀请列表
+export function mentionList(params) {
+	return getRequest({
+		path: `/api/user/${userId}/recived-posts-mentions`,
+		data: params
+	})
+}
+
 //返回该用户的新通知(角标)
 export function newNotificationNum(params) {
 	return getRequest({

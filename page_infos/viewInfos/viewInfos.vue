@@ -40,14 +40,14 @@
 					text: '评论'
 				},{
 					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/infos/iconNewFocus.png',
-					text: '新增关注'
+					text: '邀请回答'
 				}],
 				dataList: [],
 				unread_posts_likes_count: 0,
 				unread_posts_collects_count: 0,
 				unread_recived_comments_count: 0,
-				unread_follows_count: 0,
-				notification_type: ['unread_posts_likes_count', 'unread_posts_collects_count', 'unread_recived_comments_count', 'unread_follows_count']
+				unread_posts_mentions_count: 0,
+				notification_type: ['unread_posts_likes_count', 'unread_posts_collects_count', 'unread_recived_comments_count', 'unread_posts_mentions_count']
 			}
 		},
 		onShow() {
@@ -117,7 +117,7 @@
 							url: '/page_infos/infosCommentList/infosCommentList'
 						})
 						break;
-					//新增关注
+					//邀请回答
 					case 3:
 						uni.navigateTo({
 							url: '/page_infos/infosFocusList/infosFocusList'

@@ -8,7 +8,7 @@
 
 <script>
 	import InfosFocusCard from '@/page_infos/components/InfosFocusCard.vue'
-	import { followerList } from "@/network/api_infos.js"
+	import { mentionList } from "@/network/api_infos.js"
 	export default {
 		components: {
 			InfosFocusCard
@@ -21,12 +21,12 @@
 		onLoad(option) {
 			// 动态设置页面标题
 			uni.setNavigationBarTitle({
-				title: '新增关注'
+				title: '邀请回答'
 			});
 		},
 		methods: {
 			queryList(pageNo, pageSize) {
-				followerList({
+				mentionList({
 					'per_page':pageSize,
 					'page':pageNo
 				}).then(res => {
@@ -37,7 +37,7 @@
 					}
 				}, err => {
 					this.$refs.paging.complete([])
-					console.log('followerList: ', err)
+					console.log('mentionList: ', err)
 				})
 			},
 		}

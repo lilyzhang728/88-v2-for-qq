@@ -7,11 +7,11 @@
 		<view class="infos-focus-card-right">
 			<view class="infos-focus-card-content">
 				<view class="infos-focus-card-content-name">{{item.post.author.name}}</view>
-				<view class="infos-focus-card-content-infos">开始关注你了 {{timestamp}}</view>
+				<view class="infos-focus-card-content-infos">邀请你回答 {{timestamp}}</view>
 			</view>
 			<view class="infos-focus-card-right-btn-box">
 				<!-- 回关|关注|去私信 -->
-				<van-button size="small" class="infos-focus-card-right-btn-wrap" custom-class="infos-focus-card-right-btn" @click.native="handleFocus">回关</van-button>
+				<van-button size="small" class="infos-focus-card-right-btn-wrap" custom-class="infos-focus-card-right-btn" @click.native="handleFocus">去回答</van-button>
 			</view>
 		</view>
 		
@@ -67,6 +67,12 @@
 				e.preventDefault()
 				uni.navigateTo({
 					url: `/page_infos/homepage/homepage?userId=${this.item.post.author.id}`
+				})
+			},
+			// 去回答
+			handleFocus() {
+				uni.navigateTo({
+					url: `/page_qa/questionDetail/questionDetail?id=${this.item.post.id}`
 				})
 			}
 		},
@@ -168,7 +174,7 @@
 				text-align: right;
 				.infos-focus-card-right-btn-wrap {
 					/deep/ .infos-focus-card-right-btn {
-						padding: 0 26rpx !important;
+						padding: 0 24rpx !important;
 						line-height: 45rpx !important;
 						font-weight: 400 !important;
 						font-size: 26rpx !important;

@@ -8,6 +8,7 @@
 
 <script>
 	import { getNotifications } from '@/network/api_infos.js'
+	const NEW_MSG_LIST = ['unread_posts_likes_count', 'unread_posts_collects_count', 'unread_recived_comments_count', 'unread_posts_mentions_count']
 	export default {
 		data() {
 			return {
@@ -30,7 +31,7 @@
 				}).then(res => {
 					if(res.code === 0 && res.data.length) {
 						res.data.forEach(item => {
-							if(item.payload > 0) {
+							if(NEW_MSG_LIST.indexOf(item.name) > -1 && item.payload > 0) {
 								// 有新消息
 								this.showNotification = true
 								return
