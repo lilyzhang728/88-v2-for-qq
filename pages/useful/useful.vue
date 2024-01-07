@@ -81,8 +81,6 @@
 		methods: {
 			tabsChange(e) {
 				this.active = e.detail.index;
-				// 更新list
-				this.reloadList()
 			},
 			subTabsChange(e) {
 				this.subActive = e.detail.index;

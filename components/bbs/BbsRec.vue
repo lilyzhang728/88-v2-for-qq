@@ -1,47 +1,44 @@
 <!-- tab4-发现 -->
 <template>
 	<view class="bbs-rec">
-		<!-- 热门话题 -->
-		<view class="bbs-rec-topic" v-if="topicList.length">
-			<view class="bbs-rec-topic-title">
-				<text class="bbs-rec-topic-title-text">#推荐话题</text>
-				<text class="bbs-rec-topic-title-more" @click="toTopicList">
-					更多推荐内容<van-icon size="25rpx" name="arrow" class="bbs-rec-topic-title-more-icon"/>
-				</text>
-			</view>
-			<view class="bbs-rec-topic-list">
-				<view class="bbs-rec-topic-item" v-for="(item, index) in topicList" :key="index" @click="toTopicDetail(item)">
-					<img class="bbs-rec-topic-item-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
-					<text class="bbs-rec-topic-item-text">{{item.body}}</text>
+		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'left': '25rpx', 'right': '25rpx'}">
+			<!-- 热门话题 -->
+			<view class="bbs-rec-topic" v-if="topicList.length">
+				<view class="bbs-rec-topic-title">
+					<text class="bbs-rec-topic-title-text">#推荐话题</text>
+					<text class="bbs-rec-topic-title-more" @click="toTopicList">
+						更多推荐内容<van-icon size="25rpx" name="arrow" class="bbs-rec-topic-title-more-icon"/>
+					</text>
+				</view>
+				<view class="bbs-rec-topic-list">
+					<view class="bbs-rec-topic-item" v-for="(item, index) in topicList" :key="index" @click="toTopicDetail(item)">
+						<img class="bbs-rec-topic-item-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
+						<text class="bbs-rec-topic-item-text">{{item.body}}</text>
+					</view>
 				</view>
 			</view>
-		</view>
-		
-		
-		<!-- 帖子列表 -->
-		<view class="bbs-rec-post">
-			<bbs-post-card v-for="(item,index) in dataList" :key="index" :postData="item" :index="index"  
-			@click.native="toPostDetail(item.id)" @checkoutLike="checkoutLike"></bbs-post-card>
-		</view>
+			
+			
+			<!-- 帖子列表 -->
+			<view class="bbs-rec-post">
+				<bbs-post-card v-for="(item,index) in dataList" :key="index" :postData="item" :index="index"  
+				@click.native="toPostDetail(item.id)" @checkoutLike="checkoutLike"></bbs-post-card>
+			</view>
+		</z-paging>
 	</view>
 </template>
 
 <script>
 	import BbsPostCard from "@/components/bbs/BbsPostCard.vue"
 	import { topicList } from '@/network/api_bbs.js'
+	import { recArticle } from '@/network/api_guide.js'
 	export default {
 		components: {
 			BbsPostCard
 		},
-		props: {
-			dataList: {
-				type: Array,
-				required: true,
-				default: []
-			},
-		},
 		data() {
 			return {
+				dataList: [],
 				topicList: []
 			}
 		},
@@ -49,6 +46,30 @@
 			this.getTopicList()
 		},
 		methods: {
+			queryList(pageNo, pageSize) {
+				this.getRecPostList(pageNo, pageSize).then(res => {
+					this.$refs.paging.complete(res);
+				})
+			},
+			//获取发现（帖子）列表
+			getRecPostList(pageNo, pageSize) {
+				return new Promise((resolve, reject) => {
+					recArticle({
+						'post_type': 3,	//3 :tab4
+						'per_page': pageSize,
+						'page': pageNo
+					}).then(res => {
+						if(res.code === 0 && Object.keys(res.data).length) {
+							resolve(res.data.items)
+						} else {
+							resolve([])
+						}
+					}, err => {
+						resolve([])
+						console.log('recArticle: ', err)
+					})
+				})
+			},
 			//获取话题列表
 			getTopicList() {
 				topicList({
@@ -79,7 +100,12 @@
 			},
 			//切换点赞状态
 			checkoutLike(cardIndex, status) {
-				this.$emit('checkoutLike', cardIndex, status)
+				this.dataList[cardIndex].is_like = status
+				if(status) {
+					this.dataList[cardIndex].likers_count++
+				} else {
+					this.dataList[cardIndex].likers_count--
+				}
 			}
 		}
 	}
@@ -89,7 +115,6 @@
 .bbs-rec {
 	margin: 0 25rpx;
 	.bbs-rec-topic {
-		margin-top: 32rpx;
 		padding: 30rpx;
 		background: linear-gradient(180deg, #F1FFF7 0%, #FFFFFF 100%);
 		box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.15);

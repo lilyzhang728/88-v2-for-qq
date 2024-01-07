@@ -62,18 +62,11 @@
 				skillColorMap: skill_color_map
 			}
 		},
-		watch: {
-			active() {
-				this.$refs.paging.reload()
-			}
-		},
 		methods: {
 			queryList(pageNo, pageSize) {
-				if(this.active === 1) {
-					this.getConnections(pageNo, pageSize).then(res => {
-						this.$refs.paging.complete(res);
-					})
-				}
+				this.getConnections(pageNo, pageSize).then(res => {
+					this.$refs.paging.complete(res);
+				})
 			},
 			getConnections(pageNo, pageSize) {
 				return new Promise((resolve, reject) => {

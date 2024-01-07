@@ -27,8 +27,14 @@
 				custom-class="bbs-search" class="bbs-search-wrap" placeholder-style="color: rgba(255,255,255,0.6);" /> -->
 			</template>
 			<swiper class="swiper" :current="active" @animationfinish="swiperAnimationfinish">
-				<swiper-item class="swiper-item" v-for="(item, index) in tabList" :key="index">
-					<swiper-list-item ref="swiperItem" :tabIndex="index" :currentIndex="active" @toTopicList="toTopicList" @pageQuery="pageQuery"></swiper-list-item>
+				<swiper-item class="swiper-item">
+					<bbs-rec @toTopicList="toTopicList"></bbs-rec>
+				</swiper-item>
+				<swiper-item class="swiper-item">
+					<bbs-focus></bbs-focus>
+				</swiper-item>
+				<swiper-item class="swiper-item">
+					<bbs-topic></bbs-topic>
 				</swiper-item>
 			</swiper>
 		</z-paging-swiper>
@@ -40,14 +46,18 @@
 </template>
 
 <script>
-	import BbsSwiperItem from "@/components/bbs/BbsSwiperItem.vue"
 	import TopSearchBox from '@/components/common/TopSearchBox.vue'
 	import SideAddBtn from '@/components/common/SideAddBtn.vue'
+	import BbsRec from "@/components/bbs/BbsRec.vue"
+	import BbsFocus from "@/components/bbs/BbsFocus.vue"
+	import BbsTopic from "@/components/bbs/BbsTopic.vue"
 	export default {
 		components: {
-			'swiper-list-item': BbsSwiperItem,
 			TopSearchBox,
-			SideAddBtn
+			SideAddBtn,
+			BbsRec,
+			BbsFocus,
+			BbsTopic
 		},
 		data() {
 			return {
@@ -57,9 +67,6 @@
 				active: 0,
 				subActive: 0,
 				searchVal: '',
-				pageSize: 0,
-				pageNo: 0,
-				noRefresh: false,	//从关注tab搜索查回来会自动跳到话题tab，此时不需要请求列表
 			}
 		},
 		computed: {
@@ -82,12 +89,6 @@
 		methods: {
 			tabsChange(e) {
 				this.active = e.detail.index;
-				if(this.noRefresh) {
-					this.noRefresh = !this.noRefresh
-				} else {
-					// 更新list
-					this.$refs.swiperItem[e.detail.index].$refs.paging.reload()
-				}
 			},
 			subTabsChange(e) {
 				this.subActive = e.detail.index;
@@ -115,11 +116,6 @@
 					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=4&searchVal=${this.searchVal}&searchContentType=${searchContentType}`
 				})
 			},
-			// 同步pageNo, pageSize
-			pageQuery(pageNo, pageSize) {
-				this.pageNo = pageNo
-				this.pageSize = pageSize
-			}
 		}
 	}
 </script>

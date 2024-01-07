@@ -38,15 +38,12 @@
 		},
 		methods: {
 			queryList(pageNo, pageSize) {
-				this.$emit('pageQuery', pageNo, pageSize)
-				if(this.currentIndex === 0) {
-					console.log('开始请求： ', pageNo, pageSize)
-					this.pageNo = pageNo
-					this.pageSize = Number(pageSize)
-					this.getRecNewsList(pageNo, pageSize).then(res => {
-						this.$refs.paging.complete(res);
-					})
-				}
+				console.log('开始请求： ', pageNo, pageSize)
+				this.pageNo = pageNo
+				this.pageSize = Number(pageSize)
+				this.getRecNewsList(pageNo, pageSize).then(res => {
+					this.$refs.paging.complete(res);
+				})
 			},
 			//请求资讯列表-发现
 			getRecNewsList(pageNo, pageSize) {

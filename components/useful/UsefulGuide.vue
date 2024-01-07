@@ -41,15 +41,12 @@
 		},
 		methods: {
 			queryList(pageNo, pageSize) {
-				// this.$emit('pageQuery', pageNo, pageSize)
-				if(this.currentIndex === 1) {
-					console.log('开始请求： ', pageNo, pageSize)
-					this.pageNo = pageNo
-					this.pageSize = Number(pageSize)
-					this.getRecGuideList(pageNo, pageSize).then(res => {
-						this.$refs.paging.complete(res);
-					})
-				}
+				console.log('开始请求： ', pageNo, pageSize)
+				this.pageNo = pageNo
+				this.pageSize = Number(pageSize)
+				this.getRecGuideList(pageNo, pageSize).then(res => {
+					this.$refs.paging.complete(res);
+				})
 			},
 			//请求攻略列表-发现
 			getRecGuideList(pageNo, pageSize) {

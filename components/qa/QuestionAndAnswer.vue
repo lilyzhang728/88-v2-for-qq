@@ -54,33 +54,26 @@
 				defaultAvatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',
 			}
 		},
-		watch: {
-			active() {
-				this.$refs.paging.reload()
-			}
-		},
 		methods: {
 			// 点赞、评论 大数单位转化
 			handleTransform(val) {
 				return transformMaxNum(val)
 			},
 			queryList(pageNo, pageSize) {
-				if(this.active === 0) {
-					recArticle({
-						'post_type': 4,	
-						'per_page': pageSize,
-						'page': pageNo
-					}).then(res => {
-						if(res.code === 0 && Object.keys(res.data).length) {
-							this.$refs.paging.complete(res.data.items)
-						} else {
-							this.$refs.paging.complete([]);
-						}
-					}, err => {
+				recArticle({
+					'post_type': 4,	
+					'per_page': pageSize,
+					'page': pageNo
+				}).then(res => {
+					if(res.code === 0 && Object.keys(res.data).length) {
+						this.$refs.paging.complete(res.data.items)
+					} else {
 						this.$refs.paging.complete([]);
-						console.log('recArticle: ', err)
-					})
-				}
+					}
+				}, err => {
+					this.$refs.paging.complete([]);
+					console.log('recArticle: ', err)
+				})
 			},
 			toDetail(item) {
 				uni.navigateTo({
