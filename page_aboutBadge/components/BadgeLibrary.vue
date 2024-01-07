@@ -38,7 +38,7 @@
 			</view>
 		</white-box>
 		
-		<badge-detail ref="badgeDetail" @toast="handleToast"></badge-detail>
+		<badge-detail ref="badgeDetail" @toast="handleToast" @lightBadge="lightBadge"></badge-detail>
 		
 		<van-toast id="van-toast" />
 	</view>
@@ -135,6 +135,17 @@
 			handleToast(msg) {
 				console.log(msg)
 				Toast({message: msg, context: this, type: 'success'})
+			},
+			// 点亮徽章
+			lightBadge() {
+				uni.navigateBack({
+				    success: () => {
+				         let page = getCurrentPages().pop();//跳转页面成功之后
+						 if(page) {
+							 page.$vm.$refs.myAbility.$refs.badgeBox.getUserBadgeList()
+						 }
+				    }
+				})
 			}
 		}
 	}

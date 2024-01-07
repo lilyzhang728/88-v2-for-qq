@@ -22,7 +22,7 @@
 			</swiper>
 			
 			<!-- 徽章详情弹窗 -->
-			<badge-detail ref="badgeDetail"></badge-detail>
+			<badge-detail ref="badgeDetail" @lightBadge="lightBadge"></badge-detail>
 		</z-paging-swiper>
 	</view>
 </template>
@@ -104,6 +104,17 @@
 			pageQuery(pageNo, pageSize) {
 				this.pageNo = pageNo
 				this.pageSize = pageSize
+			},
+			// 点亮徽章
+			lightBadge(badgeId) {
+				uni.navigateBack({
+				    success: () => {
+						 let pages = getCurrentPages().pop()
+						 if(pages) {
+							 pages.$vm.$refs.swiperItem[1].$refs.badgeLibrary.lightBadge()
+						 }
+				    }
+				})
 			}
 		}
 	}

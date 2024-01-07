@@ -48,12 +48,12 @@
 		
 		<!-- 弹起键盘 -->
 		<view class="add-new-post-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
-			<view class="add-new-post-keyboard-topic">
+			<!-- <view class="add-new-post-keyboard-topic">
 				<img class="add-new-post-keyboard-topic-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
 				<text class="add-new-post-keyboard-topic-text">{{userName}}</text>
 				<van-icon v-if="!selectedTopic" name="arrow" size="20px" color="#d9d9d9" />
 				<van-icon v-else name="cross" size="20px" color="#d9d9d9" @click.native.stop="clearTopic($event)" />
-			</view>
+			</view> -->
 			
 			<!-- 发布按钮 -->
 			<view class="view-btn-box">
@@ -243,8 +243,8 @@
 								uni.navigateBack({
 								    success: () => {
 								         let page = getCurrentPages().pop();//跳转页面成功之后
-								         if (page) {
-											page.$vm.$refs.pageTabs.active = 0
+										 if (page) {
+											page.$vm.active = 0
 								            page.$vm.$refs.questionAndAnswer.$refs.paging.reload()
 											page.$vm.$refs.questionAndAnswer.toastMsg(true)
 										 } 

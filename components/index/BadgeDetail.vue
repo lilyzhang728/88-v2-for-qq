@@ -49,7 +49,7 @@
 				<!-- 按钮 -->
 				<view class="detail-btn-box">
 					<van-button v-if="badgeType == 2" @tap="handleAddBadge" custom-style="padding: 0 105rpx;font-size: 32rpx;height: 80rpx;line-height: 45rpx;border-radius: 10rpx;background: linear-gradient(135deg, #2FC2C5 0%, #37C9A3 100%);color:#fff;">点亮徽章</van-button>
-					<van-button v-if="badgeType == 1" @tap="onClose" custom-style="padding: 0 105rpx;font-size: 32rpx;height: 80rpx;line-height: 45rpx;border-radius: 10rpx;background: linear-gradient(135deg, #2FC2C5 0%, #37C9A3 100%);color:#fff;">挂墙上</van-button>
+					<!-- <van-button v-if="badgeType == 1" @tap="collectBadge" custom-style="padding: 0 105rpx;font-size: 32rpx;height: 80rpx;line-height: 45rpx;border-radius: 10rpx;background: linear-gradient(135deg, #2FC2C5 0%, #37C9A3 100%);color:#fff;">挂墙上</van-button> -->
 				</view>
 			</view>
 		</van-popup>
@@ -99,6 +99,11 @@
 			onClose() {
 				this.showDetail = false
 			},
+			// // 挂墙上
+			// collectBadge() {
+			// 	this.showDetail = false
+			// 	this.$emit('collectBadge')
+			// },
 			resetData() {
 				this.badgeInfo = {
 					desc: "",
@@ -191,14 +196,14 @@
 					console.log('addToMyBadge' + err)
 				})
 			},
-			// 添加到我的徽章
+			// 添加到我的徽章（点亮徽章）
 			handleAddBadge() {
 				addToMyBadge({
 					'achievement_ids': [this.badgeInfo.id]
 				}).then(res => {
-					console.log(res)
 					if(res.code === 0) {
 						this.$emit('toast', '点亮成功！')
+						this.$emit('lightBadge')
 						this.showDetail = false
 					}
 				}, err => {

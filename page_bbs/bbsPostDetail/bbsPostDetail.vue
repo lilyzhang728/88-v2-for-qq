@@ -8,7 +8,6 @@
 				<img :src="avatar" alt="" class="bbs-post-detail-author-img"  @click.native.stop="toHomepage($event)">
 				<view class="bbs-post-detail-author-text"  @click.native.stop="toHomepage($event)">
 					<view class="bbs-post-detail-author-text-name">{{postData.author.name}}</view>
-					<view class="bbs-post-detail-author-text-tip">发起话题</view>
 				</view>
 			</view>
 			
@@ -353,6 +352,7 @@
 		.bbs-post-detail-author {
 			height: 66rpx;
 			display: flex;
+			margin-bottom: 50rpx;
 			.bbs-post-detail-author-img {
 				height: 66rpx;
 				width: 66rpx;
@@ -361,11 +361,12 @@
 			}
 			.bbs-post-detail-author-text {
 				flex: 1;
+				display: flex;
+				align-items: center;
 				.bbs-post-detail-author-text-name {
-					font-size: 24rpx;
+					font-size: 34rpx;
 					font-weight: 600;
 					color: rgba(0,0,0,1);
-					line-height: 33rpx;
 				}
 				.bbs-post-detail-author-text-tip {
 					font-size: 20rpx;
