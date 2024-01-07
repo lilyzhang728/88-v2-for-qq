@@ -13,7 +13,7 @@
 		</view>
 		<!-- 正文 -->
 		<view class="bbs-post-content">{{postData.body.body}}</view>
-		<view class="bbs-post-img-box" v-if="postData.body.urls.length">
+		<view class="bbs-post-img-box" v-if="postData.body.urls && postData.body.urls.length">
 			<van-image
 			  width="100%"
 			  height="100%"

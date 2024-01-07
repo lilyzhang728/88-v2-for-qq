@@ -8,12 +8,12 @@
 				<view class="question-item-card-author-time">{{item.timestamp}}</view>
 			</view>
 		</view>
-		<view class="question-item-card-content" :class="{'question-item-card-content-haveImg': item.body.urls.length>0}">
+		<view class="question-item-card-content" :class="{'question-item-card-content-haveImg': item.body.urls && item.body.urls.length}">
 			<view class="question-item-card-content-left">
 				<view class="question-item-card-content-left-title van-multi-ellipsis--l3">{{item.title}}</view>
 				<view class="question-item-card-content-left-infos" v-if="item.body.body">{{item.body.body}}</view>
 			</view>
-			<view class="question-item-card-content-right" v-if="item.body.urls.length > 0">
+			<view class="question-item-card-content-right" v-if="item.body.urls && item.body.urls.length">
 				<img :src="item.body.urls[0]" alt="" class="question-item-card-content-right-img">
 			</view>
 		</view>

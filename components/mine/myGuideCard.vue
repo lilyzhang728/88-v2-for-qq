@@ -19,10 +19,10 @@
 			<view class="guide-item-card-right-description" v-if="guideItem.body.summary">{{guideItem.body.summary}}</view>
 			<view class="guide-item-card-right-books">
 				<view class="guide-item-card-right-books-left">
-					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/matetialIcon.png" alt="" class="guide-item-card-right-book-item-icon">
-					<text class="guide-item-card-right-book-item">教辅*{{guideItem.body.references.length}}</text>
-					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/stepIcon.png" alt="" class="guide-item-card-right-book-item-icon">
-					<text class="guide-item-card-right-book-item">步骤*{{guideItem.body.steps.length}}</text>
+					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/matetialIcon.png" v-if="guideItem.body.references" alt="" class="guide-item-card-right-book-item-icon">
+					<text class="guide-item-card-right-book-item" v-if="guideItem.body.references">教辅*{{guideItem.body.references && guideItem.body.references.length}}</text>
+					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/stepIcon.png" v-if="guideItem.body.steps" alt="" class="guide-item-card-right-book-item-icon">
+					<text class="guide-item-card-right-book-item" v-if="guideItem.body.steps">步骤*{{guideItem.body.steps && guideItem.body.steps.length}}</text>
 				</view>
 				<view class="guide-item-card-right-books-right">
 					<text class="guide-item-card-right-books-right-status" v-if="guideItem.status === 0 || guideItem.status === 1">{{guideItem.status ? '已发布' : '未发布'}}</text>
