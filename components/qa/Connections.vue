@@ -4,7 +4,7 @@
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '30rpx', 'left': '25rpx', 'right': '25rpx'}">
 			<!-- connections列表 -->
 			<view class="connections-list" v-if="dataList.length">
-				<view class="connections-item-card" v-for="(item, index) in dataList" :key="index">
+				<view class="connections-item-card" v-for="(item, index) in dataList" :key="index" @click.native.stop="toHomepage($event, item.id)">
 					<view class="connections-item-card-content">
 						<view class="connections-item-card-avatar-box">
 							<img class="connections-item-card-avatar" :src="item.avatar ? item.avatar : defaultAvatar" alt="">
@@ -12,7 +12,7 @@
 						<view class="connections-item-card-body">
 							<view class="connections-item-card-body-title">
 								<text class="connections-item-card-body-title-name">{{item.name}}</text>
-								<view class="connections-item-card-body-title-btn" @click="toAskQuestion(item)">向ta提问</view>
+								<view class="connections-item-card-body-title-btn" @click.native.stop="toAskQuestion($event, item)">向ta提问</view>
 							</view>
 							<view class="connections-item-card-body-info">{{item.school ? item.school : ''}} {{item.major ? item.major : ''}}</view>
 							<view class="connections-item-card-body-labels" v-if="item.target || item.tags.length">
@@ -93,11 +93,21 @@
 				})
 				
 			},
-			toAskQuestion(item) {
+			toAskQuestion(e, item) {
+				//防止冒泡
+				e.preventDefault()
 				uni.navigateTo({
 					url: `/page_qa/askQuestion/askQuestion?userName=${item.name}&userId=${item.id}`
 				})
-			}
+			},
+			// 去个人主页
+			toHomepage(e, id) {
+				//防止冒泡
+				e.preventDefault()
+				uni.navigateTo({
+					url: `/page_infos/homepage/homepage?userId=${id}`
+				})
+			},
 		},
 	}
 </script>

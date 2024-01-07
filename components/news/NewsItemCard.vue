@@ -1,8 +1,8 @@
 <template>
 	<view class="news-item-card" @click.native="toNewsDetail">
 		<view class="news-item-card-author">
-			<img :src="avatar" alt="" class="news-item-card-author-img">
-			<view class="news-item-card-author-text">
+			<img :src="avatar" @click.native.stop="toHomepage($event, newsItem.author.id)" alt="" class="news-item-card-author-img">
+			<view class="news-item-card-author-text" @click.native.stop="toHomepage($event, newsItem.author.id)">
 				<view class="news-item-card-author-name">{{newsItem.author.name}}</view>
 				<view class="news-item-card-author-time">{{timestamp}}</view>
 			</view>
@@ -138,7 +138,15 @@
 				uni.navigateTo({
 					url: `/page_news/newsDetail/newsDetail?id=${this.newsItem.id}`
 				});
-			}
+			},
+			// 点击头像，去个人主页
+			toHomepage(e, id) {
+				//防止冒泡
+				e.preventDefault()
+				uni.navigateTo({
+					url: `/page_infos/homepage/homepage?userId=${id}`
+				})
+			},
 		}
 	}
 </script>

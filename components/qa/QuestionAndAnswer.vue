@@ -5,8 +5,8 @@
 			<view class="question-list">
 				<view class="question-item-card" @click="toDetail(item)" v-for="(item,index) in dataList">
 					<view class="question-item-card-author">
-						<img :src="item.author.avatar ? item.author.avatar : defaultAvatar" alt="" class="question-item-card-author-img">
-						<view class="question-item-card-author-text">
+						<img :src="item.author.avatar ? item.author.avatar : defaultAvatar" @click.native.stop="toHomepage($event, item.author.id)" alt="" class="question-item-card-author-img">
+						<view class="question-item-card-author-text" @click.native.stop="toHomepage($event, item.author.id)">
 							<view class="question-item-card-author-name">{{item.author.name}}</view>
 							<view class="question-item-card-author-time">{{item.timestamp}}</view>
 						</view>
@@ -149,6 +149,14 @@
 					})
 				}
 				
+			},
+			// 点击头像，去个人主页
+			toHomepage(e, id) {
+				//防止冒泡
+				e.preventDefault()
+				uni.navigateTo({
+					url: `/page_infos/homepage/homepage?userId=${id}`
+				})
 			},
 		},
 	}
