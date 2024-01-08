@@ -24,27 +24,19 @@
 			  :key="index"
 			/>
 		</view>
-		<view class="bbs-topic-post-operate">
-			<!-- 点赞 -->
-			<view class="bbs-topic-post-operate-like">
-				<van-icon v-if="!postData.is_like" name="like-o" size="25rpx" @click.native.stop="checkoutLike($event, true)" />
-				<van-icon v-else name="like" size="25rpx"  @click.native.stop="checkoutLike($event, false)" />
-				<text class="bbs-topic-post-operate-like-num">{{handleTransform(postData.likers_count)}}</text>
-			</view>
-			<view class="bbs-topic-post-operate-split"></view>
-			<!-- 评论 -->
-			<view class="bbs-topic-post-operate-comment">
-				<van-icon name="comment-o" size="25rpx" />
-				<text class="bbs-topic-post-operate-comment-num">{{handleTransform(postData.comments_count)}}</text>
-			</view>
-		</view>
+		
+		<!-- 卡片底部-点赞|评论 -->
+		<card-like-comment :cardData="postData" @checkoutLike="checkoutLike" :showComment="true"></card-like-comment>
 	</view>
 </template>
 
 <script>
-	import { likeGuide, disLikeGuide } from '@/network/api_guide.js'
-	import { transformTime, transformMaxNum } from '@/tools/transform_time.js'
+	import { transformTime } from '@/tools/transform_time.js'
+	import CardLikeComment from '@/components/common/CardLikeComment.vue'
 	export default {
+		components: {
+			CardLikeComment
+		},
 		props: {
 			postData: {
 				type: Object,
@@ -79,35 +71,9 @@
 			}
 		},
 		methods: {
-			// 点赞、评论 大数单位转化
-			handleTransform(val) {
-				return transformMaxNum(val)
+			checkoutLike(status) {
+				this.$emit('checkoutLike', this.index, status)
 			},
-			checkoutLike(e, status) {
-				//防止冒泡
-				e.preventDefault()
-				if(status) {
-					//unlike ——> like
-					likeGuide(this.postData.id).then(res => {
-						if(res.code === 0) {
-							//点赞成功，改变icon状态
-							this.$emit('checkoutLike', this.index, status)
-						}
-					}, err => {
-						console.log('likeGuide: ', err)
-					})
-				} else {
-					//like ——> unlike
-					disLikeGuide(this.postData.id).then(res => {
-						if(res.code === 0) {
-							//取消点赞成功，改变icon状态
-							this.$emit('checkoutLike', this.index, status)
-						}
-					}, err => {
-						console.log('disLikeGuide: ', err)
-					})
-				}
-			}
 		},
 	}
 </script>
@@ -176,34 +142,6 @@
 				margin-right: 20rpx;
 				&:last-child {
 					margin-right: 0;
-				}
-			}
-		}
-		.bbs-topic-post-operate {
-			margin-top: 30rpx;
-			display: flex;
-			justify-content: space-around;
-			align-items: center;
-			line-height: 30rpx;
-			font-size: 22rpx;
-			color: rgba(0,0,0,0.6);
-			.bbs-topic-post-operate-split {
-				width: 1rpx;
-				height: 28rpx;
-				border-left: 1rpx solid #EAEAEA;
-			}
-			.bbs-topic-post-operate-like {
-				display: flex;
-				align-items: center;
-				.bbs-topic-post-operate-like-num {
-					margin-left: 16rpx;
-				}
-			}
-			.bbs-topic-post-operate-comment {
-				display: flex;
-				align-items: center;
-				.bbs-topic-post-operate-comment-num {
-					margin-left: 16rpx;
 				}
 			}
 		}

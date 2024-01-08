@@ -25,27 +25,19 @@
 			  @click.native="previewImg($event, pic)"
 			/>
 		</view>
-		<view class="bbs-post-operate" @click.native.stop="clickOperate($event)">
-			<!-- 点赞 -->
-			<view class="bbs-post-operate-like">
-				<van-icon name="good-job" :color="postData.is_like ? '#8B8B8B' : '#D7D7D7'" size="34rpx" @click.native.stop="checkoutLike($event)" />
-				<view class="bbs-post-operate-like-num"  @click.native.stop="checkoutLike($event, false)" >{{handleTransform(postData.likers_count)}}</view>
-			</view>
-			<view class="bbs-post-operate-split"></view>
-			<!-- 评论 -->
-			<view class="bbs-post-operate-comment">
-				<van-icon name="comment" size="34rpx" color="#D7D7D7" @click.native.stop="toComment($event)" />
-				<view class="bbs-post-operate-comment-num" @click.native.stop="toComment($event)">{{handleTransform(postData.comments_count)}}</view>
-			</view>
-		</view>
+		<!-- 卡片底部-点赞|评论 -->
+		<card-like-comment :cardData="postData" @checkoutLike="checkoutLike" :showComment="true"></card-like-comment>
 	</view>
 </template>
 
 <script>
 	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
-	import { likeGuide, disLikeGuide } from '@/network/api_guide.js'
-	import { transformTime, transformMaxNum } from '@/tools/transform_time.js'
+	import { transformTime } from '@/tools/transform_time.js'
+	import CardLikeComment from '@/components/common/CardLikeComment.vue'
 	export default {
+		components: {
+			CardLikeComment
+		},
 		props: {
 			//帖子的index
 			index: {
@@ -95,46 +87,8 @@
 					urls: [url]
 				});
 			},
-			// 点赞、评论 大数单位转化
-			handleTransform(val) {
-				return transformMaxNum(val)
-			},
-			clickOperate(e) {
-				//防止冒泡
-				e.preventDefault()
-			},
-			checkoutLike(e) {
-				//防止冒泡
-				e.preventDefault()
-				if(!this.postData.is_like) {
-					//unlike ——> like
-					likeGuide(this.postData.id).then(res => {
-						if(res.code === 0) {
-							//点赞成功，改变icon状态
-							this.$emit('checkoutLike', this.index, true)
-						}
-					}, err => {
-						console.log('likeGuide: ', err)
-					})
-				} else {
-					//like ——> unlike
-					disLikeGuide(this.postData.id).then(res => {
-						if(res.code === 0) {
-							//取消点赞成功，改变icon状态
-							this.$emit('checkoutLike', this.index, false)
-						}
-					}, err => {
-						console.log('disLikeGuide: ', err)
-					})
-				}
-			},
-			// 去评论
-			toComment(e) {
-				//防止冒泡
-				e.preventDefault()
-				uni.navigateTo({
-					url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.postData.id}&showReply=1`
-				})
+			checkoutLike(status) {
+				this.$emit('checkoutLike', this.index, status)
 			},
 			// 点击头像，去个人主页
 			toHomepage(e) {
@@ -230,38 +184,6 @@
 				margin-right: 20rpx;
 				&:last-child {
 					margin-right: 0;
-				}
-			}
-		}
-		.bbs-post-operate {
-			margin-top: 35rpx;
-			display: flex;
-			justify-content: space-around;
-			align-items: center;
-			line-height: 30rpx;
-			font-size: 22rpx;
-			color: rgba(0,0,0,0.6);
-			padding-bottom: 30rpx;
-			.bbs-post-operate-split {
-				width: 1rpx;
-				height: 28rpx;
-				border-left: 1rpx solid #EAEAEA;
-			}
-			.bbs-post-operate-like {
-				display: flex;
-				align-items: center;
-				.bbs-post-operate-like-num {
-					margin-left: 16rpx;
-					margin-top: 5rpx;
-					width: 50rpx;
-				}
-			}
-			.bbs-post-operate-comment {
-				display: flex;
-				align-items: center;
-				.bbs-post-operate-comment-num {
-					margin-left: 16rpx;
-					width: 50rpx;
 				}
 			}
 		}
