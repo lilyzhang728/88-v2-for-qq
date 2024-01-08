@@ -17,23 +17,19 @@
 				<img :src="item.body.urls[0]" alt="" class="question-item-card-content-right-img">
 			</view>
 		</view>
-		<view class="question-item-card-operate" @click.native.stop="clickOperate($event)">
-			<view class="question-item-card-operate-item">
-				<van-icon name="good-job" size="34rpx" :color="item.is_like ? '#8B8B8B' : '#D7D7D7'" @click.native.stop="clickLike($event, index)" />
-				<view class="question-item-card-operate-num">{{handleTransform(item.likers_count)}}</view>
-			</view>
-			<view class="question-item-card-operate-item">
-				<van-icon name="star" size="34rpx" :color="item.is_collect ? '#8B8B8B' : '#D7D7D7'" @click.native.stop="clickStar($event, index)" />
-				<view class="question-item-card-operate-num">{{handleTransform(item.collectors_count)}}</view>
-			</view>
-		</view>
+		
+		<!-- 卡片底部-点赞|收藏 -->
+		<card-like-comment :cardData="item" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect" :showStar="true"></card-like-comment>
 	</view>
 </template>
 
 <script>
-	import { transformTime, transformMaxNum } from '@/tools/transform_time.js'
-	import { likeGuide, disLikeGuide, collectGuide, unCollectGuide } from '@/network/api_guide.js'
+	import { transformTime } from '@/tools/transform_time.js'
+	import CardLikeComment from '@/components/common/CardLikeComment.vue'
 	export default {
+		components: {
+			CardLikeComment
+		},
 		props: {
 			item: {
 				type: Object,
@@ -60,65 +56,11 @@
 			toastMsg(type) {
 				this.$emit('toastMsg', type)
 			},
-			// 点赞、评论 大数单位转化
-			handleTransform(val) {
-				return transformMaxNum(val)
+			checkoutLike(status) {
+				this.$emit('checkoutLike', this.index, status)
 			},
-			clickOperate(e) {
-				//防止冒泡
-				e.preventDefault()
-			},
-			clickLike(e, index) {
-				//防止冒泡
-				e.preventDefault()
-				if(!this.item.is_like) {
-					//unlike ——> like
-					likeGuide(this.item.id).then(res => {
-						if(res.code === 0) {
-							//点赞成功，改变icon状态
-							this.$emit('checkoutLike', this.index, true)
-						}
-					}, err => {
-						console.log('likeGuide: ', err)
-					})
-				} else {
-					//like ——> unlike
-					disLikeGuide(this.item.id).then(res => {
-						if(res.code === 0) {
-							//取消点赞成功，改变icon状态
-							this.$emit('checkoutLike', this.index, false)
-						}
-					}, err => {
-						console.log('disLikeGuide: ', err)
-					})
-				}
-			},
-			// 收藏/取消收藏
-			clickStar(e, index) {
-				//防止冒泡
-				e.preventDefault()
-				if(!this.item.is_collect) {
-					//unstar ——> star
-					collectGuide(this.item.id).then(res => {
-						if(res.code === 0) {
-							//收藏成功，改变icon状态
-							this.$emit('checkoutCollect', this.index, true)
-						}
-					}, err => {
-						console.log('collectGuide: ', err)
-					})
-				} else {
-					//star ——> unstar
-					unCollectGuide(this.item.id).then(res => {
-						if(res.code === 0) {
-							//取消收藏成功，改变icon状态
-							this.$emit('checkoutCollect', this.index, false)
-						}
-					}, err => {
-						console.log('unCollectGuide: ', err)
-					})
-				}
-				
+			checkoutCollect(status) {
+				this.$emit('checkoutCollect', this.index, status)
 			},
 		},
 	}
@@ -199,24 +141,6 @@
 				}
 				.question-item-card-content-haveImg {
 					min-height: 140rpx;
-				}
-				.question-item-card-operate {
-					display: flex;
-					justify-content: space-around;
-					margin-top: 10rpx;
-					padding-bottom: 25rpx;
-					.question-item-card-operate-item {
-						display: flex;
-						align-items: center;
-						.question-item-card-operate-num {
-							margin-left: 16rpx;
-							font-size: 22rpx;
-							color: rgba(0,0,0,0.6);
-							line-height: 30rpx;
-							width: 50rpx;
-						}
-					}
-					
 				}
 			}
 </style>

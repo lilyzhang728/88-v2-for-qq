@@ -16,16 +16,6 @@
 				<img :src="item.body.urls[0]" alt="" class="question-item-card-content-right-img">
 			</view>
 		</view>
-		<!-- <view class="question-item-card-operate" @click.native.stop="clickOperate($event)">
-			<view class="question-item-card-operate-item">
-				<van-icon name="good-job" size="34rpx" :color="item.is_like ? '#8B8B8B' : '#D7D7D7'" @click.native.stop="clickLike($event, index)" />
-				<view class="question-item-card-operate-num">{{handleTransform(item.likers_count)}}</view>
-			</view>
-			<view class="question-item-card-operate-item">
-				<van-icon name="star" size="34rpx" :color="item.is_collect ? '#8B8B8B' : '#D7D7D7'" @click.native.stop="clickStar($event, index)" />
-				<view class="question-item-card-operate-num">{{handleTransform(item.collectors_count)}}</view>
-			</view>
-		</view> -->
 		
 		<!-- 卡片底部-点赞|收藏 -->
 		<card-like-comment :cardData="item" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect" :showStar="true"></card-like-comment>

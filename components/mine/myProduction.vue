@@ -25,7 +25,8 @@
 					
 					<!-- 我的问答 -->
 					<view class="qa" v-if="active === 2">
-						<my-question-card v-for="(item,index) in dataList" :key="index" :item="item" @toastMsg="toastMsg"></my-question-card>
+						<my-question-card v-for="(item,index) in dataList" :key="index" :item="item" 
+						@toastMsg="toastMsg" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></my-question-card>
 					</view>
 					
 					<!-- 我的收藏 -->
