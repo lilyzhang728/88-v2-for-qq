@@ -13,12 +13,19 @@
 			<van-icon name="comment" size="34rpx" color="#D7D7D7" @click.native.stop="toComment($event)" />
 			<view class="card-operate-comment-num" @click.native.stop="toComment($event)">{{handleTransform(cardData.comments_count)}}</view>
 		</view>
+		
+		<!-- 收藏 -->
+		<view class="card-operate-split" v-if="showStar"></view>
+		<view class="card-operate-comment" v-if="showStar">
+			<van-icon name="star" size="34rpx" :color="cardData.is_collect ? '#8B8B8B' : '#D7D7D7'" @click.native.stop="clickStar($event)" />
+			<view class="card-operate-comment-num" @click.native.stop="clickStar($event)">{{handleTransform(cardData.collectors_count)}}</view>
+		</view>
 	</view>
 </template>
 
 <script>
 	import { transformMaxNum } from '@/tools/transform_time.js'
-	import { likeGuide, disLikeGuide } from '@/network/api_guide.js'
+	import { likeGuide, disLikeGuide, collectGuide, unCollectGuide } from '@/network/api_guide.js'
 	export default {
 		props: {
 			cardData: {
@@ -34,7 +41,12 @@
 			showComment: {
 				type: Boolean,
 				default: false
-			}
+			},
+			// 是否显示收藏图标
+			showStar: {
+				type: Boolean,
+				default: false
+			},
 		},
 		methods: {
 			clickOperate(e) {
@@ -77,6 +89,35 @@
 				uni.navigateTo({
 					url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.cardData.id}&showReply=1`
 				})
+			},
+			// 收藏/取消收藏
+			clickStar(e) {
+				//防止冒泡
+				e.preventDefault()
+				if(!this.cardData.is_collect) {
+					//unstar ——> star
+					//改变icon状态
+					this.$emit('checkoutCollect', true)
+					collectGuide(this.cardData.id).then(res => {
+						if(res.code === 0) {
+							//收藏成功
+						}
+					}, err => {
+						console.log('collectGuide: ', err)
+					})
+				} else {
+					//star ——> unstar
+					//改变icon状态
+					this.$emit('checkoutCollect', false)
+					unCollectGuide(this.cardData.id).then(res => {
+						if(res.code === 0) {
+							//取消收藏成功
+						}
+					}, err => {
+						console.log('unCollectGuide: ', err)
+					})
+				}
+				
 			},
 		}
 	}
