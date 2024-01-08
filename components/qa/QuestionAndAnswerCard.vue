@@ -71,11 +71,24 @@
 			},
 		},
 		methods: {
+			toDetail(item) {
+				uni.navigateTo({
+					url: `/page_qa/questionDetail/questionDetail?id=${item.id}`
+				})
+			},
 			checkoutLike(status) {
 				this.$emit('checkoutLike', this.index, status)
 			},
 			checkoutCollect(status) {
 				this.$emit('checkoutCollect', this.index, status)
+			},
+			// 点击头像，去个人主页
+			toHomepage(e, id) {
+				//防止冒泡
+				e.preventDefault()
+				uni.navigateTo({
+					url: `/page_infos/homepage/homepage?userId=${id}`
+				})
 			},
 		},
 	}

@@ -146,20 +146,22 @@
 				}
 				if(status) {
 					//unlike ——> like
+					//改变icon状态
+					this.$emit('checkoutLike', this.index, status)
 					likeGuide(this.guideItem.id).then(res => {
 						if(res.code === 0) {
-							//点赞成功，改变icon状态
-							this.$emit('checkoutLike', this.index, status)
+							//点赞成功
 						}
 					}, err => {
 						console.log('likeGuide: ', err)
 					})
 				} else {
 					//like ——> unlike
+					//改变icon状态
+					this.$emit('checkoutLike', this.index, status)
 					disLikeGuide(this.guideItem.id).then(res => {
 						if(res.code === 0) {
-							//取消点赞成功，改变icon状态
-							this.$emit('checkoutLike', this.index, status)
+							//取消点赞成功
 						}
 					}, err => {
 						console.log('disLikeGuide: ', err)
@@ -176,20 +178,22 @@
 				}
 				if(status) {
 					//unstar ——> star
+					//改变icon状态
+					this.$emit('checkoutCollect', this.index, status)
 					collectGuide(this.guideItem.id).then(res => {
 						if(res.code === 0) {
-							//收藏成功，改变icon状态
-							this.$emit('checkoutCollect', this.index, status)
+							//收藏成功
 						}
 					}, err => {
 						console.log('collectGuide: ', err)
 					})
 				} else {
 					//star ——> unstar
+					//改变icon状态
+					this.$emit('checkoutCollect', this.index, status)
 					unCollectGuide(this.guideItem.id).then(res => {
 						if(res.code === 0) {
-							//取消收藏成功，改变icon状态
-							this.$emit('checkoutCollect', this.index, status)
+							//取消收藏成功
 						}
 					}, err => {
 						console.log('unCollectGuide: ', err)

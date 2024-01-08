@@ -47,11 +47,6 @@
 					console.log('recArticle: ', err)
 				})
 			},
-			toDetail(item) {
-				uni.navigateTo({
-					url: `/page_qa/questionDetail/questionDetail?id=${item.id}`
-				})
-			},
 			toastMsg(type) {
 				this.$emit('toastMsg', type)
 			},
@@ -73,14 +68,7 @@
 					this.dataList[index].collectors_count--
 				}
 			},
-			// 点击头像，去个人主页
-			toHomepage(e, id) {
-				//防止冒泡
-				e.preventDefault()
-				uni.navigateTo({
-					url: `/page_infos/homepage/homepage?userId=${id}`
-				})
-			},
+			
 		},
 	}
 </script>

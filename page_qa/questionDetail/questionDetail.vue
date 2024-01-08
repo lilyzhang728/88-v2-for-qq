@@ -275,22 +275,24 @@
 			clickLike(status) {
 				if(status) {
 					//unlike ——> like
+					//改变icon状态
+					this.postData.is_like = status
+					this.postData.likers_count++
 					likeGuide(this.postData.id).then(res => {
 						if(res.code === 0) {
-							//点赞成功，改变icon状态
-							this.postData.is_like = status
-							this.postData.likers_count++
+							//点赞成功
 						}
 					}, err => {
 						console.log('likeGuide: ', err)
 					})
 				} else {
 					//like ——> unlike
+					//改变icon状态
+					this.postData.is_like = status
+					this.postData.likers_count--
 					disLikeGuide(this.postData.id).then(res => {
 						if(res.code === 0) {
-							//取消点赞成功，改变icon状态
-							this.postData.is_like = status
-							this.postData.likers_count--
+							//取消点赞成功
 						}
 					}, err => {
 						console.log('disLikeGuide: ', err)
@@ -300,22 +302,24 @@
 			clickCollect(status) {
 				if(status) {
 					//unCollect ——> collect
+					//改变icon状态
+					this.postData.is_collect = status
+					this.postData.collectors_count++
 					collectGuide(this.postData.id).then(res => {
 						if(res.code === 0) {
-							//点赞成功，改变icon状态
-							this.postData.is_collect = status
-							this.postData.collectors_count++
+							//点赞成功
 						}
 					}, err => {
 						console.log('likeGuide: ', err)
 					})
 				} else {
 					//collect ——> unCollect
+					//改变icon状态
+					this.postData.is_collect = status
+					this.postData.collectors_count--
 					unCollectGuide(this.postData.id).then(res => {
 						if(res.code === 0) {
-							//取消点赞成功，改变icon状态
-							this.postData.is_collect = status
-							this.postData.collectors_count--
+							//取消点赞成功
 						}
 					}, err => {
 						console.log('disLikeGuide: ', err)
