@@ -249,6 +249,8 @@
 					if(res.code === 0 && Object.keys(res.data).length) {
 						//评论成功，1级回显到第1条，2级回显到回复的评论下面
 						this.showReplyComment(res.data)
+						//评论数+1
+						this.postData.comments_count++
 					}
 				}, err => {
 					console.log('postComment: ', err)
@@ -292,22 +294,24 @@
 			clickLike(status) {
 				if(status) {
 					//unlike ——> like
+					//改变icon状态
+					this.postData.is_like = status
+					this.postData.likers_count++
 					likeGuide(this.postData.id).then(res => {
 						if(res.code === 0) {
-							//点赞成功，改变icon状态
-							this.postData.is_like = status
-							this.postData.likers_count++
+							//点赞成功
 						}
 					}, err => {
 						console.log('likeGuide: ', err)
 					})
 				} else {
 					//like ——> unlike
+					//改变icon状态
+					this.postData.is_like = status
+					this.postData.likers_count--
 					disLikeGuide(this.postData.id).then(res => {
 						if(res.code === 0) {
-							//取消点赞成功，改变icon状态
-							this.postData.is_like = status
-							this.postData.likers_count--
+							//取消点赞成功
 						}
 					}, err => {
 						console.log('disLikeGuide: ', err)
