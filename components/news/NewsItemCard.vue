@@ -10,7 +10,7 @@
 		<view class="news-item-card-content" :class="{'news-item-card-content-haveImg': newsItem.body.urls && newsItem.body.urls.length>0}">
 			<view class="news-item-card-content-left">
 				<view class="news-item-card-content-left-title van-multi-ellipsis--l3">{{newsItem.title}}</view>
-				<view class="news-item-card-content-left-infos" v-if="newsItem.body.summary">{{newsItem.body.summary}}</view>
+				<view class="news-item-card-content-left-infos" v-if="newsItem.body.body">{{newsItem.body.body}}</view>
 			</view>
 			<view class="news-item-card-content-right" v-if="newsItem.body.urls && newsItem.body.urls.length > 0">
 				<img :src="newsItem.body.urls[0]" alt="" class="news-item-card-content-right-img">
@@ -132,7 +132,7 @@
 			}
 		}
 		.news-item-card-content {
-			display: flex;
+			// display: flex;
 			margin-top: 20rpx;
 			.news-item-card-content-left {
 				flex: 3;
