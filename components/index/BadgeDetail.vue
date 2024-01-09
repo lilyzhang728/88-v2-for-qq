@@ -27,9 +27,9 @@
 				<!-- 打分 -->
 				<view class="detail-info-rate">
 					<view class="detail-info-rate-left">
-						<van-rate :value="badgeInfo.rating"  size="20" color="#ffd21e" readonly />
+						<van-rate :value="myRating" @change.native="handleRate" size="20" color="#ffd21e" :readonly="!showRating" />
 						<view class="detail-info-rate-text-1">我的评分</view>
-						<view class="detail-info-rate-text-2">({{badgeInfo.rating}}星)</view>
+						<view class="detail-info-rate-text-2">({{myRating}}星)</view>
 					</view>
 					<view class="detail-info-rate-split"></view>
 					<view class="detail-info-rate-right">
@@ -79,8 +79,9 @@
 				},
 				badgeType: 0,
 				showIcon: false,
-				showRating: false,
-				badgeId: null
+				showRating: false,		// true:放开打分  false:禁止打分
+				badgeId: null,
+				myRating: 0
 			}
 		},
 		computed: {
@@ -119,6 +120,7 @@
 				this.showIcon = false
 				this.showRating = false
 				this.badgeId = null
+				this.myRating = 0
 			},
 			// type 徽章类型： 0-首页我的徽章 1-我的徽章	2-徽章库（我未获得的徽章） 用来决定按钮显示内容
 			getBadgeDetail(badgeInfo, type) {
@@ -155,7 +157,7 @@
 							if(Object.keys(res.data).length) {
 								// 用户评过分，回显总评分
 								this.showRating = false
-								this.badgeInfo.rating = res.data.rating
+								this.myRating = res.data.rating
 							} else {
 								// 用户未评分
 								this.showRating = true
@@ -183,7 +185,7 @@
 							icon: 'success'
 						});
 						//更新总评分显示
-						this.badgeInfo.rating = event.detail
+						// this.badgeInfo.rating = event.detail
 						this.showRating = false
 					} else {
 						uni.showToast({
