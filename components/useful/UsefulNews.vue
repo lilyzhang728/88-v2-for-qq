@@ -52,7 +52,7 @@
 						'post_type': 2,	//2 :tab3
 						'per_page': pageSize,
 						'page': pageNo,
-						'field': Number(this.subActive) + 1
+						'field': Number(this.subActive)
 					}).then(res => {
 						if(res.code === 0 && Object.keys(res.data).length) {
 							resolve(res.data.items)

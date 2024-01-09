@@ -18,6 +18,7 @@
 				<!-- 子tab -->
 				<van-tabs :active="subActive" animated @change.native="subTabsChange" ref="subTabs"
 				line-height="0" line-width="0" class="useful-subTabs" :swipeable="false">
+					<van-tab title="推荐"></van-tab>
 					<van-tab title="考研" class="useful-subTab-first"></van-tab>
 					<van-tab title="找工作"></van-tab>
 					<van-tab title="出国"></van-tab>

@@ -55,7 +55,7 @@
 						'post_type': 1,	//1 :tab2
 						'per_page': pageSize,
 						'page': pageNo,
-						'field': Number(this.subActive) + 1
+						'field': Number(this.subActive)
 					}).then(res => {
 						if(res.code === 0 && Object.keys(res.data).length) {
 							resolve(res.data.items)
