@@ -1,68 +1,88 @@
 <!-- 新增情报 -->
 <template>
 	<view class="add-news" :style="{backgroundImage: backgroundImage,backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<back-topbar title="发布情报"></back-topbar>
-		
-		<!-- 编辑 -->
-		<view class="add-new-post-edit">
-			<!-- 问题标题 -->
-			<view class="add-new-post-edit-title">
+		<z-paging ref="paging" :paging-style="{'top': '0px', 'left': '25rpx', 'right': '25rpx'}">
+			<template #top>
+				<back-topbar title="发布情报" class="add-news-title"></back-topbar>
+			</template>
+			
+			<view class="add-new-post-edit">
+				<!-- 标题 -->
+				<view class="add-new-post-edit-title">
+					<van-field
+						class="add-new-post-edit-title-wrap"
+						input-class="add-new-post-edit-title"
+						:value="title"
+						placeholder="请输入标题"
+						auto-focus
+						:border="false"
+						@change.native="inputTitle($event)"
+						@focus.native="inputBindFocus"
+						@blur.native="inputBindBlur"
+					  />
+				</view>
+				
+				<view class="add-new-post-edit-title-split"></view>
+				
+				<!-- 正文 -->
 				<van-field
-					class="add-new-post-edit-title-wrap"
-					input-class="add-new-post-edit-title"
-					:value="title"
-					placeholder="请输入标题"
+					class="add-new-post-edit-textarea-wrap"
+					input-class="add-new-post-edit-textarea"
+					:value="postVal"
+					type="textarea"
+					placeholder="请输入情报正文"
+					autosize
 					auto-focus
 					:border="false"
-					@change.native="inputTitle($event)"
+					@change.native="inputPost($event)"
 					@focus.native="inputBindFocus"
 					@blur.native="inputBindBlur"
 				  />
+				
+				
+				<!-- 链接 -->
+				<van-field
+					class="add-new-post-edit-title-wrap"
+					input-class="add-new-post-edit-title"
+					:value="urlVal"
+					placeholder="请输入情报链接"
+					autosize
+					auto-focus
+					:border="false"
+					@change.native="inputUrl($event)"
+					@focus.native="inputBindFocus"
+					@blur.native="inputBindBlur"
+				/>
+				
+				<view class="add-new-post-edit-title-split add-new-post-edit-title-split-bottom"></view>
+				  
+				<!-- uploader -->
+				<van-uploader ref="imgUploader" class="img-uploader"
+				:file-list="postImgList" deletable="true" max-count="9" 
+				:preview-size="imageWidth" image-fit="aspectFit"
+				use-before-read @beforeRead.native="beforeRead"
+				@afterRead.native="afterRead" @delete.native="deleteImg">
+				</van-uploader>
 			</view>
 			
-			<view class="add-new-post-edit-title-split"></view>
-			
-			<!-- 问题正文 -->
-			<van-field
-				class="add-new-post-edit-textarea-wrap"
-				input-class="add-new-post-edit-textarea"
-				:value="postVal"
-				type="textarea"
-				placeholder="请输入情报正文"
-				autosize
-				auto-focus
-				:border="false"
-				@change.native="inputPost($event)"
-				@focus.native="inputBindFocus"
-				@blur.native="inputBindBlur"
-			  />
-			  
-			<!-- uploader -->
-			<van-uploader ref="imgUploader" class="img-uploader"
-			:file-list="postImgList" deletable="true" max-count="9" 
-			:preview-size="imageWidth" image-fit="aspectFit"
-			use-before-read @beforeRead.native="beforeRead"
-			@afterRead.native="afterRead" @delete.native="deleteImg">
-			</van-uploader>
-		</view>
-		
-		<!-- 弹起键盘 -->
-		<view class="add-new-post-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
-			<!-- <view class="add-new-post-keyboard-topic">
-				<img class="add-new-post-keyboard-topic-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
-				<text class="add-new-post-keyboard-topic-text">{{userName}}</text>
-				<van-icon v-if="!selectedTopic" name="arrow" size="20px" color="#d9d9d9" />
-				<van-icon v-else name="cross" size="20px" color="#d9d9d9" @click.native.stop="clearTopic($event)" />
-			</view> -->
-			
-			<!-- 发布按钮 -->
-			<view class="view-btn-box">
-				<van-button class="view-btn-wrap" :class="{'view-btn-wrap-active': postVal}" custom-class="view-btn" size="small" @click.native="send">发送</van-button>
+			<!-- 弹起键盘 -->
+			<view class="add-new-post-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
+				<!-- <view class="add-new-post-keyboard-topic">
+					<img class="add-new-post-keyboard-topic-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
+					<text class="add-new-post-keyboard-topic-text">{{userName}}</text>
+					<van-icon v-if="!selectedTopic" name="arrow" size="20px" color="#d9d9d9" />
+					<van-icon v-else name="cross" size="20px" color="#d9d9d9" @click.native.stop="clearTopic($event)" />
+				</view> -->
+				
+				<!-- 发布按钮 -->
+				<view class="view-btn-box">
+					<van-button class="view-btn-wrap" :class="{'view-btn-wrap-active': postVal}" custom-class="view-btn" size="small" @click.native="send">发送</van-button>
+				</view>
 			</view>
-		</view>
-		
-		<!-- toast提示 -->
-		<van-toast id="van-toast" />
+			
+			<!-- toast提示 -->
+			<van-toast id="van-toast" />
+		</z-paging>
 	</view>
 </template>
 
@@ -78,13 +98,16 @@
 		},
 		data() {
 			return {
+				title: '',
 				postVal: '',	//提问内容
+				urlVal: '',		//链接
 				bottomVal: '0px',	//键盘上话题bottom
 				postImgList: [],	//上传图片list
 				showKeyboard: true,
 				keyboardHeight: '85px',	//键盘上话题height	1行54px，2行85px
 				userName: '',
-				userId: ''
+				userId: '',
+				customBarTop: uni.getStorageSync('customBarTop') ? uni.getStorageSync('customBarTop') : 0,
 			}
 		},
 		computed: {
@@ -115,6 +138,10 @@
 			//编辑输入帖子
 			inputPost(e) {
 				this.postVal = e.detail
+			},
+			//输入链接
+			inputUrl(e) {
+				this.urlVal = e.detail
 			},
 			inputBindFocus(e) {
 				// 获取手机键盘的高度，赋值给input 所在盒子的 bottom 值
@@ -206,7 +233,8 @@
 						'title': this.title,
 						'body': {
 							'body': this.postVal,
-							'urls': this.transformImg()
+							'urls': this.transformImg(),
+							'source': this.urlVal,	// 情报来源
 						},
 						'post_type': 2,
 						'status': 1
@@ -246,6 +274,9 @@
 	right: 0;
 	bottom: 0;
 	padding: 0 25rpx;
+	.add-news-title {
+		
+	}
 	.add-new-post-edit {
 		.add-new-post-edit-textarea-wrap {
 			/deep/ .add-new-post-edit-textarea{
@@ -260,6 +291,9 @@
 			height: 1px;
 			border-bottom: 1px solid #EAEAEA;
 			margin: 0 25rpx;
+		}
+		.add-new-post-edit-title-split-bottom {
+			margin-bottom: 80rpx;
 		}
 	}
 	.add-new-post-keyboard {

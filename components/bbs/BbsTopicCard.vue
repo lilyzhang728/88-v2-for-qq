@@ -8,7 +8,7 @@
 			</view>
 			<view class="bbs-topic-card-left-info">
 				<text class="bbs-topic-card-left-info-text">{{topicData.posts_count}}篇内容</text>
-				<text class="bbs-topic-card-left-info-text">{{topicData.views}}次浏览</text>
+				<text class="bbs-topic-card-left-info-text">关注人数 {{topicData.collectors_count}}</text>
 			</view>
 		</view>
 		<view class="bbs-topic-card-right">></view>

@@ -23,6 +23,12 @@
 				<img v-for="(item, index) in newsData.body.urls" :index="index" :src="item" alt="" class="news-detail-img">
 			</view>
 			
+			<!-- 链接 -->
+			<view class="news-detail-url" v-if="newsData.body.source" @click="clickLink">
+				<img class="guide-detail-step-link-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/linkIcon.png" alt="">
+				{{newsData.body.source}}
+			</view>
+			
 			<van-divider />
 			
 			<!-- 推荐话题 -->
@@ -291,6 +297,19 @@
 					this.dataList[index].likers_count--
 				}
 			},
+			// 点击复制链接
+			clickLink() {
+				uni.setClipboardData({
+					data: this.newsData.body.source,
+					success() {
+						uni.showToast({
+							title:'已复制到剪贴板',
+							icon:'none',
+							position:'top'
+						})
+					}
+				})
+			}
 		}
 	}
 </script>
@@ -344,6 +363,19 @@
 			width: 100%;
 			height: auto;
 			margin-top: 20rpx;
+		}
+	}
+	.news-detail-url {
+		margin-top: 20rpx;
+		font-size: 28rpx;
+		color: #35C8A7;
+		line-height: 40rpx;
+		display: flex;
+		align-items: center;
+		.guide-detail-step-link-icon {
+			height: 22rpx;
+			width: 22rpx;
+			margin-right: 10rpx;
 		}
 	}
 	.news-detail-rec-topic {
