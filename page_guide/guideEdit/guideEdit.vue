@@ -18,6 +18,7 @@
 				 <van-field
 					:value="guideInfo.title"
 					type="textarea"
+					:show-confirm-bar="false"
 					placeholder="添加标题"
 					autosize
 					:border="false"
@@ -33,6 +34,7 @@
 				<van-field
 				   :value="guideInfo.body.summary"
 				   type="textarea"
+				   :show-confirm-bar="false"
 				   placeholder="添加说明"
 				   autosize
 				   :border="false"
@@ -53,6 +55,7 @@
 						:key="index"
 					   :value="item"
 					   type="textarea"
+					   :show-confirm-bar="false"
 					   placeholder="添加教辅材料"
 					   autosize
 					   clearable
@@ -93,6 +96,7 @@
 						:value="guideInfo.body.tips"
 						placeholder="有哪些需要注意的细节和小技巧"
 						type="textarea"
+						:show-confirm-bar="false"
 						autosize
 						:border="false"
 						@change.native="changeTip"

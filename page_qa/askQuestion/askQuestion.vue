@@ -28,6 +28,7 @@
 				input-class="add-new-post-edit-textarea"
 				:value="postVal"
 				type="textarea"
+				:show-confirm-bar="false"
 				placeholder="请输入问题"
 				autosize
 				auto-focus

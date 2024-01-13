@@ -30,6 +30,7 @@
 					input-class="add-new-post-edit-textarea"
 					:value="postVal"
 					type="textarea"
+					:show-confirm-bar="false"
 					placeholder="请输入情报正文"
 					autosize
 					auto-focus

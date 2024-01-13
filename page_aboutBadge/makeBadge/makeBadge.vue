@@ -30,6 +30,7 @@
 				required
 				name="desc"
 				type="textarea"
+				:show-confirm-bar="false"
 				autosize
 				maxlength="100"
 				clearable

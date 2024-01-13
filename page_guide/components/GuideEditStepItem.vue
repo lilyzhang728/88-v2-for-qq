@@ -3,13 +3,13 @@
 		<!-- <view class="guide-edit-step-title">步骤{{index + 1}}</view> -->
 
 		<!-- 步骤副标题 -->
-		<van-field :value="step.subtile" type="textarea" placeholder="添加副标题" autosize :border="false"
+		<van-field :value="step.subtile" type="textarea" :show-confirm-bar="false" placeholder="添加副标题" autosize :border="false"
 			@change.native="changeStepSubtitle"
 			placeholder-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;"
 			custom-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;" />
 
 		<!-- 步骤说明 -->
-		<van-field :value="step.body" type="textarea" placeholder="添加步骤说明" autosize :border="false" @change.native="changeStepBody"
+		<van-field :value="step.body" type="textarea" :show-confirm-bar="false" placeholder="添加步骤说明" autosize :border="false" @change.native="changeStepBody"
 			placeholder-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;"
 			custom-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;" />
 

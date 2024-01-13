@@ -23,7 +23,7 @@
 									<view class="connections-item-card-body-title">
 										<text class="connections-item-card-body-title-name">{{item.name}}</text>
 										<view class="connections-item-card-body-title-btn" :class="{'connections-item-card-body-title-btn-grey': item.is_mentioned}" @click="toAskQuestion(item, index)">
-											{{item.is_mentioned ? '已提问' : '向ta提问'}}</view>
+											{{item.is_mentioned ? '已被邀请' : '邀ta回答'}}</view>
 									</view>
 									<view class="connections-item-card-body-info">{{item.school ? item.school : ''}} {{item.major ? item.major : ''}}</view>
 									<view class="connections-item-card-body-labels" v-if="item.target || item.tags.length">

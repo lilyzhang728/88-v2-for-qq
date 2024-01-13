@@ -22,6 +22,7 @@
 				required
 				name="description"
 				type="textarea"
+				:show-confirm-bar="false"
 				autosize
 				maxlength="100"
 				clearable

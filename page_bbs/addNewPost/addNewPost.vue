@@ -25,6 +25,7 @@
 				input-class="add-new-post-edit-textarea"
 				:value="postVal"
 				type="textarea"
+				:show-confirm-bar="false"
 				placeholder="请输入留言"
 				autosize
 				auto-focus
