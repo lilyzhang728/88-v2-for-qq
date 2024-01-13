@@ -31,7 +31,6 @@
 				:show-confirm-bar="false"
 				placeholder="请输入问题"
 				autosize
-				auto-focus
 				:border="false"
 				@change.native="inputPost($event)"
 				@focus.native="inputBindFocus"
@@ -83,7 +82,7 @@
 				bottomVal: '0px',	//键盘上话题bottom
 				postImgList: [],	//上传图片list
 				showKeyboard: true,
-				keyboardHeight: '85px',	//键盘上话题height	1行54px，2行85px
+				keyboardHeight: '54px',	//键盘上话题height	1行54px，2行85px
 				userName: '',
 				userId: ''
 			}

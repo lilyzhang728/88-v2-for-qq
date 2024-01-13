@@ -33,7 +33,6 @@
 					:show-confirm-bar="false"
 					placeholder="请输入情报正文"
 					autosize
-					auto-focus
 					:border="false"
 					@change.native="inputPost($event)"
 					@focus.native="inputBindFocus"
@@ -48,7 +47,6 @@
 					:value="urlVal"
 					placeholder="请输入情报链接"
 					autosize
-					auto-focus
 					:border="false"
 					@change.native="inputUrl($event)"
 					@focus.native="inputBindFocus"
