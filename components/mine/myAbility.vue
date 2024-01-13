@@ -1,7 +1,7 @@
 <!-- 档案 -->
 <template>
 	<view class="content index">
-		<z-paging ref="paging" :paging-style="{'top': '45rpx', 'left': '25rpx', 'right': '25rpx'}">
+		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '45rpx', 'left': '25rpx', 'right': '25rpx'}">
 			<!-- 个人信息 -->
 			<view class="userInfo" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/userInfoBg.png?sign=ffd748d25d6721cb672e63b6ff4b2625&t=1687599098');background-size: 100% 100%;background-repeat: no-repeat;" >
 				<skill-radar :userId="userId" class="skill-radar" ref="skillRadar"></skill-radar>
@@ -20,7 +20,7 @@
 			
 			<!-- 徽章 -->
 			<view class="badge">
-				<badge-box ref="badgeBox" :userId="userId" @showBadgeDetail="showBadgeDetail"></badge-box>
+				<badge-box ref="badgeBox" :userId="userId" :badgeList="dataList" @showBadgeDetail="showBadgeDetail"></badge-box>
 			</view>
 			
 			
@@ -47,6 +47,7 @@
 	import Toast from '@/wxcomponents/vant/toast/toast'
 	import { tagsList } from "@/network/api_index.js"	
 	import ZPInterceptor from '@/uni_modules/z-paging/components/z-paging/js/z-paging-interceptor'
+	import { getBadgeList } from "@/network/api_index.js"
 	
 	let _this = null
 	export default {
@@ -58,7 +59,7 @@
 		},
 		data() {
 			return {
-				dataList: [],	//大事年表-事件列表
+				dataList: [],	//徽章列表
 				start_year: new Date().getFullYear(),
 				graduate_year: new Date().getFullYear(),
 				labelList: [],
@@ -96,6 +97,21 @@
 			uni.$off('showDialog')
 		},
 		methods: {
+			queryList(pageNo, pageSize) {
+				getBadgeList({
+					'per_page': 8,
+					'page': 1,
+					'userId': this.userId
+				}).then(res => {
+					if(res.code == 0 && Object.keys(res.data).length) {
+						this.$refs.paging.complete(res.data.items);
+					} else {
+						this.$refs.paging.complete([]);
+					}
+				}, err => {
+					console.log('getBadgeList', err)
+				})
+			},
 			// 获取标签列表
 			getTagsList() {
 				tagsList({
@@ -114,9 +130,9 @@
 				this.$refs.portraitInfo.getUserInfo()
 			},
 			// 刷新徽章
-			reloadBadge() {
-				this.$refs.badgeBox.getUserBadgeList()
-			},
+			// reloadBadge() {
+			// 	this.$refs.badgeBox.getUserBadgeList()
+			// },
 			// 展示徽章详情
 			showBadgeDetail(badgeInfo) {
 				this.$refs.badgeDetail.getBadgeDetail(badgeInfo, 0)

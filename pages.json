@@ -54,7 +54,7 @@
             {
                 "navigationBarTitleText": "",
 				"navigationStyle": "custom",
-                "enablePullDownRefresh": true
+                "enablePullDownRefresh": false
             }
             
         }

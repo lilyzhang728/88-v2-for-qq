@@ -13,7 +13,7 @@
 		</page-tabs>
 		
 		<!-- 侧边收信箱 -->
-		<side-message-box ref="sideMessageBox"></side-message-box>
+		<side-message-box></side-message-box>
 	</view>
 </template>
 

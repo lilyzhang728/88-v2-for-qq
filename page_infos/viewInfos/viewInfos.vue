@@ -1,8 +1,7 @@
 <template>
 	<view class="infos" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/infos/infosBg.png?sign=0e86468cac06b3dca60ea1ef5fca01dc&t=1691397405');background-size: 100%;background-color: #FFF;background-repeat: no-repeat;">
-		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{ 'padding': '0 25rpx'}">
-			<!-- <view class="infos-title">收到的赞和收藏</view> -->
-			<back-topbar title="收到的赞和收藏" refName="sideMessageBox" functionName="getNewNotifications"></back-topbar>
+		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': pagingTop + 'px', 'padding': '0 25rpx'}">
+			<view class="infos-title">收到的赞和收藏</view>
 			<view class="infos-btns">
 				<view class="infos-btns-item" v-for="(item, index) in btnList" :index="index" @click="clickBtn(index)">
 					<view class="infos-btns-item-img-wrap">
@@ -22,11 +21,9 @@
 <script>
 	import InfosListCard from '@/components/infos/InfosListCard.vue'
 	import { newNotificationNum, messagesList } from "@/network/api_infos.js"
-	import BackTopbar from '@/components/common/BackTopbar.vue'
 	export default {
 		components: {
-			InfosListCard,
-			BackTopbar
+			InfosListCard
 		},
 		data() {
 			return {
@@ -138,12 +135,12 @@
 	.infos {
 		width: 100%;
 		height: 100%;
-		// .infos-title {
-		// 	font-size: 36rpx;
-		// 	font-weight: 500;
-		// 	color: #000000;
-		// 	line-height: 50rpx;
-		// }
+		.infos-title {
+			font-size: 36rpx;
+			font-weight: 500;
+			color: #000000;
+			line-height: 50rpx;
+		}
 		.infos-btns {
 			margin-top: 20rpx;
 			display: flex;
