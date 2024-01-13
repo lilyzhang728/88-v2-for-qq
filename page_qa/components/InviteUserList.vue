@@ -127,6 +127,13 @@
 				}, err => {
 					console.log('invideUserAnswer: ', err)
 				})
+			},
+			toSearch() {
+				const searchContentType = 0
+				let tabIndex = 6
+				uni.navigateTo({
+					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=${tabIndex}&searchContentType=${searchContentType}`
+				})
 			}
 		}
 	}
