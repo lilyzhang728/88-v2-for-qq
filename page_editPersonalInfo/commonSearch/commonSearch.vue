@@ -31,7 +31,8 @@
 				tabIndex: 2,  				//tabIndex: 1-tab1, 2-tab2, 3-tab3, 4-tab4
 				searchContentType: 0,	// 0:搜索文章  1:搜索徽章  2:搜索话题
 				historyList: ['体育馆预定', '停车泊位', '爱心捐赠', '蚂蚁借呗'],
-				findList: ['体育馆预定', '停车泊位', '爱心捐赠', '蚂蚁借呗', '蚂蚁借呗蚂蚁借呗蚂蚁借呗蚂蚁借呗']
+				findList: ['体育馆预定', '停车泊位', '爱心捐赠', '蚂蚁借呗', '蚂蚁借呗蚂蚁借呗蚂蚁借呗蚂蚁借呗'],
+				postId: ''
 			}
 		},
 		onLoad(option) {
@@ -44,6 +45,10 @@
 			// 徽章或者话题页会传
 			if(option.searchContentType) {
 				this.searchContentType = Number(option.searchContentType)
+			}
+			// 问题详情-邀请回答-搜索，带上了postId，跳转6的时候带上
+			if(option.postId) {
+				this.postId = option.postId
 			}
 		},
 		onUnload() {
@@ -96,7 +101,7 @@
 							case 6:
 								// 跳转人脉搜索结果页
 								uni.navigateTo({
-									url: `/page_qa/connectionSearchResult/connectionSearchResult?searchVal=${searchVal}`
+									url: `/page_qa/connectionSearchResult/connectionSearchResult?searchVal=${searchVal}&postId=${this.postId}`
 								})
 								break
 						}

@@ -22,7 +22,8 @@
 								<view class="connections-item-card-body">
 									<view class="connections-item-card-body-title">
 										<text class="connections-item-card-body-title-name">{{item.name}}</text>
-										<view class="connections-item-card-body-title-btn" @click="toAskQuestion(item)">向ta提问</view>
+										<view class="connections-item-card-body-title-btn" :class="{'connections-item-card-body-title-btn-grey': item.is_mentioned}" @click="toAskQuestion(item, index)">
+											{{item.is_mentioned ? '已提问' : '向ta提问'}}</view>
 									</view>
 									<view class="connections-item-card-body-info">{{item.school ? item.school : ''}} {{item.major ? item.major : ''}}</view>
 									<view class="connections-item-card-body-labels" v-if="item.target || item.tags.length">
@@ -101,7 +102,8 @@
 				return new Promise((resolve, reject) => {
 					connections({
 						'per_page': pageSize,
-						'page': pageNo
+						'page': pageNo,
+						'post_id': this.postId
 					}).then(res => {
 						if(res.code === 0 && Object.keys(res.data).length) {
 							resolve(res.data.items)
@@ -115,24 +117,29 @@
 				})
 				
 			},
-			toAskQuestion(item) {
-				invideUserAnswer({
-					'user_id': item.id,
-					'id': this.postId
-				}).then(res => {
-					if(res.code === 0) {
-						this.$emit('closePopup', true)
-					} else {
-					}
-				}, err => {
-					console.log('invideUserAnswer: ', err)
-				})
+			// 向他提问
+			toAskQuestion(item, index) {
+				if(!item.is_mentioned) {
+					this.$set(this.dataList[index], 'is_mentioned', true)
+					invideUserAnswer({
+						'user_id': item.id,
+						'id': this.postId
+					}).then(res => {
+						if(res.code === 0) {
+							// this.$emit('closePopup', true)
+						} else {
+						}
+					}, err => {
+						console.log('invideUserAnswer: ', err)
+					})
+				}
+				
 			},
 			toSearch() {
 				const searchContentType = 0
 				let tabIndex = 6
 				uni.navigateTo({
-					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=${tabIndex}&searchContentType=${searchContentType}`
+					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=${tabIndex}&searchContentType=${searchContentType}&postId=${this.postId}`
 				})
 			}
 		}
@@ -224,6 +231,9 @@
 									font-size: 24rpx;
 									font-weight: 600;
 									color: #FFFFFF;
+								}
+								.connections-item-card-body-title-btn-grey {
+									background: #dfdfdf !important;
 								}
 							}
 							.connections-item-card-body-info {

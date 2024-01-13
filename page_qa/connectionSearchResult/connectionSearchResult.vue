@@ -9,8 +9,8 @@
 		<!-- 搜索结果列表 -->
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '40px', 'padding': '0 25rpx'}" 
 		loading-more-default-text="点击加载更多" loading-more-no-more-text="没有更多了" :auto-show-system-loading="true">
-			<connection-card v-for="(item, index) in dataList" :item="item" :key="index"
-			@click.native.stop="toHomepage($event, item.id)"></connection-card>
+			<connection-card v-for="(item, index) in dataList" :item="item" :key="index" :index="index"
+			@click.native.stop="toHomepage($event, item.id)" @changeState="changeState"></connection-card>
 		</z-paging>
 	</view>
 </template>
@@ -19,6 +19,7 @@
 	import FakeSearchBox from "@/components/common/FakeSearchBox.vue"
 	import ConnectionCard from '@/components/qa/ConnectionCard.vue'
 	import { searchUser } from '@/network/api_index.js'
+	import { invideUserAnswer } from '@/network/api_qa.js'
 	export default {
 		components: {
 			FakeSearchBox,
@@ -28,6 +29,7 @@
 			return {
 				dataList: [],
 				searchVal: '',
+				postId: ''
 			}
 		},
 		watch: {
@@ -37,6 +39,9 @@
 		},
 		onLoad(option) {
 			this.searchVal = option.searchVal
+			if(option.postId) {
+				this.postId = option.postId
+			}
 		},
 		methods: {
 			queryList(pageNo, pageSize) {
@@ -50,7 +55,8 @@
 					searchUser({
 						'es_query': this.searchVal,
 						'per_page': pageSize,
-						'page': pageNo
+						'page': pageNo,
+						'post_id': this.postId
 					}).then(res => {
 						if(res.code === 0 && Object.keys(res.data).length) {
 							resolve(res.data.items)
@@ -100,6 +106,22 @@
 				uni.navigateBack({  //uni.navigateTo跳转的返回，默认1为返回上一级
 				    delta: 1
 				});
+			},
+			// 改变用户卡片状态： 向ta提问 ——> 已提问
+			changeState(index, cardId) {
+				this.$set(this.dataList[index], 'is_mentioned', true)
+				// 调提问接口
+				invideUserAnswer({
+					'user_id': cardId,
+					'id': this.postId
+				}).then(res => {
+					if(res.code === 0) {
+						// this.$emit('closePopup', true)
+					} else {
+					}
+				}, err => {
+					console.log('invideUserAnswer: ', err)
+				})
 			}
 		}
 	}

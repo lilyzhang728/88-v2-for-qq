@@ -1,3 +1,5 @@
+<!-- 人脉卡片 -->
+<!-- 本组件被 人脉页|邀请回答-搜索结果页  复用 -->
 <template>
 	<view class="connections-item-card">
 		<view class="connections-item-card-content">
@@ -7,7 +9,7 @@
 			<view class="connections-item-card-body">
 				<view class="connections-item-card-body-title">
 					<text class="connections-item-card-body-title-name">{{item.name}}</text>
-					<view class="connections-item-card-body-title-btn" @click.native.stop="toAskQuestion($event, item)">向ta提问</view>
+					<view class="connections-item-card-body-title-btn" :class="{'connections-item-card-body-title-btn-grey': item.is_mentioned}" @click.native.stop="toAskQuestion($event, item)">{{item.is_mentioned ? '已提问' : '向ta提问'}}</view>
 				</view>
 				<view class="connections-item-card-body-info">{{item.school ? item.school : ''}} {{item.major ? item.major : ''}}</view>
 				<view class="connections-item-card-body-labels" v-if="item.target || item.tags.length">
@@ -37,6 +39,14 @@
 				default: {
 					
 				}
+			},
+			parent: {
+				type: String,
+				default: ''
+			},
+			index: {
+				type: Number,
+				default: 0
 			}
 		},
 		data() {
@@ -51,9 +61,17 @@
 			toAskQuestion(e, item) {
 				//防止冒泡
 				e.preventDefault()
-				uni.navigateTo({
-					url: `/page_qa/askQuestion/askQuestion?userName=${item.name}&userId=${item.id}`
-				})
+				if(this.parent === 'connection') {
+					// 人脉页，跳转发布问题页
+					uni.navigateTo({
+						url: `/page_qa/askQuestion/askQuestion?userName=${item.name}&userId=${item.id}`
+					})
+				} else {
+					if(!item.is_mentioned) {
+						// 邀请回答-搜索结果页，改变状态
+						this.$emit('changeState', this.index, item.id)
+					}
+				}
 			},
 		},
 	}
@@ -98,6 +116,9 @@
 						font-size: 24rpx;
 						font-weight: 600;
 						color: #FFFFFF;
+					}
+					.connections-item-card-body-title-btn-grey {
+						background: #DFDFDF !important;
 					}
 				}
 				.connections-item-card-body-info {
