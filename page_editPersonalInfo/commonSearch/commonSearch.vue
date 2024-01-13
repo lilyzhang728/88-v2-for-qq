@@ -93,6 +93,12 @@
 									url: `/page_qa/qaSearchResult/qaSearchResult?searchVal=${searchVal}`
 								})
 								break
+							case 6:
+								// 跳转人脉搜索结果页
+								uni.navigateTo({
+									url: `/page_qa/connectionSearchResult/connectionSearchResult?searchVal=${searchVal}`
+								})
+								break
 						}
 						break
 					case 1:

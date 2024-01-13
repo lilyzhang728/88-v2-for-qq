@@ -164,6 +164,14 @@ export function searchTopic(params) {
 	})
 }
 
+//搜索-人脉
+export function searchUser(params) {
+	return getRequest({
+		path: `/api/users/${userId}/search`,
+		data: params
+	})
+}
+
 //获取标签列表
 export function tagsList(params) {
 	return getRequest({

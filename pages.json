@@ -395,6 +395,14 @@
                 		"navigationBarTitleText" : "",
                 		"enablePullDownRefresh" : false
                 	}
+                },
+                {
+                	"path" : "connectionSearchResult/connectionSearchResult",
+                	"style" : 
+                	{
+                		"navigationBarTitleText" : "",
+                		"enablePullDownRefresh" : false
+                	}
                 }
             ]
 		}

@@ -1,6 +1,6 @@
-<!-- 问答搜索结果页 -->
+<!-- 人脉搜索结果页 -->
 <template>
-	<view class="qa-search-result">
+	<view class="connection-search-result">
 		<!-- 搜索框 -->
 		<view class="news-search-box">
 			<fake-search-box :searchVal="searchVal" @clearAll="clearAll"></fake-search-box>
@@ -9,20 +9,20 @@
 		<!-- 搜索结果列表 -->
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '40px', 'padding': '0 25rpx'}" 
 		loading-more-default-text="点击加载更多" loading-more-no-more-text="没有更多了" :auto-show-system-loading="true">
-			<question-and-answer-card v-for="(item, index) in dataList" :key="index" :item="item" :index="index"
-			@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></question-and-answer-card>
+			<connection-card v-for="(item, index) in dataList" :item="item" :key="index"
+			@click.native.stop="toHomepage($event, item.id)"></connection-card>
 		</z-paging>
 	</view>
 </template>
 
 <script>
 	import FakeSearchBox from "@/components/common/FakeSearchBox.vue"
-	import QuestionAndAnswerCard from '@/components/qa/QuestionAndAnswerCard.vue'
-	import { searchArticle } from '@/network/api_index.js'
+	import ConnectionCard from '@/components/qa/ConnectionCard.vue'
+	import { searchUser } from '@/network/api_index.js'
 	export default {
 		components: {
 			FakeSearchBox,
-			QuestionAndAnswerCard
+			ConnectionCard
 		},
 		data() {
 			return {
@@ -47,9 +47,8 @@
 			//调搜索文章接口
 			handleSearchArticle(pageNo, pageSize) {
 				return new Promise((resolve, reject) => {
-					searchArticle({
+					searchUser({
 						'es_query': this.searchVal,
-						'post_type': 4,
 						'per_page': pageSize,
 						'page': pageNo
 					}).then(res => {
@@ -62,6 +61,13 @@
 						resolve([])
 						console.log('searchArticle: ', err)
 					})
+				})
+			},
+			toHomepage(e, id) {
+				//防止冒泡
+				e.preventDefault()
+				uni.navigateTo({
+					url: `/page_infos/homepage/homepage?userId=${id}`
 				})
 			},
 			//切换like状态
