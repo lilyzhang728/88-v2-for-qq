@@ -10,7 +10,7 @@
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '40px', 'padding': '0 25rpx'}" 
 		loading-more-default-text="点击加载更多" loading-more-no-more-text="没有更多了" :auto-show-system-loading="true">
 			<connection-card v-for="(item, index) in dataList" :item="item" :key="index" :index="index"
-			@click.native.stop="toHomepage($event, item.id)" @changeState="changeState"></connection-card>
+			@click.native.stop="toHomepage($event, item.id)" @changeState="changeState" :parent="postId ? '' : 'connection'"></connection-card>
 		</z-paging>
 	</view>
 </template>
