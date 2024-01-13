@@ -92,10 +92,10 @@
 			// 搜索帖子
 			toSearch() {
 				// 0:搜索文章  1:搜索徽章  2:搜索话题
-				const searchContentType = this.active ? 2 : 0	
+				const searchContentType = 0	
 				//tabIndex: 1-tab1, 2-tab2, 3-tab3, 4-tab4
 				uni.navigateTo({
-					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=4&searchVal=${this.searchVal}&searchContentType=${searchContentType}`
+					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=5&searchVal=${this.searchVal}&searchContentType=${searchContentType}`
 				})
 			},
 			//swiper滑动结束

@@ -38,9 +38,9 @@
 			if(option.tabIndex) {
 				this.tabIndex = Number(option.tabIndex)
 			}
-			if(option.searchVal) {
-				this.searchVal = option.searchVal
-			}
+			// if(option.searchVal) {
+			// 	this.searchVal = option.searchVal
+			// }
 			// 徽章或者话题页会传
 			if(option.searchContentType) {
 				this.searchContentType = Number(option.searchContentType)
@@ -85,6 +85,12 @@
 								// 跳转bbs搜索结果页
 								uni.navigateTo({
 									url: `/page_bbs/bbsSearchResult/bbsSearchResult?searchVal=${searchVal}`
+								})
+								break
+							case 5:
+								// 跳转qa搜索结果页
+								uni.navigateTo({
+									url: `/page_qa/qaSearchResult/qaSearchResult?searchVal=${searchVal}`
 								})
 								break
 						}

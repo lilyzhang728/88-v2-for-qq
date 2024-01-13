@@ -387,6 +387,14 @@
 					"navigationStyle": "custom"
                 }
                 
+                },
+                {
+                	"path" : "qaSearchResult/qaSearchResult",
+                	"style" : 
+                	{
+                		"navigationBarTitleText" : "",
+                		"enablePullDownRefresh" : false
+                	}
                 }
             ]
 		}
