@@ -28,13 +28,13 @@
 			</template>
 			<swiper class="swiper" :current="active" @animationfinish="swiperAnimationfinish">
 				<swiper-item class="swiper-item">
-					<bbs-rec @toTopicList="toTopicList"></bbs-rec>
+					<bbs-rec ref="bbsRec" @toTopicList="toTopicList"></bbs-rec>
 				</swiper-item>
 				<swiper-item class="swiper-item">
-					<bbs-focus></bbs-focus>
+					<bbs-focus ref="bbsFocus"></bbs-focus>
 				</swiper-item>
 				<swiper-item class="swiper-item">
-					<bbs-topic></bbs-topic>
+					<bbs-topic ref="bbsTopic"></bbs-topic>
 				</swiper-item>
 			</swiper>
 		</z-paging-swiper>
