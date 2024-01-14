@@ -19,10 +19,10 @@ export function transformTime(val) {
 		return (cur_year - year) + '年前'
 	}
 	if(cur_month > month) {
-		return year + '-' + month + '-' + day
+		return month + '-' + day
 	}
 	if(cur_day - day > 1) {
-		return year + '-' + month + '-' + day
+		return month + '-' + day
 	}
 	if(cur_day - day == 1) {
 		return '昨天' + hour + ':' + minute

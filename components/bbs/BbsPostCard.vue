@@ -1,16 +1,15 @@
 <!-- 帖子 -->
 <template>
 	<view class="bbs-post-card">
-		<view class="bbs-post-author">
-			<img class="bbs-post-author-avatar" :src="avatar"  @click.native.stop="toHomepage($event)"></img>
-			<view class="bbs-post-author-name"  @click.native.stop="toHomepage($event)">{{postData.author.name}}</view>
-			<view class="bbs-post-author-time">{{timestamp}}</view>
-		</view>
+		<!-- 头像、昵称、学校 -->
+		<card-user :item="postData"></card-user>
+		
 		<!-- 帖子所属话题 -->
 		<view class="bbs-post-topic" @click.native.stop="toTopic($event)" v-if="postData.bind_topics && postData.bind_topics.length">
 			<img class="bbs-post-topic-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
 			<text class="bbs-post-topic-text">{{postData.bind_topics[0].body}}</text>
 		</view>
+		
 		<!-- 正文 -->
 		<view class="bbs-post-content">{{postData.body.body}}</view>
 		<view class="bbs-post-img-box" v-if="postData.body.urls && postData.body.urls.length">
@@ -25,18 +24,19 @@
 			  @click.native="previewImg($event, pic)"
 			/>
 		</view>
+		
 		<!-- 卡片底部-点赞|评论 -->
 		<card-like-comment :cardData="postData" @checkoutLike="checkoutLike" :showComment="true"></card-like-comment>
 	</view>
 </template>
 
 <script>
-	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
-	import { transformTime } from '@/tools/transform_time.js'
 	import CardLikeComment from '@/components/common/CardLikeComment.vue'
+	import CardUser from '@/components/common/CardUser.vue'
 	export default {
 		components: {
-			CardLikeComment
+			CardLikeComment,
+			CardUser
 		},
 		props: {
 			//帖子的index
@@ -50,7 +50,9 @@
 					author: {
 						name: '',
 						avatar: '',
-						id: ''
+						id: '',
+						school: '',
+						major: ''
 					},
 					body: {
 						body: ''
@@ -67,15 +69,9 @@
 			},
 		},
 		computed: {
-			avatar() {
-				return this.postData.author.avatar ?  this.postData.author.avatar : DEFAULT_AVATAR
-			},
 			picList() {
 				return this.postData.body.urls && this.postData.body.urls.length ? this.postData.body.urls.slice(0, 3) : []
 			},
-			timestamp() {
-				return this.postData.timestamp ? transformTime(this.postData.timestamp) : this.postData.timestamp
-			}
  		},
 		methods: {
 			// 预览图片
@@ -89,14 +85,6 @@
 			},
 			checkoutLike(status) {
 				this.$emit('checkoutLike', this.index, status)
-			},
-			// 点击头像，去个人主页
-			toHomepage(e) {
-				//防止冒泡
-				e.preventDefault()
-				uni.navigateTo({
-					url: `/page_infos/homepage/homepage?userId=${this.postData.author.id}`
-				})
 			},
 			// 跳转话题详情页
 			toTopic(e) {
@@ -118,30 +106,6 @@
 		box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.15);
 		border-radius: 20rpx;
 		margin-bottom: 20rpx;
-		.bbs-post-author {
-			display: flex;
-			align-items: center;
-			.bbs-post-author-avatar {
-				width: 70rpx;
-				height: 70rpx;
-				margin-right:20rpx;
-				border-radius: 50%;
-			}
-			.bbs-post-author-name {
-				flex: 1;
-				font-size: 30rpx;
-				font-weight: 500;
-				color: #000;
-				line-height: 42rpx;
-			}
-			.bbs-post-author-time {
-				width: 100rpx;
-				font-size: 20rpx;
-				color: rgba(0,0,0,0.4);
-				line-height: 28rpx;
-				margin-left: 10rpx;
-			}
-		}
 		.bbs-post-topic {
 			font-size: 26rpx;
 			color: #35C8A6;
