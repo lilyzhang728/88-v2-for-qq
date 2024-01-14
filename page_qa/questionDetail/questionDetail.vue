@@ -408,6 +408,8 @@
 			height: 50rpx;
 			display: flex;
 			align-items: center;
+			flex: 1;
+			overflow: hidden;
 			.bbs-post-detail-author-img {
 				height: 50rpx;
 				width: 50rpx;
@@ -416,10 +418,14 @@
 			}
 			.bbs-post-detail-author-text {
 				flex: 1;
+				overflow: hidden;
 				.bbs-post-detail-author-text-name {
 					font-size: 24rpx;
 					color: rgba(0,0,0,0.5);
 					line-height: 33rpx;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
 				}
 				
 			}
@@ -428,6 +434,8 @@
 			font-size: 24rpx;
 			color: rgba(0,0,0,0.5);
 			line-height: 33rpx;
+			width: 320rpx;
+			text-align: right;
 		}
 	}
 	.question-detail-btns {

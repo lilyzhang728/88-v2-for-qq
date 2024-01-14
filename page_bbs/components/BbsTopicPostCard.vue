@@ -1,11 +1,9 @@
 <!-- 话题详情-帖子 -->
 <template>
 	<view class="bbs-topic-post-card">
-		<view class="bbs-topic-post-author">
-			<img class="bbs-topic-post-author-avatar" :src="postData.author.avatar"></img>
-			<view class="bbs-topic-post-author-name">{{postData.author.name}}</view>
-			<view class="bbs-topic-post-author-time">{{timestamp}}</view>
-		</view>
+		<!-- 头像、昵称、学校 -->
+		<card-user :item="postData"></card-user>
+		
 		<!-- <view class="bbs-topic-post-topic">
 			<img class="bbs-topic-post-topic-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
 			<text class="bbs-topic-post-topic-text">COS大赛灌篮高手COS大赛灌篮高手COS大赛灌篮高手COS大赛灌篮高手COS大赛</text>
@@ -31,11 +29,12 @@
 </template>
 
 <script>
-	import { transformTime } from '@/tools/transform_time.js'
 	import CardLikeComment from '@/components/common/CardLikeComment.vue'
+	import CardUser from '@/components/common/CardUser.vue'
 	export default {
 		components: {
-			CardLikeComment
+			CardLikeComment,
+			CardUser
 		},
 		props: {
 			postData: {
@@ -66,9 +65,6 @@
 			picList() {
 				return this.postData.body.urls && this.postData.body.urls.length ? this.postData.body.urls.slice(0, 3) : []
 			},
-			timestamp() {
-				return this.postData.timestamp ? transformTime(this.postData.timestamp) : this.postData.timestamp
-			}
 		},
 		methods: {
 			checkoutLike(status) {
@@ -85,26 +81,7 @@
 		box-shadow: 0rpx 0rpx 13rpx 0rpx rgba(81,211,184,0.15);
 		border-radius: 20rpx;
 		margin-top: 20rpx;
-		.bbs-topic-post-author {
-			display: flex;
-			align-items: center;
-			font-size: 24rpx;
-			color: rgba(0,0,0,0.5);
-			line-height: 33rpx;
-			.bbs-topic-post-author-avatar {
-				width: 50rpx;
-				height: 50rpx;
-				margin-right:20rpx;
-				border-radius: 50%;
-			}
-			.bbs-topic-post-author-name {
-				flex: 1;
-				
-			}
-			.bbs-topic-post-author-time {
-				text-align: right;
-			}
-		}
+		
 		.bbs-topic-post-topic {
 			font-size: 26rpx;
 			color: #35C8A6;

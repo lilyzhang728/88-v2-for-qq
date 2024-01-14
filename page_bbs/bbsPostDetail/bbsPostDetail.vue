@@ -3,13 +3,8 @@
 	<view class="bbs-post-detail" :style="{backgroundImage: 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)',backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
 		<back-topbar></back-topbar>
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': (customBar+20) + 'px', 'bottom': '64px', paddingLeft: '25rpx', paddingRight: '25rpx'}">
-			<!-- 帖子作者 -->
-			<view class="bbs-post-detail-author">
-				<img :src="avatar" alt="" class="bbs-post-detail-author-img"  @click.native.stop="toHomepage($event)">
-				<view class="bbs-post-detail-author-text"  @click.native.stop="toHomepage($event)">
-					<view class="bbs-post-detail-author-text-name">{{postData.author.name}}</view>
-				</view>
-			</view>
+			<!-- 头像、昵称、学校 -->
+			<card-user :item="postData" parent="detail"></card-user>
 			
 			<!-- 帖子所属话题 -->
 			<view class="bbs-post-detail-topic" v-if="postData.bind_topics && postData.bind_topics.length" @click="toTopicDetail">
@@ -75,11 +70,13 @@
 	import { postComment } from "@/network/api_bbs.js"
 	import { utf16toEntities, uncodeUtf16 } from '@/tools/transform_emoji.js'
 	import { transformMaxNum } from '@/tools/transform_time.js'
+	import CardUser from '@/components/common/CardUser.vue'
 	export default {
 		components: {
 			BbsPostComment,
 			BackTopbar,
-			BbsCommentKeyboard
+			BbsCommentKeyboard,
+			CardUser
 		},
 		data() {
 			return {
@@ -119,9 +116,6 @@
 			}
 		},
 		computed: {
-			avatar() {
-				return this.postData.author.avatar ?  this.postData.author.avatar : DEFAULT_AVATAR
-			},
 			//共xxx条评论
 			commentNum() {
 				return this.postData.comments_count ? this.postData.comments_count : 0
@@ -353,33 +347,7 @@
 		left: 0;
 		bottom: 0;
 		padding: 0 25rpx;
-		.bbs-post-detail-author {
-			height: 66rpx;
-			display: flex;
-			margin-bottom: 50rpx;
-			.bbs-post-detail-author-img {
-				height: 66rpx;
-				width: 66rpx;
-				border-radius: 50%;
-				margin-right: 20rpx;
-			}
-			.bbs-post-detail-author-text {
-				flex: 1;
-				display: flex;
-				align-items: center;
-				.bbs-post-detail-author-text-name {
-					font-size: 34rpx;
-					font-weight: 600;
-					color: rgba(0,0,0,1);
-				}
-				.bbs-post-detail-author-text-tip {
-					font-size: 20rpx;
-					color: rgba(0,0,0,0.4);
-					line-height: 28rpx;
-					margin-top: 5rpx;
-				}
-			}
-		}
+		
 		.bbs-post-detail-topic {
 			margin-top: 36rpx;
 			font-size: 26rpx;

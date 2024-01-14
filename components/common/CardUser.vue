@@ -5,9 +5,9 @@
 		<view class="card-user-right">
 			<view class="card-user-name"  @click.native.stop="toHomepage($event)">{{item.author.name}}</view>
 			<view class="card-user-infos">
-				<text class="card-user-time">{{timestamp}}</text>
-				<text class="card-user-infos-text" v-if="item.author.school">{{item.author.school}}</text>
-				<!-- <text class="card-user-infos-text" v-if="item.major">{{item.author.major}}</text> -->
+				<text class="card-user-time" v-if="!isDetail">{{timestamp}}</text>
+				<text class="card-user-infos-text" :class="{'card-user-infos-text-detail': isDetail}" v-if="item.author.school">{{item.author.school}}</text>
+				<text class="card-user-infos-text" v-if="isDetail && item.author.major">{{item.author.major}}</text>
 			</view>
 		</view>
 	</view>
@@ -30,6 +30,11 @@
 					},
 				}
 			},
+			parent: {
+				type: String,
+				default: '',
+				required: false
+			}
 		},
 		computed: {
 			avatar() {
@@ -37,6 +42,10 @@
 			},
 			timestamp() {
 				return this.item.timestamp ? transformTime(this.item.timestamp) : this.item.timestamp
+			},
+			// 是否是detail页面
+			isDetail() {
+				return this.parent === 'detail'
 			}
 		},
 		methods: {
@@ -81,6 +90,9 @@
 				}
 				.card-user-infos-text {
 					margin-left: 10rpx;
+				}
+				.card-user-infos-text-detail {
+					margin-left: 0;
 				}
 			}
 		}		

@@ -27,7 +27,6 @@
 		data() {
 			return {
 				dataList: [],
-				defaultAvatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',
 			}
 		},
 		methods: {

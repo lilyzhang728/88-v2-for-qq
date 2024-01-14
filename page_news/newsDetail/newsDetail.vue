@@ -6,10 +6,14 @@
 			<view class="news-detail-title">{{newsData.title}}</view>
 			
 			<!-- 作者|日期 -->
-			<view class="news-detail-author">
-				<text class="news-detail-author-text">{{newsData.author.name}}</text>
-				<text class="news-detail-author-split"></text>
-				<text class="news-detail-author-date">{{newsData.timestamp}}</text>
+			<view class="question-detail-info-box">
+				<view class="bbs-post-detail-author">
+					<img :src="avatar" alt="" class="bbs-post-detail-author-img"  @click.native.stop="toHomepage($event)">
+					<view class="bbs-post-detail-author-text"  @click.native.stop="toHomepage($event)">
+						<view class="bbs-post-detail-author-text-name">{{newsData.author.name}}</view>
+					</view>
+				</view>
+				<view class="bbs-post-detail-edit-info">编辑于{{newsData.timestamp}}</view>
 			</view>
 			
 			<!-- 资讯摘要 -->
@@ -72,6 +76,7 @@
 </template>
 
 <script>
+	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
 	import { guideDetail, likeGuide, disLikeGuide, collectGuide, unCollectGuide } from '@/network/api_guide.js'
 	import BackTopbar from "@/components/common/BackTopbar.vue"
 	import BbsCommentKeyboard from "@/components/common/CommentKeyboard.vue"
@@ -117,6 +122,9 @@
 			}
 		},
 		computed: {
+			avatar() {
+				return this.newsData.author.avatar ?  this.newsData.author.avatar : DEFAULT_AVATAR
+			},
 			newsBody() {
 				return this.newsData.body.body ? uncodeUtf16(this.newsData.body.body) : this.newsData.body.body
 			},
@@ -309,7 +317,15 @@
 						})
 					}
 				})
-			}
+			},
+			// 点击头像，去个人主页
+			toHomepage(e) {
+				//防止冒泡
+				e.preventDefault()
+				uni.navigateTo({
+					url: `/page_infos/homepage/homepage?userId=${this.newsData.author.id}`
+				})
+			},
 		}
 	}
 </script>
@@ -334,21 +350,44 @@
 		color: rgba(0,0,0,0.5);
 		line-height: 49rpx;
 	}
-	.news-detail-author {
+	
+	.question-detail-info-box {
 		margin-top: 40rpx;
-		font-size: 24rpx;
-		line-height: 33rpx;
 		display: flex;
-		.news-detail-author-text {
-			color: #35C8A7;
+		align-items: center;
+		justify-content: space-between;
+		.bbs-post-detail-author {
+			height: 50rpx;
+			display: flex;
+			align-items: center;
+			flex: 1;
+			overflow: hidden;
+			.bbs-post-detail-author-img {
+				height: 50rpx;
+				width: 50rpx;
+				border-radius: 50%;
+				margin-right: 20rpx;
+			}
+			.bbs-post-detail-author-text {
+				flex: 1;
+				overflow: hidden;
+				.bbs-post-detail-author-text-name {
+					font-size: 24rpx;
+					color: rgba(0,0,0,0.5);
+					line-height: 33rpx;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+				}
+				
+			}
 		}
-		.news-detail-author-split {
-			width: 1rpx;
-			border: 1rpx solid #E2E2E2;
-			margin: 8rpx 20rpx;
-		}
-		.news-detail-author-date {
-			color: rgba(0,0,0,0.4);
+		.bbs-post-detail-edit-info {
+			font-size: 24rpx;
+			color: rgba(0,0,0,0.5);
+			line-height: 33rpx;
+			width: 320rpx;
+			text-align: right;
 		}
 	}
 	.news-detail-content {

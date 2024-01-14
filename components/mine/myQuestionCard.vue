@@ -1,13 +1,9 @@
 <!-- 我的问答 -->
 <template>
 	<view class="question-item-card" @click="toDetail(item)">
-		<view class="question-item-card-author">
-			<img :src="item.author.avatar ? item.author.avatar : defaultAvatar" alt="" class="question-item-card-author-img">
-			<view class="question-item-card-author-text">
-				<view class="question-item-card-author-name">{{item.author.name}}</view>
-				<view class="question-item-card-author-time">{{item.timestamp}}</view>
-			</view>
-		</view>
+		<!-- 头像、昵称、学校 -->
+		<card-user :item="item"></card-user>
+		
 		<view class="question-item-card-content" :class="{'question-item-card-content-haveImg': item.body.urls && item.body.urls.length}">
 			<view class="question-item-card-content-left">
 				<view class="question-item-card-content-left-title van-multi-ellipsis--l3">{{item.title}}</view>
@@ -24,11 +20,12 @@
 </template>
 
 <script>
-	import { transformTime } from '@/tools/transform_time.js'
 	import CardLikeComment from '@/components/common/CardLikeComment.vue'
+	import CardUser from '@/components/common/CardUser.vue'
 	export default {
 		components: {
-			CardLikeComment
+			CardLikeComment,
+			CardUser
 		},
 		props: {
 			item: {
@@ -43,7 +40,6 @@
 		},
 		data() {
 			return {
-				defaultAvatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',
 			}
 		},
 		methods: {
@@ -74,36 +70,6 @@
 				box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.15);
 				border-radius: 20rpx;
 				margin-bottom: 20rpx;
-				.question-item-card-author {
-					height: 66rpx;
-					line-height: 66rpx;
-					font-size: 24rpx;
-					color: rgba(0,0,0);
-					display: flex;
-					align-items: center;
-					.question-item-card-author-img {
-						width:66rpx;
-						height: 66rpx;
-						border-radius: 50%;
-						margin-right: 20rpx;
-					}
-					.question-item-card-author-text {
-						flex: 1;
-						.question-item-card-author-name {
-							font-size: 24rpx;
-							color: rgba(0,0,0);
-							line-height: 33rpx;
-							overflow: hidden;
-							height: 33rpx;
-						}
-						.question-item-card-author-time {
-							font-size: 20rpx;
-							color: rgba(0,0,0,0.4);
-							line-height: 28rpx;
-							margin-top: 5rpx;
-						}
-					}
-				}
 				.question-item-card-content {
 					display: flex;
 					margin-top: 20rpx;

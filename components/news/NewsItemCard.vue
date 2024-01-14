@@ -1,12 +1,8 @@
 <template>
 	<view class="news-item-card" @click.native="toNewsDetail">
-		<view class="news-item-card-author">
-			<img :src="avatar" @click.native.stop="toHomepage($event, newsItem.author.id)" alt="" class="news-item-card-author-img">
-			<view class="news-item-card-author-text" @click.native.stop="toHomepage($event, newsItem.author.id)">
-				<view class="news-item-card-author-name">{{newsItem.author.name}}</view>
-				<view class="news-item-card-author-time">{{timestamp}}</view>
-			</view>
-		</view>
+		<!-- 头像、昵称、学校 -->
+		<card-user :item="newsItem"></card-user>
+		
 		<view class="news-item-card-content" :class="{'news-item-card-content-haveImg': newsItem.body.urls && newsItem.body.urls.length>0}">
 			<view class="news-item-card-content-left">
 				<view class="news-item-card-content-left-title van-multi-ellipsis--l3">{{newsItem.title}}</view>
@@ -23,11 +19,12 @@
 </template>
 
 <script>
-	import { transformTime } from '@/tools/transform_time.js'
 	import CardLikeComment from '@/components/common/CardLikeComment.vue'
+	import CardUser from '@/components/common/CardUser.vue'
 	export default {
 		components: {
-			CardLikeComment
+			CardLikeComment,
+			CardUser
 		},
 		props: {
 			newsItem: {
@@ -36,7 +33,9 @@
 				default: {
 					author: {
 						avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',		//默认头像
-						name: ''
+						name: '',
+						school: '',
+						major: ''
 					},
 					body: {
 						cover_url: '',
@@ -62,12 +61,7 @@
 			},
 		},
 		computed: {
-			avatar() {
-				return this.newsItem.author.avatar ? this.newsItem.author.avatar : 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
-			},
-			timestamp() {
-				return this.newsItem.timestamp ? transformTime(this.newsItem.timestamp) : this.newsItem.timestamp
-			}
+			
 		},
 		methods: {
 			checkoutLike(status) {
@@ -81,14 +75,7 @@
 					url: `/page_news/newsDetail/newsDetail?id=${this.newsItem.id}`
 				});
 			},
-			// 点击头像，去个人主页
-			toHomepage(e, id) {
-				//防止冒泡
-				e.preventDefault()
-				uni.navigateTo({
-					url: `/page_infos/homepage/homepage?userId=${id}`
-				})
-			},
+			
 		}
 	}
 </script>
@@ -101,36 +88,7 @@
 		box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.15);
 		border-radius: 20rpx;
 		margin-bottom: 20rpx;
-		.news-item-card-author {
-			height: 66rpx;
-			line-height: 66rpx;
-			font-size: 24rpx;
-			color: rgba(0,0,0);
-			display: flex;
-			align-items: center;
-			.news-item-card-author-img {
-				width:66rpx;
-				height: 66rpx;
-				border-radius: 50%;
-				margin-right: 20rpx;
-			}
-			.news-item-card-author-text {
-				flex: 1;
-				.news-item-card-author-name {
-					font-size: 24rpx;
-					color: rgba(0,0,0);
-					line-height: 33rpx;
-					overflow: hidden;
-					height: 33rpx;
-				}
-				.news-item-card-author-time {
-					font-size: 20rpx;
-					color: rgba(0,0,0,0.4);
-					line-height: 28rpx;
-					margin-top: 5rpx;
-				}
-			}
-		}
+		
 		.news-item-card-content {
 			// display: flex;
 			margin-top: 20rpx;
