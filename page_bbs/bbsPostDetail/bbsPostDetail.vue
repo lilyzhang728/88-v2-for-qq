@@ -29,7 +29,8 @@
 			<!-- 评论区 -->
 			<view class="bbs-post-detail-comment">
 				<view class="bbs-post-detail-comment-total">共{{commentNum}}条评论</view>
-				<bbs-post-comment @reply="reply" :commentData="dataList" @checkoutCommentLike="checkoutCommentLike"></bbs-post-comment>
+				<bbs-post-comment @reply="reply" :commentData="dataList" 
+				@checkoutCommentLike="checkoutCommentLike" @checkoutCommentLikeLevel2="checkoutCommentLikeLevel2"></bbs-post-comment>
 			</view>
 		</z-paging>
 		
@@ -319,6 +320,14 @@
 					this.dataList[index].likers_count++
 				} else {
 					this.dataList[index].likers_count--
+				}
+			},
+			checkoutCommentLikeLevel2(index, subIndex, status) {
+				this.dataList[index].descendants[subIndex].is_like = status
+				if(status) {
+					this.dataList[index].descendants[subIndex].likers_count++
+				} else {
+					this.dataList[index].descendants[subIndex].likers_count--
 				}
 			},
 			// 点击头像，去个人主页

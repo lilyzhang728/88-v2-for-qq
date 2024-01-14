@@ -1,47 +1,50 @@
+<!-- 查看全部回复 -->
 <template>
 	<view class="wrap">
 		<view class="comment">
-			<view class="top">
-				<view class="left">
-					<view class="heart-photo"><image :src="getAvatar(commentData)" mode=""></image></view>
-					<view class="user-info">
-						<view class="name">{{ commentData.author.name }}</view>
-						<view class="date">{{commentData.timestamp}}</view>
+			<!-- 头像、昵称、学校 -->
+			<card-user v-if="commentData.author" :item="commentData" parent="detail"></card-user>
+			<!-- 1级评论正文 -->
+			<view class="comment-content-body" @click="handleReply(commentData)">{{ commentBody(commentData.body) }}</view>
+			<!-- 第一层: 时间、点赞、评论 -->
+			<view class="comment-content-footer">
+				<view class="comment-content-footer-left">{{transformTimestamp(commentData)}}</view>
+				<view class="comment-content-footer-right">
+					<view class="comment-content-footer-right-like">
+						<van-icon v-if="!commentData.is_like" name="good-job" size="34rpx" color="#D7D7D7" @click.native="getLike(true)"></van-icon>
+						<van-icon v-if="commentData.is_like" name="good-job" size="34rpx" color="#8B8B8B" @click.native="getLike(false)"></van-icon>
+						<view class="num">{{ handleTransform(commentData.likers_count) }}</view>
+					</view>
+					<view class="comment-content-footer-right-reply">
+						<van-icon name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(commentData)" />
 					</view>
 				</view>
-				<view class="right" :class="{ highlight: commentData.is_like }">
-					{{ handleTransform(commentData.likers_count) }}
-					<van-icon v-if="!commentData.is_like" name="like-o" size="25rpx" class="like" color="#9a9a9a" @click.native="getLike(true)"></van-icon>
-					<van-icon v-if="commentData.is_like" name="like" size="25rpx" class="like" @click.native="getLike(false)"></van-icon>
-				</view>
 			</view>
-			<!-- 1级评论正文 -->
-			<view class="content" @click="handleReply(commentData)">{{ commentBody(commentData.body) }}</view>
 		</view>
 		<view class="all-reply">
 			<view class="all-reply-top">全部回复（{{ subReplyNum }}）</view>
 			<view class="item" v-for="(item, index) in commentData.descendants" :key="index">
 				<view class="comment">
-					<view class="top">
-						<view class="left">
-							<view class="heart-photo"><image :src="getAvatar(item)" mode=""></image></view>
-							<view class="user-info">
-								<view class="name">{{ item.author.name }}</view>
-								<view class="date">{{ item.timestamp }}</view>
+					<card-user v-if="item.author" :item="item" parent="detail"></card-user>
+					<!-- 2级评论正文 -->
+					<view class="comment-content-body" @click="handleReply(item, index)">
+						<text v-if="!item.is_first_descend">回复 <text style="color: #999999;">{{item.parent_author}}</text>：</text>
+						{{ commentBody(item.body) }}
+					</view>
+					<!-- 第2层: 时间、点赞、评论 -->
+					<view class="comment-content-footer">
+						<view class="comment-content-footer-left">{{transformTimestamp(item)}}</view>
+						<view class="comment-content-footer-right">
+							<view class="comment-content-footer-right-like">
+								<van-icon v-if="!item.is_like" name="good-job" size="34rpx" color="#D7D7D7" @click.native="getLike(true, index, 'sub')"></van-icon>
+								<van-icon v-if="item.is_like" name="good-job" size="34rpx" color="#8B8B8B" @click.native="getLike(false, index, 'sub')"></van-icon>
+								<view class="num">{{ handleTransform(item.likers_count) }}</view>
+							</view>
+							<view class="comment-content-footer-right-reply">
+								<van-icon name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(item, index)" />
 							</view>
 						</view>
-						<view class="right"  :class="{ highlight: item.is_like }">
-							<view class="num">{{ handleTransform(item.likers_count) }}</view>
-							<van-icon v-if="!item.is_like" name="like-o" class="like" size="25rpx" color="#9a9a9a" @click.native="getLike(true, index, 'sub')"></van-icon>
-							<van-icon v-if="item.is_like" name="like" class="like" size="25rpx" @click.native="getLike(false, index, 'sub')"></van-icon>
-						</view>
 					</view>
-					<!-- <view class="reply" v-if="item.reply">
-						<view class="username">{{ item.reply.name }}</view>
-						<view class="text">{{ item.reply.contentStr }}</view>
-					</view> -->
-					<!-- 2级评论正文 -->
-					<view class="content" @click="handleReply(item, index)">{{ commentBody(item.body) }}</view>
 				</view>
 			</view>
 		</view>
@@ -58,11 +61,13 @@
 const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
 import { allReply, likeComment, disLikeComment, postComment } from "@/network/api_bbs.js"
 import BbsCommentKeyboard from "@/page_bbs/components/BbsCommentKeyboard.vue"
-import { transformMaxNum } from '@/tools/transform_time.js'
+import { transformMaxNum, transformTime } from '@/tools/transform_time.js'
 import { utf16toEntities, uncodeUtf16 } from '@/tools/transform_emoji.js'
+import CardUser from '@/components/common/CardUser.vue'
 export default {
 	components: {
-		BbsCommentKeyboard
+		BbsCommentKeyboard,
+		CardUser
 	},
 	data() {
 		return {
@@ -91,6 +96,9 @@ export default {
 		this.getAllReply(option.id)
 	},
 	methods: {
+		transformTimestamp(item) {
+			return item.timestamp ? transformTime(item.timestamp) : item.timestamp
+		},
 		// 点赞、评论 大数单位转化
 		handleTransform(val) {
 			return transformMaxNum(val)
@@ -223,50 +231,34 @@ page {
 	padding: 25rpx;
 	font-size: 32rpx;
 	background-color: #ffffff;
-	.top {
+	
+	.comment-content-body {
+		font-size: 30rpx;
+		margin-top: 10rpx;
+	}
+	.comment-content-footer {
 		display: flex;
 		justify-content: space-between;
-	}
-	.left {
-		display: flex;
-		.heart-photo {
-			image {
-				width: 64rpx;
-				height: 64rpx;
-				border-radius: 50%;
-				background-color: #f2f2f2;
-			}
-		}
-		.user-info {
-			margin-left: 10rpx;
-			.name {
-				color: #35C8A6;
-				font-size: 28rpx;
-				margin-bottom: 4rpx;
-			}
-			.date {
-				font-size: 20rpx;
-				color: #ccc;
-			}
-		}
-	}
-	.right {
-		display: flex;
-		font-size: 20rpx;
 		align-items: center;
-		color: #9a9a9a;
-		.like {
-			margin-left: 6rpx;
+		font-size: 22rpx;
+		color: rgba(0,0,0,0.6);
+		overflow: hidden;
+		.comment-content-footer-left {
+			
 		}
-		.num{
-			font-size: 26rpx;
-			color: #9a9a9a;
-		}
-	}
-	.highlight {
-		color: #35C8A6;
-		.num{
-			color: #35C8A6;
+		.comment-content-footer-right {
+			display: flex;
+			align-items: center;
+			.comment-content-footer-right-like {
+				display: flex;
+				align-items: center;
+				color: #9a9a9a;
+				font-size: 26rpx;
+			}
+			.comment-content-footer-right-reply {
+				margin-top: 12rpx;
+				margin-left: 20rpx;
+			}
 		}
 	}
 }
@@ -284,17 +276,7 @@ page {
 	}
 	.item {
 		margin: 25rpx;
-		// border-bottom: solid 2rpx #ccc;
 	}
-	.reply {
-		padding: 20rpx;
-		background-color: rgb(242, 242, 242);
-		border-radius: 12rpx;
-		margin: 10rpx 0;
-		.username {
-			font-size: 24rpx;
-			color: #7a7a7a;
-		}
-	}
+	
 }
 </style>

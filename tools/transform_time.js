@@ -33,7 +33,10 @@ export function transformTime(val) {
 	if(cur_minute > minute) {
 		return (cur_minute - minute) + '分钟前'
 	}
-	return (cur_second - second) + '秒钟前'
+	if(cur_second > second) {
+		return (cur_second - second) + '秒钟前'
+	}
+	return '刚刚'
 }
 
 
