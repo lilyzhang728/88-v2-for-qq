@@ -40,7 +40,7 @@
 			<!-- 评论区 -->
 			<view class="bbs-post-detail-comment">
 				<view class="bbs-post-detail-comment-total">共{{commentNum}}个回答</view>
-				<bbs-post-comment :commentData="dataList" @checkoutCommentLike="checkoutCommentLike"></bbs-post-comment>
+				<bbs-post-comment :commentData="dataList" :hideReply="true" @checkoutCommentLike="checkoutCommentLike"></bbs-post-comment>
 			</view>
 		</z-paging>
 		

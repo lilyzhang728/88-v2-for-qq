@@ -18,7 +18,7 @@
 							<view class="num">{{ handleTransform(item.likers_count) }}</view>
 						</view>
 						<view class="comment-content-footer-right-reply">
-							<van-icon name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(item, 1, index)" />
+							<van-icon v-if="!hideReply" name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(item, 1, index)" />
 						</view>
 					</view>
 				</view>
@@ -42,7 +42,7 @@
 								<view class="num">{{ handleTransform(reply.likers_count) }}</view>
 							</view>
 							<view class="comment-content-footer-right-reply">
-								<van-icon name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(reply, 2, index, subIndex)" />
+								<van-icon v-if="!hideReply" name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(reply, 2, index, subIndex)" />
 							</view>
 						</view>
 					</view>
@@ -70,6 +70,11 @@
 				type: Array,
 				default: []
 			},
+			hideReply: {
+				type: Boolean,
+				default: false,
+				required: false
+			}
 		},	
 		components: {
 			CardUser
