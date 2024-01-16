@@ -92,7 +92,7 @@
 				flex: 3;
 				margin-right: 20rpx;
 				.question-item-card-content-left-title {
-					font-size: 30rpx;
+					font-size: 32rpx;
 					margin-bottom: 10rpx;
 					color: #000;
 					line-height: 42rpx;
@@ -103,8 +103,8 @@
 				}
 				.question-item-card-content-left-infos {
 					color: rgba(0, 0, 0, 0.4);
-					font-size: 22rpx;
-					line-height: 30rpx;
+					font-size: 30rpx;
+					// line-height: 34rpx;
 					margin-bottom: 10rpx;
 					display: -webkit-box;
 					-webkit-box-orient: vertical;

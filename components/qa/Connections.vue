@@ -1,7 +1,7 @@
 <!-- 人脉页 -->
 <template>
 	<view class="connections">
-		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '30rpx', 'left': '25rpx', 'right': '25rpx'}">
+		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'left': '25rpx', 'right': '25rpx'}">
 			<!-- connections列表 -->
 			<view class="connections-list" v-if="dataList.length">
 				<connection-card v-for="(item, index) in dataList" :item="item" :key="index" 

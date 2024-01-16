@@ -127,12 +127,12 @@
 			}
 		}
 		.bbs-post-content {
-			margin-top: 20rpx;
+			// margin-top: 20rpx;
 			border-radius: 8rpx;
 			border: 20rpx solid #fff;
-			font-size: 26rpx;
+			font-size: 30rpx;
 			color: #000;
-			line-height: 45rpx;
+			// line-height: 45rpx;
 			display: -webkit-box;
 			-webkit-line-clamp: 3;
 			-webkit-box-orient: vertical;

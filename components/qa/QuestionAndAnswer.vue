@@ -1,7 +1,7 @@
 <!-- 问答页 -->
 <template>
 	<view class="question-and-answer">
-		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '30rpx', 'left': '25rpx', 'right': '25rpx'}">
+		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'left': '25rpx', 'right': '25rpx'}">
 			<view class="question-list">
 				<question-and-answer-card v-for="(item,index) in dataList" :key="index"
 				 :item="item" :index="index" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></question-and-answer-card>

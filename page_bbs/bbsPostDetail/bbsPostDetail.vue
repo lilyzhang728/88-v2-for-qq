@@ -13,7 +13,7 @@
 			</view>
 			
 			<!-- 帖子正文 -->
-			<text class="bbs-post-detail-content">{{postBody}}</text>
+			<view class="bbs-post-detail-content">{{postBody}}</view>
 			
 			<!-- 图片 -->
 			<view class="bbs-post-detail-img-box" v-if="postData.body.urls.length">

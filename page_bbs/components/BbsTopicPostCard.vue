@@ -106,9 +106,9 @@
 			margin-top: 20rpx;
 			padding: 20rpx;
 			border-radius: 8rpx;
-			font-size: 26rpx;
+			font-size: 30rpx;
 			color: #000;
-			line-height: 45rpx;
+			// line-height: 45rpx;
 		}
 		.bbs-topic-post-img-box {
 			margin-top: 40rpx;
