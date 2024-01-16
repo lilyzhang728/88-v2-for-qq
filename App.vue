@@ -36,7 +36,7 @@
 	/*每个页面公共css */
 	/* 注意:引入css的格式 */
 	@import url("@/wxcomponents/vant/common/index.wxss");
-
+	
 	/* 样式的value不加""   */
 	page {
 		background-color: #fff;
