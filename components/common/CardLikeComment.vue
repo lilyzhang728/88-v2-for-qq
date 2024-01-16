@@ -3,22 +3,22 @@
 	<view class="card-operate" @click.native.stop="clickOperate($event)">
 		<!-- 点赞 -->
 		<view class="card-operate-like">
-			<van-icon name="good-job" :color="cardData.is_like ? '#8B8B8B' : '#D7D7D7'" size="34rpx" @click.native.stop="checkoutLike($event)" />
-			<view class="card-operate-like-num"  @click.native.stop="checkoutLike($event, false)" >{{handleTransform(cardData.likers_count)}}</view>
+			<van-icon name="good-job" size="40rpx" :color="cardData.is_like ? activeColor : '#D7D7D7'" @click.native.stop="checkoutLike($event)" />
+			<view class="card-operate-like-num" :style="{'color': cardData.is_like ? activeColor : '#00000099'}"  @click.native.stop="checkoutLike($event, false)" >{{handleTransform(cardData.likers_count)}}</view>
 		</view>
 		
 		<!-- 评论 -->
 		<view class="card-operate-split" v-if="showComment"></view>
 		<view class="card-operate-comment" v-if="showComment">
-			<van-icon name="comment" size="34rpx" color="#D7D7D7" @click.native.stop="toComment($event)" />
+			<van-icon name="comment" size="40rpx" color="#D7D7D7" @click.native.stop="toComment($event)" />
 			<view class="card-operate-comment-num" @click.native.stop="toComment($event)">{{handleTransform(cardData.comments_count)}}</view>
 		</view>
 		
 		<!-- 收藏 -->
 		<view class="card-operate-split" v-if="showStar"></view>
 		<view class="card-operate-comment" v-if="showStar">
-			<van-icon name="star" size="34rpx" :color="cardData.is_collect ? '#8B8B8B' : '#D7D7D7'" @click.native.stop="clickStar($event)" />
-			<view class="card-operate-comment-num" @click.native.stop="clickStar($event)">{{handleTransform(cardData.collectors_count)}}</view>
+			<van-icon name="star" size="40rpx" :color="cardData.is_collect ? activeCollectColor : '#D7D7D7'" @click.native.stop="clickStar($event)" />
+			<view class="card-operate-comment-num" :style="{'color': cardData.is_collect ? activeCollectColor : '#00000099'}" @click.native.stop="clickStar($event)">{{handleTransform(cardData.collectors_count)}}</view>
 		</view>
 	</view>
 </template>
@@ -26,6 +26,7 @@
 <script>
 	import { transformMaxNum } from '@/tools/transform_time.js'
 	import { likeGuide, disLikeGuide, collectGuide, unCollectGuide } from '@/network/api_guide.js'
+	import { themeColor, collectColor } from '@/common/common.less'
 	export default {
 		props: {
 			cardData: {
@@ -47,6 +48,13 @@
 				type: Boolean,
 				default: false
 			},
+		},
+		data() {
+			return {
+				activeColor: themeColor,
+				activeCollectColor: collectColor
+				
+			}
 		},
 		methods: {
 			clickOperate(e) {
@@ -129,8 +137,8 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
-		line-height: 30rpx;
-		font-size: 22rpx;
+		// line-height: 30rpx;
+		font-size: 24rpx;
 		color: rgba(0,0,0,0.6);
 		padding-bottom: 30rpx;
 		.card-operate-split {
@@ -143,7 +151,6 @@
 			align-items: center;
 			.card-operate-like-num {
 				margin-left: 16rpx;
-				margin-top: 5rpx;
 				width: 50rpx;
 			}
 		}
@@ -153,6 +160,7 @@
 			.card-operate-comment-num {
 				margin-left: 16rpx;
 				width: 50rpx;
+				margin-bottom: 4rpx;
 			}
 		}
 	}
