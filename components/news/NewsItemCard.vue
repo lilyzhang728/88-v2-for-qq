@@ -96,7 +96,7 @@
 				flex: 3;
 				margin-right: 20rpx;
 				.news-item-card-content-left-title {
-					font-size: 32rpx;
+					font-size: 30rpx;
 					margin-bottom: 10rpx;
 					color: #000;
 					line-height: 42rpx;
@@ -104,10 +104,11 @@
 					-webkit-box-orient: vertical;
 					-webkit-line-clamp: 2;
 					overflow: hidden;
+					font-weight: bold;
 				}
 				.news-item-card-content-left-infos {
 					color: rgba(0, 0, 0, 0.4);
-					font-size: 30rpx;
+					font-size: 28rpx;
 					// line-height: 34rpx;
 					margin-bottom: 10rpx;
 					display: -webkit-box;

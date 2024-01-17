@@ -11,8 +11,9 @@
 				<view class="portrait-name">{{userInfo.name}}</view>
 				<view class="portrait-info">
 					<text class="portrait-info-item">学校：{{userInfo.school ? userInfo.school : '未填写'}}</text>
-					<text>目标：{{target}}</text>
+					<!-- <text>目标：{{target}}</text> -->
 				</view>
+				<view class="portrait-info">目标：{{target}}</view>
 			</view>
 			
 			<view class="portrait-icon"><text class="iconfont icon-editor portrait-icon-img" @tap="toEdit"></text></view>
@@ -20,7 +21,7 @@
 		
 		<!-- 个性签名 -->
 		<view class="portrait-container-about-me">
-			<van-icon class="portrait-container-about-me-icon" name="edit" color="#fff" />
+			<van-icon class="portrait-container-about-me-icon" name="edit" color="#fff" @tap="toEdit" />
 			<text class="portrait-container-about-me-text">个性签名: {{userInfo.about_me}}</text>
 		</view>
 		
@@ -206,7 +207,7 @@
 					white-space: nowrap;
 				}
 				.portrait-info {
-					font-size: 20rpx;
+					font-size: 26rpx;
 					overflow: hidden;
 					text-overflow: ellipsis;
 					white-space: nowrap;
@@ -227,7 +228,7 @@
 			}
 		}
 		.portrait-container-about-me {
-			font-size: 22rpx;
+			font-size: 26rpx;
 			color: #FFFFFF;
 			line-height: 30rpx;
 			margin-top: 22rpx;
