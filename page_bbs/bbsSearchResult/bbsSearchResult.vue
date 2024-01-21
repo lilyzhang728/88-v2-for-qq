@@ -6,7 +6,7 @@
 		</view>
 		
 		<!-- 搜索结果列表 -->
-		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '40px', 'padding': '0 25rpx'}" 
+		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '46px', 'padding': '0 25rpx'}" 
 		loading-more-default-text="点击加载更多" loading-more-no-more-text="没有更多了" :auto-show-system-loading="true">
 			<bbs-post-card v-for="(item,index) in dataList" :key="index" :postData="item" :index="index"
 			@click.native="toPostDetail(item.id)" @checkoutLike="checkoutLike"></bbs-post-card>

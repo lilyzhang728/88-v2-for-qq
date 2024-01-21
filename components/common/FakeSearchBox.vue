@@ -41,7 +41,7 @@
 
 <style lang="less" scoped>
 	.fake-search-box {
-		height: 28px;
+		height: 36px;
 		padding: 0 25rpx;
 		box-shadow: 0rpx 0rpx 15rpx 0rpx rgba(81, 211, 184, 0.1);
 		.fake-search {
@@ -49,8 +49,8 @@
 			padding-right: 25rpx;
 			height: 100%;
 			background-color: #fff;
-			color: #000;
-			font-size: 24rpx;
+			color: #323233;
+			font-size: 28rpx;
 			border-radius: 20rpx;
 			display: flex;
 			align-items: center;

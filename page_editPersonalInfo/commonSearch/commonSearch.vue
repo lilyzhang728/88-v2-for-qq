@@ -131,6 +131,7 @@
 <style lang="less" scoped>
 .common-search-container {
 	padding: 25rpx;
+	padding-top: 0;
 	.common-search-wrap {
 		/deep/ .common-search {
 			padding-left: 0 !important;
