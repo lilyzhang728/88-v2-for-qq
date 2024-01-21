@@ -48,12 +48,13 @@
 		
 		<!-- 弹起键盘 -->
 		<view class="add-new-post-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
-			<!-- <view class="add-new-post-keyboard-topic">
-				<img class="add-new-post-keyboard-topic-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
+			<view class="add-new-post-keyboard-topic" v-if="userName">
+				<!-- <img class="add-new-post-keyboard-topic-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt=""> -->
+				<text class="add-new-post-keyboard-topic-icon">@</text>
 				<text class="add-new-post-keyboard-topic-text">{{userName}}</text>
-				<van-icon v-if="!selectedTopic" name="arrow" size="20px" color="#d9d9d9" />
-				<van-icon v-else name="cross" size="20px" color="#d9d9d9" @click.native.stop="clearTopic($event)" />
-			</view> -->
+				<!-- <van-icon v-if="!selectedTopic" name="arrow" size="20px" color="#d9d9d9" /> -->
+				<!-- <van-icon v-else name="cross" size="20px" color="#d9d9d9" @click.native.stop="clearTopic($event)" /> -->
+			</view>
 			
 			<!-- 发布按钮 -->
 			<view class="view-btn-box">
@@ -82,7 +83,7 @@
 				bottomVal: '0px',	//键盘上话题bottom
 				postImgList: [],	//上传图片list
 				showKeyboard: true,
-				keyboardHeight: '54px',	//键盘上话题height	1行54px，2行85px
+				// keyboardHeight: this.userName ? '85px' : '54px',	//键盘上话题height	1行54px，2行85px
 				userName: '',
 				userId: ''
 			}
@@ -97,6 +98,9 @@
 			},
 			screenWidth() {
 				return uni.getStorageSync('screenWidth')
+			},
+			keyboardHeight() {
+				return this.userName ? '85px' : '54px'
 			}
 		},
 		onLoad(option) {
@@ -303,11 +307,12 @@
 			margin-bottom: 10px;
 			align-items: center;
 			.add-new-post-keyboard-topic-icon {
-				height: 20px;
-				width: 20px;
+				font-size: 40rpx;
+				color: #35C8A7;
+				font-weight: bold;
 			}
 			.add-new-post-keyboard-topic-text {
-				margin-left: 10px;
+				// margin-left: 10px;
 				flex: 1;
 				width: 0;
 				overflow: hidden;
