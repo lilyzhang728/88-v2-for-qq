@@ -12,7 +12,7 @@ export async function imgSecCheck(localPath) {
 			encoding: 'base64',
 			success: res => {
 				let datas = res.data
-				console.log(datas)
+				// console.log(datas)
 				//调接口
 				requestCheck({
 					source: datas
