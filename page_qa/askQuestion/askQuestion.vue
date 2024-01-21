@@ -11,7 +11,7 @@
 					class="add-new-post-edit-title-wrap"
 					input-class="add-new-post-edit-title"
 					:value="title"
-					placeholder="请输入标题"
+					placeholder="请输入问题"
 					auto-focus
 					:border="false"
 					@change.native="inputTitle($event)"
@@ -29,7 +29,7 @@
 				:value="postVal"
 				type="textarea"
 				:show-confirm-bar="false"
-				placeholder="请输入问题"
+				placeholder="请输入问题详情"
 				autosize
 				:border="false"
 				@change.native="inputPost($event)"

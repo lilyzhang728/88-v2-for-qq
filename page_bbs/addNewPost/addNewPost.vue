@@ -26,7 +26,7 @@
 				:value="postVal"
 				type="textarea"
 				:show-confirm-bar="false"
-				placeholder="请输入留言"
+				placeholder="说点什么……"
 				autosize
 				auto-focus
 				:border="false"
