@@ -4,12 +4,21 @@
 		<card-user :item="item"></card-user>
 		
 		<view class="question-item-card-content" :class="{'question-item-card-content-haveImg': item.body.urls.length>0}">
-			<view class="question-item-card-content-left">
+			<view class="bbs-post-content">
 				<view class="question-item-card-content-left-title van-multi-ellipsis--l3">{{item.title}}</view>
 				<view class="question-item-card-content-left-infos" v-if="item.body.body">{{item.body.body}}</view>
 			</view>
-			<view class="question-item-card-content-right" v-if="item.body.urls.length > 0">
-				<img :src="item.body.urls[0]" alt="" class="question-item-card-content-right-img">
+			<view class="bbs-post-img-box" v-if="item.body.urls && item.body.urls.length">
+				<van-image
+				  width="100%"
+				  height="100%"
+				  fit="cover"
+				  :src="pic"
+				  class="bbs-post-img-item"
+				  v-for="(pic, index) in item.body.urls"
+				  :key="index"
+				  @click.native="previewImg($event, pic)"
+				/>
 			</view>
 		</view>
 		
@@ -61,6 +70,15 @@
 			},
 		},
 		methods: {
+			// 预览图片
+			previewImg(e, url) {
+				//防止冒泡
+				e.preventDefault()
+				uni.previewImage({
+					current: 0,
+					urls: [url]
+				});
+			},
 			toDetail(item) {
 				uni.navigateTo({
 					url: `/page_qa/questionDetail/questionDetail?id=${item.id}`
@@ -86,11 +104,19 @@
 		margin-bottom: 20rpx;
 		
 		.question-item-card-content {
-			display: flex;
 			margin-top: 20rpx;
-			.question-item-card-content-left {
-				flex: 3;
-				margin-right: 20rpx;
+			
+			.bbs-post-content {
+				margin-top: 20rpx;
+				border-radius: 8rpx;
+				border: 20rpx solid #fff;
+				font-size: 30rpx;
+				color: #000;
+				// line-height: 45rpx;
+				display: -webkit-box;
+				-webkit-line-clamp: 3;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
 				.question-item-card-content-left-title {
 					font-size: 30rpx;
 					margin-bottom: 10rpx;
@@ -113,11 +139,17 @@
 					overflow: hidden;
 				}
 			}
-			.question-item-card-content-right {
-				flex: 1;
-				.question-item-card-content-right-img {
-					width: 100%;
-					height: 100%;
+			.bbs-post-img-box {
+				// margin-top: 40rpx;
+				display: flex;
+				height: 200rpx;
+				.bbs-post-img-item {
+					// flex: 1;
+					width: calc((100vw - 110rpx) / 3);
+					margin-right: 20rpx;
+					&:last-child {
+						margin-right: 0;
+					}
 				}
 			}
 		}

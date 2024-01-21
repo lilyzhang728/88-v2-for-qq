@@ -43,7 +43,7 @@
 		<view class="guide-edit-step-pic">
 			<van-uploader :file-list="step.pics" deletable="true" max-count="3" 
 			:preview-size="imageWidth" image-fit="aspectFit"
-			use-before-read @beforeRead.native="beforeRead"
+			use-before-read @beforeRead.native="beforeRead" multiple
 			@afterRead.native="afterRead" @delete.native="deleteImg" />
 		</view>
 	</view>
@@ -136,27 +136,65 @@
 					file,
 					callback
 				} = event.detail;
-				callback(file.type === 'image');
+				if(Array.isArray(event.detail.file)) {
+					// 上传多张
+					file.forEach((item) => {
+						callback(item.type === 'image');
+					})
+				} else {
+					// 上传1张
+					callback(file.type === 'image');
+				}
 			},
 			afterRead(event) {
 				const file = event.detail.file
 				//鉴黄
-				imgSecCheck(file.url).then(res => {
-					this.$emit('updateStepPics', this.index, file.url)
-				}, err => {
-					uni.showModal({
-						title: '提示',
-						content: '您发布的图片可能包括敏感信息，请重新发布',
-						success: function(res) {
-							if (res.confirm) {
-								// 执行确认后的操作
-							} 
-							else {
-								// 执行取消后的操作
-							}
-						}
+				if(Array.isArray(file)) {
+					// 上传多张
+					this.checkImgValid(file).then(res => {
+						this.$emit('updateStepPicsMultiple', this.index, file)
+					}).catch(err => {
+						uni.showModal({
+							title: '提示',
+							content: '您发布的图片可能包括敏感信息，请重新发布',
+							success: function(res) {}
+						})
 					})
-				})
+				} else { 
+					// 上传1张
+					imgSecCheck(file.url).then(res => {
+						this.$emit('updateStepPics', this.index, file.url)
+					}, err => {
+						uni.showModal({
+							title: '提示',
+							content: '您发布的图片可能包括敏感信息，请重新发布',
+							success: function(res) {
+								if (res.confirm) {
+									// 执行确认后的操作
+								} 
+								else {
+									// 执行取消后的操作
+								}
+							}
+						})
+					})
+				}
+			},
+			//鉴黄
+			checkImgValid(imagePaths) {
+				// 创建一个 Promise 数组，每个 Promise 对应一张图片的鉴黄
+				const checkPromises = imagePaths.map((imagePath) => {
+					return new Promise((resolve, reject) => {
+						imgSecCheck(imagePath.url).then(res => {
+							resolve()
+						}, err => {
+							reject()
+						})
+					});
+				});
+				
+				// 使用 Promise.all 等待所有上传任务完成
+				return Promise.all(checkPromises);
 			},
 			// 点击预览的x号，将图片删除
 			deleteImg(event) {

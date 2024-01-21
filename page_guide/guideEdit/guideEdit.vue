@@ -80,7 +80,7 @@
 				<van-icon name="close" color="#7F7F7F" size="34rpx" class="guide-edit-step-delete" @click.native="deleteStep(index)" />
 				<guide-edit-step-item :index="index" :step="item" :screenWidth="screenWidth"
 				@addURL="addURL" @deleteURL="deleteURL" @updateStep="updateStep" @updateStepLinks="updateStepLinks" 
-				@updateStepPics="updateStepPics" @deleteStepPics="deleteStepPics"></guide-edit-step-item>
+				@updateStepPics="updateStepPics" @updateStepPicsMultiple="updateStepPicsMultiple" @deleteStepPics="deleteStepPics"></guide-edit-step-item>
 			</view>
 			<view class="guide-edit-add-btn-box guide-edit-add-btn-box-step">
 				<van-button plain class="guide-edit-add-btn-wrap" custom-class="guide-edit-add-btn" @click="addStep">增加步骤</van-button>
@@ -296,6 +296,30 @@
 					this.guideInfo.body.steps[index]['pics'][this.guideInfo.body.steps[index]['pics'].length-1].status = 'done'
 				}).catch(error => {
 				  console.error(err)
+				})
+			},
+			// 更新输入值 - 步骤-上传多张图片
+			updateStepPicsMultiple(index, file) {
+				// 上传多张
+				file.forEach((item, subIndex) => {
+					//回显
+					this.guideInfo.body.steps[index]['pics'].push({})
+					this.$set(this.guideInfo.body.steps[index]['pics'][this.guideInfo.body.steps[index]['pics'].length-1], 'status', 'uploading')
+					// 上传至云存储, 文件路径为 guide/userid/时间戳/index-subindex.png: index为第几步，subindex为第几张图片
+					const userId = uni.getStorageSync('userId')
+					this.timestamp = this.timestamp ? this.timestamp : new Date().getTime()
+					wx.cloud.uploadFile({
+					  cloudPath: `guide/${userId}/${this.timestamp}/${index}-${this.guideInfo.body.steps[index]['pics'].length-1}.png`, // 对象存储路径，根路径直接填文件名，文件夹例子 test/文件名，不要 / 开头
+					  filePath: item.url, 
+					  config: {
+					    env: 'prod-4gkvfp8b0382845d' // 需要替换成自己的微信云托管环境ID
+					  }
+					}).then(res => {
+						this.$set(this.guideInfo.body.steps[index]['pics'][this.guideInfo.body.steps[index]['pics'].length-file.length+subIndex], 'url', res.fileID)
+						this.guideInfo.body.steps[index]['pics'][this.guideInfo.body.steps[index]['pics'].length-file.length+subIndex].status = 'done'
+					}).catch(error => {
+					  console.error(err)
+					})
 				})
 			},
 			//更新输入值 - 步骤-删除一张图片  url为图片在云存储的地址

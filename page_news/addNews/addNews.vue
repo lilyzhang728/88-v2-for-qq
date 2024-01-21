@@ -56,12 +56,12 @@
 				<view class="add-new-post-edit-title-split add-new-post-edit-title-split-bottom"></view>
 				  
 				<!-- uploader -->
-				<van-uploader ref="imgUploader" class="img-uploader"
-				:file-list="postImgList" deletable="true" max-count="9" 
+				<!-- <van-uploader ref="imgUploader" class="img-uploader"
+				:file-list="postImgList" deletable="true" max-count="3" 
 				:preview-size="imageWidth" image-fit="aspectFit"
-				use-before-read @beforeRead.native="beforeRead"
+				use-before-read @beforeRead.native="beforeRead" multiple
 				@afterRead.native="afterRead" @delete.native="deleteImg">
-				</van-uploader>
+				</van-uploader> -->
 			</view>
 			
 			<!-- 弹起键盘 -->
@@ -155,50 +155,109 @@
 					file,
 					callback
 				} = event.detail;
-				callback(file.type === 'image');
+				if(Array.isArray(event.detail.file)) {
+					// 上传多张
+					file.forEach((item) => {
+						callback(item.type === 'image');
+					})
+				} else {
+					// 上传1张
+					callback(file.type === 'image');
+				}
 			},
 			afterRead(event) {
 				const file = event.detail.file
 				//鉴黄
-				imgSecCheck(file.url).then(res => {
-					this.updateImg(file)
-				}, err => {
-					uni.showModal({
-						title: '提示',
-						content: '您发布的图片可能包括敏感信息，请重新发布',
-						success: function(res) {
-							if (res.confirm) {
-								// 执行确认后的操作
-							} 
-							else {
-								// 执行取消后的操作
-							}
-						}
+				if(Array.isArray(file)) {
+					// 上传多张
+					this.checkImgValid(file).then(res => {
+						this.updateImg(file)
+					}).catch(err => {
+						uni.showModal({
+							title: '提示',
+							content: '您发布的图片可能包括敏感信息，请重新发布',
+							success: function(res) {}
+						})
 					})
-				})
+				} else {
+					imgSecCheck(file.url).then(res => {
+						this.updateImg(file)
+					}, err => {
+						uni.showModal({
+							title: '提示',
+							content: '您发布的图片可能包括敏感信息，请重新发布',
+							success: function(res) {
+								if (res.confirm) {
+									// 执行确认后的操作
+								} 
+								else {
+									// 执行取消后的操作
+								}
+							}
+						})
+					})
+				}
+			},
+			//鉴黄
+			checkImgValid(imagePaths) {
+				// 创建一个 Promise 数组，每个 Promise 对应一张图片的鉴黄
+				const checkPromises = imagePaths.map((imagePath) => {
+					return new Promise((resolve, reject) => {
+						imgSecCheck(imagePath.url).then(res => {
+							resolve()
+						}, err => {
+							reject()
+						})
+					});
+				});
 				
-				
+				// 使用 Promise.all 等待所有上传任务完成
+				return Promise.all(checkPromises);
 			},
 			//鉴黄通过，回显 + 上传至云存储
 			updateImg(file) {
-				//回显
-				this.postImgList.push({})
-				this.$set(this.postImgList[this.postImgList.length-1], 'status', 'uploading')
-				// 上传至云存储, 文件路径为 qa/userid/时间戳/index.png: index为第几张图片
-				const userId = uni.getStorageSync('userId')
-				this.timestamp = this.timestamp ? this.timestamp : new Date().getTime()
-				wx.cloud.uploadFile({
-				  cloudPath: `qa/${userId}/${this.timestamp}/${this.postImgList.length-1}.png`, // 对象存储路径，根路径直接填文件名，文件夹例子 test/文件名，不要 / 开头
-				  filePath: file.url, 
-				  config: {
-				    env: 'prod-4gkvfp8b0382845d' // 需要替换成自己的微信云托管环境ID
-				  }
-				}).then(res => {
-					this.$set(this.postImgList[this.postImgList.length-1], 'url', res.fileID)
-					this.postImgList[this.postImgList.length-1].status = 'done'
-				}).catch(error => {
-				  console.error(err)
-				})
+				if(Array.isArray(file)) {
+					// 上传多张
+					file.forEach((item, index) => {
+						//回显
+						this.postImgList.push({})
+						this.$set(this.postImgList[this.postImgList.length-1], 'status', 'uploading')
+						// 上传至云存储, 文件路径为 news/userid/时间戳/index.png: index为第几张图片
+						const userId = uni.getStorageSync('userId')
+						this.timestamp = this.timestamp ? this.timestamp : new Date().getTime()
+						wx.cloud.uploadFile({
+						  cloudPath: `news/${userId}/${this.timestamp}/${this.postImgList.length-1}.png`, // 对象存储路径，根路径直接填文件名，文件夹例子 test/文件名，不要 / 开头
+						  filePath: item.url, 
+						  config: {
+						    env: 'prod-4gkvfp8b0382845d' // 需要替换成自己的微信云托管环境ID
+						  }
+						}).then(res => {
+							this.$set(this.postImgList[this.postImgList.length-file.length+index], 'url', res.fileID)
+							this.postImgList[this.postImgList.length-file.length+index].status = 'done'
+						}).catch(error => {
+						  console.error(error)
+						})
+					})
+				} else {
+					//回显
+					this.postImgList.push({})
+					this.$set(this.postImgList[this.postImgList.length-1], 'status', 'uploading')
+					// 上传至云存储, 文件路径为 news/userid/时间戳/index.png: index为第几张图片
+					const userId = uni.getStorageSync('userId')
+					this.timestamp = this.timestamp ? this.timestamp : new Date().getTime()
+					wx.cloud.uploadFile({
+					  cloudPath: `news/${userId}/${this.timestamp}/${this.postImgList.length-1}.png`, // 对象存储路径，根路径直接填文件名，文件夹例子 test/文件名，不要 / 开头
+					  filePath: file.url, 
+					  config: {
+					    env: 'prod-4gkvfp8b0382845d' // 需要替换成自己的微信云托管环境ID
+					  }
+					}).then(res => {
+						this.$set(this.postImgList[this.postImgList.length-1], 'url', res.fileID)
+						this.postImgList[this.postImgList.length-1].status = 'done'
+					}).catch(error => {
+					  console.error(err)
+					})
+				}
 			},
 			// 点击预览的x号，将图片删除
 			deleteImg(event) {
