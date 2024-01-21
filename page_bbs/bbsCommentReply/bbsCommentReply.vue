@@ -36,9 +36,9 @@
 						<view class="comment-content-footer-left">{{transformTimestamp(item)}}</view>
 						<view class="comment-content-footer-right">
 							<view class="comment-content-footer-right-like">
-								<van-icon v-if="!item.is_like" name="good-job" size="34rpx" color="#D7D7D7" @click.native="getLike(true, index, 'sub')"></van-icon>
-								<van-icon v-if="item.is_like" name="good-job" size="34rpx" color="#8B8B8B" @click.native="getLike(false, index, 'sub')"></van-icon>
-								<view class="num">{{ handleTransform(item.likers_count) }}</view>
+								<van-icon v-if="!item.is_like" name="good-job" size="40rpx" color="#8B8B8B" @click.native="getLike(true, index, 'sub')"></van-icon>
+								<van-icon v-if="item.is_like" name="good-job" size="40rpx" :color="activeColor" @click.native="getLike(false, index, 'sub')"></van-icon>
+								<view class="num" :style="{'color': item.is_like ? activeColor : '#00000099'}">{{ handleTransform(item.likers_count) }}</view>
 							</view>
 							<view class="comment-content-footer-right-reply">
 								<van-icon name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(item, index)" />
@@ -64,6 +64,7 @@ import BbsCommentKeyboard from "@/page_bbs/components/BbsCommentKeyboard.vue"
 import { transformMaxNum, transformTime } from '@/tools/transform_time.js'
 import { utf16toEntities, uncodeUtf16 } from '@/tools/transform_emoji.js'
 import CardUser from '@/components/common/CardUser.vue'
+import { themeColor } from '@/common/common.less'
 export default {
 	components: {
 		BbsCommentKeyboard,
@@ -84,6 +85,7 @@ export default {
 			curReplyAvatar: '',		//当前回复的评论的头像
 			curReplyContent: '',	//当前回复的评论的内容
 			showReplyPostBox: false,	//是否显示引用评论
+			activeColor: themeColor,
 		};
 	},
 	computed: {
@@ -228,7 +230,7 @@ page {
 	background-color: #f2f2f2;
 }
 .comment {
-	padding: 25rpx;
+	padding: 0 25rpx;
 	font-size: 32rpx;
 	background-color: #ffffff;
 	
@@ -240,7 +242,7 @@ page {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		font-size: 22rpx;
+		font-size: 24rpx;
 		color: rgba(0,0,0,0.6);
 		overflow: hidden;
 		.comment-content-footer-left {
@@ -269,6 +271,7 @@ page {
 	background-color: #ffffff;
 	.all-reply-top {
 		margin-left: 20rpx;
+		margin-bottom: 30rpx;
 		padding-left: 20rpx;
 		border-left: solid 4rpx #35C8A6;
 		font-size: 30rpx;

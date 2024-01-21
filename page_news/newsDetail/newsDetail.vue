@@ -28,6 +28,7 @@
 			</view>
 			
 			<!-- 链接 -->
+			<view class="news-detail-url-title" v-if="newsData.body.source">情报来源：</view>
 			<view class="news-detail-url" v-if="newsData.body.source" @click="clickLink">
 				<img class="guide-detail-step-link-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/linkIcon.png" alt="">
 				{{newsData.body.source}}
@@ -53,7 +54,7 @@
 			
 			<!-- 评论区 -->
 			<view class="bbs-post-detail-comment">
-				<view class="bbs-post-detail-comment-total">共{{commentNum}}个回答</view>
+				<view class="bbs-post-detail-comment-total">共{{commentNum}}条评论</view>
 				<bbs-post-comment :commentData="dataList" :hideReply="true" @checkoutCommentLike="checkoutCommentLike"></bbs-post-comment>
 			</view>
 		</z-paging>
@@ -404,8 +405,14 @@
 			margin-top: 20rpx;
 		}
 	}
+	.news-detail-url-title {
+		margin-top: 35rpx;
+		font-size: 32rpx;
+		color: #000000;
+		line-height: 56rpx;
+	}
 	.news-detail-url {
-		margin-top: 20rpx;
+		// margin-top: 20rpx;
 		font-size: 28rpx;
 		color: #35C8A7;
 		line-height: 40rpx;

@@ -169,7 +169,7 @@
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
-					font-size: 22rpx;
+					font-size: 24rpx;
 					color: rgba(0,0,0,0.6);
 					overflow: hidden;
 					.comment-content-footer-left {
@@ -200,6 +200,7 @@
 				display: flex;
 				color: #35C8A7;
 				align-items: center;
+				font-size: 28rpx;
 				.more {
 					margin-left: 6rpx;
 				}
