@@ -1,40 +1,19 @@
 import { getRequest, postRequest, putRequest, deleteRequest } from '@/network/https.js'
 
-export async function imgSecCheck(localPath) {
+export async function imgSecCheck(param) {
 	return new Promise((resolve, reject) => {
-		// const base64Res = await getImgBase64(localPath)
-		// if (base64Res.code !== 200) {
-		// 	reject(base64Res)
-		// }
-		// console.log('appid', uni.getAccountInfoSync().miniProgram.appId)
-		uni.getFileSystemManager().readFile({
-			filePath: localPath,
-			encoding: 'base64',
-			success: res => {
-				let datas = res.data
-				// console.log(datas)
-				//调接口
-				requestCheck({
-					source: datas
-				}).then(res => {
-					if(res.code === 0) {
-						//鉴黄通过
-						resolve()
-					} else {
-						reject()
-					}
-				}, err => {
-					reject()
-				})
-			},
-			fail: (e) => {
-				console.error('getImgBase64 fail', e)
-				reject({
-					message: 'base64转换出错'
-				})
+		requestCheck({
+			source: param
+		}).then(res => {
+			if(res.code === 0) {
+				//鉴黄通过
+				resolve()
+			} else {
+				reject()
 			}
+		}, err => {
+			reject()
 		})
-		
 	})
 }
 

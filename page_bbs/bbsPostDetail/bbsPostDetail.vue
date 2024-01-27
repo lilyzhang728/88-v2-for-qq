@@ -18,7 +18,8 @@
 			<!-- 图片 -->
 			<view class="bbs-post-detail-img-box" v-if="postData.body.urls.length">
 				<van-image width="100%" height="100%" fit="cover" :src="pic"
-				  class="bbs-post-detail-img-item" v-for="(pic, index) in postData.body.urls" :key="index" />
+				  class="bbs-post-detail-img-item" v-for="(pic, index) in postData.body.urls" :key="index"
+				  @click.native="previewImg($event, pic)" />
 			</view>
 			
 			<!-- 编辑时间 -->
@@ -149,6 +150,15 @@
 			this.getPostDetail()
 		},
 		methods: {
+			// 预览图片
+			previewImg(e, url) {
+				//防止冒泡
+				e.preventDefault()
+				uni.previewImage({
+					current: 0,
+					urls: [url]
+				});
+			},
 			// 点赞、评论 大数单位转化
 			handleTransform(val) {
 				return transformMaxNum(val)
