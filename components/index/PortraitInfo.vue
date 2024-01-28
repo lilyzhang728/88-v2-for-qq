@@ -53,11 +53,11 @@
 					target: "",
 					id: "",
 					avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',
-					w: 0,
-					h: 0,
-					cloud_path: '',	//上传至对象存储的地址（单张）
-					cloud_path_split: '',	//上传至对象存储的地址-截断（单张）
 				},
+				w: 0,
+				h: 0,
+				cloud_path: '',	//上传至对象存储的地址（单张）
+				cloud_path_split: '',	//上传至对象存储的地址-截断（单张）
 				default_avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',
 				tmp_url: ''
 			};
