@@ -139,7 +139,6 @@
 			overflow: hidden;
 		}
 		.bbs-post-img-box {
-			margin-top: 40rpx;
 			display: flex;
 			height: 200rpx;
 			.bbs-post-img-item {

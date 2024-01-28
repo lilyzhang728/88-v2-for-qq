@@ -13,7 +13,7 @@
 				</view>
 				<view class="connections-item-card-body-info">{{item.school ? item.school : ''}} {{item.major ? item.major : ''}}</view>
 				<view class="connections-item-card-body-labels" v-if="item.target || item.tags.length">
-					<van-tag v-if="item.target" color="#EFFDFB" class="connections-item-card-body-labels-item connections-item-card-body-labels-item-target">{{targetMap[Number(item.target)]}}</van-tag>
+					<van-tag v-if="item.target" color="#2C5CC5" class="connections-item-card-body-labels-item connections-item-card-body-labels-item-target">{{targetMap[Number(item.target)]}}</van-tag>
 					<van-tag v-for="(tag, subIndex) in item.tags" :key="subIndex" color="#F5F5F7" class="connections-item-card-body-labels-item">{{tag.body}}</van-tag>
 				</view>
 			</view>
