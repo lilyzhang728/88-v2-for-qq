@@ -26,6 +26,8 @@
 		</view>
 		
 		<van-toast id="van-toast" />
+		
+		
 	</view>
 </template>
 
@@ -50,8 +52,14 @@
 					school: "",
 					target: "",
 					id: "",
-					avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+					avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',
+					w: 0,
+					h: 0,
+					cloud_path: '',	//上传至对象存储的地址（单张）
+					cloud_path_split: '',	//上传至对象存储的地址-截断（单张）
 				},
+				default_avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',
+				tmp_url: ''
 			};
 		},
 		computed: {
@@ -84,42 +92,214 @@
 				})
 			},
 			// 点击头像
-			onChooseAvatar(e) {
-				const url = e.detail.avatarUrl
-				//鉴黄
-				imgSecCheck(url).then(res => {
-					this.updateImg(url)
-				}, err => {
-					uni.showModal({
-						title: '提示',
-						content: '您发布的图片可能包括敏感信息，请重新发布',
-						success: function(res) {
-							if (res.confirm) {
-								// 执行确认后的操作
-							} 
-							else {
-								// 执行取消后的操作
-							}
-						}
+			async onChooseAvatar(e) {
+				try {
+					const file = e.detail.avatarUrl
+					// console.log('原图大小', file)
+					// 1. 压缩，返回 file_list / file
+					let result = await this.handleCompressImg(file)
+					// console.log(result)
+					
+					// 2. 上传, 返回对象存储中的地址
+					let result2 = await this.uploadCloud(result)
+					// console.log(result2)
+					
+					// 3. 鉴黄，返回：鉴黄是否通过 true/false
+					let result3 = await this.checkImgValid(result2)
+					// console.log('result3', result3)
+					
+					// 4. 回显
+					this.showUploadImg(result3)
+					
+				} catch(error) {
+					console.error(error);
+				}
+				
+				// const url = e.detail.avatarUrl
+				// //鉴黄
+				// imgSecCheck(url).then(res => {
+				// 	this.updateImg(url)
+				// }, err => {
+				// 	uni.showModal({
+				// 		title: '提示',
+				// 		content: '您发布的图片可能包括敏感信息，请重新发布',
+				// 		success: function(res) {
+				// 			if (res.confirm) {
+				// 				// 执行确认后的操作
+				// 			} 
+				// 			else {
+				// 				// 执行取消后的操作
+				// 			}
+				// 		}
+				// 	})
+				// })
+			},
+			// 1. 图片大小压缩在100k左右
+			handleCompressImg(file) {
+				this.tmp_url = ''
+				return new Promise((resolve, reject) => {
+					this.compressImageSize(file, 0).then(result => {
+						this.tmp_url = result
+						resolve(file)
+					}).catch(err => {
+						reject()
 					})
 				})
 			},
-			//鉴黄通过，回显 + 上传至云存储
-			updateImg(url) {
-				//回显
-				this.userInfo.avatar = url
-				// 上传至云存储, 文件路径为 profile_photos/userid/xxx.png
-				const userId = uni.getStorageSync('userId')
-				wx.cloud.uploadFile({
-				  cloudPath: `profile_photos/${userId}/avatar-${new Date().getTime()}.png`, // 对象存储路径，根路径直接填文件名，文件夹例子 test/文件名，不要 / 开头
-				  filePath: url, 
-				  config: {
-				    env: 'prod-4gkvfp8b0382845d' // 需要替换成自己的微信云托管环境ID
-				  }
-				}).then(res => {
+			// 图片压缩函数
+			compressImageSize(url, index) {
+				return new Promise((resolve, reject) => {
+					// 1-1. 获取图片信息
+					uni.getImageInfo({
+						src: url,
+						success: (infoRes)=> {
+							const pixels = 100000;
+							// 1-2.创建canvas
+							let canvas = uni.createCanvasContext("myCanvas");
+							// 1-3.压缩
+							let [ w, h ] = this.calcImageSize(infoRes);
+							this.$emit('updateWidthHeight', [w, h])
+							this.w = w
+							this.h = h
+							// console.log(w, h, file.size)
+							canvas.drawImage(infoRes.path, 0, 0, w, h)
+							canvas.draw(false, () => {
+								// 1-4. canvas 根据配置生成指定大小的图片，并返回文件路径
+								setTimeout(() => {
+									uni.canvasToTempFilePath({
+									  x: 0,
+									  y: 0,
+									  width: w, 
+									  height: h, 
+									  destWidth: w, 
+									  destHeight: h,
+									  quality:.7,
+									  fileType:"jpg",
+									  canvasId: "myCanvas",
+									  success: (pathRes)=> {
+										// 返回压缩后的图片路径
+										resolve(pathRes.tempFilePath)
+											
+										// 获取文件信息
+										  uni.getFileInfo({
+											filePath: pathRes.tempFilePath,
+											success: (fileInfo) => {
+											  console.log('绘制后图片文件大小：', fileInfo.size, '字节', fileInfo.size/1024, 'kb');
+											},
+											fail: (error) => {
+											  console.error('获取文件信息失败', error);
+											}
+										  });
+									  },
+									   fail: (error) => {
+										 console.error('返回压缩后的图片路径失败', error);
+										 reject()
+									   }
+									})
+								},500)
+							})
+							
+						},
+						fail: (error) => {
+							console.error('获取图片信息失败', error);
+							reject()
+						}
+					})
+					
+				})
+			},
+			// 压缩规则：宽高压到1000*560以下
+			calcImageSize(res) {
+				let cW = res.width,
+					cH = res.height,
+					cHeight = cH,
+					cWidth = cW;
+				// console.log('压缩前：', cW, cH)
+				if ((cW / cH) < 0.56) { //说明 要依高为缩放比例--0.56是 750/1334的结果，这个是官方要求，但是实际上按照这个尺寸，有时还是会太大，因此按等比例规定最大尺寸为560/1000
+						if (cH > 1000) {
+						cHeight = 1000;
+						cWidth = parseInt((cW * 1000) / cH);
+					}
+				} else { //要依宽为缩放比例
+					if (cW > 560) {
+						cWidth = 560;
+						cHeight = parseInt((cH * 560) / cW);
+					}
+				}
+				// console.log('压缩后：', cWidth, cHeight)
+				return [cWidth, cHeight]
+			},
+			// 2. 上传对象存储
+			uploadCloud(file) {
+				this.cloud_path = ''
+				this.cloud_path_split = ''
+				return new Promise((resolve, reject) => {
+					this.uploadToCloud(file).then(res => {
+						this.cloud_path = res
+						this.cloud_path_split = res.slice(res.indexOf('profile_photos'))
+						resolve(this.cloud_path_split)
+					}).catch(err => {
+						// 上传失败，从本地文件列表中删除
+						// const newArrayLength = this.postImgList.length - 1
+						// this.postImgList = this.postImgList.slice(0, newArrayLength)
+						reject()
+					})
+				})
+			},
+			// 上传至云存储
+			uploadToCloud(item) {
+				return new Promise((resolve, reject) => {
+					//回显
+					this.userInfo.avatar = this.tmp_url
+					// 上传至云存储, 文件路径为 bbs/userid/时间戳/随机数.jpg
+					const userId = uni.getStorageSync('userId')
+					this.timestamp = this.timestamp ? this.timestamp : new Date().getTime()
+					wx.cloud.uploadFile({
+					  cloudPath: `profile_photos/${userId}/avatar-${new Date().getTime()}.jpg`, // 对象存储路径，根路径直接填文件名，文件夹例子 test/文件名，不要 / 开头
+					  filePath: this.tmp_url, 
+					  config: {
+					    env: 'prod-4gkvfp8b0382845d' // 需要替换成自己的微信云托管环境ID
+					  }
+					}).then(res => {
+						resolve(res.fileID)
+					}).catch(error => {
+						console.error(error)
+						reject('上传失败')
+					})
+				})
+			},
+			// 3. 鉴黄方法：本方法入参：图片的对象存储地址，正常返回（resolve)：都通过了检测
+			// 鉴黄接口：上送图片地址，返回是否通过检查
+			checkImgValid(path) {
+				return new Promise((resolve, reject) => {
+					imgSecCheck([path]).then(res => {
+						// 通过
+						resolve(true)
+					}, err => {
+						// 未通过
+						uni.showModal({
+							title: '提示',
+							content: '您发布的图片可能包括敏感信息，请重新发布',
+							success: function(res) {}
+						})
+						// 从本地文件列表中删除
+						this.userInfo.avatar = this.default_avatar
+						// 对象存储中同步删除
+						wx.cloud.deleteFile({
+						  fileList: [this.cloud_path], // 对象存储文件ID列表，最多50个，从上传文件接口或者控制台获取
+						})
+						resolve(false)
+					})
+				})
+			},
+			// 4. 回显图片
+			showUploadImg(res) {
+				if(res) {
+					// 鉴黄通过
+					this.userInfo.avatar = this.cloud_path
 					//传给后台
 					updateProfile({
-						avatar: res.fileID
+						avatar: this.cloud_path
 					}).then(res => {
 						if(res.code === 0) {
 							Toast({message: '修改成功！', context: this, type: 'success'})
@@ -127,10 +307,10 @@
 					}, err => {
 						console.log('updateProfile: ', err)
 					})
-				}).catch(error => {
-				  console.error(error)
-				})
+				}
 			},
+			
+		
 			// changePotrait() {
 			// 	console.log(888)
 			// 	uni.chooseImage({ // 从本地相册选择图片或使用相机拍照。

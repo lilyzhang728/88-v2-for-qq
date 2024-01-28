@@ -80,7 +80,8 @@
 				<van-icon name="close" color="#7F7F7F" size="34rpx" class="guide-edit-step-delete" @click.native="deleteStep(index)" />
 				<guide-edit-step-item :index="index" :step="item" :screenWidth="screenWidth"
 				@addURL="addURL" @deleteURL="deleteURL" @updateStep="updateStep" @updateStepLinks="updateStepLinks" 
-				@updateStepPics="updateStepPics" @updateStepPicsMultiple="updateStepPicsMultiple" @deleteStepPics="deleteStepPics"></guide-edit-step-item>
+				@updateStepPics="updateStepPics" @updateStepPicsMultiple="updateStepPicsMultiple" @deleteStepPics="deleteStepPics"
+				@showStepItemImg="showStepItemImg" @deleteStepItemImg="deleteStepItemImg"></guide-edit-step-item>
 			</view>
 			<view class="guide-edit-add-btn-box guide-edit-add-btn-box-step">
 				<van-button plain class="guide-edit-add-btn-wrap" custom-class="guide-edit-add-btn" @click="addStep">增加步骤</van-button>
@@ -322,6 +323,22 @@
 					})
 				})
 			},
+			showStepItemImg(index, length, url, subIndex) {
+				if(length && url) {
+					//回显（done)
+					this.$set(this.guideInfo.body.steps[index]['pics'][this.guideInfo.body.steps[index]['pics'].length-length+subIndex], 'url', url)
+					this.guideInfo.body.steps[index]['pics'][this.guideInfo.body.steps[index]['pics'].length-length+subIndex].status = 'done'
+				} else {
+					//回显（loading)
+					this.guideInfo.body.steps[index]['pics'].push({})
+					this.$set(this.guideInfo.body.steps[index]['pics'][this.guideInfo.body.steps[index]['pics'].length-1], 'status', 'uploading')
+				}
+				
+			},
+			deleteStepItemImg(index, length) {
+				const newArrayLength = this.guideInfo.body.steps[index]['pics'].length - length
+				this.postImgList = this.guideInfo.body.steps[index]['pics'].slice(0, newArrayLength)
+			},
 			//更新输入值 - 步骤-删除一张图片  url为图片在云存储的地址
 			deleteStepPics(url, index, subIndex) {
 				this.guideInfo.body.steps[index]['pics'][subIndex].status = 'uploading'
@@ -447,6 +464,7 @@
 						uni.navigateBack({
 						    success: () => {
 						         let page = getCurrentPages().pop();//跳转页面成功之后
+								 console.log(page)
 						         if (page) {
 									 page.$vm.active = 1
 						             page.$vm.$refs.guide.$refs.paging.reload()
