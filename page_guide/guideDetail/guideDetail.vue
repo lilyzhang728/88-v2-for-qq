@@ -3,29 +3,31 @@
 	<view class="guide-detail" :style="{backgroundImage: 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)',backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
 		<back-topbar title="攻略详情" functionName="reloadList"></back-topbar>
 		<z-paging ref="paging" :paging-style="{'top': (customBar) + 'px', 'bottom': pagingBottom, paddingLeft: '25rpx', paddingRight: '25rpx'}">
-			<!-- 基本信息 -->
-			<guide-item-card  hideBorder="true" :guideItem="guideData" :index="cardIndex" :forbiddenClick="true" :tabIndex="tabIndex"
-			@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></guide-item-card>
-			
-			<!-- 材料 -->
-			<view class="guide-detail-material" v-if="guideData.body.references.length">
-				<view class="guide-detail-material-title">材料</view>
-				<view class="guide-detail-material-content">
-					<view class="guide-detail-material-item" v-for="(item, index) in guideData.body.references" :key="index">
-						<text class="guide-detail-material-item-index">{{index+1}}</text>
-						{{item}}</view>
+			<view @longpress="handleLongpress">
+				<!-- 基本信息 -->
+				<guide-item-card  hideBorder="true" :guideItem="guideData" :index="cardIndex" :forbiddenClick="true" :tabIndex="tabIndex"
+				@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></guide-item-card>
+				
+				<!-- 材料 -->
+				<view class="guide-detail-material" v-if="guideData.body.references.length">
+					<view class="guide-detail-material-title">材料</view>
+					<view class="guide-detail-material-content">
+						<view class="guide-detail-material-item" v-for="(item, index) in guideData.body.references" :key="index">
+							<text class="guide-detail-material-item-index">{{index+1}}</text>
+							{{item}}</view>
+					</view>
 				</view>
-			</view>
-			
-			<!-- 步骤 -->
-			<guide-detail-step v-for="(item, index) in guideData.body.steps" :key="index" :index="index" :stepData="item"></guide-detail-step>
-			
-			<!-- 小贴士 -->
-			<view class="guide-detail-tip" v-if="guideData.body.tips">
-				<view class="guide-detail-tip-title">
-					<img class="guide-detail-tip-title-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/tipIcon.png" alt="">
-					小贴士</view>
-				<view class="guide-detail-tip-content">{{guideData.body.tips}}</view>
+				
+				<!-- 步骤 -->
+				<guide-detail-step v-for="(item, index) in guideData.body.steps" :key="index" :index="index" :stepData="item"></guide-detail-step>
+				
+				<!-- 小贴士 -->
+				<view class="guide-detail-tip" v-if="guideData.body.tips">
+					<view class="guide-detail-tip-title">
+						<img class="guide-detail-tip-title-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/tipIcon.png" alt="">
+						小贴士</view>
+					<view class="guide-detail-tip-content">{{guideData.body.tips}}</view>
+				</view>
 			</view>
 		</z-paging>
 		<!-- 草稿箱里的攻略并排显示2个按钮：发布 | 编辑 -->
@@ -41,6 +43,10 @@
 		
 		<!-- toast -->
 		<van-toast id="van-toast" />
+		
+		<!-- 举报面板 -->
+		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" type="0"
+		@backRefresh="backRefresh"></delete-and-complaint>
 	</view>
 </template>
 
@@ -50,11 +56,13 @@
 	import BackTopbar from '@/components/common/BackTopbar.vue'
 	import { guideDetail, editGuide, likeGuide, disLikeGuide, collectGuide, unCollectGuide } from '@/network/api_guide.js'
 	import Toast from '@/wxcomponents/vant/toast/toast'
+	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	export default {
 		components: {
 			GuideItemCard,
 			GuideDetailStep,
-			BackTopbar
+			BackTopbar,
+			DeleteAndComplaint
 		},
 		data() {
 			return {
@@ -83,6 +91,7 @@
 					is_collect: false
 				},
 				tabIndex: 0,	//跳转前card所在的tab:0-发现，1-我的收藏，2-我的创作
+				contentId: '',		// 传给长按面板的内容id （帖子/评论）
 			}
 		},
 		computed: {
@@ -187,6 +196,23 @@
 					this.guideData.collectors_count--
 				}
 			},
+			// （帖子）长按，弹起面板
+			handleLongpress() {
+				this.contentId = this.id
+				this.$refs.deleteAndComplaint.handleLongpress()
+			},
+			// 删除成功，返回上一页并刷新
+			backRefresh() {
+				uni.navigateBack({
+				    success: () => {
+				         let page = getCurrentPages().pop();//跳转页面成功之后
+				         if (page) {
+							 page.$vm.active = 1
+				             page.$vm.$refs.guide.$refs.paging.reload()
+				         } 
+				    },
+				})
+			}
 		}
 	}
 </script>
