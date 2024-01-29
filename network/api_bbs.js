@@ -76,3 +76,45 @@ export function addNewTopic(params) {
 		data: params
 	})
 }
+
+// 删除评论
+export function deleteComments(params) {
+	return deleteRequest({
+		path: `/api/comments/${params}`
+	})
+}
+
+// 删除帖子
+export function deletePosts(params) {
+	return deleteRequest({
+		path: `/api/posts/${params}`
+	})
+}
+
+// 删除话题
+export function deleteTopics(params) {
+	return deleteRequest({
+		path: `/api/topics/${params}`
+	})
+}
+
+// 举报帖子
+export function complaintPosts(params) {
+	return postRequest({
+		path: `/api/posts/${params}/complaint`
+	})
+}
+
+// 举报话题
+export function complaintTopics(params) {
+	return postRequest({
+		path: `/api/topics/${params}/complaint`
+	})
+}
+
+// 举报评论
+export function complaintComments(params) {
+	return postRequest({
+		path: `/api/comments/${params}/complaint`
+	})
+}

@@ -145,6 +145,8 @@
 							this.showLaunch = true
 							this.getAchievementsList(res.data.user_id)
 						}
+						// 存用户角色：1：管理员 0：非管理员
+						uni.setStorageSync('role', res.data.is_admin);
 						// 存token，user_id
 						uni.setStorageSync('token', res.data.token);
 						uni.setStorageSync('userId', res.data.user_id);
