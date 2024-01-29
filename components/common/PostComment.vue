@@ -8,7 +8,7 @@
 			
 			<view class="comment-content">
 				<!-- 第一层: 评论内容 -->
-				<view class="comment-content-body" @click="handleReply(item, 1, index)">{{ commentBody(item.body) }}</view>
+				<view class="comment-content-body" @click="handleReply(item, 1, index)" @longpress="handleLongpress(item.id)">{{ commentBody(item.body) }}</view>
 				<!-- 第一层: 时间、点赞、评论 -->
 				<view class="comment-content-footer">
 					<view class="comment-content-footer-left">{{transformTimestamp(item)}}</view>
@@ -29,7 +29,7 @@
 					<!-- 第2层: 头像、昵称、学校 -->
 					<card-user :item="reply" parent="detail"></card-user>
 					<!-- 第2层: 评论内容 -->
-					<view class="comment-content-body" @click="handleReply(reply, 2, index, subIndex)">
+					<view class="comment-content-body" @click="handleReply(reply, 2, index, subIndex)" @longpress="handleLongpress(reply.id)">
 						<text v-if="!reply.is_first_descend">回复 <text style="color: #999999;">{{reply.parent_author}}</text>：</text>
 						{{ commentBody(reply.body) }}
 					</view>
@@ -150,6 +150,10 @@
 			// 回复   item:回复的评论，level: 回复的是1级/2级评论，如果回复的是2级评论: index:1级评论的index, subIndex：2级评论的index
 			handleReply(item, level, index, subIndex) {
 				this.$emit('reply', item, level, index, subIndex)
+			},
+			// 长按，弹起面板
+			handleLongpress(id) {
+				this.$emit('commentLongpress', id)
 			}
 		}
 	}

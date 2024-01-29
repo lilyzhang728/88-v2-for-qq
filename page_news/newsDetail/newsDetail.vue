@@ -20,7 +20,7 @@
 			<!-- <view class="news-detail-summary">{{newsData.body.summary}}</view> -->
 			
 			<!-- 资讯正文 -->
-			<view class="news-detail-content">{{newsBody}}</view>
+			<view class="news-detail-content" @longpress="handleLongpress">{{newsBody}}</view>
 			
 			<!-- 图片 -->
 			<view class="news-detail-img-box" v-if="newsData.body.urls && newsData.body.urls.length">
@@ -55,7 +55,8 @@
 			<!-- 评论区 -->
 			<view class="bbs-post-detail-comment">
 				<view class="bbs-post-detail-comment-total">共{{commentNum}}条评论</view>
-				<bbs-post-comment :commentData="dataList" :hideReply="true" @checkoutCommentLike="checkoutCommentLike"></bbs-post-comment>
+				<bbs-post-comment :commentData="dataList" :hideReply="true" 
+				@checkoutCommentLike="checkoutCommentLike" @commentLongpress="commentLongpress"></bbs-post-comment>
 			</view>
 		</z-paging>
 		
@@ -73,6 +74,10 @@
 		<van-overlay :show="showReply" @click.native="onClickHide" :custom-style="'height:auto;bottom: '+(bottomVal)+'; '" />
 		<bbs-comment-keyboard :showReply="showReply" 
 		@submit="submit" @changeBottomVal="changeBottomVal"></bbs-comment-keyboard>
+		
+		<!-- 举报面板 -->
+		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" :type="actionType"
+		@backRefresh="backRefresh"></delete-and-complaint>
 	</view>
 </template>
 
@@ -85,11 +90,13 @@
 	import { postComment } from "@/network/api_bbs.js"
 	import { getRequest } from '@/network/https.js'
 	import BbsPostComment from '@/components/common/PostComment.vue'
+	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	export default {
 		components: {
 			BackTopbar,
 			BbsCommentKeyboard,
-			BbsPostComment
+			BbsPostComment,
+			DeleteAndComplaint
 		},
 		data() {
 			return {
@@ -120,6 +127,8 @@
 				bottomVal: '115px',	//打开键盘后遮罩bottom（150：引用别人评论，115：不引用别人评论（发表1级评论））
 				dataList: [],		//评论数据
 				startGetComment: false,	//开始请求评论
+				contentId: '',		// 传给长按面板的内容id （帖子/评论）
+				actionType: 0,		// 长按面板内容类型：0：帖子，1：评论，2：话题
 			}
 		},
 		computed: {
@@ -327,6 +336,30 @@
 					url: `/page_infos/homepage/homepage?userId=${this.newsData.author.id}`
 				})
 			},
+			// （帖子）长按，弹起面板
+			handleLongpress() {
+				this.contentId = this.id
+				this.actionType = 0
+				this.$refs.deleteAndComplaint.handleLongpress()
+			},
+			// （评论）长按，弹起面板
+			commentLongpress(id) {
+				this.contentId = id
+				this.actionType = 1
+				this.$refs.deleteAndComplaint.handleLongpress()
+			},
+			// 删除成功，返回上一页并刷新
+			backRefresh() {
+				uni.navigateBack({
+				    success: () => {
+				         let page = getCurrentPages().pop();//跳转页面成功之后
+				         if (page) {
+							 page.$vm.active = 0
+				             page.$vm.$refs.news.$refs.paging.reload()
+				         } 
+				    },
+				})
+			}
 		}
 	}
 </script>
