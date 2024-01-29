@@ -5,7 +5,7 @@
 			<!-- 头像、昵称、学校 -->
 			<card-user v-if="commentData.author" :item="commentData" parent="detail"></card-user>
 			<!-- 1级评论正文 -->
-			<view class="comment-content-body" @click="handleReply(commentData)">{{ commentBody(commentData.body) }}</view>
+			<view class="comment-content-body" @click="handleReply(commentData)" @longpress="commentLongpress(commentData.id)">{{ commentBody(commentData.body) }}</view>
 			<!-- 第一层: 时间、点赞、评论 -->
 			<view class="comment-content-footer">
 				<view class="comment-content-footer-left">{{transformTimestamp(commentData)}}</view>
@@ -27,7 +27,7 @@
 				<view class="comment">
 					<card-user v-if="item.author" :item="item" parent="detail"></card-user>
 					<!-- 2级评论正文 -->
-					<view class="comment-content-body" @click="handleReply(item, index)">
+					<view class="comment-content-body" @click="handleReply(item, index)" @longpress="commentLongpress(item.id)">
 						<text v-if="!item.is_first_descend">回复 <text style="color: #999999;">{{item.parent_author}}</text>：</text>
 						{{ commentBody(item.body) }}
 					</view>
@@ -54,6 +54,10 @@
 		<bbs-comment-keyboard :showReply="showReply" :showReplyPostBox="showReplyPostBox" 
 		:curReplyAvatar="curReplyAvatar" :curReplyContent="curReplyContent"
 		@submit="submit" @changeBottomVal="changeBottomVal"></bbs-comment-keyboard>
+		
+		<!-- 举报面板 -->
+		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" type="1"
+		@backRefresh="backRefresh"></delete-and-complaint>
 	</view>
 </template>
 
@@ -65,10 +69,12 @@ import { transformMaxNum, transformTime } from '@/tools/transform_time.js'
 import { utf16toEntities, uncodeUtf16 } from '@/tools/transform_emoji.js'
 import CardUser from '@/components/common/CardUser.vue'
 import { themeColor } from '@/common/common.less'
+import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 export default {
 	components: {
 		BbsCommentKeyboard,
-		CardUser
+		CardUser,
+		DeleteAndComplaint
 	},
 	data() {
 		return {
@@ -86,6 +92,7 @@ export default {
 			curReplyContent: '',	//当前回复的评论的内容
 			showReplyPostBox: false,	//是否显示引用评论
 			activeColor: themeColor,
+			contentId: '',		// 传给长按面板的内容id （帖子/评论）
 		};
 	},
 	computed: {
@@ -221,6 +228,15 @@ export default {
 		commentBody(val) {
 			return val ? uncodeUtf16(val) : ''
 		},
+		// （评论）长按，弹起面板
+		commentLongpress(id) {
+			this.contentId = id
+			this.$refs.deleteAndComplaint.handleLongpress()
+		},
+		// 删除成功，刷新
+		backRefresh() {
+			this.getAllReply(this.id)
+		}
 	}
 };
 </script>
