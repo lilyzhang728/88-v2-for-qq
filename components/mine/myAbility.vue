@@ -42,7 +42,6 @@
 	import PortraitInfo from "@/components/index/PortraitInfo.vue"
 	import BadgeBox from "@/components/index/BadgeBox.vue"
 	import BadgeDetail from "@/components/index/BadgeDetail.vue"
-	// import TimelineAddOption from "@/components/timeline/TimelineAddOption.vue"
 	import Dialog from "@/wxcomponents/vant/dialog/dialog"
 	import Toast from '@/wxcomponents/vant/toast/toast'
 	import { tagsList } from "@/network/api_index.js"	

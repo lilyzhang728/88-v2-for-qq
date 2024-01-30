@@ -61,14 +61,6 @@
 					"navigationStyle": "custom"
 				}
 
-			}, {
-				"path": "addTimelineItem/addTimelineItem",
-				"style": {
-					"navigationBarTitleText": "",
-					"enablePullDownRefresh": false,
-					"navigationStyle": "custom"
-				}
-
 			}
                 ,{
                     "path" : "commonSearch/commonSearch",
