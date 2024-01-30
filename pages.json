@@ -69,14 +69,7 @@
 					"navigationStyle": "custom"
 				}
 
-			}, {
-                    "path" : "selectAchievement/selectAchievement",
-                    "style" : {
-						"navigationBarTitleText": "",
-						"enablePullDownRefresh": false,
-						"navigationStyle": "custom"
-					}
-                }
+			}
                 ,{
                     "path" : "commonSearch/commonSearch",
                     "style" :                                                                                    

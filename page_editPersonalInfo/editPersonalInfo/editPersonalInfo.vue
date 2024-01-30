@@ -92,16 +92,6 @@
 				:error="validator && !userInfo.about_me"
 				custom-style="background: transparent"
 			/>
-			<!-- <van-field
-			    value=""
-				label="批量添加成就"
-				required
-				right-icon="arrow"
-				readonly
-				@clickInput="clickAchievment"
-				@clickIcon="clickAchievment"
-				custom-style="background: transparent"
-			/> -->
 		</van-cell-group>
 
 		<view class="save-btn-box">
@@ -527,12 +517,7 @@
 			closeTargetPicker() {
 				this.showTargetPicker = false
 			},
-			// 跳转添加成就页面
-			clickAchievment() {
-				uni.navigateTo({
-					url: "/page_editPersonalInfo/selectAchievement/selectAchievement"
-				})
-			},
+			
 			
 			// changePotrait() {
 			// 	uni.chooseImage({ // 从本地相册选择图片或使用相机拍照。
