@@ -157,15 +157,6 @@
                     "enablePullDownRefresh": false
                 }
                 
-                }
-                ,{
-                    "path" : "newsLink/newsLink",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
                 },
                 {
                 	"path" : "addNews/addNews",
