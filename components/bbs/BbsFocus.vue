@@ -3,21 +3,29 @@
 	<view class="bbs-focus">
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'left': '25rpx', 'right': '25rpx'}">
 			<!-- 帖子列表 -->
-			<bbs-topic-card @click.native="toTopicDetail(item.id)" v-for="(item,index) in dataList" :key="index" :topicData="item"></bbs-topic-card>
+			<bbs-topic-card @click.native="toTopicDetail(item.id)" @longpress.native="handleLongpress(item.id)"
+			v-for="(item,index) in dataList" :key="index" :topicData="item"></bbs-topic-card>
 		</z-paging>
+		
+		<!-- 举报面板 -->
+		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" type="2"
+		@backRefresh="backRefresh"></delete-and-complaint>
 	</view>
 </template>
 
 <script>
 	import BbsTopicCard from "@/components/bbs/BbsTopicCard.vue"
 	import { focusedTopic } from '@/network/api_bbs.js'
+	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	export default {
 		components: {
-			BbsTopicCard
+			BbsTopicCard,
+			DeleteAndComplaint
 		},
 		data() {
 			return {
 				dataList: [],
+				contentId: ''
 			}
 		},
 		methods: {
@@ -49,6 +57,15 @@
 				uni.navigateTo({
 					url: `/page_bbs/bbsTopicDetail/bbsTopicDetail?id=${id}`
 				})
+			},
+			// 长按，弹起面板
+			handleLongpress(id) {
+				this.contentId = id
+				this.$refs.deleteAndComplaint.handleLongpress()
+			},
+			// 删除成功，刷新
+			backRefresh() {
+				this.$refs.paging.reload()
 			}
 		}
 	}

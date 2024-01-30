@@ -6,7 +6,7 @@
 			:auto-scroll-to-top-when-reload="false" :refresher-status.sync="refresherStatus" @query="queryList"
 			:paging-style="{'top': (customBar) + 'px', 'bottom': '0', paddingLeft: '25rpx', paddingRight: '25rpx'}">
 
-			<view class="bbs-topic-detail-header">
+			<view class="bbs-topic-detail-header" @longpress="handleLongpress">
 				<view class="bbs-topic-detail-title">{{topicData.body}}</view>
 				<van-button v-if="!topicData.is_collect" size="small" class="bbs-topic-detail-btn-wrap" custom-class="bbs-topic-detail-btn" @click.native="handleFocusTopic">关注</van-button>
 				<view v-else class="bbs-topic-detail-focus" @click="handleUnfocusTopic"><van-icon name="success" class="bbs-topic-detail-focus-icon" />已关注</view>
@@ -34,6 +34,9 @@
 		<!-- 新增攻略按钮 -->
 		<side-add-btn @addNew="addNewPost"></side-add-btn>
 		
+		<!-- 举报面板 -->
+		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" :type="actionType"
+		@backRefresh="backRefresh"></delete-and-complaint>
 	</view>
 </template>
 
@@ -43,12 +46,13 @@
 	import { topicDetail, focusTopic, unFocusTopic } from "@/network/api_bbs.js"
 	import Dialog from "@/wxcomponents/vant/dialog/dialog"
 	import SideAddBtn from '@/components/common/SideAddBtn.vue'
-
+	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	export default {
 		components: {
 			BackTopbar,
 			BbsTopicPostCard,
-			SideAddBtn
+			SideAddBtn,
+			DeleteAndComplaint
 		},
 		data() {
 			return {
@@ -66,7 +70,9 @@
 					posts: {
 						items: []
 					}
-				}
+				},
+				contentId: '',		// 传给长按面板的内容id （帖子/评论）
+				actionType: 2,		// 长按面板内容类型：0：帖子，1：评论，2：话题
 			}
 		},
 		watch: {
@@ -168,6 +174,24 @@
 				uni.navigateTo({
 					url: `/page_bbs/addNewPost/addNewPost?topicInfo=${encodeURIComponent(JSON.stringify(this.topicData))}`
 				});
+			},
+			// 长按，弹起面板
+			handleLongpress() {
+				this.contentId = this.topicData.id
+				this.actionType = 2
+				this.$refs.deleteAndComplaint.handleLongpress()
+			},
+			// 删除成功，返回上一页并刷新
+			backRefresh() {
+				uni.navigateBack({
+				    success: () => {
+				         let page = getCurrentPages().pop();//跳转页面成功之后
+				         if (page) {
+							 page.$vm.active = 2
+				             page.$vm.$refs.bbsTopic.$refs.paging.reload()
+				         } 
+				    },
+				})
 			}
 		}
 	}
