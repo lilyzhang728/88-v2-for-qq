@@ -128,15 +128,7 @@
 					"enablePullDownRefresh": false
 				}
 
-			}    ,{
-                    "path" : "guideDraft/guideDraft",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "草稿箱",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
+			}    
                 ,{
                     "path" : "guideSearchResult/guideSearchResult",
                     "style" :                                                                                    
@@ -287,15 +279,6 @@
 			}
 			,{
 			    "path" : "infosCollectList/infosCollectList",
-			    "style" :                                                                                    
-			    {
-			        "navigationBarTitleText": "",
-			        "enablePullDownRefresh": false
-			    }
-			    
-			}
-			,{
-			    "path" : "infosChat/infosChat",
 			    "style" :                                                                                    
 			    {
 			        "navigationBarTitleText": "",

@@ -13,19 +13,16 @@
 				</view>
 			</view>
 			<view class="infos-content">
-				<infos-list-card v-for="(item,index) in dataList" :key="index" :item="item"></infos-list-card>
 			</view>
 		</z-paging>
 	</view>
 </template>
 
 <script>
-	import InfosListCard from '@/components/infos/InfosListCard.vue'
-	import { newNotificationNum, messagesList } from "@/network/api_infos.js"
+	import { newNotificationNum } from "@/network/api_infos.js"
 	import BackTopbar from '@/components/common/BackTopbar.vue'
 	export default {
 		components: {
-			InfosListCard,
 			BackTopbar
 		},
 		data() {
@@ -70,19 +67,7 @@
 		},
 		methods: {
 			queryList(pageNo, pageSize) {
-				messagesList({
-					'per_page':pageSize,
-					'page':pageNo
-				}).then(res => {
-					if(res.code === 0 && Object.keys(res.data).length) {
-						this.$refs.paging.complete(res.data.items);
-					} else {
-						this.$refs.paging.complete([])
-					}
-				}, err => {
-					this.$refs.paging.complete([])
-					console.log('messagesList: ', err)
-				})
+				
 			},
 			getNewNotificationNum() {
 				newNotificationNum().then(res => {

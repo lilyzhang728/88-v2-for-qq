@@ -49,13 +49,7 @@ export function newNotificationNum(params) {
 	})
 }
 
-//私信消息list
-export function messagesList(params) {
-	return getRequest({
-		path: `/api/user/${userId}/messages`,
-		data: params
-	})
-}
+
 
 //返回我与某个用户(由查询参数 from 获取)之间的所有私信记录
 export function historyChat(params) {

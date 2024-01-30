@@ -10,15 +10,7 @@
 						<img v-if="userInfo.avatar" :src="userInfo.avatar" class="homepage-user-info-basic-avatar" alt="">
 						<img v-else :src="defaultAvatar" class="homepage-user-info-basic-avatar" alt="">
 						<view class="homepage-user-info-basic-text">
-							<view class="homepage-user-info-basic-text-name">{{userInfo.name}}
-								<!-- 关注 -->
-								<van-button v-if="!isMe && !isFollow" @click="handleFocus" plain class="homepage-user-info-basic-text-focus-wrap" custom-class="homepage-user-info-basic-text-focus">+关注</van-button>
-								<van-button v-if="!isMe && isFollow" @click="handleFocus" plain class="homepage-user-info-basic-text-focus-wrap homepage-user-info-basic-text-focus-wrap-grey" custom-class="homepage-user-info-basic-text-focus">取消关注</van-button>
-								<!-- 私信 -->
-								<view v-if="!isMe" class="homepage-user-info-basic-text-mail" @click.native.stop="toChatPage($event)">
-									<van-icon name="envelop-o" size="27rpx" color="#30C3BC" class="homepage-user-info-basic-text-mail-icon" />
-								</view>
-							</view>
+							<view class="homepage-user-info-basic-text-name">{{userInfo.name}}</view>
 							<view class="homepage-user-info-basic-text-follower">粉丝：{{userInfo.followers_ct ? userInfo.followers_ct : 0}}</view>
 							<view class="homepage-user-info-basic-text-school">学校：{{userInfo.school ? userInfo.school : '未填写'}}</view>
 						</view>
@@ -100,13 +92,7 @@
 				showBadge: false,
 				badgeList: [],
 				defaultAvatar: DEFAULT_AVATAR,
-				isFollow: true
 			}
-		},
-		computed: {
-			isMe() {
-				return myId === this.userId
-			},
 		},
 		watch: {
 			userInfo(val) {
@@ -187,36 +173,7 @@
 			handleShare(e) {
 				
 			},
-			//去私信
-			toChatPage(e) {
-				uni.navigateTo({
-					url: `/page_infos/infosChat/infosChat?id=${this.userId}&name=${this.userInfo.name}`
-				})
-			},
-			//关注
-			handleFocus() {
-				if(this.isFollow) {
-					// 取消关注
-					unfollow(this.userId).then(res => {
-						if(res.code === 0) {
-							// 切换关注状态
-							this.isFollow = false
-						}
-					}, err => {
-						console.log('unfollow: ', err)
-					})
-				} else {
-					// 关注
-					follow(this.userId).then(res => {
-						if(res.code === 0) {
-							// 切换关注状态
-							this.isFollow = true
-						}
-					}, err => {
-						console.log('follow: ', err)
-					})
-				}
-			},
+			
 			
 		}
 	}
