@@ -212,7 +212,7 @@
 						this.userInfo.target = target_value_key_map[res.data.target]
 						if(!res.data.avatar) {
 							// 如返回头像为空，设置默认头像
-							this.userInfo.avatar = '../../static/logo.png'
+							this.userInfo.avatar = this.default_avatar
 						}
 					}
 				}, err => {
