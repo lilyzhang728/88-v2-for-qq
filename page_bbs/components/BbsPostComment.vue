@@ -27,22 +27,24 @@
 				<view class="comment-content-level2" v-for="(reply, subIndex) in item.descendants" :key="subIndex">
 					<!-- 第2层: 头像、昵称、学校 -->
 					<card-user :item="reply" parent="detail"></card-user>
-					<!-- 第2层: 评论内容 -->
-					<view class="comment-content-body" @click="handleReply(reply, 2, index, subIndex)" @longpress="handleLongpress(reply.id)">
-						<text v-if="!reply.is_first_descend">回复 <text style="color: #999999;">{{reply.parent_author}}</text>：</text>
-						{{ commentBody(reply.body) }}
-					</view>
-					<!-- 第2层: 时间、点赞、评论 -->
-					<view class="comment-content-footer">
-						<view class="comment-content-footer-left">{{transformTimestamp(reply)}}</view>
-						<view class="comment-content-footer-right">
-							<view class="comment-content-footer-right-like">
-								<van-icon v-if="!reply.is_like" name="good-job" size="34rpx" color="#D7D7D7" @click="getLikeLevel2(index, subIndex, true)"></van-icon>
-								<van-icon v-if="reply.is_like" name="good-job" size="34rpx" :color="activeColor" @click="getLikeLevel2(index, subIndex, false)"></van-icon>
-								<view class="num" :style="{'color': reply.is_like ? activeColor : '#00000099'}">{{ handleTransform(reply.likers_count) }}</view>
-							</view>
-							<view class="comment-content-footer-right-reply">
-								<van-icon v-if="!hideReply" name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(reply, 2, index, subIndex)" />
+					<view class="comment-content-level2-content">
+						<!-- 第2层: 评论内容 -->
+						<view class="comment-content-body" @click="handleReply(reply, 2, index, subIndex)" @longpress="handleLongpress(reply.id)">
+							<text v-if="!reply.is_first_descend">回复 <text style="color: #999999;">{{reply.parent_author}}</text>：</text>
+							{{ commentBody(reply.body) }}
+						</view>
+						<!-- 第2层: 时间、点赞、评论 -->
+						<view class="comment-content-footer">
+							<view class="comment-content-footer-left">{{transformTimestamp(reply)}}</view>
+							<view class="comment-content-footer-right">
+								<view class="comment-content-footer-right-like">
+									<van-icon v-if="!reply.is_like" name="good-job" size="34rpx" color="#D7D7D7" @click="getLikeLevel2(index, subIndex, true)"></van-icon>
+									<van-icon v-if="reply.is_like" name="good-job" size="34rpx" :color="activeColor" @click="getLikeLevel2(index, subIndex, false)"></van-icon>
+									<view class="num" :style="{'color': reply.is_like ? activeColor : '#00000099'}">{{ handleTransform(reply.likers_count) }}</view>
+								</view>
+								<view class="comment-content-footer-right-reply">
+									<van-icon v-if="!hideReply" name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(reply, 2, index, subIndex)" />
+								</view>
 							</view>
 						</view>
 					</view>
@@ -203,9 +205,13 @@
 				}
 			}
 			.comment-content-level2 {
-				margin-top: 15rpx;
+				margin-top: 20rpx;
+				.comment-content-level2-content {
+					margin-left: 90rpx;
+				}
 			}
 			.all-reply {
+				margin-left: 90rpx;
 				padding: 5rpx 0 25rpx 0;
 				display: flex;
 				color: #35C8A7;

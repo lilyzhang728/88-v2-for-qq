@@ -427,7 +427,7 @@
 			line-height: 56rpx;
 		}
 		.bbs-post-detail-img-box {
-			margin-top: 40rpx;
+			margin-top: 10rpx;
 			display: flex;
 			flex-wrap: wrap;
 			.bbs-post-detail-img-item {
