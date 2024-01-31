@@ -1,6 +1,6 @@
 <!-- 评论/回复别人评论-键盘弹起 -->
 <template>
-	<view class="bbs-comment-keyboard" v-if="showReply" :style="{bottom: bottomVal, height: keyboardHeight}">
+	<view class="bbs-comment-keyboard" v-if="showReply" :style="{bottom: bottomVal}">
 		<!-- 引用别人的评论 -->
 		<view class="reply-post" v-if="showReplyPostBox">
 			<img :src="curReplyAvatar" alt="" class="reply-post-avatar">
@@ -9,7 +9,8 @@
 		</view>
 		
 		<!-- 评论输入框 -->
-		<input :adjust-position="false" type="text" v-model="val" confirm-type="发送" placeholder="说点什么吧" 
+		<textarea :adjust-position="false" v-model="val" :auto-height="true"
+		confirm-type="发送" placeholder="说点什么吧" 
 		@confirm="send" :focus="showReply" @focus="inputBindFocus" @blur="inputBindBlur"/>
 		
 		<!-- 发布按钮 -->
