@@ -15,7 +15,6 @@
 		
 		<!-- 发布按钮 -->
 		<view class="view-btn-box">
-			<van-icon name="photo-o" size="30px" color="#6d6d6d" />
 			<van-button class="view-btn-wrap" :class="{'view-btn-wrap-active': val}" custom-class="view-btn" size="small" @click.native="send">发送</van-button>
 		</view>
 		
@@ -116,8 +115,7 @@
 		}
 		.view-btn-box{
 			margin-top: 10px;
-			display: flex;
-			justify-content: space-between;
+			text-align: end;
 			.view-btn-wrap {
 				/deep/ .view-btn {
 					color: #ccc;
