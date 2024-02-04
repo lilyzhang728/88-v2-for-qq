@@ -244,7 +244,11 @@
 			clickInput() {
 				
 				//打开评论键盘
-				this.showReply = true
+				// this.showReply = true
+				
+				uni.navigateTo({
+					url: `/page_qa/writeAnswer/writeAnswer?title=${this.postData.title}&id=${this.postData.id}`
+				})
 			},
 			
 			//发送评论（调评论接口）

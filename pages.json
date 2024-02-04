@@ -334,6 +334,14 @@
                 		"navigationBarTitleText" : "",
                 		"enablePullDownRefresh" : false
                 	}
+                },
+                {
+                	"path" : "writeAnswer/writeAnswer",
+                	"style" : 
+                	{
+                		"navigationBarTitleText" : "",
+                		"enablePullDownRefresh" : false
+                	}
                 }
             ]
 		}

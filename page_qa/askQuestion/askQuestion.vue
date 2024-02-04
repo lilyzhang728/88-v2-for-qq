@@ -77,7 +77,7 @@
 <script>
 	import BackTopbar from '@/components/common/BackTopbar.vue'
 	import Toast from '@/wxcomponents/vant/toast/toast'
-	import { guideDetail, addGuide, editGuide } from '@/network/api_guide.js'
+	import { addGuide } from '@/network/api_guide.js'
 	import { imgSecCheck } from "@/tools/sec_check.js"
 	import { invideUserAnswer } from '@/network/api_qa.js'
 	export default {
