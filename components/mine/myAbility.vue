@@ -98,8 +98,8 @@
 		methods: {
 			queryList(pageNo, pageSize) {
 				getBadgeList({
-					'per_page': 8,
-					'page': 1,
+					'per_page': pageSize,
+					'page': pageNo,
 					'userId': this.userId
 				}).then(res => {
 					if(res.code == 0 && Object.keys(res.data).length) {
