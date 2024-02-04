@@ -3,7 +3,7 @@
 	<view class="wrap">
 		<view class="comment">
 			<!-- 头像、昵称、学校 -->
-			<card-user v-if="commentData.author" :item="commentData" parent="detail"></card-user>
+			<card-user v-if="commentData.author" :isComment="true" :item="commentData" parent="detail"></card-user>
 			<!-- 1级评论正文 -->
 			<view class="comment-content-body" @click="handleReply(commentData)" @longpress="commentLongpress(commentData.id)">{{ commentBody(commentData.body) }}</view>
 			<!-- 第一层: 时间、点赞、评论 -->
@@ -25,7 +25,7 @@
 			<view class="all-reply-top">全部回复（{{ subReplyNum }}）</view>
 			<view class="item" v-for="(item, index) in commentData.descendants" :key="index">
 				<view class="comment">
-					<card-user v-if="item.author" :item="item" parent="detail"></card-user>
+					<card-user v-if="item.author" :isComment="true" :item="item" parent="detail"></card-user>
 					<!-- 2级评论正文 -->
 					<view class="comment-content-body" @click="handleReply(item, index)" @longpress="commentLongpress(item.id)">
 						<text v-if="!item.is_first_descend">回复 <text style="color: #999999;">{{item.parent_author}}</text>：</text>

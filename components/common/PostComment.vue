@@ -4,7 +4,7 @@
 	<view class="bbs-post-comment">
 		<view class="comment" v-for="(item, index) in commentData" :key="index">
 			<!-- 头像、昵称、学校 -->
-			<card-user :item="item" parent="detail"></card-user>
+			<card-user :item="item" :isComment="true" parent="detail"></card-user>
 			
 			<view class="comment-content">
 				<!-- 第一层: 评论内容 -->
@@ -27,7 +27,7 @@
 				<!-- 第2层 -->
 				<view class="comment-content-level2" v-for="(reply, subIndex) in item.descendants" :key="subIndex">
 					<!-- 第2层: 头像、昵称、学校 -->
-					<card-user :item="reply" parent="detail"></card-user>
+					<card-user :item="reply" :isComment="true" parent="detail"></card-user>
 					<!-- 第2层: 评论内容 -->
 					<view class="comment-content-body" @click="handleReply(reply, 2, index, subIndex)" @longpress="handleLongpress(reply.id)">
 						<text v-if="!reply.is_first_descend">回复 <text style="color: #999999;">{{reply.parent_author}}</text>：</text>

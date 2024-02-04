@@ -3,7 +3,9 @@
 	<view class="card-user">
 		<img class="card-user-avatar" :src="avatar"  @click.native.stop="toHomepage($event)"></img>
 		<view class="card-user-right">
-			<view class="card-user-name"  @click.native.stop="toHomepage($event)">{{item.author.name}}</view>
+			<view class="card-user-name"  @click.native.stop="toHomepage($event)">
+				{{item.author.name}} <text class="card-user-name-author" v-if="isComment">楼主</text>
+			</view>
 			<view class="card-user-infos">
 				<text class="card-user-time" v-if="!isDetail">{{timestamp}}</text>
 				<text class="card-user-infos-text" :class="{'card-user-infos-text-detail': isDetail}" v-if="item.author.school">{{item.author.school}}</text>
@@ -33,6 +35,12 @@
 			parent: {
 				type: String,
 				default: '',
+				required: false
+			},
+			// 是否是评论区引用的（用于判断是否显示楼主）
+			isComment: {
+				type: Boolean,
+				default: false,
 				required: false
 			}
 		},
@@ -79,6 +87,16 @@
 				font-weight: 500;
 				color: #000;
 				line-height: 42rpx;
+				overflow: hidden;
+				white-space: nowrap;
+				.card-user-name-author {
+					margin-left: 12rpx;
+					font-size: 26rpx;
+					padding: 5rpx 12rpx;
+					background-color: #f5f5f5;
+					color: #6f6f6f;
+					border-radius: 20rpx;
+				}
 			}
 			.card-user-infos {
 				font-size: 22rpx;
