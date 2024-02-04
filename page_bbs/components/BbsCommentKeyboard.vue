@@ -10,7 +10,7 @@
 		
 		<!-- 评论输入框 -->
 		<textarea :adjust-position="false" v-model="val" :auto-height="true"
-		confirm-type="发送" placeholder="说点什么吧" 
+		confirm-type="发送" placeholder="说点什么吧" :show-confirm-bar="false"
 		@confirm="send" :focus="showReply" @focus="inputBindFocus" @blur="inputBindBlur"/>
 		
 		<!-- 发布按钮 -->
