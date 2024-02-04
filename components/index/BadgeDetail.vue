@@ -27,7 +27,7 @@
 				<!-- 打分 -->
 				<view class="detail-info-rate">
 					<view class="detail-info-rate-left">
-						<van-rate :value="myRating" @change.native="handleRate" size="20" color="#ffd21e" :readonly="!showRating" />
+						<van-rate v-if="showDetail" :value="myRating" @change.native="handleRate" size="20" color="#ffd21e" :readonly="!showRating" />
 						<view class="detail-info-rate-text-1">我的评分</view>
 						<view class="detail-info-rate-text-2">({{myRating}}星)</view>
 					</view>
