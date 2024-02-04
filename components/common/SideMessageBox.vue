@@ -8,7 +8,7 @@
 
 <script>
 	import { getNotifications } from '@/network/api_infos.js'
-	const NEW_MSG_LIST = ['unread_posts_likes_count', 'unread_posts_collects_count', 'unread_recived_comments_count', 'unread_posts_mentions_count']
+	const NEW_MSG_LIST = ['unread_posts_likes_count', 'unread_posts_collects_count', 'unread_recived_comments_count', 'unread_posts_mentions_count', 'unread_comments_likes_count']
 	export default {
 		data() {
 			return {

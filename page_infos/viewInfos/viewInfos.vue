@@ -47,7 +47,8 @@
 				unread_posts_collects_count: 0,
 				unread_recived_comments_count: 0,
 				unread_posts_mentions_count: 0,
-				notification_type: ['unread_posts_likes_count', 'unread_posts_collects_count', 'unread_recived_comments_count', 'unread_posts_mentions_count']
+				unread_comments_likes_count: 0,
+				notification_type: ['unread_posts_likes_count', 'unread_posts_collects_count', 'unread_recived_comments_count', 'unread_posts_mentions_count', 'unread_comments_likes_count']
 			}
 		},
 		onShow() {
@@ -83,7 +84,12 @@
 				})
 			},
 			getVal(index) {
-				return this[this.notification_type[index]]
+				if(index === 0) {
+					// 收到的赞 = unread_posts_likes_count + unread_comments_likes_count
+					return this.unread_posts_likes_count + this.unread_comments_likes_count
+				} else {
+					return this[this.notification_type[index]]
+				}
 			},
 			clickBtn(index) {
 				switch (index){
