@@ -11,7 +11,7 @@
 		
 		<!-- 发布按钮 -->
 		<view class="view-btn-box">
-			<van-button class="view-btn-wrap" :class="{'view-btn-wrap-active': val}" custom-class="view-btn" size="small" @click.native="send">发送</van-button>
+			<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="!val" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
 		</view>
 		
 	</view>
@@ -102,14 +102,15 @@
 			text-align: end;
 			.view-btn-wrap {
 				/deep/ .view-btn {
-					color: #ccc;
-					border: none;
+					// color: #ccc;
+					// border: none;
 					font-size: 16px;
+					border-radius: 14rpx;
 				}
 			}
 			.view-btn-wrap-active {
 				/deep/ .view-btn {
-					color: #35C8A7;
+					// color: #35C8A7;
 				}
 			}
 		}

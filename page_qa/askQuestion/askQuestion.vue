@@ -1,7 +1,7 @@
 <!-- 提问页面 -->
 <template>
 	<view class="ask-question" :style="{backgroundImage: backgroundImage,backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<back-topbar title="发布帖子"></back-topbar>
+		<back-topbar title="发布问题"></back-topbar>
 		
 		<!-- 编辑 -->
 		<view class="add-new-post-edit">
@@ -58,7 +58,7 @@
 			
 			<!-- 发布按钮 -->
 			<view class="view-btn-box">
-				<van-button class="view-btn-wrap" :class="{'view-btn-wrap-active': postVal}" custom-class="view-btn" size="small" @click.native="send">发送</van-button>
+				<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="!postVal || !title" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
 			</view>
 		</view>
 		
@@ -86,6 +86,7 @@
 		},
 		data() {
 			return {
+				title: '',
 				postVal: '',	//提问内容
 				bottomVal: '0px',	//键盘上话题bottom
 				postImgList: [],	//上传图片list
@@ -506,10 +507,10 @@
 								})
 							}
 						} else {
-							Toast('邀请失败')
+							Toast('发布失败')
 						}
 					}, err => {
-						Toast('邀请失败')
+						Toast('发布失败')
 						console.log('addGuide: ', err)
 					})
 					// this.$emit("submit",this.val)
@@ -577,14 +578,15 @@
 			text-align: right;
 			.view-btn-wrap {
 				/deep/ .view-btn {
-					color: #ccc;
-					border: none;
+					// color: #ccc;
+					// border: none;
 					font-size: 16px;
+					border-radius: 14rpx;
 				}
 			}
 			.view-btn-wrap-active {
 				/deep/ .view-btn {
-					color: #35C8A7;
+					// color: #35C8A7;
 				}
 			}
 		}
