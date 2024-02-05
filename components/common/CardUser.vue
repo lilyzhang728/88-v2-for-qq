@@ -4,7 +4,7 @@
 		<img class="card-user-avatar" :src="avatar"  @click.native.stop="toHomepage($event)"></img>
 		<view class="card-user-right">
 			<view class="card-user-name"  @click.native.stop="toHomepage($event)">
-				{{item.author.name}} <text class="card-user-name-author" v-if="isComment">楼主</text>
+				{{item.author.name}} <text class="card-user-name-author" v-if="isComment && item.is_post_author === 1">楼主</text>
 			</view>
 			<view class="card-user-infos">
 				<text class="card-user-time" v-if="!isDetail">{{timestamp}}</text>
@@ -91,7 +91,7 @@
 				white-space: nowrap;
 				.card-user-name-author {
 					margin-left: 12rpx;
-					font-size: 26rpx;
+					font-size: 24rpx;
 					padding: 5rpx 12rpx;
 					background-color: #f5f5f5;
 					color: #6f6f6f;

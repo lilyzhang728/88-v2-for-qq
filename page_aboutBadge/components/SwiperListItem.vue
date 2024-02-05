@@ -79,7 +79,7 @@
 					collectedAchievements({
 						'per_page': pageSize,
 						'page': pageNo,
-						'filed': this.filed
+						'field': this.filed
 					}).then(res => {
 						if(res.code === 0 && Object.keys(res.data).length) {
 							// this.myBadgeList = res.data.items

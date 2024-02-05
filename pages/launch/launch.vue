@@ -139,24 +139,43 @@
 			login() {
 				login().then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
-						// res.data.is_new = true
-						if(res.data.is_new) {
-							// 新用户，显示引导页
-							this.showLaunch = true
-							this.getAchievementsList(res.data.user_id)
-						}
-						// 存用户角色：1：管理员 0：非管理员
-						uni.setStorageSync('role', res.data.is_admin);
-						// 存token，user_id
-						uni.setStorageSync('token', res.data.token);
-						uni.setStorageSync('userId', res.data.user_id);
-						this.userId = res.data.user_id
-						console.log('userid: ', res.data.user_id)
-						if(!res.data.is_new) {
-							// 老用户，跳首页
-							uni.switchTab({
-								url: '/pages/bbs/bbs'
+						if(!res.data.user_id) {
+							// 未获取到user_id，重新进入小程序
+							uni.showModal({
+								title: '提示',
+								content: '获取信息失败，请重新进入',
+								success: function (res) {
+									if (res.confirm) {
+										uni.reLaunch({
+											url: '/pages/launch/launch'
+										});
+									} else if (res.cancel) {
+										uni.reLaunch({
+											url: '/pages/launch/launch'
+										});
+									}
+								}
 							})
+						} else {
+							// res.data.is_new = true
+							if(res.data.is_new) {
+								// 新用户，显示引导页
+								this.showLaunch = true
+								this.getAchievementsList(res.data.user_id)
+							}
+							// 存用户角色：1：管理员 0：非管理员
+							uni.setStorageSync('role', res.data.is_admin);
+							// 存token，user_id
+							uni.setStorageSync('token', res.data.token);
+							uni.setStorageSync('userId', res.data.user_id);
+							this.userId = res.data.user_id
+							console.log('userid: ', res.data.user_id)
+							if(!res.data.is_new) {
+								// 老用户，跳首页
+								uni.switchTab({
+									url: '/pages/bbs/bbs'
+								})
+							}
 						}
 					} else {
 						uni.showToast({
