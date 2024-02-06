@@ -14,7 +14,8 @@
 					<!-- 我的动态 -->
 					<view class="bbs" v-if="active === 0">
 						<bbs-post-card v-for="(item,index) in dataList" :key="index" :postData="item" :index="index"
-						@click.native="toPostDetail(item.id)" @checkoutLike="checkoutLike"></bbs-post-card>
+						@click.native="toPostDetail(item.id)" @checkoutLike="checkoutLike"
+						from="mine" @clickMore="clickMore"></bbs-post-card>
 					</view>
 					
 					<!-- 我的攻略 -->
