@@ -4,7 +4,7 @@
 		<back-topbar></back-topbar>
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': (customBar+20) + 'px', 'bottom': '64px', paddingLeft: '25rpx', paddingRight: '25rpx'}">
 			<!-- 头像、昵称、学校 -->
-			<card-user :item="postData" parent="detail"></card-user>
+			<card-user :item="postData" parent="detail" :showMoreIcon="from === 'mine'" @clickMore="clickMore"></card-user>
 			
 			<!-- 帖子所属话题 -->
 			<view class="bbs-post-detail-topic" v-if="postData.bind_topics && postData.bind_topics.length" @click="toTopicDetail">
@@ -63,7 +63,7 @@
 		
 		<!-- 举报面板 -->
 		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" :type="actionType"
-		@backRefresh="backRefresh"></delete-and-complaint>
+		@backRefresh="backRefresh" :author="from === 'mine' ? 0 : 1"></delete-and-complaint>
 	</view>
 </template>
 
@@ -125,6 +125,7 @@
 				dataList: [],		//评论数据
 				contentId: '',		// 传给长按面板的内容id （帖子/评论）
 				actionType: 0,		// 长按面板内容类型：0：帖子，1：评论，2：话题
+				from: '',			// from==='mine',表示从我的页面跳转过来，需要加more-icon		
 			}
 		},
 		computed: {
@@ -140,6 +141,9 @@
 			this.id = option.id
 			if(option.showReply) {
 				this.clickInput()
+			}
+			if(option.from) {
+				this.from = option.from
 			}
 		},
 		onUnload() {
@@ -378,15 +382,35 @@
 			},
 			// 删除成功，返回上一页并刷新
 			backRefresh() {
-				uni.navigateBack({
-				    success: () => {
-				         let page = getCurrentPages().pop();//跳转页面成功之后
-				         if (page) {
-							 page.$vm.active = 0
-				             page.$vm.$refs.bbsRec.$refs.paging.reload()
-				         } 
-				    },
-				})
+				if(this.from === 'mine') {
+					// 从我的页面跳转过来
+					uni.navigateBack({
+					    success: () => {
+					         let page = getCurrentPages().pop();//跳转页面成功之后
+					         if (page) {
+								 page.$vm.active = 1
+								 page.$vm.$refs.myProduction.active = 0
+					             page.$vm.$refs.myProduction.$refs.paging.reload()
+					         } 
+					    },
+					})
+				} else {
+					uni.navigateBack({
+					    success: () => {
+					         let page = getCurrentPages().pop();//跳转页面成功之后
+					         if (page) {
+								 page.$vm.active = 0
+					             page.$vm.$refs.bbsRec.$refs.paging.reload()
+					         } 
+					    },
+					})
+				}
+			},
+			clickMore() {
+				// 参数： id, type: 0：帖子，1：评论，2：话题
+				this.contentId = this.id
+				this.actionType = 0
+				this.$refs.deleteAndComplaint.handleLongpress()
 			}
 		}
 	}

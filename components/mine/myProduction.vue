@@ -224,7 +224,7 @@
 			// 帖子详情
 			toPostDetail(id) {
 				uni.navigateTo({
-					url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${id}`
+					url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${id}&from=mine`
 				});
 			},
 			//切换点赞状态
