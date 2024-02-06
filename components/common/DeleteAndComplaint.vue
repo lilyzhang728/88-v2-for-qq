@@ -22,25 +22,55 @@
 			type: {
 				type: Number,
 				default: 0
+			},
+			// 作者：0：自己 1：别人的
+			author: {
+				type: Number,
+				default: 1
 			}
 		},
 		data() {
 			return {
 				showActionSheet: false,
-				actions: [{
-					name: '举报该内容',
-					value: 0
-				}]
+				// actions: [{
+				// 	name: '举报该内容',
+				// 	value: 0
+				// }]
 			}
 		},
-		created() {
-			if(uni.getStorageSync('role') == 1 && this.actions.length === 1) {
-				this.actions.push({
-					name: '删除该内容',
-					value: 1
-				})
+		computed: {
+			actions() {
+				let _actions = []
+				if(this.author) {
+					// 别人的
+					_actions = [{
+						name: '举报该内容',
+						value: 0
+					}]
+					if(uni.getStorageSync('role') == 1 && _actions.length === 1) {
+						_actions.push({
+							name: '删除该内容',
+							value: 1
+						})
+					}
+				} else {
+					// 自己的
+					_actions = [{
+						name: '删除该内容',
+						value: 1
+					}]
+				}
+				return _actions
 			}
 		},
+		// created() {
+		// 	if(uni.getStorageSync('role') == 1 && this.actions.length === 1) {
+		// 		this.actions.push({
+		// 			name: '删除该内容',
+		// 			value: 1
+		// 		})
+		// 	}
+		// },
 		methods: {
 			// 长按，弹起面板
 			handleLongpress() {

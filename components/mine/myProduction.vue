@@ -26,7 +26,8 @@
 					<!-- 我的问答 -->
 					<view class="qa" v-if="active === 2">
 						<my-question-card v-for="(item,index) in dataList" :key="index" :item="item" 
-						@toastMsg="toastMsg" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></my-question-card>
+						@toastMsg="toastMsg" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
+						@clickMore="clickMore"></my-question-card>
 					</view>
 					
 					<!-- 我的收藏 -->
@@ -42,7 +43,8 @@
 							@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></news-item-card>
 							<!-- 问答 -->
 							<my-question-card v-if="item.post_type === 4" :item="item" :index="index" 
-							@toastMsg="toastMsg" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></my-question-card>
+							@toastMsg="toastMsg" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
+							@clickMore="clickMore"></my-question-card>
 						</view>
 					</view>
 				</view>
@@ -62,6 +64,9 @@
 		<!-- toast提示 -->
 		<van-toast id="van-toast" />
 		
+		<!-- 更多面板 -->
+		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" :type="actionType"
+		@backRefresh="backRefresh" author="0"></delete-and-complaint>
 	</view>
 </template>
 
@@ -75,13 +80,15 @@
 	import myQuestionCard from './myQuestionCard.vue'
 	import NewsItemCard from '@/components/news/NewsItemCard.vue'
 	import GuideItemCard from '@/components/guide/GuideItemCard.vue'
+	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	export default {
 		components: {
 			myGuideCard,
 			BbsPostCard,
 			myQuestionCard,
 			NewsItemCard,
-			GuideItemCard
+			GuideItemCard,
+			DeleteAndComplaint
 		},
 		data() {
 			return {
@@ -114,6 +121,8 @@
 				cardIndex: 0,		//当前长按的card的index
 				openGuideId: 0,		//打开选项面板的攻略id，删除攻略用
 				curStatus: 0,		//打开选项面板的攻略status,跳转编辑页用，能及时显示按钮（不用等接口返回再切换1个/2个按钮
+				contentId: '',		// 传给长按面板的内容id （帖子/评论）
+				actionType: 0,		// 长按面板内容类型：0：帖子，1：评论，2：话题
 			}
 		},
 		methods: {
@@ -241,6 +250,18 @@
 					Toast('邀请失败')
 				}
 			},
+			// 点更多，弹出面板
+			// 参数： id, type: 0：帖子，1：评论，2：话题
+			clickMore(id, type) {
+				console.log(id, type)
+				this.contentId = id
+				this.actionType = type
+				this.$refs.deleteAndComplaint.handleLongpress()
+			},
+			// 删除成功，刷新
+			backRefresh() {
+				this.$refs.paging.reload()
+			}
 		},
 	}
 </script>
