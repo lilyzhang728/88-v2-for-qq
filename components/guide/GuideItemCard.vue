@@ -1,7 +1,7 @@
 <!-- 攻略列表一项（左边带图片） -->
 <!-- 此组件被攻略列表页、攻略详情页复用 -->
 <template>
-	<view class="guide-item-card" :class="{'guide-item-card-noBorder': hideBorder}" @click.native="toGuideDetail" @longpress="handleLongpress">
+	<view class="guide-item-card" :class="{'guide-item-card-noBorder': hideBorder, 'guide-item-card-mine': from==='mine'}" @click.native="toGuideDetail" @longpress="handleLongpress">
 		<view class="guide-item-card-left">
 			<view class="guide-item-card-left-img-box">
 				<van-image width="183rpx"
@@ -15,7 +15,10 @@
 			</view>
 		</view>
 		<view class="guide-item-card-right">
-			<view class="guide-item-card-right-title">{{guideItem.title}}</view>
+			<view class="guide-item-card-right-title-box">
+				<view class="guide-item-card-right-title">{{guideItem.title}}</view>
+				<van-icon v-if="showMoreIcon" name="arrow-down" @click.native.stop="clickMore($event)" />
+			</view>
 			<view class="guide-item-card-right-description" v-if="guideItem.body.summary">{{guideItem.body.summary}}</view>
 			<view class="guide-item-card-right-books">
 				<view class="guide-item-card-right-books-left">
@@ -130,6 +133,10 @@
 			},
 			timestamp() {
 				return this.guideItem.timestamp ? transformTime(this.guideItem.timestamp) : this.guideItem.timestamp
+			},
+			// 是否显示更多icon
+			showMoreIcon() {
+				return false
 			}
 		},
 		methods: {
@@ -222,6 +229,11 @@
 				uni.navigateTo({
 					url: `/page_infos/homepage/homepage?userId=${this.guideItem.author.id}`
 				})
+			},
+			clickMore(e) {
+				//防止冒泡
+				e.preventDefault()
+				this.$emit('clickMore', this.guideItem.id, 0)
 			}
 		}
 	}
@@ -279,16 +291,22 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
-			.guide-item-card-right-title {
-				font-size: 30rpx;
-				margin-bottom: 10rpx;
-				color: #000;
-				line-height: 42rpx;
-				display: -webkit-box;
-				-webkit-box-orient: vertical;
-				-webkit-line-clamp: 2;
-				overflow: hidden;
+			.guide-item-card-right-title-box {
+				display: flex;
+				justify-content: space-between;
+				align-items: start;
+				.guide-item-card-right-title {
+					font-size: 30rpx;
+					margin-bottom: 10rpx;
+					color: #000;
+					line-height: 42rpx;
+					display: -webkit-box;
+					-webkit-box-orient: vertical;
+					-webkit-line-clamp: 2;
+					overflow: hidden;
+				}
 			}
+			
 			.guide-item-card-right-description {
 				color: rgba(0,0,0,0.4);
 				font-size: 22rpx;
@@ -373,5 +391,8 @@
 	.guide-item-card-noBorder {
 		background-color: transparent;
 		box-shadow: none;
+	}
+	.guide-item-card-mine {
+		margin-bottom: 20rpx;
 	}
 </style>

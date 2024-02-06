@@ -2,7 +2,7 @@
 <template>
 	<view class="question-item-card" @click="toDetail(item)">
 		<!-- 头像、昵称、学校 -->
-		<card-user :item="item" :showMoreIcon="true" @clickMore="clickMore"></card-user>
+		<card-user :item="item" :showMoreIcon="showMoreIcon" @clickMore="clickMore"></card-user>
 		
 		<view class="question-item-card-content" :class="{'question-item-card-content-haveImg': item.body.urls && item.body.urls.length}">
 			<view class="question-item-card-content-left">
@@ -37,6 +37,11 @@
 				required: true,
 				default: 0
 			},
+			showMoreIcon: {
+				type: Boolean,
+				required: false,
+				default: false
+			}
 		},
 		data() {
 			return {

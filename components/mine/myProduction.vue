@@ -28,7 +28,7 @@
 					<view class="qa" v-if="active === 2">
 						<my-question-card v-for="(item,index) in dataList" :key="index" :item="item" 
 						@toastMsg="toastMsg" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
-						@clickMore="clickMore"></my-question-card>
+						@clickMore="clickMore" :showMoreIcon="true"></my-question-card>
 					</view>
 					
 					<!-- 我的收藏 -->
@@ -38,6 +38,7 @@
 							<guide-item-card v-if="item.post_type === 1" :index="index"
 							:guideItem="item" tabIndex="1" @openOptionSheet="openOptionSheet" 
 							@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
+							from="mine"
 							></guide-item-card>
 							<!-- 资讯 -->
 							<news-item-card v-if="item.post_type === 2" :newsItem="item" :index="index"
@@ -45,7 +46,7 @@
 							<!-- 问答 -->
 							<my-question-card v-if="item.post_type === 4" :item="item" :index="index" 
 							@toastMsg="toastMsg" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
-							@clickMore="clickMore"></my-question-card>
+							:showMoreIcon="false"></my-question-card>
 						</view>
 					</view>
 				</view>
