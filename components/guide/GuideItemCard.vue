@@ -113,7 +113,13 @@
 				type: String,
 				required: false,
 				default: ''
-			}
+			},
+			// 是否显示更多icon
+			showMoreIcon:  {
+				type: Boolean,
+				required: false,
+				default: false
+			},
 		},
 		computed: {
 			// 跳转详情页后，是否显示底部btn（编辑|发布）：发现、我的收藏不显示；我的创作显示
@@ -134,10 +140,6 @@
 			timestamp() {
 				return this.guideItem.timestamp ? transformTime(this.guideItem.timestamp) : this.guideItem.timestamp
 			},
-			// 是否显示更多icon
-			showMoreIcon() {
-				return false
-			}
 		},
 		methods: {
 			// 点赞、评论 大数单位转化

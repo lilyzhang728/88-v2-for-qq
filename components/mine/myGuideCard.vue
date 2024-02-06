@@ -107,7 +107,7 @@
 			//点击事件，跳转攻略详情
 			toGuideDetail() {
 				uni.navigateTo({
-					url: `/page_guide/guideDetail/guideDetail?showEditBtn=${true}&inDraft=${this.inDraft}&id=${this.guideItem.id}&cardIndex=${this.index}&tabIndex=2`
+					url: `/page_guide/guideDetail/guideDetail?showEditBtn=${true}&inDraft=${this.inDraft}&id=${this.guideItem.id}&cardIndex=${this.index}&tabIndex=2&from=mine`
 				});
 			},
 			//长按事件，弹起选项面板，只有“我的创作” 能操作 编辑/删除

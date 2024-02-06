@@ -6,7 +6,8 @@
 			<view @longpress="handleLongpress">
 				<!-- 基本信息 -->
 				<guide-item-card  hideBorder="true" :guideItem="guideData" :index="cardIndex" :forbiddenClick="true" :tabIndex="tabIndex"
-				@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></guide-item-card>
+				@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect" :showMoreIcon="from === 'mine'"
+				@clickMore="clickMore"></guide-item-card>
 				
 				<!-- 材料 -->
 				<view class="guide-detail-material" v-if="guideData.body.references.length">
@@ -46,7 +47,7 @@
 		
 		<!-- 举报面板 -->
 		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" type="0"
-		@backRefresh="backRefresh"></delete-and-complaint>
+		@backRefresh="backRefresh" :author="from === 'mine' ? 0 : 1"></delete-and-complaint>
 	</view>
 </template>
 
@@ -92,6 +93,7 @@
 				},
 				tabIndex: 0,	//跳转前card所在的tab:0-发现，1-我的收藏，2-我的创作
 				contentId: '',		// 传给长按面板的内容id （帖子/评论）
+				from: '',			// from==='mine',表示从我的页面跳转过来，需要加more-icon
 			}
 		},
 		computed: {
@@ -105,6 +107,9 @@
 			this.id = option.id
 			this.cardIndex = Number(option.cardIndex)
 			this.tabIndex = Number(option.tabIndex)
+			if(option.from) {
+				this.from = option.from
+			}
 		},
 		onShow() {
 			let that = this
@@ -203,15 +208,34 @@
 			},
 			// 删除成功，返回上一页并刷新
 			backRefresh() {
-				uni.navigateBack({
-				    success: () => {
-				         let page = getCurrentPages().pop();//跳转页面成功之后
-				         if (page) {
-							 page.$vm.active = 1
-				             page.$vm.$refs.guide.$refs.paging.reload()
-				         } 
-				    },
-				})
+				if(this.from === 'mine') {
+					uni.navigateBack({
+					    success: () => {
+					         let page = getCurrentPages().pop();//跳转页面成功之后
+					         if (page) {
+								 page.$vm.active = 1
+								 page.$vm.$refs.myProduction.active = 1
+								 page.$vm.$refs.myProduction.$refs.paging.reload()
+					         } 
+					    },
+					})
+				} else {
+					uni.navigateBack({
+					    success: () => {
+					         let page = getCurrentPages().pop();//跳转页面成功之后
+					         if (page) {
+								 page.$vm.active = 1
+					             page.$vm.$refs.guide.$refs.paging.reload()
+					         } 
+					    },
+					})
+				}
+				
+			},
+			clickMore() {
+				// 参数： id, type: 0：帖子，1：评论，2：话题
+				this.contentId = this.id
+				this.$refs.deleteAndComplaint.handleLongpress()
 			}
 		}
 	}
