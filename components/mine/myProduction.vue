@@ -21,7 +21,7 @@
 					<!-- 我的攻略 -->
 					<view class="guide" v-if="active === 1">
 						<my-guide-card v-for="(item, index) in dataList" :key="index" :index="index"
-						:guideItem="item" @openOptionSheet="openOptionSheet"></my-guide-card>
+						:guideItem="item" @openOptionSheet="openOptionSheet" @clickMore="clickMore"></my-guide-card>
 					</view>
 					
 					<!-- 我的问答 -->
