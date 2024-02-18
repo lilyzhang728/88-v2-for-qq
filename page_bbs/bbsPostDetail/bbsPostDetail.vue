@@ -4,7 +4,7 @@
 		<back-topbar></back-topbar>
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': (customBar+20) + 'px', 'bottom': '64px', paddingLeft: '25rpx', paddingRight: '25rpx'}">
 			<!-- 头像、昵称、学校 -->
-			<card-user :item="postData" parent="detail" :showMoreIcon="from === 'mine'" @clickMore="clickMore"></card-user>
+			<card-user :item="postData" parent="detail" :showMoreIcon="true" @clickMore="clickMore"></card-user>
 			
 			<!-- 帖子所属话题 -->
 			<view class="bbs-post-detail-topic" v-if="postData.bind_topics && postData.bind_topics.length" @click="toTopicDetail">
@@ -13,7 +13,7 @@
 			</view>
 			
 			<!-- 帖子正文 -->
-			<view class="bbs-post-detail-content" @longpress="handleLongpress">{{postBody}}</view>
+			<view class="bbs-post-detail-content">{{postBody}}</view>
 			
 			<!-- 图片 -->
 			<view class="bbs-post-detail-img-box" v-if="postData.body.urls.length">
@@ -367,12 +367,6 @@
 				uni.navigateTo({
 					url: `/page_bbs/bbsTopicDetail/bbsTopicDetail?id=${this.postData.bind_topics[0].id}`
 				})
-			},
-			// （帖子）长按，弹起面板
-			handleLongpress() {
-				this.contentId = this.id
-				this.actionType = 0
-				this.$refs.deleteAndComplaint.handleLongpress()
 			},
 			// （评论）长按，弹起面板
 			commentLongpress(id) {
