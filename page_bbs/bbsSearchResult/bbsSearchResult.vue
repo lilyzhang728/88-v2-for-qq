@@ -9,8 +9,12 @@
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '46px', 'padding': '0 25rpx'}" 
 		loading-more-default-text="点击加载更多" loading-more-no-more-text="没有更多了" :auto-show-system-loading="true">
 			<bbs-post-card v-for="(item,index) in dataList" :key="index" :postData="item" :index="index"
-			@click.native="toPostDetail(item.id)" @checkoutLike="checkoutLike"></bbs-post-card>
+			@clickMore="clickMore" @click.native="toPostDetail(item.id)" @checkoutLike="checkoutLike"></bbs-post-card>
 		</z-paging>
+		
+		<!-- 举报面板 -->
+		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" type="0"
+		@backRefresh="backRefresh"></delete-and-complaint>
 	</view>
 </template>
 
@@ -18,16 +22,19 @@
 	import FakeSearchBox from "@/components/common/FakeSearchBox.vue"
 	import BbsPostCard from "@/components/bbs/BbsPostCard.vue"
 	import { searchArticle } from '@/network/api_index.js'
+	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	export default {
 		components: {
 			FakeSearchBox,
-			BbsPostCard
+			BbsPostCard,
+			DeleteAndComplaint
 		},
 		data() {
 			return {
 				dataList: [],
 				searchVal: '',
-				tabIndex: 3
+				tabIndex: 3,
+				contentId: ''
 			}
 		},
 		watch: {
@@ -90,7 +97,17 @@
 				uni.navigateBack({  //uni.navigateTo跳转的返回，默认1为返回上一级
 				    delta: 1
 				});
-			}
+			},
+			// 删除成功，刷新
+			backRefresh() {
+				this.$refs.paging.reload()
+			},
+			// 点更多，弹出面板
+			// 参数： id, type: 0：帖子，1：评论，2：话题
+			clickMore(id, type) {
+				this.contentId = id
+				this.$refs.deleteAndComplaint.handleLongpress()
+			},
 		}
 	}
 </script>

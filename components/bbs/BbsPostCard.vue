@@ -2,7 +2,7 @@
 <template>
 	<view class="bbs-post-card">
 		<!-- 头像、昵称、学校 -->
-		<card-user :item="postData" :showMoreIcon="from === 'mine'" @clickMore="clickMore"></card-user>
+		<card-user :item="postData" :showMoreIcon="true" @clickMore="clickMore"></card-user>
 		
 		<!-- 帖子所属话题 -->
 		<view class="bbs-post-topic" @click.native.stop="toTopic($event)" v-if="postData.bind_topics && postData.bind_topics.length">
@@ -66,12 +66,6 @@
 					status: 0,
 					id: ''
 				}
-			},
-			// 我的-帖子 会引用并传这个值 from=mine，用来加more-icon
-			from: {
-				type: String,
-				default: '',
-				required: false
 			}
 		},
 		computed: {

@@ -22,9 +22,13 @@
 			<!-- 帖子列表 -->
 			<view class="bbs-rec-post">
 				<bbs-post-card v-for="(item,index) in dataList" :key="index" :postData="item" :index="index"  
-				@click.native="toPostDetail(item.id)" @checkoutLike="checkoutLike"></bbs-post-card>
+				@clickMore="clickMore" @click.native="toPostDetail(item.id)" @checkoutLike="checkoutLike"></bbs-post-card>
 			</view>
 		</z-paging>
+		
+		<!-- 举报面板 -->
+		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" type="0"
+		@backRefresh="backRefresh"></delete-and-complaint>
 	</view>
 </template>
 
@@ -32,14 +36,17 @@
 	import BbsPostCard from "@/components/bbs/BbsPostCard.vue"
 	import { topicList } from '@/network/api_bbs.js'
 	import { recArticle } from '@/network/api_guide.js'
+	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	export default {
 		components: {
-			BbsPostCard
+			BbsPostCard,
+			DeleteAndComplaint
 		},
 		data() {
 			return {
 				dataList: [],
-				topicList: []
+				topicList: [],
+				contentId: ''
 			}
 		},
 		created() {
@@ -106,7 +113,17 @@
 				} else {
 					this.dataList[cardIndex].likers_count--
 				}
-			}
+			},
+			// 删除成功，刷新
+			backRefresh() {
+				this.$refs.paging.reload()
+			},
+			// 点更多，弹出面板
+			// 参数： id, type: 0：帖子，1：评论，2：话题
+			clickMore(id, type) {
+				this.contentId = id
+				this.$refs.deleteAndComplaint.handleLongpress()
+			},
 		}
 	}
 </script>
