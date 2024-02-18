@@ -35,6 +35,7 @@
 			<view class="question-detail-btns">
 				<van-button @click.native="invideUser" class="question-detail-btn-wrap" custom-class="question-detail-btn">邀请回答</van-button>
 				<!-- <van-button  class="question-detail-btn-wrap" custom-class="question-detail-btn-2">好问题</van-button> -->
+				<van-icon v-if="from === 'mine'" name="arrow-down" @click.native.stop="handleLongpress" />
 			</view>
 		
 			<!-- 评论区 -->
@@ -87,7 +88,7 @@
 		
 		<!-- 举报面板 -->
 		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" :type="actionType"
-		@backRefresh="backRefresh"></delete-and-complaint>
+		:author="author" @backRefresh="backRefresh"></delete-and-complaint>
 	</view>
 </template>
 
@@ -145,6 +146,7 @@
 				showInviteUserList: false,
 				contentId: '',		// 传给长按面板的内容id （帖子/评论）
 				actionType: 0,		// 长按面板内容类型：0：帖子，1：评论，2：话题
+				from: '',			// from==='mine',表示从我的页面跳转过来，需要加more-icon
 			}
 		},
 		computed: {
@@ -157,12 +159,19 @@
 			},
 			postBody() {
 				return this.postData.body.body ? uncodeUtf16(this.postData.body.body) : this.postData.body.body
+			},
+			// 作者：0：自己 1：别人的
+			author() {
+				return this.from === 'mine' ? 0 : 1
 			}
 		},
 		onLoad(option) {
 			this.id = option.id
 			if(option.showReply) {
 				this.clickInput()
+			}
+			if(option.from) {
+				this.from = option.from
 			}
 		},
 		onUnload() {
@@ -476,6 +485,9 @@
 		}
 	}
 	.question-detail-btns {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		.question-detail-btn-wrap {
 			/deep/ .question-detail-btn {
 				font-size: 24rpx;

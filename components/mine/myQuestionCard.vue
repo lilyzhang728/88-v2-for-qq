@@ -51,7 +51,7 @@
 			
 			toDetail(item) {
 				uni.navigateTo({
-					url: `/page_qa/questionDetail/questionDetail?id=${this.item.id}`
+					url: `/page_qa/questionDetail/questionDetail?id=${this.item.id}&from=mine`
 				})
 			},
 			toastMsg(type) {
