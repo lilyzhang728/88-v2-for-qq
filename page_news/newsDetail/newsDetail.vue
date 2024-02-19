@@ -14,13 +14,14 @@
 					</view>
 				</view>
 				<view class="bbs-post-detail-edit-info">编辑于{{newsData.timestamp}}</view>
+				<van-icon class="more-icon" name="arrow-down" @click.native.stop="clickMore($event)" />
 			</view>
 			
 			<!-- 资讯摘要 -->
 			<!-- <view class="news-detail-summary">{{newsData.body.summary}}</view> -->
 			
 			<!-- 资讯正文 -->
-			<view class="news-detail-content" @longpress="handleLongpress">{{newsBody}}</view>
+			<view class="news-detail-content">{{newsBody}}</view>
 			
 			<!-- 图片 -->
 			<view class="news-detail-img-box" v-if="newsData.body.urls && newsData.body.urls.length">
@@ -336,12 +337,6 @@
 					url: `/page_infos/homepage/homepage?userId=${this.newsData.author.id}`
 				})
 			},
-			// （帖子）长按，弹起面板
-			handleLongpress() {
-				this.contentId = this.id
-				this.actionType = 0
-				this.$refs.deleteAndComplaint.handleLongpress()
-			},
 			// （评论）长按，弹起面板
 			commentLongpress(id) {
 				this.contentId = id
@@ -359,7 +354,14 @@
 				         } 
 				    },
 				})
-			}
+			},
+			// 点更多，弹出面板
+			// 参数： id, type: 0：帖子，1：评论，2：话题
+			clickMore() {
+				this.contentId = this.id
+				this.actionType = 0
+				this.$refs.deleteAndComplaint.handleLongpress()
+			},
 		}
 	}
 </script>
@@ -422,6 +424,9 @@
 			line-height: 33rpx;
 			width: 320rpx;
 			text-align: right;
+		}
+		.more-icon {
+			margin-left: 15rpx;
 		}
 	}
 	.news-detail-content {
