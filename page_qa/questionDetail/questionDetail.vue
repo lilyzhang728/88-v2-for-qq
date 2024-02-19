@@ -9,7 +9,7 @@
 			</view>
 			
 			<!-- 问题正文 -->
-			<view class="bbs-post-detail-content" @longpress="handleLongpress">{{postBody}}</view>
+			<view class="bbs-post-detail-content">{{postBody}}</view>
 			
 			<!-- 图片 -->
 			<view class="bbs-post-detail-img-box" v-if="postData.body.urls.length">
@@ -35,7 +35,7 @@
 			<view class="question-detail-btns">
 				<van-button @click.native="invideUser" class="question-detail-btn-wrap" custom-class="question-detail-btn">邀请回答</van-button>
 				<!-- <van-button  class="question-detail-btn-wrap" custom-class="question-detail-btn-2">好问题</van-button> -->
-				<van-icon v-if="from === 'mine'" name="arrow-down" @click.native.stop="handleLongpress" />
+				<van-icon name="arrow-down" @click.native.stop="handleLongpress" />
 			</view>
 		
 			<!-- 评论区 -->
