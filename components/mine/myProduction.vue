@@ -38,7 +38,7 @@
 							<guide-item-card v-if="item.post_type === 1" :index="index"
 							:guideItem="item" tabIndex="1" @openOptionSheet="openOptionSheet" 
 							@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
-							from="mine"></guide-item-card>
+							from="mine" @clickMore="clickMoreOthers"></guide-item-card>
 							<!-- 资讯 -->
 							<news-item-card v-if="item.post_type === 2" :newsItem="item" :index="index"
 							@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect" @clickMore="clickMoreOthers"></news-item-card>
