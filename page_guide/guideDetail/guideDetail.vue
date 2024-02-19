@@ -1,7 +1,7 @@
 <!-- 攻略详情页 -->
 <template>
 	<view class="guide-detail" :style="{backgroundImage: 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)',backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<back-topbar title="攻略详情" functionName="reloadList"></back-topbar>
+		<back-topbar title="攻略详情"></back-topbar>
 		<z-paging ref="paging" :paging-style="{'top': (customBar) + 'px', 'bottom': pagingBottom, paddingLeft: '25rpx', paddingRight: '25rpx'}">
 			<view @longpress="handleLongpress">
 				<!-- 基本信息 -->

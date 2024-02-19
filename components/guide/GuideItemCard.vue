@@ -17,7 +17,7 @@
 		<view class="guide-item-card-right">
 			<view class="guide-item-card-right-title-box">
 				<view class="guide-item-card-right-title">{{guideItem.title}}</view>
-				<van-icon v-if="showMoreIcon" name="arrow-down" @click.native.stop="clickMore($event)" />
+				<van-icon name="arrow-down" @click.native.stop="clickMore($event)" />
 			</view>
 			<view class="guide-item-card-right-description" v-if="guideItem.body.summary">{{guideItem.body.summary}}</view>
 			<view class="guide-item-card-right-books">
@@ -113,13 +113,7 @@
 				type: String,
 				required: false,
 				default: ''
-			},
-			// 是否显示更多icon
-			showMoreIcon:  {
-				type: Boolean,
-				required: false,
-				default: false
-			},
+			}
 		},
 		computed: {
 			// 跳转详情页后，是否显示底部btn（编辑|发布）：发现、我的收藏不显示；我的创作显示

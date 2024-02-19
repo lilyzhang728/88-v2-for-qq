@@ -4,20 +4,26 @@
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'left': '25rpx', 'right': '25rpx'}">
 			<view class="guide-list">
 				<guide-item-card v-for="(item, index) in dataList" :key="index" :index="index"
-				:guideItem="item" :tabIndex="tabIndex"
+				:guideItem="item" :tabIndex="tabIndex" @clickMore="clickMore"
 				@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
 				></guide-item-card>
 			</view>
 		</z-paging>
+		
+		<!-- 更多面板 -->
+		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" :type="actionType"
+		@backRefresh="backRefresh"></delete-and-complaint>
 	</view>
 </template>
 
 <script>
 	import GuideItemCard from '@/components/guide/GuideItemCard.vue'
 	import { recArticle, collectedArticle, ownArticle } from '@/network/api_guide.js'
+	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	export default {
 		components: {
-			GuideItemCard
+			GuideItemCard,
+			DeleteAndComplaint
 		},
 		props: {
 			// 子类目：考研/找工作……
@@ -37,6 +43,8 @@
 			return {
 				dataList: [],
 				tabIndex: 0,	// 0-发现，1-我的收藏，2-我的创作
+				contentId: '',		// 传给长按面板的内容id （帖子/评论）
+				actionType: 0,		// 长按面板内容类型：0：帖子，1：评论，2：话题
 			}
 		},
 		methods: {
@@ -86,6 +94,17 @@
 					this.dataList[index].collectors_count = this.dataList[index].collectors_count ? this.dataList[index].collectors_count-1 : 0
 				}
 			},
+			// 点更多，弹出面板
+			// 参数： id, type: 0：帖子，1：评论，2：话题
+			clickMore(id, type) {
+				this.contentId = id
+				this.actionType = type
+				this.$refs.deleteAndComplaint.handleLongpress()
+			},
+			// 删除成功，刷新
+			backRefresh() {
+				this.$refs.paging.reload()
+			}
 		}
 	}
 </script>
