@@ -1,7 +1,7 @@
 <template>
 	<view class="news-item-card" @click.native="toNewsDetail">
 		<!-- 头像、昵称、学校 -->
-		<card-user :item="newsItem"></card-user>
+		<card-user :item="newsItem" :showMoreIcon="true" @clickMore="clickMore"></card-user>
 		
 		<view class="news-item-card-content" :class="{'news-item-card-content-haveImg': newsItem.body.urls && newsItem.body.urls.length>0}">
 			<view class="news-item-card-content-left">
@@ -75,7 +75,10 @@
 					url: `/page_news/newsDetail/newsDetail?id=${this.newsItem.id}`
 				});
 			},
-			
+			clickMore() {
+				// 参数： id, type: 0：帖子，1：评论，2：话题
+				this.$emit('clickMore', this.newsItem.id, 0)
+			}
 		}
 	}
 </script>

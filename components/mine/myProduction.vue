@@ -41,7 +41,7 @@
 							from="mine"></guide-item-card>
 							<!-- 资讯 -->
 							<news-item-card v-if="item.post_type === 2" :newsItem="item" :index="index"
-							@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></news-item-card>
+							@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect" @clickMore="clickMoreOthers"></news-item-card>
 							<!-- 问答 -->
 							<my-question-card v-if="item.post_type === 4" :item="item" :index="index" 
 							@toastMsg="toastMsg" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"

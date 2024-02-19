@@ -9,8 +9,12 @@
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '40px', 'padding': '0 25rpx'}" 
 		loading-more-default-text="点击加载更多" loading-more-no-more-text="没有更多了" :auto-show-system-loading="true">
 			<news-item-card v-for="(item, index) in dataList" :key="index" :newsItem="item" :index="index"
-			@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></news-item-card>
+			@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect" @clickMore="clickMore"></news-item-card>
 		</z-paging>
+		
+		<!-- 举报面板 -->
+		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" type="0"
+		@backRefresh="backRefresh"></delete-and-complaint>
 	</view>
 </template>
 
@@ -18,16 +22,19 @@
 	import FakeSearchBox from "@/components/common/FakeSearchBox.vue"
 	import NewsItemCard from '@/components/news/NewsItemCard.vue'
 	import { searchArticle } from '@/network/api_index.js'
+	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	export default {
 		components: {
 			FakeSearchBox,
-			NewsItemCard
+			NewsItemCard,
+			DeleteAndComplaint
 		},
 		data() {
 			return {
 				dataList: [],
 				searchVal: '',
-				tabIndex: 2
+				tabIndex: 2,
+				contentId: ''
 			}
 		},
 		watch: {
@@ -94,7 +101,17 @@
 				uni.navigateBack({  //uni.navigateTo跳转的返回，默认1为返回上一级
 				    delta: 1
 				});
-			}
+			},
+			// 删除成功，刷新
+			backRefresh() {
+				this.$refs.paging.reload()
+			},
+			// 点更多，弹出面板
+			// 参数： id, type: 0：帖子，1：评论，2：话题
+			clickMore(id, type) {
+				this.contentId = id
+				this.$refs.deleteAndComplaint.handleLongpress()
+			},
 		}
 	}
 </script>

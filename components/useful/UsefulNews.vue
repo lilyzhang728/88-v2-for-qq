@@ -4,15 +4,20 @@
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'left': '25rpx', 'right': '25rpx'}">
 			<view class="news-list">
 				<news-item-card v-for="(item, index) in dataList" :key="index" :newsItem="item" :index="index"
-				@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></news-item-card>
+				@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect" @clickMore="clickMore"></news-item-card>
 			</view>
 		</z-paging>
+		
+		<!-- 举报面板 -->
+		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" type="0"
+		@backRefresh="backRefresh"></delete-and-complaint>
 	</view>
 </template>
 
 <script>
 	import NewsItemCard from '@/components/news/NewsItemCard.vue'
 	import { recArticle, collectedArticle } from '@/network/api_guide.js'
+	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	export default {
 		props: {
 			// 子类目：考研/找工作……
@@ -29,11 +34,13 @@
 			},
 		},
 		components: {
-			NewsItemCard
+			NewsItemCard,
+			DeleteAndComplaint
 		},
 		data() {
 			return {
-				dataList: []
+				dataList: [],
+				contentId: ''
 			}
 		},
 		methods: {
@@ -85,7 +92,17 @@
 			},
 			reloadPage() {
 				this.$refs.paging.reload()
-			}
+			},
+			// 删除成功，刷新
+			backRefresh() {
+				this.$refs.paging.reload()
+			},
+			// 点更多，弹出面板
+			// 参数： id, type: 0：帖子，1：评论，2：话题
+			clickMore(id, type) {
+				this.contentId = id
+				this.$refs.deleteAndComplaint.handleLongpress()
+			},
 		}
 	}
 </script>
