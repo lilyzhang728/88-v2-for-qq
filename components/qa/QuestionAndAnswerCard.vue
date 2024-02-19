@@ -1,7 +1,7 @@
 <template>
 	<view class="question-item-card" @click="toDetail(item)">
 		<!-- 头像、昵称、学校 -->
-		<card-user :item="item"></card-user>
+		<card-user :item="item" :showMoreIcon="true" @clickMore="clickMore"></card-user>
 		
 		<view class="question-item-card-content" :class="{'question-item-card-content-haveImg': item.body.urls.length>0}">
 			<view class="bbs-post-content">
@@ -90,6 +90,10 @@
 			checkoutCollect(status) {
 				this.$emit('checkoutCollect', this.index, status)
 			},
+			clickMore() {
+				// 参数： id, type: 0：帖子，1：评论，2：话题
+				this.$emit('clickMore', this.item.id, 0)
+			}
 		},
 	}
 </script>

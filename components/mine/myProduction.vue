@@ -28,7 +28,7 @@
 					<view class="qa" v-if="active === 2">
 						<my-question-card v-for="(item,index) in dataList" :key="index" :item="item" 
 						@toastMsg="toastMsg" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
-						@clickMore="clickMore" :showMoreIcon="true"></my-question-card>
+						@clickMore="clickMore" from="mine"></my-question-card>
 					</view>
 					
 					<!-- 我的收藏 -->
@@ -38,15 +38,14 @@
 							<guide-item-card v-if="item.post_type === 1" :index="index"
 							:guideItem="item" tabIndex="1" @openOptionSheet="openOptionSheet" 
 							@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
-							from="mine"
-							></guide-item-card>
+							from="mine"></guide-item-card>
 							<!-- 资讯 -->
 							<news-item-card v-if="item.post_type === 2" :newsItem="item" :index="index"
 							@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></news-item-card>
 							<!-- 问答 -->
 							<my-question-card v-if="item.post_type === 4" :item="item" :index="index" 
 							@toastMsg="toastMsg" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
-							:showMoreIcon="false"></my-question-card>
+							@clickMoreOthers="clickMoreOthers"></my-question-card>
 						</view>
 					</view>
 				</view>
@@ -68,7 +67,7 @@
 		
 		<!-- 更多面板 -->
 		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" :type="actionType"
-		@backRefresh="backRefresh" author="0"></delete-and-complaint>
+		@backRefresh="backRefresh" :author="author"></delete-and-complaint>
 	</view>
 </template>
 
@@ -125,6 +124,7 @@
 				curStatus: 0,		//打开选项面板的攻略status,跳转编辑页用，能及时显示按钮（不用等接口返回再切换1个/2个按钮
 				contentId: '',		// 传给长按面板的内容id （帖子/评论）
 				actionType: 0,		// 长按面板内容类型：0：帖子，1：评论，2：话题
+				author: 0,			// 0：自己 1：别人的
 			}
 		},
 		methods: {
@@ -256,6 +256,13 @@
 			// 参数： id, type: 0：帖子，1：评论，2：话题
 			clickMore(id, type) {
 				console.log(id, type)
+				this.author = 0
+				this.contentId = id
+				this.actionType = type
+				this.$refs.deleteAndComplaint.handleLongpress()
+			},
+			clickMoreOthers(id, type) {
+				this.author = 1
 				this.contentId = id
 				this.actionType = type
 				this.$refs.deleteAndComplaint.handleLongpress()

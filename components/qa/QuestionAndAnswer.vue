@@ -4,9 +4,14 @@
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'left': '25rpx', 'right': '25rpx'}">
 			<view class="question-list">
 				<question-and-answer-card v-for="(item,index) in dataList" :key="index"
-				 :item="item" :index="index" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"></question-and-answer-card>
+				 :item="item" :index="index" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
+				 @clickMore="clickMore"></question-and-answer-card>
 			</view>
 		</z-paging>
+		
+		<!-- 举报面板 -->
+		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" type="0"
+		@backRefresh="backRefresh"></delete-and-complaint>
 	</view>
 </template>
 
@@ -14,9 +19,11 @@
 	import { recArticle } from '@/network/api_guide.js'
 	import { transformTime } from '@/tools/transform_time.js'
 	import QuestionAndAnswerCard from './QuestionAndAnswerCard.vue'
+	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	export default {
 		components: {
-			QuestionAndAnswerCard
+			QuestionAndAnswerCard,
+			DeleteAndComplaint
 		},
 		props: {
 			active: {
@@ -27,6 +34,7 @@
 		data() {
 			return {
 				dataList: [],
+				contentId: ''
 			}
 		},
 		methods: {
@@ -67,7 +75,16 @@
 					this.dataList[index].collectors_count--
 				}
 			},
-			
+			// 删除成功，刷新
+			backRefresh() {
+				this.$refs.paging.reload()
+			},
+			// 点更多，弹出面板
+			// 参数： id, type: 0：帖子，1：评论，2：话题
+			clickMore(id, type) {
+				this.contentId = id
+				this.$refs.deleteAndComplaint.handleLongpress()
+			},
 		},
 	}
 </script>

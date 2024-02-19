@@ -2,7 +2,7 @@
 <template>
 	<view class="question-item-card" @click="toDetail(item)">
 		<!-- 头像、昵称、学校 -->
-		<card-user :item="item" :showMoreIcon="showMoreIcon" @clickMore="clickMore"></card-user>
+		<card-user :item="item" :showMoreIcon="true" @clickMore="clickMore"></card-user>
 		
 		<view class="question-item-card-content" :class="{'question-item-card-content-haveImg': item.body.urls && item.body.urls.length}">
 			<view class="question-item-card-content-left">
@@ -37,10 +37,11 @@
 				required: true,
 				default: 0
 			},
-			showMoreIcon: {
-				type: Boolean,
+			// 我的：mine
+			from: {
+				type: String,
 				required: false,
-				default: false
+				default: ''
 			}
 		},
 		data() {
@@ -65,7 +66,12 @@
 			},
 			clickMore() {
 				// 参数： id, type: 0：帖子，1：评论，2：话题
-				this.$emit('clickMore', this.item.id, 0)
+				if(this.from === 'mine') {
+					this.$emit('clickMore', this.item.id, 0)
+				} else {
+					// 收藏的别人的
+					this.$emit('clickMoreOthers', this.item.id, 0)
+				}
 			}
 		},
 	}
