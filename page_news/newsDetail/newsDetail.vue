@@ -14,7 +14,7 @@
 					</view>
 				</view>
 				<view class="bbs-post-detail-edit-info">编辑于{{newsData.timestamp}}</view>
-				<van-icon class="more-icon" name="arrow-down" @click.native.stop="clickMore($event)" />
+				<van-icon class="more-icon" size="24rpx" color="#808080" name="arrow-down" @click.native.stop="clickMore($event)" />
 			</view>
 			
 			<!-- 资讯摘要 -->

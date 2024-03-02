@@ -17,7 +17,7 @@
 		<view class="guide-item-card-right">
 			<view class="guide-item-card-right-title-box">
 				<view class="guide-item-card-right-title">{{guideItem.title}}</view>
-				<van-icon name="arrow-down" @click.native.stop="clickMore($event)" />
+				<van-icon size="24rpx" color="#808080" name="arrow-down" @click.native.stop="clickMore($event)" />
 			</view>
 			
 			<view class="guide-item-card-right-description" v-if="guideItem.body.summary">{{guideItem.body.summary}}</view>

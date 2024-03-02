@@ -35,7 +35,7 @@
 			<view class="question-detail-btns">
 				<van-button @click.native="invideUser" class="question-detail-btn-wrap" custom-class="question-detail-btn">邀请回答</van-button>
 				<!-- <van-button  class="question-detail-btn-wrap" custom-class="question-detail-btn-2">好问题</van-button> -->
-				<van-icon name="arrow-down" @click.native.stop="handleLongpress" />
+				<van-icon size="24rpx" color="#808080" name="arrow-down" @click.native.stop="handleLongpress" />
 			</view>
 		
 			<!-- 评论区 -->

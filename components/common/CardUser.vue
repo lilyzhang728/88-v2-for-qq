@@ -7,7 +7,7 @@
 				<view class="card-user-name"  @click.native.stop="toHomepage($event)">
 					{{item.author.name}} <text class="card-user-name-author" v-if="isComment && item.is_post_author === 1">楼主</text>
 				</view>
-				<van-icon v-if="showMoreIcon" name="arrow-down" @click.native.stop="clickMore($event)" />
+				<van-icon v-if="showMoreIcon" size="24rpx" color="#808080" name="arrow-down" @click.native.stop="clickMore($event)" />
 			</view>
 			
 			<view class="card-user-infos">
