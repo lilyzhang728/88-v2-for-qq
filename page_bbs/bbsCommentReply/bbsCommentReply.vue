@@ -253,8 +253,10 @@ page {
 	.comment-content-body {
 		font-size: 30rpx;
 		margin-top: 10rpx;
+		margin-left: 90rpx;
 	}
 	.comment-content-footer {
+		margin-left: 90rpx;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
