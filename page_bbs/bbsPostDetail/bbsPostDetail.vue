@@ -145,6 +145,7 @@
 			if(option.from) {
 				this.from = option.from
 			}
+			this.getPostDetail()
 		},
 		onUnload() {
 			this.startGetComment = false
@@ -161,7 +162,6 @@
 					// #endif
 				}
 			})
-			this.getPostDetail()
 		},
 		methods: {
 			// 预览图片

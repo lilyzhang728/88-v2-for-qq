@@ -291,15 +291,15 @@
 										resolve(pathRes.tempFilePath)
 											
 										// 获取文件信息
-										  uni.getFileInfo({
-											filePath: pathRes.tempFilePath,
-											success: (fileInfo) => {
-											  console.log('绘制后图片文件大小：', fileInfo.size, '字节', fileInfo.size/1024, 'kb');
-											},
-											fail: (error) => {
-											  console.error('获取文件信息失败', error);
-											}
-										  });
+										 //  uni.getFileInfo({
+											// filePath: pathRes.tempFilePath,
+											// success: (fileInfo) => {
+											//   console.log('绘制后图片文件大小：', fileInfo.size, '字节', fileInfo.size/1024, 'kb');
+											// },
+											// fail: (error) => {
+											//   console.error('获取文件信息失败', error);
+											// }
+										 //  });
 									  },
 									   fail: (error) => {
 									     console.error('返回压缩后的图片路径失败', error);
