@@ -8,7 +8,7 @@
 			<view class="infos-like-card-content">
 				<view class="infos-like-card-content-name" @click.native.stop="toHomepage($event)">{{item.user.name}}</view>
 				<view class="infos-like-card-content-infos">
-					<text>赞了你的{{item.post.post_type === 1 ? '秘籍' : '帖子'}}</text>
+					<text>赞了你的{{typeText}}</text>
 					<text class="infos-like-card-content-infos-timestamp">{{timestamp}}</text>
 				</view>
 			</view>
@@ -50,39 +50,66 @@
 			timestamp() {
 				return this.item.timestamp ? transformTime(this.item.timestamp) : this.item.timestamp
 			},
+			//被点赞的类型
+			typeText() {
+				if(this.item.comment) {
+					return '评论'
+				} else {
+					return this.item.post.post_type === 1 ? '秘籍' : '帖子'
+				}
+			},
 			//是否显示右边封面图
 			showRightImg() {
-				if(this.item.post.post_type === 1) {
-					//攻略
-					return this.item.post.body.cover_url
+				if(this.item.comment) {
+					// 评论(暂不显示封面)
+					return false
 				} else {
-					//帖子
-					return this.item.post.body.urls && this.item.post.body.urls.length
+					if(this.item.post.post_type === 1) {
+						//攻略
+						return this.item.post.body.cover_url
+					} else {
+						//帖子
+						return this.item.post.body.urls && this.item.post.body.urls.length
+					}
 				}
+				
 			},
 			//右边封面图url
 			rightImgUrl() {
-				if(this.item.post.post_type === 1) {
-					//攻略
-					return this.item.post.body.cover_url
+				if(this.item.comment) {
+					return ''
 				} else {
-					//帖子
-					return this.item.post.body.urls[0]
+					if(this.item.post.post_type === 1) {
+						//攻略
+						return this.item.post.body.cover_url
+					} else {
+						//帖子
+						return this.item.post.body.urls[0]
+					}
 				}
+				
 			}
 		},
 		methods: {
 			toDetail() {
-				//post_type:1-跳转攻略详情，3-跳转帖子详情
-				if(this.item.post.post_type === 1) {
+				if(this.item.comment) {
+					// 评论被点赞，跳转帖子详情
 					uni.navigateTo({
-						url: `/page_guide/guideDetail/guideDetail?showEditBtn=true&inDraft=false&id=${this.item.post.id}&tabIndex=2`
+						url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.item.comment.post.id}`
 					})
 				} else {
-					uni.navigateTo({
-						url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.item.post.id}`
-					})
+					//post_type:1-跳转攻略详情，3-跳转帖子详情
+					if(this.item.post.post_type === 1) {
+						uni.navigateTo({
+							url: `/page_guide/guideDetail/guideDetail?showEditBtn=true&inDraft=false&id=${this.item.post.id}&tabIndex=2`
+						})
+					} else {
+						uni.navigateTo({
+							url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.item.post.id}`
+						})
+					}
 				}
+				
 			},
 			// 点击头像，去个人主页
 			toHomepage(e) {
