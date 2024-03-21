@@ -4,7 +4,7 @@ const userId = uni.getStorageSync('userId')
 //返回收到的赞列表
 export function likeList(params) {
 	return getRequest({
-		path: `/api/user/${userId}/recived-posts-likes`,
+		path: `/api/user/${userId}/recived-comments_n_posts-likes`,
 		data: params
 	})
 }
