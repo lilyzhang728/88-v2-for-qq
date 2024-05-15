@@ -10,21 +10,10 @@
 					<van-tab title="话题广场"></van-tab>
 				</van-tabs>
 				
-				<!-- 子tab,只有话题广场显示 -->
-				<!-- <van-tabs v-if="active==2" :active="subActive" animated @change.native="subTabsChange" ref="subTabs"
-				line-height="0" line-width="0" class="bbs-subTabs" :swipeable="false">
-					<van-tab title="考研" class="news-subTab-first"></van-tab>
-					<van-tab title="找工作"></van-tab>
-					<van-tab title="出国"></van-tab>
-					<van-tab title="考公/编"></van-tab>
-				</van-tabs> -->
-				
 				<!-- 搜索 -->
 				<view class="bbs-search">
 					<top-search-box @toSearch="toSearch"></top-search-box>
 				</view>
-				<!-- <van-search :value="searchVal" placeholder="请输入搜索关键词" background="transparent" @click.native="toSearch" 
-				custom-class="bbs-search" class="bbs-search-wrap" placeholder-style="color: rgba(255,255,255,0.6);" /> -->
 			</template>
 			<swiper class="swiper" :current="active" @animationfinish="swiperAnimationfinish">
 				<swiper-item class="swiper-item">
@@ -177,24 +166,7 @@
 			}
 		}
 	}
-	// .bbs-search-wrap {
-	// 	/deep/ .bbs-search {
-	// 		padding-left: 0 !important;
-	// 		padding-right: 0 !important;
-	// 		line-height: 65rpx !important;
-	// 		margin: 0 25rpx !important;
-			
-	// 		.van-search__content {
-	// 			background: #fff;
-	// 			border-radius: 20rpx;
-	// 			border: 1rpx solid #fff;
-	// 			box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.35);
-	// 			.van-cell {
-	// 				color: rgba(0,0,0,0.3);
-	// 			}
-	// 		}
-	// 	}
-	// }
+	
 	.bbs-search {
 		margin: 10px 25rpx;
 		/deep/ .top-search-box {
