@@ -21,7 +21,7 @@
 			  class="bbs-post-img-item"
 			  v-for="(pic, index) in picList"
 			  :key="index"
-			  @click.native="previewImg($event, pic)"
+			  @click.native.stop="previewImg($event, pic)"
 			/>
 		</view>
 		
