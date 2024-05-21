@@ -5,7 +5,8 @@
 		<view class="card-user-right">
 			<view class="card-user-name-box">
 				<view class="card-user-name"  @click.native.stop="toHomepage($event)">
-					{{item.author.name}} <text class="card-user-name-author" v-if="isComment && item.is_post_author === 1">楼主</text>
+					<text :class="{'card-user-name-text': isComment && item.is_post_author === 1}">{{item.author.name}}</text>
+					<text class="card-user-name-author" v-if="isComment && item.is_post_author === 1">楼主</text>
 				</view>
 				<van-icon v-if="showMoreIcon" size="24rpx" color="#808080" name="arrow-down" @click.native.stop="clickMore($event)" />
 			</view>
@@ -108,6 +109,10 @@
 					line-height: 42rpx;
 					overflow: hidden;
 					white-space: nowrap;
+					display: flex;
+					.card-user-name-text {
+						max-width: calc(100% - 84rpx);
+					}
 					.card-user-name-author {
 						margin-left: 12rpx;
 						font-size: 24rpx;
