@@ -13,13 +13,13 @@
 					<view class="comment-content-footer-left">{{transformTimestamp(item)}}</view>
 					<view class="comment-content-footer-right">
 						<view class="comment-content-footer-right-like">
-							<van-icon v-if="!item.is_like" name="good-job" size="34rpx" color="#D7D7D7" @click="getLike(index, true)"></van-icon>
-							<van-icon v-if="item.is_like" name="good-job" size="34rpx" :color="activeColor" @click="getLike(index, false)"></van-icon>
-							<view class="num" :style="{'color': item.is_like ? activeColor : '#00000099'}">{{ handleTransform(item.likers_count) }}</view>
+							<view class="comment-content-footer-right-like-num" :style="{'color': item.is_like ? activeColor : '#00000099'}">{{ handleTransform(item.likers_count) }}</view>
+							<van-icon v-if="!item.is_like" name="good-job" size="40rpx" color="#D7D7D7" @click="getLike(index, true)"></van-icon>
+							<van-icon v-if="item.is_like" name="good-job" size="40rpx" :color="activeColor" @click="getLike(index, false)"></van-icon>
 						</view>
-						<view class="comment-content-footer-right-reply">
+						<!-- <view class="comment-content-footer-right-reply">
 							<van-icon v-if="!hideReply" name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(item, 1, index)" />
-						</view>
+						</view> -->
 					</view>
 				</view>
 				
@@ -38,13 +38,13 @@
 							<view class="comment-content-footer-left">{{transformTimestamp(reply)}}</view>
 							<view class="comment-content-footer-right">
 								<view class="comment-content-footer-right-like">
-									<van-icon v-if="!reply.is_like" name="good-job" size="34rpx" color="#D7D7D7" @click="getLikeLevel2(index, subIndex, true)"></van-icon>
-									<van-icon v-if="reply.is_like" name="good-job" size="34rpx" :color="activeColor" @click="getLikeLevel2(index, subIndex, false)"></van-icon>
-									<view class="num" :style="{'color': reply.is_like ? activeColor : '#00000099'}">{{ handleTransform(reply.likers_count) }}</view>
+									<view class="comment-content-footer-right-like-num" :style="{'color': reply.is_like ? activeColor : '#00000099'}">{{ handleTransform(reply.likers_count) }}</view>
+									<van-icon v-if="!reply.is_like" name="good-job" size="40rpx" color="#D7D7D7" @click="getLikeLevel2(index, subIndex, true)"></van-icon>
+									<van-icon v-if="reply.is_like" name="good-job" size="40rpx" :color="activeColor" @click="getLikeLevel2(index, subIndex, false)"></van-icon>
 								</view>
-								<view class="comment-content-footer-right-reply">
+								<!-- <view class="comment-content-footer-right-reply">
 									<van-icon v-if="!hideReply" name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(reply, 2, index, subIndex)" />
-								</view>
+								</view> -->
 							</view>
 						</view>
 					</view>
@@ -195,6 +195,10 @@
 							align-items: center;
 							color: #9a9a9a;
 							font-size: 26rpx;
+							.comment-content-footer-right-like-num {
+								margin-top: 7rpx;
+								margin-right: 10rpx;
+							}
 						}
 						.comment-content-footer-right-reply {
 							margin-top: 12rpx;

@@ -11,13 +11,13 @@
 				<view class="comment-content-footer-left">{{transformTimestamp(commentData)}}</view>
 				<view class="comment-content-footer-right">
 					<view class="comment-content-footer-right-like">
-						<van-icon v-if="!commentData.is_like" name="good-job" size="34rpx" color="#D7D7D7" @click.native="getLike(true)"></van-icon>
-						<van-icon v-if="commentData.is_like" name="good-job" size="34rpx" color="#8B8B8B" @click.native="getLike(false)"></van-icon>
-						<view class="num">{{ handleTransform(commentData.likers_count) }}</view>
+						<view class="comment-content-footer-right-like-num" :style="{'color': commentData.is_like ? activeColor : '#00000099'}">{{ handleTransform(commentData.likers_count) }}</view>
+						<van-icon v-if="!commentData.is_like" name="good-job" size="40rpx" color="#D7D7D7" @click.native="getLike(true)"></van-icon>
+						<van-icon v-if="commentData.is_like" name="good-job" size="40rpx" :color="activeColor" @click.native="getLike(false)"></van-icon>
 					</view>
-					<view class="comment-content-footer-right-reply">
+					<!-- <view class="comment-content-footer-right-reply">
 						<van-icon name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(commentData)" />
-					</view>
+					</view> -->
 				</view>
 			</view>
 		</view>
@@ -36,13 +36,13 @@
 						<view class="comment-content-footer-left">{{transformTimestamp(item)}}</view>
 						<view class="comment-content-footer-right">
 							<view class="comment-content-footer-right-like">
+								<view class="comment-content-footer-right-like-num" :style="{'color': item.is_like ? activeColor : '#00000099'}">{{ handleTransform(10000) }}</view>
 								<van-icon v-if="!item.is_like" name="good-job" size="40rpx" color="#8B8B8B" @click.native="getLike(true, index, 'sub')"></van-icon>
 								<van-icon v-if="item.is_like" name="good-job" size="40rpx" :color="activeColor" @click.native="getLike(false, index, 'sub')"></van-icon>
-								<view class="num" :style="{'color': item.is_like ? activeColor : '#00000099'}">{{ handleTransform(item.likers_count) }}</view>
 							</view>
-							<view class="comment-content-footer-right-reply">
+							<!-- <view class="comment-content-footer-right-reply">
 								<van-icon name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(item, index)" />
-							</view>
+							</view> -->
 						</view>
 					</view>
 				</view>
@@ -274,6 +274,10 @@ page {
 				align-items: center;
 				color: #9a9a9a;
 				font-size: 26rpx;
+				.comment-content-footer-right-like-num {
+					margin-top: 7rpx;
+					margin-right: 10rpx;
+				}
 			}
 			.comment-content-footer-right-reply {
 				margin-top: 12rpx;

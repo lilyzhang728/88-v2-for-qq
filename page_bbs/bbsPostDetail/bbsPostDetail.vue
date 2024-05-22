@@ -48,7 +48,8 @@
 				<van-icon name="good-job-o" size="44rpx" @click.native="clickLike(true)" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.likers_count)}}</text>
 			</view>
 			<view class="bbs-post-detail-operate-icon-box" v-else>
-				<van-icon name="good-job" size="44rpx" color="#2FC2C5" @click.native="clickLike(false)" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.likers_count)}}</text>
+				<van-icon name="good-job" size="44rpx" color="#2FC2C5" @click.native="clickLike(false)" />
+				<text class="bbs-post-detail-operate-num" :class="{'bbs-post-detail-operate-num-active': postData.is_like}">{{handleTransform(postData.likers_count)}}</text>
 			</view>
 			<view class="bbs-post-detail-operate-icon-box">
 				<van-icon name="comment-o" size="44rpx" @click.native="clickInput" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.comments_count)}}</text>
@@ -512,6 +513,9 @@
 					line-height: 42rpx;
 					margin-left: 13rpx;
 					width: 90rpx;
+				}
+				.bbs-post-detail-operate-num-active {
+					color: #2FC2C5;
 				}
 				&:last-child {
 					margin-right: 0;
