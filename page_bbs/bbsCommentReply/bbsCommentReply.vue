@@ -50,7 +50,7 @@
 		</view>
 		
 		<!-- 回复键盘 -->
-		<van-overlay :show="showReply" @click.native="onClickHide" :custom-style="'height:auto;bottom: '+(bottomVal)+'; '" />
+		<van-overlay :show="showReply" @click.native="onClickHide" :custom-style="'z-index:0;height:auto;bottom: 0;'" />
 		<bbs-comment-keyboard :showReply="showReply" :showReplyPostBox="showReplyPostBox" 
 		:curReplyAvatar="curReplyAvatar" :curReplyContent="curReplyContent"
 		@submit="submit" @changeBottomVal="changeBottomVal"></bbs-comment-keyboard>
