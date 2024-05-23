@@ -15,11 +15,12 @@
 			<van-image
 			  width="100%"
 			  height="100%"
-			  fit="contain"
+			  fit="cover"
 			  :src="pic"
 			  class="bbs-topic-post-img-item"
 			  v-for="(pic, index) in picList"
 			  :key="index"
+			  @click.native.stop="previewImg($event, pic)"
 			/>
 		</view>
 		
@@ -70,6 +71,15 @@
 			checkoutLike(status) {
 				this.$emit('checkoutLike', this.index, status)
 			},
+			// 预览图片
+			previewImg(e, url) {
+				//防止冒泡
+				e.preventDefault()
+				uni.previewImage({
+					current: 0,
+					urls: [url]
+				});
+			},
 		},
 	}
 </script>
@@ -115,7 +125,7 @@
 			display: flex;
 			height: 200rpx;
 			.bbs-topic-post-img-item {
-				flex: 1;
+				width: calc((100vw - 110rpx) / 3);
 				margin-right: 20rpx;
 				&:last-child {
 					margin-right: 0;

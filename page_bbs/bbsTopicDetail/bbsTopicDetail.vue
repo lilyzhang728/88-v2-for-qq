@@ -235,6 +235,7 @@
 			font-weight: 600;
 			color: #000000;
 			line-height: 56rpx;
+			word-break: break-all;
 		}
 		.bbs-topic-detail-btn-wrap {
 			/deep/ .bbs-topic-detail-btn {
