@@ -24,7 +24,7 @@
 			<!-- list -->
 			<view class="bbs-topic-post-list">
 				<bbs-topic-post-card v-for="(item,index) in topicData.posts.items" :key="index" 
-				:postData="item" :index="index" @checkoutLike="checkoutLike" @click.native="toPostDetail(item.id)"></bbs-topic-post-card>
+				:postData="item" :index="index" @checkoutLike="checkoutLike" @click.native="toPostDetail(item.id, index)"></bbs-topic-post-card>
 			</view>
 				
 		</z-paging>
@@ -133,9 +133,9 @@
 				}
 			},
 			//跳转帖子详情
-			toPostDetail(id) {
+			toPostDetail(id, index) {
 				uni.navigateTo({
-					url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${id}`
+					url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${id}&postIndex=${index}`
 				});
 			},
 			//关注话题
@@ -192,6 +192,10 @@
 				         } 
 				    },
 				})
+			},
+			// 帖子被删除，返回这一页删掉这条帖子
+			deleteSinglePost(index) {
+				topicData.posts.items.splice(index, 1)
 			}
 		}
 	}

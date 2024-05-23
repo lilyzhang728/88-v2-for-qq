@@ -22,7 +22,7 @@
 			<!-- 帖子列表 -->
 			<view class="bbs-rec-post">
 				<bbs-post-card v-for="(item,index) in dataList" :key="index" :postData="item" :index="index"  
-				@clickMore="clickMore" @click.native="toPostDetail(item.id)" @checkoutLike="checkoutLike"></bbs-post-card>
+				@clickMore="clickMore" @click.native="toPostDetail(item.id, index)" @checkoutLike="checkoutLike"></bbs-post-card>
 			</view>
 		</z-paging>
 		
@@ -90,9 +90,9 @@
 					console.log('topicList: ', err)
 				})
 			},
-			toPostDetail(id) {
+			toPostDetail(id, index) {
 				uni.navigateTo({
-					url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${id}`
+					url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${id}&postIndex=${index}`
 				});
 			},
 			//跳转话题列表
@@ -124,6 +124,10 @@
 				this.contentId = id
 				this.$refs.deleteAndComplaint.handleLongpress()
 			},
+			// 帖子被删除，返回这一页删掉这条帖子
+			deleteSinglePost(index) {
+				this.dataList.splice(index, 1)
+			}
 		}
 	}
 </script>

@@ -1,70 +1,73 @@
 <!-- 帖子详情 -->
 <template>
 	<view class="bbs-post-detail" :style="{backgroundImage: 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)',backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<back-topbar></back-topbar>
-		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': (customBar+20) + 'px', 'bottom': '64px', paddingLeft: '25rpx', paddingRight: '25rpx'}">
-			<!-- 头像、昵称、学校 -->
-			<card-user :item="postData" parent="detail" :showMoreIcon="true" @clickMore="clickMore"></card-user>
+		<view v-if="!showEmpty">
+			<back-topbar></back-topbar>
+			<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': (customBar+20) + 'px', 'bottom': '64px', paddingLeft: '25rpx', paddingRight: '25rpx'}">
+				<!-- 头像、昵称、学校 -->
+				<card-user :item="postData" parent="detail" :showMoreIcon="true" @clickMore="clickMore"></card-user>
+				
+				<!-- 帖子所属话题 -->
+				<view class="bbs-post-detail-topic" v-if="postData.bind_topics && postData.bind_topics.length" @click="toTopicDetail">
+					<img class="bbs-post-detail-topic-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
+					<text class="bbs-post-detail-topic-text">{{postData.bind_topics[0].body}}</text>
+				</view>
+				
+				<!-- 帖子正文 -->
+				<view class="bbs-post-detail-content">{{postBody}}</view>
+				
+				<!-- 图片 -->
+				<view class="bbs-post-detail-img-box" v-if="postData.body.urls.length">
+					<van-image width="100%" height="100%" fit="cover" :src="pic"
+					  class="bbs-post-detail-img-item" v-for="(pic, index) in postData.body.urls" :key="index"
+					  @click.native="previewImg($event, pic)" />
+				</view>
+				
+				<!-- 编辑时间 -->
+				<view class="bbs-post-detail-edit-info">编辑于{{postData.timestamp}}</view>
+				
+				<van-divider />
 			
-			<!-- 帖子所属话题 -->
-			<view class="bbs-post-detail-topic" v-if="postData.bind_topics && postData.bind_topics.length" @click="toTopicDetail">
-				<img class="bbs-post-detail-topic-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
-				<text class="bbs-post-detail-topic-text">{{postData.bind_topics[0].body}}</text>
+				<!-- 评论区 -->
+				<view class="bbs-post-detail-comment">
+					<view class="bbs-post-detail-comment-total">共{{commentNum}}条评论</view>
+					<bbs-post-comment @reply="reply" :commentData="dataList" 
+					@checkoutCommentLike="checkoutCommentLike" @checkoutCommentLikeLevel2="checkoutCommentLikeLevel2"
+					@commentLongpress="commentLongpress"
+					></bbs-post-comment>
+				</view>
+			</z-paging>
+			
+			<!-- 底部操作区 -->
+			<view class="bbs-post-detail-operate">
+				<!-- <van-field placeholder="说点什么……" :border="false" class="bbs-post-detail-operate-input-wrap"
+				 @focus="noBomBox" @clickInput.native.stop="clickInput" /> -->
+				<view class="bbs-post-detail-operate-left" @click="clickInput">说点什么……</view>
+				
+				<!-- 点赞/评论icon -->
+				<view class="bbs-post-detail-operate-icon-box" v-if="!postData.is_like">
+					<van-icon name="good-job-o" size="44rpx" @click.native="clickLike(true)" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.likers_count)}}</text>
+				</view>
+				<view class="bbs-post-detail-operate-icon-box" v-else>
+					<van-icon name="good-job" size="44rpx" color="#2FC2C5" @click.native="clickLike(false)" />
+					<text class="bbs-post-detail-operate-num" :class="{'bbs-post-detail-operate-num-active': postData.is_like}">{{handleTransform(postData.likers_count)}}</text>
+				</view>
+				<view class="bbs-post-detail-operate-icon-box">
+					<van-icon name="comment-o" size="44rpx" @click.native="clickInput" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.comments_count)}}</text>
+				</view>
 			</view>
 			
-			<!-- 帖子正文 -->
-			<view class="bbs-post-detail-content">{{postBody}}</view>
+			<!-- 回复键盘 -->
+			<van-overlay :show="showReply" @click.native="onClickHide" :custom-style="'z-index:0;height:auto;bottom: 0;'" />
+			<bbs-comment-keyboard :showReply="showReply" :showReplyPostBox="showReplyPostBox" 
+			:curReplyAvatar="curReplyAvatar" :curReplyContent="curReplyContent"
+			@submit="submit" @changeBottomVal="changeBottomVal"></bbs-comment-keyboard>
 			
-			<!-- 图片 -->
-			<view class="bbs-post-detail-img-box" v-if="postData.body.urls.length">
-				<van-image width="100%" height="100%" fit="cover" :src="pic"
-				  class="bbs-post-detail-img-item" v-for="(pic, index) in postData.body.urls" :key="index"
-				  @click.native="previewImg($event, pic)" />
-			</view>
-			
-			<!-- 编辑时间 -->
-			<view class="bbs-post-detail-edit-info">编辑于{{postData.timestamp}}</view>
-			
-			<van-divider />
-
-			<!-- 评论区 -->
-			<view class="bbs-post-detail-comment">
-				<view class="bbs-post-detail-comment-total">共{{commentNum}}条评论</view>
-				<bbs-post-comment @reply="reply" :commentData="dataList" 
-				@checkoutCommentLike="checkoutCommentLike" @checkoutCommentLikeLevel2="checkoutCommentLikeLevel2"
-				@commentLongpress="commentLongpress"
-				></bbs-post-comment>
-			</view>
-		</z-paging>
-		
-		<!-- 底部操作区 -->
-		<view class="bbs-post-detail-operate">
-			<!-- <van-field placeholder="说点什么……" :border="false" class="bbs-post-detail-operate-input-wrap"
-			 @focus="noBomBox" @clickInput.native.stop="clickInput" /> -->
-			<view class="bbs-post-detail-operate-left" @click="clickInput">说点什么……</view>
-			
-			<!-- 点赞/评论icon -->
-			<view class="bbs-post-detail-operate-icon-box" v-if="!postData.is_like">
-				<van-icon name="good-job-o" size="44rpx" @click.native="clickLike(true)" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.likers_count)}}</text>
-			</view>
-			<view class="bbs-post-detail-operate-icon-box" v-else>
-				<van-icon name="good-job" size="44rpx" color="#2FC2C5" @click.native="clickLike(false)" />
-				<text class="bbs-post-detail-operate-num" :class="{'bbs-post-detail-operate-num-active': postData.is_like}">{{handleTransform(postData.likers_count)}}</text>
-			</view>
-			<view class="bbs-post-detail-operate-icon-box">
-				<van-icon name="comment-o" size="44rpx" @click.native="clickInput" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.comments_count)}}</text>
-			</view>
+			<!-- 举报面板 -->
+			<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" :type="actionType"
+			@backRefresh="backRefresh" :author="from === 'mine' ? 0 : 1"></delete-and-complaint>
 		</view>
-		
-		<!-- 回复键盘 -->
-		<van-overlay :show="showReply" @click.native="onClickHide" :custom-style="'z-index:0;height:auto;bottom: 0;'" />
-		<bbs-comment-keyboard :showReply="showReply" :showReplyPostBox="showReplyPostBox" 
-		:curReplyAvatar="curReplyAvatar" :curReplyContent="curReplyContent"
-		@submit="submit" @changeBottomVal="changeBottomVal"></bbs-comment-keyboard>
-		
-		<!-- 举报面板 -->
-		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" :type="actionType"
-		@backRefresh="backRefresh" :author="from === 'mine' ? 0 : 1"></delete-and-complaint>
+		<van-empty v-else description="找不到该帖子……" />
 	</view>
 </template>
 
@@ -93,6 +96,7 @@
 			return {
 				customBar: 0,
 				id: '',
+				postIndex: '',
 				postData: {
 					author: {
 						name: '',
@@ -127,6 +131,7 @@
 				contentId: '',		// 传给长按面板的内容id （帖子/评论）
 				actionType: 0,		// 长按面板内容类型：0：帖子，1：评论，2：话题
 				from: '',			// from==='mine',表示从我的页面跳转过来，需要加more-icon		
+				showEmpty: false,	// 帖子被删时显示空页面
 			}
 		},
 		computed: {
@@ -140,6 +145,7 @@
 		},
 		onLoad(option) {
 			this.id = option.id
+			this.postIndex = option.postIndex
 			if(option.showReply) {
 				this.clickInput()
 			}
@@ -203,6 +209,22 @@
 					}
 				}, err => {
 					console.log('guideDetail: ', err)
+					if(err == 'statusCode404') {
+						// 帖子被删除
+						this.showEmpty = true
+						// 自动返回上一页，并删除该帖子
+						setTimeout(() => {
+							uni.navigateBack({
+							    success: () => {
+							         let page = getCurrentPages().pop();//跳转页面成功之后
+							         if (page) {
+										 page.$vm.active = 0
+							             page.$vm.$refs.bbsRec.deleteSinglePost(this.postIndex)
+							         } 
+							    },
+							})
+						}, 1000)
+					}
 				})
 			},
 			//拿到评论接口后请求评论数据
@@ -395,7 +417,7 @@
 					         let page = getCurrentPages().pop();//跳转页面成功之后
 					         if (page) {
 								 page.$vm.active = 0
-					             page.$vm.$refs.bbsRec.$refs.paging.reload()
+					             page.$vm.$refs.bbsRec.deleteSinglePost(this.postIndex)
 					         } 
 					    },
 					})
