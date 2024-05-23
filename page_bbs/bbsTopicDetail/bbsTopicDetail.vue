@@ -1,42 +1,45 @@
 <!-- 话题详情 -->
 <template>
 	<view class="bbs-topic-detail" :style="{backgroundImage: 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)',backgroundSize: '100%',backgroundColor: '#F8F8F8',backgroundRepeat: 'no-repeat'}">
-		<back-topbar title="话题" ></back-topbar>
-		<z-paging ref="paging" v-model="dataList" :auto-clean-list-when-reload="false"
-			:auto-scroll-to-top-when-reload="false" :refresher-status.sync="refresherStatus" @query="queryList"
-			:paging-style="{'top': (customBar) + 'px', 'bottom': '0', paddingLeft: '25rpx', paddingRight: '25rpx'}">
-
-			<view class="bbs-topic-detail-header" @longpress="handleLongpress">
-				<view class="bbs-topic-detail-title">{{topicData.body}}</view>
-				<van-button v-if="!topicData.is_collect" size="small" class="bbs-topic-detail-btn-wrap" custom-class="bbs-topic-detail-btn" @click.native="handleFocusTopic">关注</van-button>
-				<view v-else class="bbs-topic-detail-focus" @click="handleUnfocusTopic"><van-icon name="success" class="bbs-topic-detail-focus-icon" />已关注</view>
-			</view>
-			<view class="bbs-topic-detail-info">{{topicData.posts_count}}篇内容·{{topicData.views}}次浏览</view>
+		<view v-if="!showEmpty">
+			<back-topbar title="话题" ></back-topbar>
+			<z-paging ref="paging" v-model="dataList" :auto-clean-list-when-reload="false"
+				:auto-scroll-to-top-when-reload="false" :refresher-status.sync="refresherStatus" @query="queryList"
+				:paging-style="{'top': (customBar) + 'px', 'bottom': '0', paddingLeft: '25rpx', paddingRight: '25rpx'}">
 			
-			<!-- <view style="z-index: 100;position: sticky;top :0;">
-				<van-tabs :active="active" animated @change.native="tabsChange" ref="tabs"
-				line-height="8rpx" line-width="60rpx" class="bbs-tabs" swipeable>
-					<van-tab title="热门"></van-tab>
-					<van-tab title="最新"></van-tab>
-				</van-tabs>
-			</view> -->
-			
-			<!-- list -->
-			<view class="bbs-topic-post-list">
-				<bbs-topic-post-card v-for="(item,index) in topicData.posts.items" :key="index" 
-				:postData="item" :index="index" @checkoutLike="checkoutLike" @click.native="toPostDetail(item.id, index)"></bbs-topic-post-card>
-			</view>
+				<view class="bbs-topic-detail-header" @longpress="handleLongpress">
+					<view class="bbs-topic-detail-title">{{topicData.body}}</view>
+					<van-button v-if="!topicData.is_collect" size="small" class="bbs-topic-detail-btn-wrap" custom-class="bbs-topic-detail-btn" @click.native="handleFocusTopic">关注</van-button>
+					<view v-else class="bbs-topic-detail-focus" @click="handleUnfocusTopic"><van-icon name="success" class="bbs-topic-detail-focus-icon" />已关注</view>
+				</view>
+				<view class="bbs-topic-detail-info">{{topicData.posts_count}}篇内容·{{topicData.views}}次浏览</view>
 				
-		</z-paging>
-		
-		<van-dialog id="van-dialog" />
-		
-		<!-- 新增攻略按钮 -->
-		<side-add-btn @addNew="addNewPost"></side-add-btn>
-		
-		<!-- 举报面板 -->
-		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" :type="actionType"
-		@backRefresh="backRefresh"></delete-and-complaint>
+				<!-- <view style="z-index: 100;position: sticky;top :0;">
+					<van-tabs :active="active" animated @change.native="tabsChange" ref="tabs"
+					line-height="8rpx" line-width="60rpx" class="bbs-tabs" swipeable>
+						<van-tab title="热门"></van-tab>
+						<van-tab title="最新"></van-tab>
+					</van-tabs>
+				</view> -->
+				
+				<!-- list -->
+				<view class="bbs-topic-post-list">
+					<bbs-topic-post-card v-for="(item,index) in topicData.posts.items" :key="index" 
+					:postData="item" :index="index" @checkoutLike="checkoutLike" @click.native="toPostDetail(item.id, index)"></bbs-topic-post-card>
+				</view>
+					
+			</z-paging>
+			
+			<van-dialog id="van-dialog" />
+			
+			<!-- 新增攻略按钮 -->
+			<side-add-btn @addNew="addNewPost"></side-add-btn>
+			
+			<!-- 举报面板 -->
+			<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" :type="actionType"
+			@backRefresh="backRefresh"></delete-and-complaint>
+		</view>
+		<van-empty v-else description="找不到该话题……" />
 	</view>
 </template>
 
@@ -73,6 +76,7 @@
 				},
 				contentId: '',		// 传给长按面板的内容id （帖子/评论）
 				actionType: 2,		// 长按面板内容类型：0：帖子，1：评论，2：话题
+				showEmpty: false
 			}
 		},
 		watch: {
@@ -120,6 +124,20 @@
 						}
 					}, err => {
 						console.log('topicDetail: ', err)
+						if(err == 'statusCode404') {
+							this.showEmpty = true
+							setTimeout(() => {
+								uni.navigateBack({
+								    success: () => {
+								         let page = getCurrentPages().pop();//跳转页面成功之后
+								         if (page) {
+											 page.$vm.active = 2
+								             page.$vm.$refs.bbsTopic.$refs.paging.reload()
+								         } 
+								    },
+								})
+							}, 1000)
+						}
 					})
 				}
 			},
