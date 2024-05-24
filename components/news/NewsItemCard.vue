@@ -99,6 +99,7 @@
 				flex: 3;
 				margin-right: 20rpx;
 				.news-item-card-content-left-title {
+					word-break: break-all;
 					font-size: 30rpx;
 					margin-bottom: 10rpx;
 					color: #000;

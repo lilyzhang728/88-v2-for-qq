@@ -375,6 +375,7 @@
 	bottom: 0;
 	padding: 0 25rpx;
 	.news-detail-title {
+		word-break: break-all;
 		font-size: 48rpx;
 		font-weight: 600;
 		color: #000000;

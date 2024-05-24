@@ -19,6 +19,8 @@
 						@change.native="inputTitle($event)"
 						@focus.native="inputBindFocus"
 						@blur.native="inputBindBlur"
+						maxlength=30
+						clearable
 					  />
 				</view>
 				
@@ -286,7 +288,7 @@
 			},
 			//发帖
 			send() {
-				if(this.postVal) {
+				if(this.title && this.postVal) {
 					addGuide({
 						'title': this.title,
 						'body': {
