@@ -5,7 +5,7 @@
 			<!-- 资讯标题 -->
 			<view class="news-detail-title">{{newsData.title}}</view>
 			
-			<!-- 作者|日期 -->
+			<!-- 作者 -->
 			<view class="question-detail-info-box">
 				<view class="bbs-post-detail-author">
 					<img :src="avatar" alt="" class="bbs-post-detail-author-img"  @click.native.stop="toHomepage($event)">
@@ -13,6 +13,10 @@
 						<view class="bbs-post-detail-author-text-name">{{newsData.author.name}}</view>
 					</view>
 				</view>
+			</view>
+			
+			<!-- 日期 -->
+			<view class="question-detail-date-box">
 				<view class="bbs-post-detail-edit-info">编辑于{{newsData.timestamp}}</view>
 				<van-icon class="more-icon" size="24rpx" color="#808080" name="arrow-down" @click.native.stop="clickMore($event)" />
 			</view>
@@ -390,14 +394,10 @@
 	
 	.question-detail-info-box {
 		margin-top: 40rpx;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
 		.bbs-post-detail-author {
 			height: 50rpx;
 			display: flex;
 			align-items: center;
-			flex: 1;
 			overflow: hidden;
 			.bbs-post-detail-author-img {
 				height: 50rpx;
@@ -416,18 +416,22 @@
 					white-space: nowrap;
 					text-overflow: ellipsis;
 				}
-				
 			}
 		}
+	}
+	.question-detail-date-box {
+		margin-top: 25rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		.bbs-post-detail-edit-info {
 			font-size: 24rpx;
 			color: rgba(0,0,0,0.5);
 			line-height: 33rpx;
 			width: 320rpx;
-			text-align: right;
+			text-align: left;
 		}
 		.more-icon {
-			margin-left: 15rpx;
 		}
 	}
 	.news-detail-content {
