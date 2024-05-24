@@ -19,9 +19,11 @@
 					    placeholder="请输入话题"
 					    :border="true"
 					    @change.native="onChange($event)"
+						maxlength=20
+						clearable
 					  />
 					  
-					<van-button class="add-post-topic-new-topic-btn" color="#35C8A6" block @click.native="handleAddNewTopic">添加</van-button>
+					<van-button class="add-post-topic-new-topic-btn" color="#35C8A6" block :disabled="!newTopicVal" @click.native="handleAddNewTopic">添加</van-button>
 				</view>
 			</van-action-sheet>
 		</view>
@@ -116,33 +118,35 @@
 			},
 			//发起话题
 			handleAddNewTopic() {
-				addNewTopic({
-					'body': this.newTopicVal
-				}).then(res => {
-					if(res.code === 0 && Object.keys(res.data).length) {
-						this.showAddPopup = false
-						uni.navigateBack({
-							success: () => {
-							     let page = getCurrentPages().pop();//跳转页面成功之后
-							     if (page) {
-									 //返回上一页
-									 page.$vm.selectedTopic = true
-									 page.$vm.addedTopicContent = res.data
-									 if(this.showEdit > 0) {
-										 //从入口点击“试试添加话题”进来的，返回时切换为编辑页面
-										 page.$vm.showEdit = true
-										 page.$vm.showKeyboard = true
-									 }
-							     }
-							}
-						})
-					} else {
-						//toast添加失败todo:
-						
-					}
-				}, err => {
-					console.log('addNewTopic: ', err)
-				})
+				if(this.newTopicVal) {
+					addNewTopic({
+						'body': this.newTopicVal
+					}).then(res => {
+						if(res.code === 0 && Object.keys(res.data).length) {
+							this.showAddPopup = false
+							uni.navigateBack({
+								success: () => {
+								     let page = getCurrentPages().pop();//跳转页面成功之后
+								     if (page) {
+										 //返回上一页(都是从addNewPost.vue跳转来的，2个触发点：1.试试添加话题  2.发帖的时候点话题icon添加话题)
+										 page.$vm.selectedTopic = true	// 回显话题开关
+										 page.$vm.addedTopicContent = res.data	// 回显话题内容
+										 if(this.showEdit > 0) {
+											 //从入口点击“试试添加话题”进来的，返回时切换为编辑页面
+											 page.$vm.showEdit = true
+											 page.$vm.showKeyboard = true
+										 }
+								     }
+								}
+							})
+						} else {
+							//toast添加失败todo:
+							
+						}
+					}, err => {
+						console.log('addNewTopic: ', err)
+					})
+				}
 			}
 			
 		}
