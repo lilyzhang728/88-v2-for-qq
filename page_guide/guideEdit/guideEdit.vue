@@ -47,7 +47,7 @@
 			<!-- 教辅材料 -->
 			<view class="guide-edit-material">
 				<view class="guide-edit-form-title">
-					教辅材料<van-icon name="info-o" color="#7F7F7F" class="guide-edit-material-title-icon" />
+					教辅材料
 				</view>
 				<view class="guide-edit-material-content">
 					<van-field

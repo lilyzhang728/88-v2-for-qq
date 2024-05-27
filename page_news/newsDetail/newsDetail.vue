@@ -302,6 +302,8 @@
 					if(res.code === 0 && Object.keys(res.data).length) {
 						//评论成功，1级回显到第1条，2级回显到回复的评论下面
 						this.showReplyComment(res.data)
+						//评论数+1
+						this.newsData.comments_count++
 					}
 				}, err => {
 					console.log('postComment: ', err)
