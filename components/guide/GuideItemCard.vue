@@ -23,10 +23,10 @@
 			<view class="guide-item-card-right-description" v-if="guideItem.body.summary">{{guideItem.body.summary}}</view>
 			<view class="guide-item-card-right-books">
 				<view class="guide-item-card-right-books-left">
-					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/matetialIcon.png" alt="" class="guide-item-card-right-book-item-icon">
-					<text class="guide-item-card-right-book-item">教辅*{{guideItem.body.references.length}}</text>
-					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/stepIcon.png" alt="" class="guide-item-card-right-book-item-icon">
-					<text class="guide-item-card-right-book-item">步骤*{{guideItem.body.steps.length}}</text>
+					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/matetialIcon.png" alt="" class="guide-item-card-right-book-item-icon" v-if="guideItem.body.references">
+					<text class="guide-item-card-right-book-item" v-if="guideItem.body.references">教辅*{{guideItem.body.references.length}}</text>
+					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/stepIcon.png" alt="" class="guide-item-card-right-book-item-icon" v-if="guideItem.body.steps">
+					<text class="guide-item-card-right-book-item" v-if="guideItem.body.steps">步骤*{{guideItem.body.steps.length}}</text>
 				</view>
 				<view class="guide-item-card-right-books-right">
 					<text class="guide-item-card-right-books-right-time" v-if="tabIndex!==2 && guideItem.timestamp">{{timestamp}}</text>
@@ -293,6 +293,7 @@
 				justify-content: space-between;
 				align-items: start;
 				.guide-item-card-right-title {
+					word-break: break-all;
 					font-size: 30rpx;
 					margin-bottom: 10rpx;
 					color: #000;
@@ -332,7 +333,12 @@
 						margin-right: 0;
 					}
 				}
+				.guide-item-card-right-books-left {
+					flex: 1;
+				}
 				.guide-item-card-right-books-right {
+					width: 106rpx;
+					text-align: right;
 					.guide-item-card-right-books-right-time {
 						color: rgba(0,0,0,0.4);
 					}
@@ -361,7 +367,10 @@
 						color: #000;
 						flex: 1;
 						height: 40rpx;
+						width: 190rpx;
 						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
 					}
 				}
 				.guide-item-card-right-icons {
