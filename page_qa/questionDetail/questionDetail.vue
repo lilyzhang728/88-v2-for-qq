@@ -25,9 +25,10 @@
 						<view class="bbs-post-detail-author-text-name">{{postData.author.name}}</view>
 					</view>
 				</view>
-				<!-- 发布时间 -->
-				<view class="bbs-post-detail-edit-info">编辑于{{postData.timestamp}}</view>
 			</view>
+			
+			<!-- 发布时间 -->
+			<view class="bbs-post-detail-edit-info">编辑于{{postData.timestamp}}</view>
 			
 			<van-divider />
 			
@@ -447,14 +448,10 @@
 	}
 	.question-detail-info-box {
 		margin-top: 40rpx;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
 		.bbs-post-detail-author {
 			height: 50rpx;
 			display: flex;
 			align-items: center;
-			flex: 1;
 			overflow: hidden;
 			.bbs-post-detail-author-img {
 				height: 50rpx;
@@ -476,13 +473,13 @@
 				
 			}
 		}
-		.bbs-post-detail-edit-info {
-			font-size: 24rpx;
-			color: rgba(0,0,0,0.5);
-			line-height: 33rpx;
-			width: 320rpx;
-			text-align: right;
-		}
+	}
+	.bbs-post-detail-edit-info {
+		margin-top: 20rpx;
+		font-size: 24rpx;
+		color: rgba(0,0,0,0.5);
+		line-height: 33rpx;
+		text-align: left;
 	}
 	.question-detail-btns {
 		display: flex;

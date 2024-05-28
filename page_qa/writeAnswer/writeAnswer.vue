@@ -18,6 +18,7 @@
 				@change.native="inputAnswer($event)"
 				@focus.native="inputBindFocus"
 				@blur.native="inputBindBlur"
+				clearable
 			  />
 		</view>
 		

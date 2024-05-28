@@ -17,6 +17,8 @@
 					@change.native="inputTitle($event)"
 					@focus.native="inputBindFocus"
 					@blur.native="inputBindBlur"
+					maxlength=30
+					clearable
 				  />
 			</view>
 			
@@ -35,6 +37,7 @@
 				@change.native="inputPost($event)"
 				@focus.native="inputBindFocus"
 				@blur.native="inputBindBlur"
+				clearable
 			  />
 			  
 			<!-- uploader -->
@@ -456,7 +459,7 @@
 			},
 			//发帖
 			send() {
-				if(this.postVal) {
+				if(this.postVal && this.title) {
 					addGuide({
 						'title': this.title,
 						'body': {
