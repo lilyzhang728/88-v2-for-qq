@@ -14,13 +14,16 @@
 					<view class="guide-detail-material-title">材料</view>
 					<view class="guide-detail-material-content">
 						<view class="guide-detail-material-item" v-for="(item, index) in guideData.body.references" :key="index">
-							<text class="guide-detail-material-item-index">{{index+1}}</text>
-							{{item}}</view>
+							<view class="guide-detail-material-item-index">{{index+1}}</view>
+							<view class="guide-detail-material-item-text">{{item}}</view>
+						</view>
 					</view>
 				</view>
 				
 				<!-- 步骤 -->
-				<guide-detail-step v-for="(item, index) in guideData.body.steps" :key="index" :index="index" :stepData="item"></guide-detail-step>
+				<view class="guide-detail-step-box">
+					<guide-detail-step v-for="(item, index) in guideData.body.steps" :key="index" :index="index" :stepData="item"></guide-detail-step>
+				</view>
 				
 				<!-- 小贴士 -->
 				<view class="guide-detail-tip" v-if="guideData.body.tips">
@@ -272,19 +275,25 @@
 					color: #000;
 					line-height: 40rpx;
 					display: flex;
-					align-items: center;
+					align-items: top;
 					.guide-detail-material-item-index {	
 						font-size: 28rpx;
 						color: rgba(0,0,0,0.3);
-						line-height: 32rpx;
 						margin-right: 12rpx;
 						width: 32rpx;
+						vertical-align: top;
+					}
+					.guide-detail-material-item-text {
+						flex: 1;
 					}
 				}
 			}
 		}
+		.guide-detail-step-box {
+			margin-bottom: 40rpx;
+		}
 		.guide-detail-tip {
-			margin: 40rpx 0;
+			margin-bottom: 40rpx;
 			.guide-detail-tip-title {
 				font-weight: 600;
 				color: rgba(0,0,0,0.8);

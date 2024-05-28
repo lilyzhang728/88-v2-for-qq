@@ -10,7 +10,8 @@
 			<view class="guide-detail-step-desc">{{stepData.body}}</view>
 			<view class="guide-detail-step-link" v-for="(link, index) in stepData.links" @click="clickLink(link.url)" :key="index" v-if="link.name && link.url">
 				<img class="guide-detail-step-link-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/linkIcon.png" alt="">
-				{{link.name}}</view>
+				<view class="guide-detail-step-link-text">{{link.name}}</view>
+			</view>
 			<!-- <view class="guide-detail-step-tip">辅助说明</view> -->
 			<view class="guide-detail-step-img" v-if="picsList.length">
 				<van-image 
@@ -125,10 +126,14 @@
 				line-height: 40rpx;
 				display: flex;
 				align-items: center;
+				margin-top: 20rpx;
 				.guide-detail-step-link-icon {
 					height: 22rpx;
 					width: 22rpx;
 					margin-right: 10rpx;
+				}
+				.guide-detail-step-link-text {
+					flex: 1;
 				}
 			}
 			// .guide-detail-step-tip {
