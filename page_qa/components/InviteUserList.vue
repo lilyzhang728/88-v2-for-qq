@@ -21,7 +21,7 @@
 								</view>
 								<view class="connections-item-card-body">
 									<view class="connections-item-card-body-title">
-										<text class="connections-item-card-body-title-name">{{item.name}}</text>
+										<view class="connections-item-card-body-title-name">{{item.name}}</view>
 										<view class="connections-item-card-body-title-btn" :class="{'connections-item-card-body-title-btn-grey': item.is_mentioned}" @click="toAskQuestion(item, index)">
 											{{item.is_mentioned ? '已被邀请' : '邀ta回答'}}</view>
 									</view>
@@ -33,7 +33,7 @@
 								</view>
 							</view>
 							<view class="connections-item-card-skillbar">
-								<view class="connections-item-card-skillbar-item" :class="'connections-item-card-skillbar-item-'+skillKey" v-for="(skillVal, skillKey, skillIndex) in item.ratings" :key="skillIndex">
+								<view class="connections-item-card-skillbar-item" :class="'connections-item-card-skillbar-item-'+skillKey" v-for="(skillVal, skillKey, skillIndex) in getRatingList(item.ratings)" :key="skillIndex">
 									<view class="connections-item-card-skillbar-item-name">{{skillMap[skillKey]}}</view>
 									<view class="connections-item-card-skillbar-item-progress">
 										<van-progress :percentage="skillVal/5*100" :color="skillColorMap[skillKey]" :show-pivot="false" class="connections-item-card-skillbar-item-progress-bar" />
@@ -141,6 +141,11 @@
 				uni.navigateTo({
 					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=${tabIndex}&searchContentType=${searchContentType}&postId=${this.postId}`
 				})
+			},
+			// 根据能力值由大到小排序
+			getRatingList(ratings) {
+				if(!ratings) return {}
+				return Object.fromEntries(Object.entries(ratings).sort((a, b) => (a[1] - b[1])*-1))
 			}
 		}
 	}
@@ -208,6 +213,7 @@
 						}
 						.connections-item-card-body {
 							flex: 1;
+							overflow: hidden;
 							margin-left: 37rpx;
 							.connections-item-card-body-title {
 								height: 55rpx;
@@ -220,6 +226,9 @@
 									width: calc(100% - 150rpx);
 									vertical-align: top;
 									text-align: left;
+									overflow: hidden;
+									white-space: nowrap;
+									text-overflow: ellipsis;
 								}
 								.connections-item-card-body-title-btn {
 									width: 150rpx;
