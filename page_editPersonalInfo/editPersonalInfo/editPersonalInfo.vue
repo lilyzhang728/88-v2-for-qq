@@ -11,14 +11,15 @@
 			</view>
 			<van-field
 			    :value="userInfo.name"
-			    placeholder="请输入姓名"
+			    placeholder="请输入昵称"
 			    @change.native="onChange($event, 'name')"
-				label="姓名"
+				label="昵称"
 				required
 				name="name"
 				clearable
 				:error="validator && !userInfo.name"
 				custom-style="background: transparent"
+				maxlength=15
 			/>
 			<van-field
 			    :value="userInfo.school"
@@ -30,6 +31,7 @@
 				clearable
 				:error="validator && !userInfo.school"
 				custom-style="background: transparent"
+				maxlength=15
 			/>
 			<van-field
 			    :value="userInfo.major"
@@ -41,6 +43,7 @@
 				clearable
 				:error="validator && !userInfo.major"
 				custom-style="background: transparent"
+				maxlength=15
 			/>
 			<van-field
 			    :value="userInfo.startDay"
@@ -86,16 +89,16 @@
 			    placeholder="请输入个性签名"
 			    @change.native="onChange($event, 'about_me')"
 				label="个性签名"
-				required
 				name="about_me"
 				clearable
 				:error="validator && !userInfo.about_me"
 				custom-style="background: transparent"
+				maxlength=30
 			/>
 		</van-cell-group>
 
 		<view class="save-btn-box">
-			<van-button class="save-btn-wrap" custom-class="save-btn" @click="handleSave">保存</van-button>
+			<van-button class="save-btn-wrap" custom-class="save-btn" :disabled="btnDisabled" @click="handleSave">保存</van-button>
 		</view>
 
 
@@ -187,6 +190,10 @@
 			dateChange() {
 				const { start_year, start_month, graduate_year, graduate_month } = this.userInfo
 				return { start_year, start_month, graduate_year, graduate_month }
+			},
+			// 除了个性签名都必输
+			btnDisabled() {
+				return !this.userInfo.name || !this.userInfo.school || !this.userInfo.major || !this.userInfo.start_year || !this.userInfo.start_month || !this.userInfo.graduate_year || !this.userInfo.graduate_month || !this.userInfo.target
 			}
 		},
 		watch: {
