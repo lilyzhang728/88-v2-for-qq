@@ -19,7 +19,7 @@
 			</view>
 		</view>
 		<view class="connections-item-card-skillbar">
-			<view class="connections-item-card-skillbar-item" :class="'connections-item-card-skillbar-item-'+skillKey" v-for="(skillVal, skillKey, skillIndex) in item.ratings" :key="skillIndex">
+			<view class="connections-item-card-skillbar-item" :class="'connections-item-card-skillbar-item-'+skillKey" v-for="(skillVal, skillKey, skillIndex) in getRatingList(item.ratings)" :key="skillIndex">
 				<view class="connections-item-card-skillbar-item-name">{{skillMap[skillKey]}}</view>
 				<view class="connections-item-card-skillbar-item-progress">
 					<van-progress :percentage="skillVal/5*100" :color="skillColorMap[skillKey]" :show-pivot="false" class="connections-item-card-skillbar-item-progress-bar" />
@@ -73,6 +73,11 @@
 					}
 				}
 			},
+			// 根据能力值由大到小排序
+			getRatingList(ratings) {
+				if(!ratings) return {}
+				return Object.fromEntries(Object.entries(ratings).sort((a, b) => (a[1] - b[1])*-1))
+			}
 		},
 	}
 </script>
