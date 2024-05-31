@@ -13,7 +13,7 @@
 				</view>
 				<view class="connections-item-card-body-info">{{item.school ? item.school : ''}} {{item.major ? item.major : ''}}</view>
 				<view class="connections-item-card-body-labels" v-if="item.target || item.tags.length">
-					<van-tag v-if="item.target" color="#2C5CC5" class="connections-item-card-body-labels-item connections-item-card-body-labels-item-target">{{targetMap[Number(item.target)]}}</van-tag>
+					<van-tag v-if="item.target" plain color="#35C7AD"  class="connections-item-card-body-labels-item connections-item-card-body-labels-item-target">{{targetMap[Number(item.target)]}}</van-tag>
 					<van-tag v-for="(tag, subIndex) in item.tags" :key="subIndex" color="#F5F5F7" class="connections-item-card-body-labels-item">{{tag.body}}</van-tag>
 				</view>
 			</view>
@@ -94,6 +94,7 @@
 			}
 			.connections-item-card-body {
 				flex: 1;
+				overflow: hidden;
 				margin-left: 37rpx;
 				.connections-item-card-body-title {
 					height: 55rpx;
@@ -105,6 +106,9 @@
 						line-height: 45rpx;
 						width: calc(100% - 150rpx);
 						vertical-align: top;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
 					}
 					.connections-item-card-body-title-btn {
 						width: 150rpx;
@@ -143,11 +147,11 @@
 					}
 					.connections-item-card-body-labels-item-target {
 						/deep/ .van-tag {
-							color: #35C7AD;
+							color: #35C7AD !important;
 							line-height: 30rpx;
 							padding: 5rpx 16rpx;
 							border-radius: 8rpx;
-							border: 1px solid #35C7AD;
+							border: 1px solid #35C7AD !important;
 							font-size: 22rpx;
 							background-color: #EFFDFB;
 						}
