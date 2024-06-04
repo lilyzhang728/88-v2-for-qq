@@ -261,6 +261,7 @@
 				font-weight: bold;
 				margin-top: 32rpx;  //108rpx;
 				line-height: 48rpx;
+				word-break: break-all;
 			}
 			// TODO:最多2行？待确认
 			.detail-badge-desc {
