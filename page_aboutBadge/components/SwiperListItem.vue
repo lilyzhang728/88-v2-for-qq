@@ -47,7 +47,7 @@
 		watch: {
 			currentIndex(val) {
 				//tab切换，刷新列表
-				this.reloadList()
+				this.changeTab('grade')
 			}
 		},
 		methods: {
