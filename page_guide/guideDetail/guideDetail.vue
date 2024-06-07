@@ -173,8 +173,14 @@
 						    success: () => {
 						         let page = getCurrentPages().pop();//跳转页面成功之后
 						         if (page) {
-									 page.$vm.active = 2
-						             page.$vm.$refs.swiperItem[2].$refs.paging.reload()
+									 if(page.route == "pages/mine/mine") {
+										 // 回到 档案-我的-攻略
+										 page.$vm.$refs.myProduction.active = 1
+										 page.$vm.$refs.myProduction.$refs.paging.reload()
+									 } else {
+										 page.$vm.active = 2
+										 page.$vm.$refs.swiperItem[2].$refs.paging.reload()
+									 }
 						         } 
 						    },
 						})
