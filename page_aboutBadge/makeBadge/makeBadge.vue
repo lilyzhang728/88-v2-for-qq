@@ -12,6 +12,7 @@
 				clearable
 				:error="validator && !form.name"
 				custom-style="background: transparent"
+				maxlength=8
 			/>
 			<van-field
 			  	label="徽章图片"
@@ -32,7 +33,7 @@
 				type="textarea"
 				:show-confirm-bar="false"
 				autosize
-				maxlength="100"
+				maxlength="30"
 				clearable
 				:error="validator && !form.desc"
 				custom-style="background: transparent"
@@ -53,7 +54,7 @@
 		</van-cell-group>
 		
 		<view class="save-btn-box">
-			<van-button class="save-btn-wrap" custom-class="save-btn" @tap="handleSave">提交</van-button>
+			<van-button class="save-btn-wrap" custom-class="save-btn" @tap="handleSave" :disabled="disabledBtn">提交</van-button>
 		</view>
 		
 		<!-- 徽章分类选择器 -->
@@ -101,6 +102,11 @@
 				typeIndex: 0
 			}
 		},
+		computed: {
+			disabledBtn() {
+				return !this.form.name || !this.form.desc || !this.form.field || !this.fileList.length
+			}
+		},
 		onShow() {
 			let that = this
 			// // 接收编辑页面值
@@ -127,8 +133,8 @@
 			// 点击徽章分类
 			handleClickInput() {
 				this.showTargetPicker = true
-				this.typeIndex = 0
-				this.form.field = type_list[0].name
+				// this.typeIndex = 0
+				// this.form.field = ''
 			},
 			closeTargetPicker() {
 				this.showTargetPicker = false
