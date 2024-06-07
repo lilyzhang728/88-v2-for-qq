@@ -103,7 +103,7 @@
 					name: '攻略'
 				},{
 					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/iconMyQa.png',
-					name: '回答'
+					name: '问题'
 				},{
 					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/iconMyCollection.png',
 					name: '收藏'

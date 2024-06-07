@@ -58,7 +58,7 @@
 				<van-icon name="good-job-o" size="44rpx" @click.native="clickLike(true)" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.likers_count)}}</text>
 			</view>
 			<view class="bbs-post-detail-operate-icon-box" v-else>
-				<van-icon name="good-job" size="44rpx" color="#2FC2C5" @click.native="clickLike(false)" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.likers_count)}}</text>
+				<van-icon name="good-job" size="44rpx" color="#2FC2C5" @click.native="clickLike(false)" /><text class="bbs-post-detail-operate-num bbs-post-detail-operate-num-active">{{handleTransform(postData.likers_count)}}</text>
 			</view>
 			
 			<!-- 收藏icon -->
@@ -66,7 +66,7 @@
 				<van-icon name="star-o" size="44rpx" @click.native="clickCollect(true)" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.collectors_count)}}</text>
 			</view>
 			<view class="bbs-post-detail-operate-icon-box" v-else>
-				<van-icon name="star" size="44rpx" color="#2FC2C5" @click.native="clickCollect(false)" /><text class="bbs-post-detail-operate-num">{{handleTransform(postData.collectors_count)}}</text>
+				<van-icon name="star" size="44rpx" color="#2FC2C5" @click.native="clickCollect(false)" /><text class="bbs-post-detail-operate-num bbs-post-detail-operate-num-active">{{handleTransform(postData.collectors_count)}}</text>
 			</view>
 			
 			<!-- 评论icon -->
@@ -577,6 +577,10 @@
 				line-height: 42rpx;
 				margin-left: 13rpx;
 				width: 90rpx;
+				color: #000;
+			}
+			.bbs-post-detail-operate-num-active {
+				color: #2FC2C5;
 			}
 			&:last-child {
 				margin-right: 0;
