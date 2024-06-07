@@ -188,6 +188,7 @@
 				justify-content: space-between;
 				align-items: start;
 				.guide-item-card-right-title {
+					word-break: break-all;
 					font-size: 30rpx;
 					margin-bottom: 10rpx;
 					color: #000;
@@ -256,7 +257,10 @@
 						color: #000;
 						flex: 1;
 						height: 40rpx;
+						width: 190rpx;
 						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
 					}
 				}
 				.guide-item-card-right-icons {
