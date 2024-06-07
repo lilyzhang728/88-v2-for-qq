@@ -91,7 +91,6 @@
 				label="个性签名"
 				name="about_me"
 				clearable
-				:error="validator && !userInfo.about_me"
 				custom-style="background: transparent"
 				maxlength=30
 			/>

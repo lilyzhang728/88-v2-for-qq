@@ -188,9 +188,7 @@
 			.portrait-info {
 				display: block;
 				margin: 30rpx 35rpx;
-				border: 1rpx solid #FFFFFF;
-				border-radius: 20rpx;
-				background: rgba(255,255,255,0.1);
+				
 				height: 216rpx;
 			}
 			.chain-icon {

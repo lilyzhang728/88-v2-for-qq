@@ -20,7 +20,7 @@
 		</view>
 		
 		<!-- 个性签名 -->
-		<view class="portrait-container-about-me">
+		<view class="portrait-container-about-me" v-if="userInfo.about_me">
 			<van-icon class="portrait-container-about-me-icon" name="edit" color="#fff" @tap="toEdit" />
 			<text class="portrait-container-about-me-text">个性签名: {{userInfo.about_me}}</text>
 		</view>
@@ -349,7 +349,9 @@
 <style lang="less" scoped>
 	.portrait-container {
 		width: 100%;
-		height: 100%;
+		border: 1rpx solid #FFFFFF;
+		border-radius: 20rpx;
+		background: rgba(255,255,255,0.1);
 		box-sizing: border-box;
 		color: #fff;
 		padding: 18rpx 25rpx;
