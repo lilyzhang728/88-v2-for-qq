@@ -20,7 +20,7 @@
 			<view class="question-detail-info-box">
 				<!-- 帖子作者 -->
 				<view class="bbs-post-detail-author">
-					<img :src="avatar" alt="" class="bbs-post-detail-author-img"  @click.native.stop="toHomepage($event)">
+					<img v-if="postData.author.avatar" :src="postData.author.avatar" @error.once="imgError" alt="" class="bbs-post-detail-author-img"  @click.native.stop="toHomepage($event)">
 					<view class="bbs-post-detail-author-text"  @click.native.stop="toHomepage($event)">
 						<view class="bbs-post-detail-author-text-name">{{postData.author.name}}</view>
 					</view>
@@ -193,6 +193,9 @@
 			this.getPostDetail()
 		},
 		methods: {
+			imgError() {
+				return this.postData.author.avatar = DEFAULT_AVATAR
+			},
 			// 点赞、评论 大数单位转化
 			handleTransform(val) {
 				return transformMaxNum(val)
@@ -202,6 +205,7 @@
 				guideDetail(this.id).then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
 						this.postData = res.data
+						this.postData.author.avatar = res.data.author.avatar ? res.data.author.avatar : DEFAULT_AVATAR
 						//获取评论区数据
 						if(res.data._links.comments) {
 							this.curGetCommentUrl = res.data._links.comments
