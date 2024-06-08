@@ -8,7 +8,7 @@
 			<!-- 作者 -->
 			<view class="question-detail-info-box">
 				<view class="bbs-post-detail-author">
-					<img :src="avatar" alt="" class="bbs-post-detail-author-img"  @click.native.stop="toHomepage($event)">
+					<img v-if="newsData.author.avatar" :src="newsData.author.avatar" @error.once="imgError" alt="" class="bbs-post-detail-author-img"  @click.native.stop="toHomepage($event)">
 					<view class="bbs-post-detail-author-text"  @click.native.stop="toHomepage($event)">
 						<view class="bbs-post-detail-author-text-name">{{newsData.author.name}}</view>
 					</view>
@@ -109,7 +109,7 @@
 				id: '',
 				newsData: {
 					author: {
-						avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',		//默认头像
+						avatar: '',		//默认头像
 						name: ''
 					},
 					body: {
@@ -169,11 +169,15 @@
 			this.getNewsDetail()
 		},
 		methods: {
+			imgError() {
+				return this.newsData.author.avatar = DEFAULT_AVATAR
+			},
 			//获取资讯详情
 			getNewsDetail() {
 				guideDetail(this.id).then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
 						this.newsData = res.data
+						this.newsData.author.avatar = res.data.author.avatar ? res.data.author.avatar : DEFAULT_AVATAR
 						//获取评论区数据
 						if(res.data._links.comments) {
 							this.curGetCommentUrl = res.data._links.comments
