@@ -78,9 +78,9 @@
 			},
 			toastMsg(type) {
 				if(type) {
-					Toast('邀请成功！')
+					Toast('发布成功！')
 				} else {
-					Toast('邀请失败')
+					Toast('发布失败！')
 				}
 			},
 			addNewQuestion(e) {

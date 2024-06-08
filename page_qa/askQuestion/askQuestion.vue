@@ -483,7 +483,7 @@
 										    success: () => {
 										         let page = getCurrentPages().pop();//跳转页面成功之后
 										         if (page) {
-													page.$vm.$refs.pageTabs.active = 0
+													page.$vm.active = 0
 										            page.$vm.$refs.questionAndAnswer.$refs.paging.reload()
 													page.$vm.$refs.questionAndAnswer.toastMsg(true)
 												 } 
