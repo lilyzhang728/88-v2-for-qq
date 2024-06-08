@@ -143,6 +143,7 @@
 			align-items: center;
 			padding: 30rpx 0;
 			border-bottom: 1rpx solid #E8E8E8;
+			overflow: hidden;
 			.infos-like-card-content {
 				flex: 1;
 				overflow: hidden;
