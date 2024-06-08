@@ -8,7 +8,7 @@
 			<view class="infos-collect-card-content">
 				<view class="infos-collect-card-content-name" @click.native.stop="toHomepage($event)">{{item.user.name}}</view>
 				<view class="infos-collect-card-content-infos">
-					<text>收藏了你的秘籍</text>
+					<text>收藏了你的{{postType}}</text>
 					<text class="infos-collect-card-content-infos-timestamp">{{timestamp}}</text>
 				</view>
 			</view>
@@ -21,6 +21,7 @@
 
 <script>
 	import { transformTime } from '@/tools/transform_time.js'
+	import { article_type_key_value_map } from '@/tools/transform_data.js'
 	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
 	export default {
 		props: {
@@ -49,6 +50,11 @@
 			},
 			timestamp() {
 				return this.item.timestamp ? transformTime(this.item.timestamp) : this.item.timestamp
+			},
+			postType() {
+				if(this.item.post.post_type) {
+					return article_type_key_value_map[this.item.post.post_type]
+				}
 			}
 		},
 		methods: {
@@ -92,6 +98,7 @@
 			align-items: center;
 			padding: 30rpx 0;
 			border-bottom: 1rpx solid #E8E8E8;
+			overflow: hidden;
 			.infos-collect-card-content {
 				flex: 1;
 				overflow: hidden;

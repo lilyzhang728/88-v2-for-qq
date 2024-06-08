@@ -21,6 +21,7 @@
 
 <script>
 	import { transformTime } from '@/tools/transform_time.js'
+	import { article_type_key_value_map } from '@/tools/transform_data.js'
 	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
 	export default {
 		props: {
@@ -54,8 +55,8 @@
 			typeText() {
 				if(this.item.comment) {
 					return '评论'
-				} else {
-					return this.item.post.post_type === 1 ? '秘籍' : '帖子'
+				} else if(this.item.post.post_type) {
+					return article_type_key_value_map[this.item.post.post_type]
 				}
 			},
 			//是否显示右边封面图

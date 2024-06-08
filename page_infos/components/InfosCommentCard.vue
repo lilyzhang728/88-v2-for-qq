@@ -9,7 +9,7 @@
 				{{item.author.name}}
 			</view>
 			<view class="infos-comment-card-content-time">
-				评论了你的帖子 {{timestamp}}
+				评论了你的{{postType}} {{timestamp}}
 			</view>
 			<view class="infos-comment-card-content-body">
 				{{item.body}}
@@ -58,6 +58,11 @@
 			},
 			timestamp() {
 				return this.item.timestamp ? transformTime(this.item.timestamp) : this.item.timestamp
+			},
+			postType() {
+				// if(this.item.post.post_type) {
+				// 	return article_type_key_value_map[this.item.post.post_type]
+				// }
 			}
 		},
 		methods: {
