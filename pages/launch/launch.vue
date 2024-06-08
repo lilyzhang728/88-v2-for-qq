@@ -37,13 +37,13 @@
 			<view class="launch-step launch-step2" v-if="activeStep === 1">
 				<!-- 学历 -->
 				<view class="launch-title">你的学历是</view>
-				<view class="launch-labels">
+				<view class="launch-labels launch-labels-center">
 					<view @click="selectLabelSingle(index, 'educationList')" class="launch-label-item" :class="{'launch-label-item-active': label.active}" v-for="(label, index) in educationList" :key="index">{{label.body}}</view>
 				</view>
 				
 				<!-- 在校状态 -->
 				<view class="launch-title">你目前的状态是</view>
-				<view class="launch-labels">
+				<view class="launch-labels launch-labels-center">
 					<view @click="selectLabelSingle(index, 'ifStudentList')" class="launch-label-item" :class="{'launch-label-item-active': label.active}" v-for="(label, index) in ifStudentList" :key="index">{{label.body}}</view>
 				</view>
 			</view>
@@ -52,7 +52,7 @@
 			<view class="launch-step" v-if="activeStep === 2">
 				<!-- 目标 -->
 				<view class="launch-title">现阶段你的目标是</view>
-				<view class="launch-labels">
+				<view class="launch-labels launch-labels-center">
 					<view @click="selectLabelSingle(index, 'targetList')" class="launch-label-item" :class="{'launch-label-item-active': label.active}" v-for="(label, index) in targetList" :key="index">{{label.body}}</view>
 				</view>
 				
@@ -139,6 +139,7 @@
 			login() {
 				login().then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
+						// res.data.user_id = null		//测试用
 						if(!res.data.user_id) {
 							// 未获取到user_id，重新进入小程序
 							uni.showModal({
@@ -157,7 +158,7 @@
 								}
 							})
 						} else {
-							// res.data.is_new = true
+							// res.data.is_new = true   //测试用
 							if(res.data.is_new) {
 								// 新用户，显示引导页
 								this.showLaunch = true
@@ -386,6 +387,9 @@
 			color: #FFFFFF;
 			font-weight: 500;
 		}
+	}
+	.launch-labels-center {
+		justify-content: space-around;
 	}
 	
 	.launch-btn-box {
