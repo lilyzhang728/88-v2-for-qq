@@ -23,6 +23,7 @@
 					autosize
 					:border="false"
 					size="large"
+					maxlength=30
 					@change.native="changeTitle"
 					placeholder-style="font-size: 32rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; font-weight: bold; padding-left: 0; padding-right: 0;"
 					custom-style="font-size: 32rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; font-weight: bold; padding-left: 0; padding-right: 0;"
@@ -38,6 +39,7 @@
 				   placeholder="添加说明"
 				   autosize
 				   :border="false"
+				   maxlength=30
 				   @change.native="changeDesc"
 				   placeholder-style="font-size: 26rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;"
 				   custom-style="font-size: 26rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;"
@@ -111,7 +113,7 @@
 		<view class="guide-edit-btn-box" :class="{'guide-edit-btn-box-single': published}">
 			<van-button @tap="handlePublish(0)" block icon="records" class="guide-edit-btn-wrap guide-edit-btn-wrap-plain" custom-class="guide-edit-btn" v-if="!published">
 				保存到草稿箱</van-button>
-			<van-button @tap="handlePublish(1)" block icon="guide-o" class="guide-edit-btn-wrap" custom-class="guide-edit-btn">发布</van-button>
+			<van-button @tap="handlePublish(1)" :disabled="disabledPublish" block icon="guide-o" class="guide-edit-btn-wrap" custom-class="guide-edit-btn">发布</van-button>
 		</view>
 		
 		<!-- 封面图片选择器 -->
@@ -175,6 +177,27 @@
 				timestamp: null,	//时间戳，用于确定该用户创建的这篇攻略的所有图片的唯一文件夹名
 				ifEdit: false,		//true为编辑页，false为新建页
 				published: false,	//true为编辑页&&当前攻略为“已发布”-只显示“发布” false-新建页或未发布的编辑页，显示“保存草稿”+“发布”
+			}
+		},
+		computed: {
+			disabledPublish() {
+				// 检查所有对象
+				const allValid = this.guideInfo.body.steps.every(obj => {
+				  const hasTitle = obj.subtile != null && obj.subtile !== '';
+				  const hasBody = obj.body != null && obj.body !== '';
+				  return (hasTitle && hasBody) || (!hasTitle && !hasBody);
+				});
+				
+				// 检查是否至少有一个对象的subtile和body都有值
+				const someTitleBodyValid = this.guideInfo.body.steps.some(obj => {
+				  const hasTitle = obj.subtile != null && obj.subtile !== '';
+				  const hasBody = obj.body != null && obj.body !== '';
+				  return hasTitle && hasBody;
+				});
+				
+				const isValid = allValid && someTitleBodyValid;
+				
+				return !this.guideInfo.title || !isValid
 			}
 		},
 		onLoad(option) {
@@ -429,55 +452,67 @@
 			},
 			//调用编辑接口
 			handleEditGuide(status) {
-				editGuide({
-					'title': this.guideInfo.title,
-					'body': this.guideInfo.body,
-					'post_type': 1,
-					'id': this.guideInfo.id,
-					'status': status
-				}).then(res => {
-					if(res.code === 0) {
-						//编辑成功，回到上一页
-						Toast('发布成功！')
-						uni.navigateBack({  //uni.navigateTo跳转的返回，默认1为返回上一级
-						    delta: 1
-						});
-					} else {
+				if(status && this.disabledPublish) {
+					// 发布且未通过必输校验
+					return
+				} else {
+					// 发布且通过必输校验，或者保存草稿箱
+					editGuide({
+						'title': this.guideInfo.title,
+						'body': this.guideInfo.body,
+						'post_type': 1,
+						'id': this.guideInfo.id,
+						'status': status
+					}).then(res => {
+						if(res.code === 0) {
+							//编辑成功，回到上一页
+							Toast('发布成功！')
+							uni.navigateBack({  //uni.navigateTo跳转的返回，默认1为返回上一级
+							    delta: 1
+							});
+						} else {
+							Toast('发布失败')
+						}
+					}, err => {
 						Toast('发布失败')
-					}
-				}, err => {
-					Toast('发布失败')
-					console.log('addGuide: ', err)
-				})
+						console.log('addGuide: ', err)
+					})
+				}
 			},
 			//调用新建接口
 			handleAddGuide(status) {
-				addGuide({
-					'title': this.guideInfo.title,
-					'body': this.guideInfo.body,
-					'post_type': 1,
-					'status': status
-				}).then(res => {
-					if(res.code === 0) {
-						//发布成功，回到列表页，并刷新列表
-						Toast('发布成功！')
-						uni.navigateBack({
-						    success: () => {
-						         let page = getCurrentPages().pop();//跳转页面成功之后
-								 console.log(page)
-						         if (page) {
-									 page.$vm.active = 1
-						             page.$vm.$refs.guide.$refs.paging.reload()
-						         } 
-						    },
-						})
-					} else {
+				if(status && this.disabledPublish) {
+					// 发布且未通过必输校验
+					return
+				} else {
+					// 发布且通过必输校验，或者保存草稿箱
+					addGuide({
+						'title': this.guideInfo.title,
+						'body': this.guideInfo.body,
+						'post_type': 1,
+						'status': status
+					}).then(res => {
+						if(res.code === 0) {
+							//发布成功，回到列表页，并刷新列表
+							Toast('发布成功！')
+							uni.navigateBack({
+							    success: () => {
+							         let page = getCurrentPages().pop();//跳转页面成功之后
+									 console.log(page)
+							         if (page) {
+										 page.$vm.active = 1
+							             page.$vm.$refs.guide.$refs.paging.reload()
+							         } 
+							    },
+							})
+						} else {
+							Toast('发布失败')
+						}
+					}, err => {
 						Toast('发布失败')
-					}
-				}, err => {
-					Toast('发布失败')
-					console.log('addGuide: ', err)
-				})
+						console.log('addGuide: ', err)
+					})
+				}
 			}
 		}
 	}
