@@ -9,7 +9,7 @@
 				{{item.author.name}}
 			</view>
 			<view class="infos-comment-card-content-time">
-				评论了你的{{postType}} {{timestamp}}
+				评论了你的{{postType}} {{timestamp}} 
 			</view>
 			<view class="infos-comment-card-content-body">
 				{{item.body}}
@@ -18,17 +18,15 @@
 				<img class="infos-comment-card-content-reply-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/infos/iconReply.png" alt="">
 				回复</view>
 		</view>
-		<view class="infos-comment-card-right">
-			<view class="infos-comment-card-right-quote" v-if="showQuote">
-				我看过很多婚姻，我觉得七八成我觉得七八成我觉得七八成我觉得七八成
-			</view>
-			<img v-else class="infos-comment-card-right-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/book1.png" alt="">
+		<view class="infos-comment-card-right" v-if="showRightImg">
+			<img class="infos-comment-card-right-img" :src="rightImgUrl" alt="">
 		</view>
 	</view>
 </template>
 
 <script>
 	import { transformTime } from '@/tools/transform_time.js'
+	import { article_type_key_value_map } from '@/tools/transform_data.js'
 	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
 	export default {
 		props: {
@@ -42,14 +40,14 @@
 					body: '',
 					id: '',
 					post: {
-						id: ''
+						id: '',
+						post_type: 3
 					}
 				}
 			},
 		},
 		data() {
 			return {
-				showQuote: false
 			}
 		},
 		computed: {
@@ -60,9 +58,43 @@
 				return this.item.timestamp ? transformTime(this.item.timestamp) : this.item.timestamp
 			},
 			postType() {
-				// if(this.item.post.post_type) {
-				// 	return article_type_key_value_map[this.item.post.post_type]
+				if(this.item.post.post_type) {
+					return article_type_key_value_map[this.item.post.post_type]
+				} else {
+					return ''
+				}
+			},
+			//是否显示右边封面图
+			showRightImg() {
+				return false
+				// if(this.item.comment) {
+				// 	// 评论(暂不显示封面)
+				// 	return false
+				// } else {
+				// 	if(this.item.post.post_type === 1) {
+				// 		//攻略
+				// 		return this.item.post.body.cover_url
+				// 	} else {
+				// 		//帖子
+				// 		return this.item.post.body.urls && this.item.post.body.urls.length
+				// 	}
 				// }
+			},
+			//右边封面图url
+			rightImgUrl() {
+				return ''
+				// if(this.item.comment) {
+				// 	return ''
+				// } else {
+				// 	if(this.item.post.post_type === 1) {
+				// 		//攻略
+				// 		return this.item.post.body.cover_url
+				// 	} else {
+				// 		//帖子
+				// 		return this.item.post.body.urls[0]
+				// 	}
+				// }
+				
 			}
 		},
 		methods: {
@@ -139,26 +171,36 @@
 				}
 			}
 		}
+		// .infos-comment-card-right {
+		// 	padding: 30rpx 0;
+		// 	border-bottom: 1rpx solid #E8E8E8;
+		// 	text-align: right;
+		// 	.infos-comment-card-right-quote {
+		// 		width: 122rpx;
+		// 		height: 87rpx;
+		// 		font-size: 22rpx;
+		// 		color: rgba(0,0,0,0.4);
+		// 		line-height: 29rpx;
+		// 		margin-top: 15rpx;
+		// 		overflow: hidden;
+		// 		text-overflow: ellipsis;
+		// 		display: -webkit-box;
+		// 		-webkit-line-clamp: 3;
+		// 		-webkit-box-orient: vertical;
+		// 	}
+		// 	.infos-comment-card-right-img {
+		// 		width: 112rpx;
+		// 		height: 112rpx;
+		// 	}
+		// }
 		.infos-comment-card-right {
-			padding: 30rpx 0;
-			border-bottom: 1rpx solid #E8E8E8;
+			width: 100rpx;
 			text-align: right;
-			.infos-comment-card-right-quote {
-				width: 122rpx;
-				height: 87rpx;
-				font-size: 22rpx;
-				color: rgba(0,0,0,0.4);
-				line-height: 29rpx;
-				margin-top: 15rpx;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				display: -webkit-box;
-				-webkit-line-clamp: 3;
-				-webkit-box-orient: vertical;
-			}
+			display: flex;
+			align-items: center;
 			.infos-comment-card-right-img {
-				width: 112rpx;
-				height: 112rpx;
+				width: 80rpx;
+				height: 80rpx;
 			}
 		}
 	}
