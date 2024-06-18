@@ -14,7 +14,7 @@
 				<view class="connections-item-card-body-info">{{item.school ? item.school : ''}} {{item.major ? item.major : ''}}</view>
 				<view class="connections-item-card-body-labels" v-if="item.target || item.tags.length">
 					<van-tag v-if="item.target" plain color="#35C7AD"  class="connections-item-card-body-labels-item connections-item-card-body-labels-item-target">{{targetMap[Number(item.target)]}}</van-tag>
-					<van-tag v-for="(tag, subIndex) in item.tags" :key="subIndex" color="#F5F5F7" class="connections-item-card-body-labels-item">{{tag.body}}</van-tag>
+					<van-tag v-for="(tag, subIndex) in item.tags" :key="subIndex" color="#FF6F61" class="connections-item-card-body-labels-item">{{tag.body}}</van-tag>
 				</view>
 			</view>
 		</view>
@@ -142,7 +142,7 @@
 					.connections-item-card-body-labels-item {
 						margin-right: 10rpx;
 						/deep/ .van-tag {
-							color: rgba(0,0,0,0.8);
+							color: #fff;
 							line-height: 30rpx;
 							padding: 5rpx 16rpx;
 							border-radius: 8rpx;
