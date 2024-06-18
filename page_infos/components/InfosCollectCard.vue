@@ -54,6 +54,8 @@
 			postType() {
 				if(this.item.post.post_type) {
 					return article_type_key_value_map[this.item.post.post_type]
+				} else {
+					return ''
 				}
 			}
 		},

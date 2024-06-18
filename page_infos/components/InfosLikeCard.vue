@@ -57,6 +57,8 @@
 					return '评论'
 				} else if(this.item.post.post_type) {
 					return article_type_key_value_map[this.item.post.post_type]
+				} else {
+					return ''
 				}
 			},
 			//是否显示右边封面图
