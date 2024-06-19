@@ -43,6 +43,11 @@
 			userId: {
 				type: String,
 				default: ''
+			},
+			// 下拉刷新flag
+			refreshFlag: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -72,13 +77,18 @@
 				if(val) {
 					this.getUserInfo()
 				}
+			},
+			refreshFlag() {
+				if(this.userId) {
+					this.getUserInfo()
+				}
 			}
 		},
-		created() {
-			if(this.userId) {
-				this.getUserInfo()
-			}
-		},
+		// created() {
+		// 	if(this.userId) {
+		// 		this.getUserInfo()
+		// 	}
+		// },
 		methods: {
 			//查询个人信息
 			getUserInfo() {

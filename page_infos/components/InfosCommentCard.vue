@@ -58,7 +58,9 @@
 				return this.item.timestamp ? transformTime(this.item.timestamp) : this.item.timestamp
 			},
 			postType() {
-				if(this.item.post.post_type) {
+				if(this.item.parent_id) {
+					return '评论'
+				} else if(this.item.post.post_type) {
 					return article_type_key_value_map[this.item.post.post_type]
 				} else {
 					return ''
@@ -66,34 +68,32 @@
 			},
 			//是否显示右边封面图
 			showRightImg() {
-				return false
-				// if(this.item.comment) {
-				// 	// 评论(暂不显示封面)
-				// 	return false
-				// } else {
-				// 	if(this.item.post.post_type === 1) {
-				// 		//攻略
-				// 		return this.item.post.body.cover_url
-				// 	} else {
-				// 		//帖子
-				// 		return this.item.post.body.urls && this.item.post.body.urls.length
-				// 	}
-				// }
+				if(this.item.parent_id) {
+					// 评论(暂不显示封面)
+					return false
+				} else {
+					if(this.item.post.post_type === 1) {
+						//攻略
+						return this.item.post.body.cover_url
+					} else {
+						//帖子
+						return this.item.post.body.urls && this.item.post.body.urls.length
+					}
+				}
 			},
 			//右边封面图url
 			rightImgUrl() {
-				return ''
-				// if(this.item.comment) {
-				// 	return ''
-				// } else {
-				// 	if(this.item.post.post_type === 1) {
-				// 		//攻略
-				// 		return this.item.post.body.cover_url
-				// 	} else {
-				// 		//帖子
-				// 		return this.item.post.body.urls[0]
-				// 	}
-				// }
+				if(this.item.parent_id) {
+					return ''
+				} else {
+					if(this.item.post.post_type === 1) {
+						//攻略
+						return this.item.post.body.cover_url
+					} else {
+						//帖子
+						return this.item.post.body.urls[0]
+					}
+				}
 				
 			}
 		},

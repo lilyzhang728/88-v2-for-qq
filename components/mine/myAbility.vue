@@ -5,7 +5,7 @@
 			<!-- 个人信息 -->
 			<view class="userInfo" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/userInfoBg.png?sign=ffd748d25d6721cb672e63b6ff4b2625&t=1687599098');background-size: 100% 100%;background-repeat: no-repeat;" >
 				<skill-radar :userId="userId" class="skill-radar" ref="skillRadar"></skill-radar>
-				<portrait-info :userId="userId" class="portrait-info" ref="portraitInfo" @getTimeRange="getTimeRange" @updateWidthHeight="updateWidthHeight"></portrait-info>
+				<portrait-info :userId="userId" :refreshFlag="refreshFlag" class="portrait-info" ref="portraitInfo" @getTimeRange="getTimeRange" @updateWidthHeight="updateWidthHeight"></portrait-info>
 				<img v-if="labelList.length" class="chain-icon chain-icon-left" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
 				<img v-if="labelList.length" class="chain-icon chain-icon-right" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
 			</view>
@@ -62,6 +62,7 @@
 				start_year: new Date().getFullYear(),
 				graduate_year: new Date().getFullYear(),
 				labelList: [],
+				refreshFlag: false
 			}
 		},
 		computed: {
@@ -83,9 +84,9 @@
 				return [pageNo, pageSize, from];
 			})
 		},
-		created() {
-			this.getTagsList()
-		},
+		// created() {
+		// 	this.getTagsList()
+		// },
 		mounted() {
 			
 			uni.$on('showDialog', function(){
@@ -97,6 +98,13 @@
 		},
 		methods: {
 			queryList(pageNo, pageSize) {
+				// 通知信箱刷新
+				this.$emit('pulldownRefresh')
+				// 通知雷达图和个人信息模块刷新
+				this.refreshFlag = !this.refreshFlag
+				// 请求标签数据
+				this.getTagsList()
+				// 请求徽章数据
 				getBadgeList({
 					'per_page': pageSize,
 					'page': pageNo,

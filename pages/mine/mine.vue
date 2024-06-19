@@ -4,7 +4,7 @@
 		<page-tabs :titleList="titleList" :slotName="slotName">
 			<template v-slot:myAbility> 
 				<!-- 档案 -->
-				<my-ability ref="myAbility" @updateWidthHeight="updateWidthHeight"></my-ability>			
+				<my-ability ref="myAbility" @updateWidthHeight="updateWidthHeight" @pulldownRefresh="pulldownRefresh"></my-ability>			
 			</template>
 			<template v-slot:myProduction>
 				<!-- 我的 -->
@@ -52,13 +52,15 @@
 		onLoad() {
 			
 		},
-		
 		methods: {
 			updateWidthHeight(arr) {
 				this.w = arr[0]
 				this.h = arr[1]
+			},
+			// 下拉刷新，刷新信箱
+			pulldownRefresh() {
+				this.$refs.sideMessageBox.getNewNotifications()
 			}
-			
 		}
 	}
 </script>

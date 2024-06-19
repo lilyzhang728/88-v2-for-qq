@@ -26,6 +26,7 @@
 				})
 			},
 			getNewNotifications() {
+				this.showNotification = false
 				getNotifications({
 					'since': new Date().getTime()
 				}).then(res => {
