@@ -24,7 +24,7 @@
 				
 				<!-- list -->
 				<view class="bbs-topic-post-list">
-					<bbs-topic-post-card v-for="(item,index) in topicData.posts.items" :key="index" 
+					<bbs-topic-post-card v-for="(item,index) in dataList" :key="index" 
 					:postData="item" :index="index" @checkoutLike="checkoutLike" @click.native="toPostDetail(item.id, index)"></bbs-topic-post-card>
 				</view>
 					
@@ -74,6 +74,7 @@
 						items: []
 					}
 				},
+				dataList: [],	// 话题下的帖子
 				contentId: '',		// 传给长按面板的内容id （帖子/评论）
 				actionType: 2,		// 长按面板内容类型：0：帖子，1：评论，2：话题
 				showEmpty: false
@@ -121,6 +122,9 @@
 					}).then(res => {
 						if(res.code === 0 && Object.keys(res.data).length) {
 							this.topicData = res.data
+							this.$refs.paging.complete(res.data.posts.items);
+						} else {
+							this.$refs.paging.complete([])
 						}
 					}, err => {
 						console.log('topicDetail: ', err)
