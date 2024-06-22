@@ -82,6 +82,7 @@
 		methods: {
 			tabsChange(e) {
 				this.active = e.detail.index;
+				this.subActive = 0
 			},
 			subTabsChange(e) {
 				this.subActive = e.detail.index;
