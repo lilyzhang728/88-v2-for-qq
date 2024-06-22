@@ -126,5 +126,5 @@ export const article_type_key_value_map = {
 	1: '攻略',
 	2: '资讯',
 	3: '动态',
-	4: '问答'
+	4: '提问'
 }
