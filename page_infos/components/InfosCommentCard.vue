@@ -91,7 +91,7 @@
 						return this.item.post.body.cover_url
 					} else {
 						//帖子
-						return this.item.post.body.urls[0]
+						return this.item.post.body.urls && this.item.post.body.urls[0]
 					}
 				}
 				

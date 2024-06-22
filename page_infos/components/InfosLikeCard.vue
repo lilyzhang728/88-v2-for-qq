@@ -56,7 +56,7 @@
 				if(this.item.comment) {
 					return '评论'
 				} else if(this.item.post.post_type) {
-					return article_type_key_value_map[this.item.post.post_type]
+					return article_type_key_value_map[Number(this.item.post.post_type)]
 				} else {
 					return ''
 				}
@@ -87,7 +87,7 @@
 						return this.item.post.body.cover_url
 					} else {
 						//帖子
-						return this.item.post.body.urls[0]
+						return this.item.post.body.urls && this.item.post.body.urls[0]
 					}
 				}
 				
