@@ -36,13 +36,13 @@
 							<homepage-badge :userId="userId" :badgeList="badgeList" @showBadgeDetail="showBadgeDetail"></homepage-badge>
 						</view>
 					</view>
-					<!-- 发表的攻略 -->
+					<!-- 发表的帖子 -->
 					<view class="homepage-achivement-guide" v-if="dataList.length">
-						<view class="homepage-achivement-title">
-							<view class="homepage-achivement-title-icon"></view>发表的攻略
+						<view class="homepage-achivement-title homepage-achivement-title-post">
+							<view class="homepage-achivement-title-icon"></view>发表的动态
 						</view>
 						<view class="homepage-achivement-guide-content">
-							<homepage-guide :userId="userId" :dataList="dataList"></homepage-guide>
+							<homepage-post :userId="userId" :dataList="dataList" @checkoutLike="checkoutLike"></homepage-post>
 						</view>
 					</view>
 				</view>
@@ -65,8 +65,8 @@
 	import HomepageRadar from '@/page_infos/components/HomepageRadar.vue'
 	import HomepageBadge from '@/page_infos/components/HomepageBadge.vue'
 	import BadgeDetail from "@/components/index/BadgeDetail.vue"
-	import HomepageGuide from '@/page_infos/components/HomepageGuide.vue'
-	import { profile, ownArticle, getBadgeList, follow, unfollow } from '@/network/api_infos.js'
+	import HomepagePost from '@/page_infos/components/HomepagePost.vue'
+	import { profile, ownArticle, getBadgeList, follow, unfollow, getUserPosts } from '@/network/api_infos.js'
 	const myId = uni.getStorageSync('userId')
 	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
 	export default {
@@ -75,7 +75,7 @@
 			HomepageRadar,
 			HomepageBadge,
 			BadgeDetail,
-			HomepageGuide
+			HomepagePost
 		},
 		data() {
 			return {
@@ -153,11 +153,11 @@
 				this.$refs.badgeDetail.getBadgeDetail(badgeInfo, 0)
 			},
 			queryList(pageNo, pageSize) {
-				ownArticle({
-					'post_type': 1,	//1 :tab2
+				getUserPosts({
+					'post_type': 3,	//帖子
 					'per_page': pageSize,
 					'page': pageNo,
-					'id': this.userId
+					'userId': this.userId
 				}).then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
 						this.$refs.paging.complete(res.data.items)
@@ -173,7 +173,15 @@
 			handleShare(e) {
 				
 			},
-			
+			// 切换帖子的点赞状态
+			checkoutLike(cardIndex, status) {
+				this.dataList[cardIndex].is_like = status
+				if(status) {
+					this.dataList[cardIndex].likers_count++
+				} else {
+					this.dataList[cardIndex].likers_count--
+				}
+			}
 			
 		}
 	}
@@ -311,6 +319,9 @@
 					border-radius: 4rpx;
 					margin-right: 9rpx;
 				}
+			}
+			.homepage-achivement-title-post {
+				margin-bottom: 25rpx;
 			}
 			.homepage-achivement-badge {
 				.homepage-achivement-badge-content {

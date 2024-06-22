@@ -118,3 +118,12 @@ export function getNotifications(params) {
 		data: params
 	})
 }
+
+
+// 指定用户的帖子
+export function getUserPosts(params) {
+	return getRequest({
+		path: `/api/user/${params.userId}/posts`,
+		data: params
+	})
+}
