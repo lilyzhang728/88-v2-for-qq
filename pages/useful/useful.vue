@@ -21,7 +21,7 @@
 					<van-tab title="推荐"></van-tab>
 					<van-tab title="考研" class="useful-subTab-first"></van-tab>
 					<van-tab title="找工作"></van-tab>
-					<van-tab title="出国"></van-tab>
+					<!-- <van-tab title="出国"></van-tab> -->
 					<van-tab title="考公/编"></van-tab>
 				</van-tabs>
 			</template>
