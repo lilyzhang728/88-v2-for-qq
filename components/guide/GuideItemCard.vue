@@ -41,13 +41,13 @@
 					<text class="guide-item-card-user-name">{{guideItem.author.name}}</text>
 				</view>
 				<view class="guide-item-card-right-icons">
-					<img v-if="showEditBtn || guideItem.is_like" @click.native.stop="clickLike($event, false)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/likeIcon.png" class="guide-item-card-right-icon-img" alt="">
+					<img v-show="showEditBtn || guideItem.is_like" @click.native.stop="clickLike($event, false)"  src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/likeIcon.png" class="guide-item-card-right-icon-img" alt="">
 					<!-- <van-icon v-else name="like-o" color="#7F7F7F" @click.native.stop="clickLike($event, true)" /> -->
-					<img v-else @click.native.stop="clickLike($event, true)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/unLike.png" class="guide-item-card-right-icon-img" alt="">
+					<img v-show="!showEditBtn && !guideItem.is_like" @click.native.stop="clickLike($event, true)"  src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/unLike.png" class="guide-item-card-right-icon-img" alt="">
 					<view class="guide-item-card-right-icon-num">{{handleTransform(guideItem.likers_count)}}</view>
-					<img v-if="showEditBtn || guideItem.is_collect" @click.native.stop="clickStar($event, false)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/starIcon.png" class="guide-item-card-right-icon-img" alt="">
+					<img v-show="showEditBtn || guideItem.is_collect" @click.native.stop="clickStar($event, false)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/starIcon.png" class="guide-item-card-right-icon-img" alt="">
 					<!-- <van-icon v-else name="star-o" color="#7F7F7F" @click.native.stop="clickStar($event, true)" /> -->
-					<img v-else  @click.native.stop="clickStar($event, true)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/unStar.png" class="guide-item-card-right-icon-img" alt="">
+					<img v-show="!showEditBtn && !guideItem.is_collect"  @click.native.stop="clickStar($event, true)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/unStar.png" class="guide-item-card-right-icon-img" alt="">
 					<view class="guide-item-card-right-icon-num guide-item-card-right-icon-num-last">{{handleTransform(guideItem.collectors_count)}}</view>
 				</view>
 			</view>
@@ -117,7 +117,7 @@
 			}
 		},
 		computed: {
-			// 跳转详情页后，是否显示底部btn（编辑|发布）：发现、我的收藏不显示；我的创作显示
+			// 跳转详情页后，是否显示底部btn（编辑|发布）：发现、我的收藏不显示；我的创作显示. 此值为true为我创作的攻略，false为别人的
 			showEditBtn() {
 				return this.tabIndex === 2
 			},

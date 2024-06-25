@@ -69,10 +69,10 @@
 		<view class="news-detail-btn-box">
 			<view class="bbs-post-detail-operate-left" @click="clickInput">添加评论</view>
 			
-			<img v-if="newsData.is_like" @click="clickLike(false)" class="news-detail-btn-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/likeIcon.png" alt="">
-			<img v-if="!newsData.is_like" @click="clickLike(true)" class="news-detail-btn-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/unLikeIcon.png" alt="">
-			<img v-if="newsData.is_collect" @click="clickStar(false)" class="news-detail-btn-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/collectIcon.png" alt="" >
-			<img v-if="!newsData.is_collect" @click="clickStar(true)" class="news-detail-btn-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/unCollectIcon.png" alt="" >
+			<img v-show="newsData.is_like" @click="clickLike(false)" class="news-detail-btn-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/likeIcon.png" alt="">
+			<img v-show="!newsData.is_like" @click="clickLike(true)" class="news-detail-btn-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/unLikeIcon.png" alt="">
+			<img v-show="newsData.is_collect" @click="clickStar(false)" class="news-detail-btn-icon news-detail-btn-icon-right" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/collectIcon.png" alt="" >
+			<img v-show="!newsData.is_collect" @click="clickStar(true)" class="news-detail-btn-icon news-detail-btn-icon-right" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/unCollectIcon.png" alt="" >
 		</view>
 		
 		<!-- 回复键盘 -->
@@ -549,9 +549,9 @@
 			height: 60rpx;
 			width: 60rpx;
 			margin-right: 40rpx;
-			&:last-child {
-				margin-right: 0;
-			}
+		}
+		.news-detail-btn-icon-right {
+			margin-right: 20rpx;
 		}
 	}
 }
