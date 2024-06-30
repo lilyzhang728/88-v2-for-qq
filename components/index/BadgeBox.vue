@@ -20,7 +20,6 @@
 </template>
 
 <script>
-	import { getBadgeList } from "@/network/api_index.js"
 	export default {
 		props: {
 			userId: {
@@ -55,19 +54,6 @@
 			// }
 		},
 		methods: {
-			// getUserBadgeList() {
-			// 	getBadgeList({
-			// 		'per_page': 8,
-			// 		'page': 1,
-			// 		'userId': this.userId
-			// 	}).then(res => {
-			// 		if(res.code == 0 && Object.keys(res.data).length) {
-			// 			this.badgeList = res.data.items
-			// 		}
-			// 	}, err => {
-			// 		console.log('getBadgeList', err)
-			// 	})
-			// },
 			toMyBadge() {
 				uni.navigateTo({
 					url: '/page_aboutBadge/myBadgeAndBadgeLibrary/myBadgeAndBadgeLibrary'

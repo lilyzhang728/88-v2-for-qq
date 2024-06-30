@@ -71,21 +71,6 @@ export function editBadgeInfo(params) {
 	})
 }
 
-// 获取大事年表-收藏事件
-export function eventListStar(params) {
-	return getRequest({
-		path: `/api/user/${params.userId}/collected-events`,
-		data: params
-	})
-}
-
-// 获取大事年表-公共事件
-export function eventListPublic(params) {
-	return getRequest({
-		path: `/api/recommend/events/${params.userId}`,
-		data: params
-	})
-}
 
 // 用户创建日历事件
 export function createEvent(params) {
@@ -143,7 +128,7 @@ export function eventRecord(params) {
 //搜索-文章（tab2,3,4的文章）
 export function searchArticle(params) {
 	return getRequest({
-		path: `/api/posts/${userId}/search`,
+		path: `/api/posts/${userId ? userId : uni.getStorageSync('userId')}/search`,
 		data: params
 	})
 }
@@ -151,7 +136,7 @@ export function searchArticle(params) {
 //搜索-徽章
 export function searchBadge(params) {
 	return getRequest({
-		path: `/api/achievements/${userId}/search`,
+		path: `/api/achievements/${userId ? userId : uni.getStorageSync('userId')}/search`,
 		data: params
 	})
 }
@@ -159,7 +144,7 @@ export function searchBadge(params) {
 //搜索-话题
 export function searchTopic(params) {
 	return getRequest({
-		path: `/api/topics/${userId}/search`,
+		path: `/api/topics/${userId ? userId : uni.getStorageSync('userId')}/search`,
 		data: params
 	})
 }
@@ -167,7 +152,7 @@ export function searchTopic(params) {
 //搜索-人脉
 export function searchUser(params) {
 	return getRequest({
-		path: `/api/users/${userId}/search`,
+		path: `/api/users/${userId ? userId : uni.getStorageSync('userId')}/search`,
 		data: params
 	})
 }
@@ -175,7 +160,7 @@ export function searchUser(params) {
 //获取标签列表
 export function tagsList(params) {
 	return getRequest({
-		path: `/api/user/${userId}/collected-tags`,
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/collected-tags`,
 		data: params
 	})
 }
@@ -183,7 +168,7 @@ export function tagsList(params) {
 // 我的-收藏
 export function myCollectionList(params) {
 	return getRequest({
-		path: `/api/user/${userId}/collected-posts`,
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/collected-posts`,
 		data: params
 	})
 }
@@ -191,7 +176,7 @@ export function myCollectionList(params) {
 // 我的-干货，问答，动态  参数：干货1，问答4，动态3
 export function myProductionList(params) {
 	return getRequest({
-		path: `/api/user/${userId}/posts`,
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/posts`,
 		data: params
 	})
 }
