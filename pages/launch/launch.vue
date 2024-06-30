@@ -162,7 +162,6 @@
 							if(res.data.is_new) {
 								// 新用户，显示引导页
 								this.showLaunch = true
-								this.getAchievementsList(res.data.user_id)
 							}
 							// 存用户角色：1：管理员 0：非管理员
 							uni.setStorageSync('role', res.data.is_admin);
@@ -171,7 +170,10 @@
 							uni.setStorageSync('userId', res.data.user_id);
 							this.userId = res.data.user_id
 							console.log('userid: ', res.data.user_id)
-							if(!res.data.is_new) {
+							if(res.data.is_new) {
+								// 新用户,请求获取成就(因为headers里要带token，所以必须存之后再调这个接口，否则会401)
+								this.getAchievementsList(res.data.user_id)
+							} else {
 								// 老用户，跳首页
 								uni.switchTab({
 									url: '/pages/bbs/bbs'
