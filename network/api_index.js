@@ -18,7 +18,7 @@ export function profile(params) {
 // 更新个人信息
 export function updateProfile(params) {
 	return putRequest({
-		path: `/api/user/${userId}/profile`,
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/profile`,
 		data: params
 	})
 }
