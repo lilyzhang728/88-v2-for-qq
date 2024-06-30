@@ -11,9 +11,13 @@
 						<img v-else :src="defaultAvatar" class="homepage-user-info-basic-avatar" alt="">
 						<view class="homepage-user-info-basic-text">
 							<view class="homepage-user-info-basic-text-name">{{userInfo.name}}</view>
-							<view class="homepage-user-info-basic-text-follower">粉丝：{{userInfo.followers_ct ? userInfo.followers_ct : 0}}</view>
+							<!-- <view class="homepage-user-info-basic-text-follower">粉丝：{{userInfo.followers_ct ? userInfo.followers_ct : 0}}</view> -->
 							<view class="homepage-user-info-basic-text-school">学校：{{userInfo.school ? userInfo.school : '未填写'}}</view>
+							<view class="homepage-user-info-basic-text-school homepage-user-info-basic-text-target">目标：{{userInfo.target ? target : '未填写'}}</view>
 						</view>
+					</view>
+					<view class="homepage-user-info-about-me" v-if="userInfo.about_me">
+						<text class="homepage-user-info-about-me-text">个性签名: {{userInfo.about_me}}</text>
 					</view>
 					
 					<!-- 雷达图 -->
@@ -48,9 +52,9 @@
 				</view>
 				
 				<!-- 分享按钮 -->
-				<view class="homepage-user-info-share" @click.native.stop="handleShare($event)">
+				<!-- <view class="homepage-user-info-share" @click.native.stop="handleShare($event)">
 					<van-icon name="share-o" size="24rpx" class="homepage-user-info-share-icon" />分享
-				</view>
+				</view> -->
 			</view>
 		</z-paging>
 		
@@ -67,6 +71,7 @@
 	import BadgeDetail from "@/components/index/BadgeDetail.vue"
 	import HomepagePost from '@/page_infos/components/HomepagePost.vue'
 	import { profile, ownArticle, getBadgeList, follow, unfollow, getUserPosts } from '@/network/api_infos.js'
+	import { target_value_key_map } from "@/tools/transform_data.js"
 	const myId = uni.getStorageSync('userId')
 	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
 	export default {
@@ -92,6 +97,11 @@
 				showBadge: false,
 				badgeList: [],
 				defaultAvatar: DEFAULT_AVATAR,
+			}
+		},
+		computed: {
+			target() {
+				return this.userInfo.target ? target_value_key_map[Number(this.userInfo.target)] : '未填写'
 			}
 		},
 		watch: {
@@ -258,6 +268,20 @@
 						line-height: 28rpx;
 						margin-top: 10rpx;
 					}
+					.homepage-user-info-basic-text-target {
+						margin-top: 5rpx;
+					}
+				}
+			}
+			.homepage-user-info-about-me {
+				margin-top: 10rpx;
+				.homepage-user-info-about-me-text {
+					font-size: 26rpx;
+					color: #000;
+					line-height: 30rpx;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 				}
 			}
 			.homepage-user-info-radar {

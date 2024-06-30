@@ -46,16 +46,16 @@
 				<view class="launch-labels launch-labels-center">
 					<view @click="selectLabelSingle(index, 'ifStudentList')" class="launch-label-item" :class="{'launch-label-item-active': label.active}" v-for="(label, index) in ifStudentList" :key="index">{{label.body}}</view>
 				</view>
-			</view>
-			
-			<!-- 第三步 -->
-			<view class="launch-step" v-if="activeStep === 2">
+				
 				<!-- 目标 -->
 				<view class="launch-title">现阶段你的目标是</view>
 				<view class="launch-labels launch-labels-center">
 					<view @click="selectLabelSingle(index, 'targetList')" class="launch-label-item" :class="{'launch-label-item-active': label.active}" v-for="(label, index) in targetList" :key="index">{{label.body}}</view>
 				</view>
-				
+			</view>
+			
+			<!-- 第三步 -->
+			<view class="launch-step launch-step-3" v-if="activeStep === 2">
 				<!-- 成就 -->
 				<view class="launch-title" v-if="achievementList.length">已经达成了哪些成就？</view>
 				<view class="launch-labels" v-if="achievementList.length">
@@ -218,7 +218,6 @@
 			},
 			selectGender(val) {
 				this.gender = val
-				console.log(this.gender)
 			},
 			selectLabel(index, list) {
 				if(this[list][index].active === undefined) {
@@ -320,7 +319,9 @@
 	}
 	.launch-step2 {
 		margin-top: 300rpx; 
-		
+	}
+	.launch-step-3 {
+		margin-top: 200rpx;
 	}
 	.launch-gender {
 		.launch-gender-title {
