@@ -18,7 +18,7 @@
 
 <script>
 	import GuideItemCard from '@/components/guide/GuideItemCard.vue'
-	import { recArticle, collectedArticle, ownArticle } from '@/network/api_guide.js'
+	import { recArticle } from '@/network/api_guide.js'
 	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	export default {
 		components: {

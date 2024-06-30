@@ -16,7 +16,7 @@
 
 <script>
 	import NewsItemCard from '@/components/news/NewsItemCard.vue'
-	import { recArticle, collectedArticle } from '@/network/api_guide.js'
+	import { recArticle } from '@/network/api_guide.js'
 	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	export default {
 		props: {

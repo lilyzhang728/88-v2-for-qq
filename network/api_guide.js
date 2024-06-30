@@ -9,22 +9,6 @@ export function recArticle(params) {
 	})
 }
 
-// 获取攻略列表——我的收藏
-export function collectedArticle(params) {
-	return getRequest({
-		path: `/api/user/${userId}/collected-posts`,
-		data: params
-	})
-}
-
-// 获取攻略列表——我的创作
-export function ownArticle(params) {
-	return getRequest({
-		path: `/api/user/${userId}/posts`,
-		data: params
-	})
-}
-
 // 攻略详情
 export function guideDetail(params) {
 	return getRequest({
