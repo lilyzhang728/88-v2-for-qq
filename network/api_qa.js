@@ -4,7 +4,7 @@ const userId = uni.getStorageSync('userId')
 // 人脉
 export function connections(params) {
 	return getRequest({
-		path: `/api/users/${userId}/rec`,
+		path: `/api/users/${userId ? userId : uni.getStorageSync('userId')}/rec`,
 		data: params
 	})
 }
