@@ -4,7 +4,7 @@ const userId = uni.getStorageSync('userId')
 // 获取我的徽章
 export function collectedAchievements(params) {
 	return getRequest({
-		path: `/api/user/${userId}/collected-achievements`,
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/collected-achievements`,
 		data: params
 	})
 }
@@ -12,7 +12,7 @@ export function collectedAchievements(params) {
 // 获取徽章库徽章
 export function libraryAchievements(params) {
 	return getRequest({
-		path: `/api/recommend/achievements/${userId}`,
+		path: `/api/recommend/achievements/${userId ? userId : uni.getStorageSync('userId')}`,
 		data: params
 	})
 }
