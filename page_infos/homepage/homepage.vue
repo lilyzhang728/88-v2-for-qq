@@ -2,7 +2,7 @@
 <template>
 	<view class="homepage"  style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/infos/infosBg.png?sign=0e86468cac06b3dca60ea1ef5fca01dc&t=1691397405');background-size: 100%;background-color: #F8F8F8;background-repeat: no-repeat;">
 		<back-topbar title="个人主页"></back-topbar>
-		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': customBar + 'px', 'padding': '0 25rpx'}">
+		<z-paging ref="paging" v-model="dataList" @query="queryList" :hide-empty-view="true" :paging-style="{'top': customBar + 'px', 'padding': '0 25rpx'}">
 			<view class="homepage-content">
 				<view class="homepage-user-info">
 					<!-- 用户基本信息 -->
@@ -34,7 +34,7 @@
 					<!-- 获得的徽章 -->
 					<view class="homepage-achivement-badge" v-if="showBadge">
 						<view class="homepage-achivement-title">
-							<view class="homepage-achivement-title-icon"></view>获得的徽章
+							<view class="homepage-achivement-title-icon"></view>徽章墙
 						</view>
 						<view class="homepage-achivement-badge-content">
 							<homepage-badge :userId="userId" :badgeList="badgeList" @showBadgeDetail="showBadgeDetail"></homepage-badge>
