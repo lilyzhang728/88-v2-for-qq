@@ -4,7 +4,7 @@ const userId = uni.getStorageSync('userId')
 //返回话题列表
 export function topicList(params) {
 	return getRequest({
-		path: `/api/topics/${userId}/rec`,
+		path: `/api/topics/${userId ? userId : uni.getStorageSync('userId')}/rec`,
 		data: params
 	})
 }
@@ -12,7 +12,7 @@ export function topicList(params) {
 //返回关注的话题列表
 export function focusedTopic(params) {
 	return getRequest({
-		path: `/api/user/${userId}/collected-topics`,
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/collected-topics`,
 		data: params
 	})
 }

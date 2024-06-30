@@ -4,7 +4,7 @@ const userId = uni.getStorageSync('userId')
 // 获取攻略列表——发现
 export function recArticle(params) {
 	return getRequest({
-		path: `/api/posts/${userId}/rec`,
+		path: `/api/posts/${userId ? userId : uni.getStorageSync('userId')}/rec`,
 		data: params
 	})
 }
