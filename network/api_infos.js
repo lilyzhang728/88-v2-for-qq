@@ -4,7 +4,7 @@ const userId = uni.getStorageSync('userId')
 //返回收到的赞列表
 export function likeList(params) {
 	return getRequest({
-		path: `/api/user/${userId}/recived-comments_n_posts-likes`,
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/recived-comments_n_posts-likes`,
 		data: params
 	})
 }
@@ -12,7 +12,7 @@ export function likeList(params) {
 //返回收到的收藏列表
 export function collectList(params) {
 	return getRequest({
-		path: `/api/user/${userId}/recived-posts-collects`,
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/recived-posts-collects`,
 		data: params
 	})
 }
@@ -20,23 +20,16 @@ export function collectList(params) {
 //返回收到的评论列表
 export function commentList(params) {
 	return getRequest({
-		path: `/api/user/${userId}/recived-comments`,
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/recived-comments`,
 		data: params
 	})
 }
 
-//返回收到的关注列表
-export function followerList(params) {
-	return getRequest({
-		path: `/api/user/${userId}/followers`,
-		data: params
-	})
-}
 
 //返回收到的邀请列表
 export function mentionList(params) {
 	return getRequest({
-		path: `/api/user/${userId}/recived-posts-mentions`,
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/recived-posts-mentions`,
 		data: params
 	})
 }
@@ -44,20 +37,11 @@ export function mentionList(params) {
 //返回该用户的新通知(角标)
 export function newNotificationNum(params) {
 	return getRequest({
-		path: `/api/user/${userId}/notifications`,
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/notifications`,
 		data: params
 	})
 }
 
-
-
-//返回我与某个用户(由查询参数 from 获取)之间的所有私信记录
-export function historyChat(params) {
-	return getRequest({
-		path: `/api/user/${userId}/history-messages`,
-		data: params
-	})
-}
 
 //给其它用户发送私信
 export function sendMessage(params) {
@@ -114,7 +98,7 @@ export function unfollow(params) {
 // 获取新通知
 export function getNotifications(params) {
 	return getRequest({
-		path: `/api/user/${userId}/notifications`,
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/notifications`,
 		data: params
 	})
 }
