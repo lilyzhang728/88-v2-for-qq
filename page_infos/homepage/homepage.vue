@@ -12,8 +12,8 @@
 						<view class="homepage-user-info-basic-text">
 							<view class="homepage-user-info-basic-text-name">{{userInfo.name}}</view>
 							<!-- <view class="homepage-user-info-basic-text-follower">粉丝：{{userInfo.followers_ct ? userInfo.followers_ct : 0}}</view> -->
-							<view class="homepage-user-info-basic-text-school">学校：{{userInfo.school ? userInfo.school : '未填写'}}</view>
-							<view class="homepage-user-info-basic-text-school homepage-user-info-basic-text-target">目标：{{userInfo.target ? target : '未填写'}}</view>
+							<view class="homepage-user-info-basic-text-school">学校：{{userInfo.school ? userInfo.school : '暂无'}}</view>
+							<view class="homepage-user-info-basic-text-school homepage-user-info-basic-text-target">目标：{{userInfo.target ? target : '暂无'}}</view>
 						</view>
 					</view>
 					<view class="homepage-user-info-about-me" v-if="userInfo.about_me">
@@ -101,7 +101,7 @@
 		},
 		computed: {
 			target() {
-				return this.userInfo.target ? target_value_key_map[Number(this.userInfo.target)] : '未填写'
+				return this.userInfo.target ? target_value_key_map[Number(this.userInfo.target)] : '暂无'
 			}
 		},
 		watch: {

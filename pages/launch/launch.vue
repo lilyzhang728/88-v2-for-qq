@@ -9,16 +9,16 @@
 					<view class="launch-gender-img-box">
 						<!-- 女生 -->
 						<view class="launch-gender-img-box-item">
-							<img v-if="!gender" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/girlSelect.png" class="launch-gender-img" alt="">
-							<img v-else @click="selectGender(0)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/girlUnSelect.png" class="launch-gender-img" alt="">
-							<img v-if="!gender" class="launch-gender-img-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/iconSelect.png" alt="">
+							<img v-show ="!gender" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/girlSelect.png" class="launch-gender-img" alt="">
+							<img v-show="gender" @click="selectGender(0)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/girlUnSelect.png" class="launch-gender-img" alt="">
+							<img v-show="!gender" class="launch-gender-img-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/iconSelect.png" alt="">
 						</view>
 						
 						<!-- 男生 -->
 						<view class="launch-gender-img-box-item">
-							<img v-if="gender" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/boySelect.png" class="launch-gender-img" alt="">
-							<img v-else @click="selectGender(1)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/boyUnSelect.png" class="launch-gender-img" alt="">
-							<img v-if="gender" class="launch-gender-img-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/iconSelect.png" alt="">
+							<img v-show="gender" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/boySelect.png" class="launch-gender-img" alt="">
+							<img v-show="!gender" @click="selectGender(1)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/boyUnSelect.png" class="launch-gender-img" alt="">
+							<img v-show="gender" class="launch-gender-img-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/iconSelect.png" alt="">
 						</view>
 						
 					</view>
