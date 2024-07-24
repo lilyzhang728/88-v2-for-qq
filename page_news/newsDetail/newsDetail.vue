@@ -467,6 +467,8 @@
 		line-height: 40rpx;
 		display: flex;
 		align-items: center;
+		word-wrap: break-word;
+		word-break: break-all;
 		.guide-detail-step-link-icon {
 			height: 22rpx;
 			width: 22rpx;
