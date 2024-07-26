@@ -105,6 +105,7 @@
 <style lang="less" scoped>
 	.bbs-post-card {
 		padding: 30rpx;
+		padding-bottom: 10rpx;
 		background: #fff;
 		box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.15);
 		border-radius: 20rpx;
