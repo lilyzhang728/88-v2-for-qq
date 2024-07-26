@@ -87,7 +87,7 @@
 	.news-item-card {
 		padding: 30rpx;
 		padding-bottom: 10rpx;
-		background: #fff;
+		background: linear-gradient( 180deg, #F1FFF7 0%, #FFFFFF 100%);
 		box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.15);
 		border-radius: 20rpx;
 		margin-bottom: 20rpx;
