@@ -430,7 +430,7 @@
 	}
 	.bbs-post-detail-content {
 		margin-top: 22rpx;
-		font-size: 32rpx;
+		font-size: 36rpx;
 		color: rgba(0,0,0,0.7);
 		line-height: 50rpx;
 	}

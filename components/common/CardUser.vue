@@ -104,7 +104,7 @@
 				align-items: center;
 				.card-user-name {
 					font-size: 30rpx;
-					font-weight: 500;
+					font-weight: 600;
 					color: #000;
 					line-height: 42rpx;
 					overflow: hidden;
