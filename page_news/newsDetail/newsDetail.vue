@@ -415,7 +415,7 @@
 				flex: 1;
 				overflow: hidden;
 				.bbs-post-detail-author-text-name {
-					font-size: 24rpx;
+					font-size: 26rpx;
 					color: rgba(0,0,0,0.5);
 					line-height: 33rpx;
 					overflow: hidden;
@@ -431,10 +431,10 @@
 		justify-content: space-between;
 		align-items: center;
 		.bbs-post-detail-edit-info {
-			font-size: 24rpx;
+			font-size: 26rpx;
 			color: rgba(0,0,0,0.5);
 			line-height: 33rpx;
-			width: 320rpx;
+			width: 360rpx;
 			text-align: left;
 		}
 		.more-icon {
@@ -442,9 +442,9 @@
 	}
 	.news-detail-content {
 		margin-top: 35rpx;
-		font-size: 32rpx;
+		font-size: 36rpx;
 		color: #000000;
-		line-height: 56rpx;
+		line-height: 60rpx;
 		white-space: pre-line;
 	}
 	.news-detail-img-box {
@@ -456,13 +456,13 @@
 	}
 	.news-detail-url-title {
 		margin-top: 35rpx;
-		font-size: 32rpx;
+		font-size: 34rpx;
 		color: #000000;
 		line-height: 56rpx;
 	}
 	.news-detail-url {
 		// margin-top: 20rpx;
-		font-size: 28rpx;
+		font-size: 30rpx;
 		color: #35C8A7;
 		line-height: 40rpx;
 		display: flex;

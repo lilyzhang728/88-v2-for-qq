@@ -266,7 +266,7 @@
 			.guide-detail-material-title {
 				display: inline-block;
 				font-weight: bold;
-				font-size: 28rpx;
+				font-size: 32rpx;
 				color: #FFFFFF;
 				line-height: 40rpx;
 				padding: 7rpx 30rpx;
@@ -275,11 +275,12 @@
 			}
 			.guide-detail-material-content {
 				margin: 0 30rpx;
+				margin-top: 20rpx;
 				.guide-detail-material-item {
-					margin-top: 20rpx;
-					font-size: 28rpx;
+					// margin-top: 20rpx;
+					font-size: 34rpx;
 					color: #000;
-					line-height: 40rpx;
+					line-height: 54rpx;
 					display: flex;
 					align-items: top;
 					.guide-detail-material-item-index {	
@@ -304,7 +305,7 @@
 				font-weight: 600;
 				color: rgba(0,0,0,0.8);
 				line-height: 41rpx;
-				font-size: 28rpx;
+				font-size: 32rpx;
 				display: flex;
 				align-items: center;
 				margin-bottom: 10rpx;
@@ -316,8 +317,9 @@
 			}
 			.guide-detail-tip-content {
 				color: rgba(0,0,0,0.4);
-				line-height: 41rpx;
-				font-size: 26rpx;
+				line-height: 46rpx;
+				font-size: 32rpx;
+				margin-top: 14rpx;
 			}
 		}
 		.guide-detail-btn-box {

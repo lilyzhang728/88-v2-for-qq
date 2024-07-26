@@ -93,7 +93,7 @@
 		.guide-detail-step-title {
 			display: inline-block;
 			font-weight: bold;
-			font-size: 28rpx;
+			font-size: 32rpx;
 			color: #FFFFFF;
 			line-height: 40rpx;
 			padding: 7rpx 30rpx;
@@ -107,17 +107,18 @@
 			// }
 		}
 		.guide-detail-step-content {
-			margin: 18rpx 30rpx 0 30rpx;
+			margin: 20rpx 30rpx 0 30rpx;
 			.guide-detail-step-subtitle {
-				font-size: 30rpx;
+				font-size: 36rpx;
 				color: #000;
 				line-height: 44rpx;
+				font-weight: 500;
 			}
 			.guide-detail-step-desc {
 				color: rgba(0,0,0,0.8);
-				line-height: 44rpx;
-				font-size: 28rpx;
-				margin-top: 20rpx;
+				line-height: 54rpx;
+				font-size: 34rpx;
+				margin-top: 18rpx;
 				white-space: pre-line;
 			}
 			.guide-detail-step-link {
