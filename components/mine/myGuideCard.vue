@@ -189,7 +189,7 @@
 				align-items: start;
 				.guide-item-card-right-title {
 					word-break: break-all;
-					font-size: 30rpx;
+					font-size: 34rpx;
 					margin-bottom: 10rpx;
 					color: #000;
 					line-height: 42rpx;
@@ -212,7 +212,7 @@
 			}
 			.guide-item-card-right-books {
 				color: rgba(255, 145, 58, 1);
-				font-size: 24rpx;
+				font-size: 26rpx;
 				line-height: 33rpx;
 				display: flex;
 				align-items: center;
@@ -253,7 +253,7 @@
 						border-radius: 50%;
 					}
 					.guide-item-card-user-name {
-						font-size: 20rpx;
+						font-size: 22rpx;
 						color: #000;
 						flex: 1;
 						height: 40rpx;
