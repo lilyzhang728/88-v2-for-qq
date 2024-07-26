@@ -444,7 +444,7 @@
 		
 		.bbs-post-detail-topic {
 			margin-top: 36rpx;
-			font-size: 26rpx;
+			font-size: 28rpx;
 			color: #35C8A6;
 			line-height: 37rpx;
 			display: flex;
@@ -463,7 +463,7 @@
 		}
 		.bbs-post-detail-content {
 			margin-top: 20rpx;
-			font-size: 32rpx;
+			font-size: 34rpx;
 			color: #000000;
 			line-height: 56rpx;
 		}
@@ -485,7 +485,7 @@
 		}
 		.bbs-post-detail-edit-info {
 			margin-top: 20rpx;
-			font-size: 24rpx;
+			font-size: 26rpx;
 			color: rgba(0,0,0,0.5);
 			line-height: 33rpx;
 		}

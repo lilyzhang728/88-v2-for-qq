@@ -118,7 +118,7 @@
 			border-radius: 8rpx;
 			font-size: 30rpx;
 			color: #000;
-			// line-height: 45rpx;
+			line-height: 48rpx;
 		}
 		.bbs-topic-post-img-box {
 			margin-top: 40rpx;

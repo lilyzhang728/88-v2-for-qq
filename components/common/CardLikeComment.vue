@@ -2,9 +2,9 @@
 <template>
 	<view class="card-operate" @click.native.stop="clickOperate($event)">
 		<!-- 点赞 -->
-		<view class="card-operate-like">
-			<van-icon name="good-job" size="40rpx" :color="cardData.is_like ? activeColor : '#D7D7D7'" @click.native.stop="checkoutLike($event)" />
-			<view class="card-operate-like-num" :style="{'color': cardData.is_like ? activeColor : '#00000099'}"  @click.native.stop="checkoutLike($event, false)" >{{handleTransform(cardData.likers_count)}}</view>
+		<view class="card-operate-like" @click.native.stop="checkoutLike($event)">
+			<van-icon name="good-job" size="40rpx" :color="cardData.is_like ? activeColor : '#D7D7D7'" />
+			<view class="card-operate-like-num" :style="{'color': cardData.is_like ? activeColor : '#00000099'}">{{handleTransform(cardData.likers_count)}}</view>
 		</view>
 		
 		<!-- 评论 -->
@@ -133,20 +133,21 @@
 
 <style lang="less" scoped>
 	.card-operate {
-		margin-top: 35rpx;
+		// margin-top: 5rpx;
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
 		// line-height: 30rpx;
 		font-size: 24rpx;
 		color: rgba(0,0,0,0.6);
-		padding-bottom: 30rpx;
+		// padding-bottom: 30rpx;
 		.card-operate-split {
 			width: 1rpx;
 			height: 28rpx;
 			border-left: 1rpx solid #EAEAEA;
 		}
 		.card-operate-like {
+			padding: 20rpx;
 			display: flex;
 			align-items: center;
 			.card-operate-like-num {
@@ -155,6 +156,7 @@
 			}
 		}
 		.card-operate-comment {
+			padding: 20rpx;
 			display: flex;
 			align-items: center;
 			.card-operate-comment-num {

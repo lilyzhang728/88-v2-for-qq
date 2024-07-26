@@ -161,7 +161,7 @@
 		}
 		.bbs-rec-topic-list {
 			.bbs-rec-topic-item {
-				font-size: 26rpx;
+				font-size: 28rpx;
 				color: #000000;
 				line-height: 37rpx;
 				display: flex;

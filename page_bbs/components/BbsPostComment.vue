@@ -12,10 +12,10 @@
 				<view class="comment-content-footer">
 					<view class="comment-content-footer-left">{{transformTimestamp(item)}}</view>
 					<view class="comment-content-footer-right">
-						<view class="comment-content-footer-right-like">
+						<view class="comment-content-footer-right-like" @click="getLike(index, !item.is_like)">
 							<view class="comment-content-footer-right-like-num" :style="{'color': item.is_like ? activeColor : '#00000099'}">{{ handleTransform(item.likers_count) }}</view>
-							<van-icon v-if="!item.is_like" name="good-job" size="40rpx" color="#D7D7D7" @click="getLike(index, true)"></van-icon>
-							<van-icon v-if="item.is_like" name="good-job" size="40rpx" :color="activeColor" @click="getLike(index, false)"></van-icon>
+							<van-icon v-if="!item.is_like" name="good-job" size="40rpx" color="#D7D7D7"></van-icon>
+							<van-icon v-if="item.is_like" name="good-job" size="40rpx" :color="activeColor"></van-icon>
 						</view>
 						<!-- <view class="comment-content-footer-right-reply">
 							<van-icon v-if="!hideReply" name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(item, 1, index)" />
@@ -37,10 +37,10 @@
 						<view class="comment-content-footer">
 							<view class="comment-content-footer-left">{{transformTimestamp(reply)}}</view>
 							<view class="comment-content-footer-right">
-								<view class="comment-content-footer-right-like">
+								<view class="comment-content-footer-right-like" @click="getLikeLevel2(index, subIndex, !reply.is_like)">
 									<view class="comment-content-footer-right-like-num" :style="{'color': reply.is_like ? activeColor : '#00000099'}">{{ handleTransform(reply.likers_count) }}</view>
-									<van-icon v-if="!reply.is_like" name="good-job" size="40rpx" color="#D7D7D7" @click="getLikeLevel2(index, subIndex, true)"></van-icon>
-									<van-icon v-if="reply.is_like" name="good-job" size="40rpx" :color="activeColor" @click="getLikeLevel2(index, subIndex, false)"></van-icon>
+									<van-icon v-if="!reply.is_like" name="good-job" size="40rpx" color="#D7D7D7"></van-icon>
+									<van-icon v-if="reply.is_like" name="good-job" size="40rpx" :color="activeColor"></van-icon>
 								</view>
 								<!-- <view class="comment-content-footer-right-reply">
 									<van-icon v-if="!hideReply" name="comment" size="34rpx" color="#D7D7D7" @click="handleReply(reply, 2, index, subIndex)" />
@@ -174,14 +174,16 @@
 			.comment-content {
 				margin-left: 90rpx;
 				.comment-content-body {
-					font-size: 30rpx;
+					font-size: 34rpx;
 					margin-top: 10rpx;
+					line-height: 60rpx;
+					white-space: pre-line;
 				}
 				.comment-content-footer {
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
-					font-size: 24rpx;
+					font-size: 30rpx;
 					color: rgba(0,0,0,0.6);
 					overflow: hidden;
 					.comment-content-footer-left {
@@ -194,7 +196,8 @@
 							display: flex;
 							align-items: center;
 							color: #9a9a9a;
-							font-size: 26rpx;
+							font-size: 30rpx;
+							padding: 20rpx;
 							.comment-content-footer-right-like-num {
 								margin-top: 7rpx;
 								margin-right: 10rpx;

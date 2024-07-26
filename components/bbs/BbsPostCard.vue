@@ -105,7 +105,6 @@
 <style lang="less" scoped>
 	.bbs-post-card {
 		padding: 30rpx;
-		padding-bottom: 0;
 		background: #fff;
 		box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.15);
 		border-radius: 20rpx;
@@ -136,7 +135,7 @@
 			border: 20rpx solid #fff;
 			font-size: 30rpx;
 			color: #000;
-			// line-height: 45rpx;
+			line-height: 48rpx;
 			display: -webkit-box;
 			-webkit-line-clamp: 3;
 			-webkit-box-orient: vertical;
