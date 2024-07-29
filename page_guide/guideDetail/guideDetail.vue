@@ -10,12 +10,14 @@
 				@clickMore="clickMore"></guide-item-card>
 				
 				<!-- 材料 -->
-				<view class="guide-detail-material" v-if="guideData.body.references.length">
+				<view class="guide-detail-material" v-if="showReferences">
 					<view class="guide-detail-material-title">材料</view>
 					<view class="guide-detail-material-content">
-						<view class="guide-detail-material-item" v-for="(item, index) in guideData.body.references" :key="index">
-							<view class="guide-detail-material-item-index">{{index+1}}</view>
-							<view class="guide-detail-material-item-text">{{item}}</view>
+						<view class="guide-detail-material-item" v-for="(item, index) in referencesList" :key="index">
+							<view class="guide-detail-material-item-box" v-if="item">
+								<view class="guide-detail-material-item-index">{{index+1}}</view>
+								<view class="guide-detail-material-item-text">{{item}}</view>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -102,6 +104,26 @@
 		computed: {
 			pagingBottom() {
 				return this.showEditBtn ? '66px' : '0px'
+			},
+			showReferences() {
+				if(this.guideData && this.guideData.body && this.guideData.body.references && this.guideData.body.references.length) {
+					// 正则表达式，匹配非空字符串
+					const nonEmptyStringRegex = /\S+/;
+								
+					// 使用every方法检查数组中的每一项是否都是空字符串
+					// 如果数组为空或者所有项都是空字符串，every方法将返回true
+					// 否则，只要有一个非空字符串，every方法将返回false
+					return !this.guideData.body.references.every(item => !nonEmptyStringRegex.test(item));
+				} else {
+					return false;
+				}
+			},
+			referencesList() {
+				if(this.guideData && this.guideData.body && this.guideData.body.references && this.guideData.body.references.length) {
+					return this.guideData.body.references.filter(item => item.trim() !== '')
+				} else {
+					return [];
+				}
 			}
 		},
 		onLoad(option) {
@@ -281,18 +303,22 @@
 					font-size: 34rpx;
 					color: #000;
 					line-height: 54rpx;
-					display: flex;
-					align-items: top;
-					.guide-detail-material-item-index {	
-						font-size: 28rpx;
-						color: rgba(0,0,0,0.3);
-						margin-right: 12rpx;
-						width: 32rpx;
-						vertical-align: top;
+					
+					.guide-detail-material-item-box {
+						display: flex;
+						align-items: top;
+						.guide-detail-material-item-index {
+							font-size: 28rpx;
+							color: rgba(0,0,0,0.3);
+							margin-right: 12rpx;
+							width: 32rpx;
+							vertical-align: top;
+						}
+						.guide-detail-material-item-text {
+							flex: 1;
+						}
 					}
-					.guide-detail-material-item-text {
-						flex: 1;
-					}
+					
 				}
 			}
 		}
