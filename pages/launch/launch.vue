@@ -28,7 +28,7 @@
 				<!-- 性格标签 -->
 				<view class="launch-character">
 					<view class="launch-title" v-if="characterList.length">向大家介绍一下自己吧</view>
-					<view class="launch-labels" v-if="characterList.length">
+					<view class="launch-labels launch-labels-scroll" v-if="characterList.length" :style="{'height': characterHeight}">
 						<view @click="selectLabel(index, 'characterList')" class="launch-label-item" :class="{'launch-label-item-active': label.active}" v-for="(label, index) in characterList" :key="index">{{label.body}}</view>
 					</view>
 				</view>
@@ -59,7 +59,7 @@
 			<view class="launch-step launch-step-3" v-if="activeStep === 2">
 				<!-- 成就 -->
 				<view class="launch-title" v-if="achievementList.length">已经达成了哪些成就？</view>
-				<view class="launch-labels" v-if="achievementList.length">
+				<view class="launch-labels launch-labels-scroll" v-if="achievementList.length" :style="{'height': achievementsHeight}">
 					<view @click="selectLabel(index, 'achievementList')" class="launch-label-item" :class="{'launch-label-item-active': label.active}" v-for="(label, index) in achievementList" :key="index">{{label.name}}</view>
 				</view>
 			</view>
@@ -129,10 +129,21 @@
 					id: 4
 				}],		//目标
 				achievementList: [],	//成就
+				screenHeight: 0
 			}
 		},
-		
+		computed: {
+			characterHeight() {
+				let otherHeight = 242+48+50+187+105+48+50+68+50
+				return `calc(${this.screenHeight}px - ${otherHeight}rpx - 44px) `
+			},
+			achievementsHeight() {
+				let otherHeight = 200+48+50+50+68
+				return `calc(${this.screenHeight}px - ${otherHeight}rpx - 44px) `
+			}
+		},
 		onLoad() {
+			this.screenHeight = uni.getSystemInfoSync().windowHeight//获取当前页面的高度
 			this.login()
 			this.getCharacterList()
 		},
@@ -195,7 +206,7 @@
 			getCharacterList() {
 				characterList({
 					'page':1,
-					'per_page':10
+					'per_page':20
 				}).then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
 						this.characterList = res.data.items
@@ -409,6 +420,9 @@
 	}
 	.launch-labels-center {
 		justify-content: space-around;
+	}
+	.launch-labels-scroll {
+		overflow: scroll;
 	}
 	
 	.launch-btn-box {
