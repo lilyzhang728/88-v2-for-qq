@@ -1,6 +1,7 @@
 <template>
 	<view class="launch" v-if="showLaunch"  style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/qa/qaBg.png?sign=dea87806eae980fcf46c05d496c6f02f&t=1702015391');background-size: 100%;background-color: #FFFFFF;background-repeat: no-repeat;">
 		<!-- <view class="launch-step-box"> -->
+			<view class="launch-skip" @click="handleSkip">一键跳过</view>
 			<!-- 第一步 -->
 			<view class="launch-step" v-if="activeStep === 0">
 				<!-- 性别 -->
@@ -299,6 +300,13 @@
 					})
 				}
 				
+			},
+			// 一键跳过
+			handleSkip() {
+				//跳转到正文
+				uni.switchTab({
+					url: '/pages/bbs/bbs'
+				})
 			}
 		}
 	}
@@ -316,6 +324,14 @@
 	// .launch-step-box {
 		
 	// }
+	.launch-skip {
+		position: absolute;
+		left: 50rpx;
+		top: 100rpx;
+		color: rgba(0,0,0,0.6);
+		display: inline-block;
+		padding: 20rpx;
+	}
 	.launch-step {
 		width: 100vw;
 	}
