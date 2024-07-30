@@ -5,7 +5,7 @@
 	<view class="bbs-comment-keyboard" v-if="showReply" :style="{bottom: bottomVal}">
 		
 		<!-- 评论输入框 -->
-		<textarea :adjust-position="false" v-model="val" :auto-height="true"
+		<textarea :adjust-position="false" v-model="val" :auto-height="true" maxlength="-1" 
 		confirm-type="发送" placeholder="说点什么吧" :show-confirm-bar="false"
 		@confirm="send" :focus="showReply" @focus="inputBindFocus" @blur="inputBindBlur"/>
 		
