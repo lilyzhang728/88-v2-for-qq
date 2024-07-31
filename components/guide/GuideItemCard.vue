@@ -1,5 +1,5 @@
 <!-- 攻略列表一项（左边带图片） -->
-<!-- 此组件被攻略列表页、攻略详情页复用 -->
+<!-- 此组件被攻略列表页、攻略详情页、我的页面、攻略搜索结果页 复用 -->
 <template>
 	<view class="guide-item-card" :class="{'guide-item-card-noBorder': hideBorder, 'guide-item-card-mine': from==='mine'}" 
 	@click.native="toGuideDetail" @longpress="handleLongpress" v-if="guideItem.status">
@@ -17,10 +17,10 @@
 		</view>
 		<view class="guide-item-card-right">
 			<view class="guide-item-card-right-title-box">
-				<view class="guide-item-card-right-title">{{guideItem.title}}</view>
+				<view class="guide-item-card-right-title" :class="{'guide-item-card-right-title-whole': showWholeTitle}">{{guideItem.title}}</view>
 				<van-icon size="24rpx" color="#808080" name="arrow-down" @click.native.stop="clickMore($event)" />
 			</view>
-			<view class="guide-item-card-right-description" v-if="guideItem.body.summary">{{guideItem.body.summary}}</view>
+			<view class="guide-item-card-right-description" :class="{'guide-item-card-right-description-whole': showWholeTitle}" v-if="guideItem.body.summary">{{guideItem.body.summary}}</view>
 			<view class="guide-item-card-right-books">
 				<view class="guide-item-card-right-books-left">
 					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/matetialIcon.png" alt="" class="guide-item-card-right-book-item-icon" v-if="guideItem.body.references">
@@ -114,6 +114,12 @@
 				type: String,
 				required: false,
 				default: ''
+			},
+			// 是否显示完整标题（详情页显示完整标题）
+			showWholeTitle: {
+				type: Boolean,
+				required: false,
+				default: false
 			}
 		},
 		computed: {
@@ -303,6 +309,9 @@
 					-webkit-line-clamp: 2;
 					overflow: hidden;
 				}
+				.guide-item-card-right-title-whole {
+					display: block;
+				}
 			}
 			
 			.guide-item-card-right-description {
@@ -314,6 +323,9 @@
 				-webkit-box-orient: vertical;
 				-webkit-line-clamp: 2;
 				overflow: hidden;
+			}
+			.guide-item-card-right-description-whole {
+				display: block;
 			}
 			.guide-item-card-right-books {
 				color: rgba(255, 145, 58, 1);

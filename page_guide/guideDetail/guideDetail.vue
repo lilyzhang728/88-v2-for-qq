@@ -7,7 +7,7 @@
 				<!-- 基本信息 -->
 				<guide-item-card  hideBorder="true" :guideItem="guideData" :index="cardIndex" :forbiddenClick="true" :tabIndex="tabIndex"
 				@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect" :showMoreIcon="from === 'mine'"
-				@clickMore="clickMore"></guide-item-card>
+				@clickMore="clickMore" :showWholeTitle="true"></guide-item-card>
 				
 				<!-- 材料 -->
 				<view class="guide-detail-material" v-if="showReferences">
