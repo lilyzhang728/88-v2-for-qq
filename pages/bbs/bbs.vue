@@ -6,8 +6,8 @@
 				<van-tabs :active="active" animated @change.native="tabsChange" ref="tabs"
 				line-height="8rpx" line-width="60rpx" class="bbs-tabs" :swipeable="true">
 					<van-tab title="发现"></van-tab>
-					<van-tab title="关注"></van-tab>
 					<van-tab title="话题广场"></van-tab>
+					<van-tab title="关注"></van-tab>
 				</van-tabs>
 				
 				<!-- 搜索 -->
@@ -20,10 +20,10 @@
 					<bbs-rec ref="bbsRec" @toTopicList="toTopicList"></bbs-rec>
 				</swiper-item>
 				<swiper-item class="swiper-item">
-					<bbs-focus ref="bbsFocus"></bbs-focus>
+					<bbs-topic ref="bbsTopic"></bbs-topic>
 				</swiper-item>
 				<swiper-item class="swiper-item">
-					<bbs-topic ref="bbsTopic"></bbs-topic>
+					<bbs-focus ref="bbsFocus"></bbs-focus>
 				</swiper-item>
 			</swiper>
 		</z-paging-swiper>
@@ -54,7 +54,6 @@
 				tabList: ["发现", "收藏", "话题广场"],
 				statusBar: 0,
 				active: 0,
-				subActive: 0,
 				searchVal: '',
 			}
 		},
@@ -79,9 +78,6 @@
 			tabsChange(e) {
 				this.active = e.detail.index;
 			},
-			subTabsChange(e) {
-				this.subActive = e.detail.index;
-			},
 			swiperAnimationfinish(e) {
 				this.active = e.detail.current;
 			},
@@ -94,7 +90,7 @@
 			},
 			//切到话题列表
 			toTopicList() {
-				this.active = 2
+				this.active = 1
 			},
 			// 搜索帖子
 			toSearch() {

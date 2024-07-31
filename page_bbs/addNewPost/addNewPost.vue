@@ -523,8 +523,14 @@
 							    success: () => {
 							         let page = getCurrentPages().pop();//跳转页面成功之后
 									 if (page) {
-										 page.$vm.active = 0
-							             page.$vm.$refs.bbsRec.$refs.paging.reload()
+										 if(page.route == 'page_bbs/bbsTopicDetail/bbsTopicDetail') {
+											 // 从话题详情跳转过来
+											 page.$vm.$refs.paging.reload()
+										 } else {
+											 // 从社区页跳进来
+											 page.$vm.active = 0
+											 page.$vm.$refs.bbsRec.$refs.paging.reload()
+										 }
 							         } 
 							    },
 							})

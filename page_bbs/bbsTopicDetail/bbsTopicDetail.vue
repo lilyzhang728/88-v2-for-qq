@@ -135,7 +135,7 @@
 								    success: () => {
 								         let page = getCurrentPages().pop();//跳转页面成功之后
 								         if (page) {
-											 page.$vm.active = 2
+											 page.$vm.active = 1
 								             page.$vm.$refs.bbsTopic.$refs.paging.reload()
 								         } 
 								    },
@@ -209,7 +209,7 @@
 				    success: () => {
 				         let page = getCurrentPages().pop();//跳转页面成功之后
 				         if (page) {
-							 page.$vm.active = 2
+							 page.$vm.active = 1
 				             page.$vm.$refs.bbsTopic.$refs.paging.reload()
 				         } 
 				    },
