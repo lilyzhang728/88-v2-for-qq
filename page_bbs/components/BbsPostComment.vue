@@ -63,7 +63,7 @@
 <script>
 	const DEFAULT_AVATAR = 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg'
 	import { likeComment, disLikeComment } from "@/network/api_bbs.js"
-	import { utf16toEntities, uncodeUtf16 } from '@/tools/transform_emoji.js'
+	import { uncodeUtf16 } from '@/tools/transform_emoji.js'
 	import { transformMaxNum, transformTime } from '@/tools/transform_time.js'
 	import CardUser from '@/components/common/CardUser.vue'
 	import { themeColor } from '@/common/common.less'

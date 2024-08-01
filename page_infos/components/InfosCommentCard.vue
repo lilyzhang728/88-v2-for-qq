@@ -12,7 +12,7 @@
 				评论了你的{{postType}} {{timestamp}} 
 			</view>
 			<view class="infos-comment-card-content-body">
-				{{item.body}}
+				{{commentBody(item.body)}}
 			</view>
 			<view class="infos-comment-card-content-reply">
 				<img class="infos-comment-card-content-reply-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/infos/iconReply.png" alt="">
@@ -27,6 +27,7 @@
 <script>
 	import { transformTime } from '@/tools/transform_time.js'
 	import { article_type_key_value_map } from '@/tools/transform_data.js'
+	import { uncodeUtf16 } from '@/tools/transform_emoji.js'
 	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
 	export default {
 		props: {
@@ -98,6 +99,10 @@
 			}
 		},
 		methods: {
+			// 评论正文emoji解码
+			commentBody(val) {
+				return val ? uncodeUtf16(val) : ''
+			},
 			//跳转帖子详情
 			toPostDetail() {
 				switch (this.item.post.post_type){
