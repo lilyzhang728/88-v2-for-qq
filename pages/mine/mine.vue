@@ -60,6 +60,12 @@
 			// 下拉刷新，刷新信箱
 			pulldownRefresh() {
 				this.$refs.sideMessageBox.getNewNotifications()
+			},
+			// 删帖后返回刷新
+			backRefresh() {
+				this.active = 1
+				this.$refs.myProduction.active = 0
+				this.$refs.myProduction.$refs.paging.reload()
 			}
 		}
 	}

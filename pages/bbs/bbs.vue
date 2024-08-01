@@ -101,6 +101,11 @@
 					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=4&searchVal=${this.searchVal}&searchContentType=${searchContentType}`
 				})
 			},
+			// 删帖后返回刷新
+			backRefresh(postIndex) {
+				this.active = 0
+				this.$refs.bbsRec.deleteSinglePost(postIndex)
+			}
 		}
 	}
 </script>

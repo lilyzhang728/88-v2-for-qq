@@ -399,29 +399,14 @@
 			},
 			// 删除成功，返回上一页并刷新
 			backRefresh() {
-				if(this.from === 'mine') {
-					// 从我的页面跳转过来
-					uni.navigateBack({
-					    success: () => {
-					         let page = getCurrentPages().pop();//跳转页面成功之后
-					         if (page) {
-								 page.$vm.active = 1
-								 page.$vm.$refs.myProduction.active = 0
-					             page.$vm.$refs.myProduction.$refs.paging.reload()
-					         } 
-					    },
-					})
-				} else {
-					uni.navigateBack({
-					    success: () => {
-					         let page = getCurrentPages().pop();//跳转页面成功之后
-					         if (page) {
-								 page.$vm.active = 0
-					             page.$vm.$refs.bbsRec.deleteSinglePost(this.postIndex)
-					         } 
-					    },
-					})
-				}
+				uni.navigateBack({
+				    success: () => {
+				         let page = getCurrentPages().pop();//跳转页面成功之后
+				         if (page) {
+							 page.$vm.backRefresh(this.postIndex)
+				         } 
+				    },
+				})
 			},
 			clickMore() {
 				// 参数： id, type: 0：帖子，1：评论，2：话题

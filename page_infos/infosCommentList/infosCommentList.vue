@@ -41,6 +41,10 @@
 					console.log('commentList: ', err)
 				})
 			},
+			// 删帖后返回刷新
+			backRefresh() {
+				this.$refs.paging.reload()
+			}
 		}
 	}
 </script>
