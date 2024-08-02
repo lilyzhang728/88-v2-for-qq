@@ -12,11 +12,11 @@
 		
 		<!-- 正文 -->
 		<view class="bbs-post-content">{{postData.body.body}}</view>
-		<view class="bbs-post-img-box" v-if="postData.body.urls && postData.body.urls.length">
+		<view class="bbs-post-img-box" :class="{'bbs-post-img-box-single': postData.body.urls.length == 1}" v-if="postData.body.urls && postData.body.urls.length">
 			<van-image
 			  width="100%"
 			  height="100%"
-			  fit="cover"
+			  :fit="postData.body.urls.length == 1 ? 'contain' : 'cover'"
 			  :src="pic"
 			  class="bbs-post-img-item"
 			  v-for="(pic, index) in picList"
@@ -152,6 +152,15 @@
 				&:last-child {
 					margin-right: 0;
 				}
+			}
+		}
+		.bbs-post-img-box-single {
+			height: 400rpx;
+			width: calc(100vw * 2 / 3);
+			overflow: hidden;
+			.bbs-post-img-item {
+				height: 400rpx;
+				width: calc(100vw * 2 / 3);
 			}
 		}
 	}
