@@ -16,7 +16,7 @@
 			<van-image
 			  width="100%"
 			  height="100%"
-			  :fit="postData.body.urls.length == 1 ? 'contain' : 'cover'"
+			  fit="cover"
 			  :src="pic"
 			  class="bbs-post-img-item"
 			  v-for="(pic, index) in picList"
@@ -147,20 +147,20 @@
 			height: 200rpx;
 			.bbs-post-img-item {
 				// flex: 1;
-				width: calc((100vw - 110rpx) / 3);
-				margin-right: 20rpx;
+				width: calc((100vw - 12px - 12px - 30rpx - 30rpx - 10rpx - 10rpx) / 3);
+				margin-right: 10rpx;
 				&:last-child {
 					margin-right: 0;
 				}
 			}
 		}
 		.bbs-post-img-box-single {
-			height: 400rpx;
-			width: calc(100vw * 2 / 3);
+			height: calc(100vw / 2);
+			width: calc(100vw / 2);
 			overflow: hidden;
 			.bbs-post-img-item {
-				height: 400rpx;
-				width: calc(100vw * 2 / 3);
+				height: calc(100vw / 2);
+				width: calc(100vw / 2);
 			}
 		}
 	}

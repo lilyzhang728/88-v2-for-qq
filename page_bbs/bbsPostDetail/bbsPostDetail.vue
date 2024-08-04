@@ -17,7 +17,7 @@
 				<view class="bbs-post-detail-content">{{postBody}}</view>
 				
 				<!-- 图片 -->
-				<view class="bbs-post-detail-img-box" v-if="postData.body.urls.length">
+				<view class="bbs-post-detail-img-box" :class="{'bbs-post-detail-img-box-single': postData.body.urls.length == 1}" v-if="postData.body.urls.length">
 					<van-image width="100%" height="100%" fit="cover" :src="pic"
 					  class="bbs-post-detail-img-item" v-for="(pic, index) in postData.body.urls" :key="index"
 					  @click.native="previewImg($event, pic)" />
@@ -458,14 +458,25 @@
 			flex-wrap: wrap;
 			.bbs-post-detail-img-item {
 				flex: 1;
-				width: calc((100vw - 40rpx - 50rpx) / 3); 
-				min-width: calc((100vw - 40rpx - 50rpx) / 3);
-				max-width: calc((100vw - 40rpx - 50rpx) / 3);
-				height: calc((100vw - 40rpx - 50rpx) / 3);
-				margin-right: 20rpx;
+				width: calc((100vw - 12px - 12px - 10rpx - 10rpx) / 3); 
+				min-width: calc((100vw - 12px - 12px - 10rpx - 10rpx) / 3);
+				max-width: calc((100vw - 12px - 12px - 10rpx - 10rpx) / 3);
+				height: calc((100vw - 12px - 12px - 10rpx - 10rpx) / 3);
+				margin-right: 10rpx;
 				&:nth-child(3n) {
 					margin-right: 0;
 				}
+			}
+		}
+		.bbs-post-detail-img-box-single {
+			height: calc(100vw / 2);
+			width: calc(100vw / 2);
+			overflow: hidden;
+			.bbs-post-detail-img-item {
+				height: calc(100vw / 2);
+				width: calc(100vw / 2);
+				max-width: calc(100vw / 2);
+				min-width: calc(100vw / 2);
 			}
 		}
 		.bbs-post-detail-edit-info {
