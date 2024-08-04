@@ -49,7 +49,7 @@
 			<!-- 教辅材料 -->
 			<view class="guide-edit-material">
 				<view class="guide-edit-form-title">
-					教辅材料
+					教辅
 				</view>
 				<view class="guide-edit-material-content">
 					<van-field
@@ -58,7 +58,7 @@
 					   :value="item"
 					   type="textarea"
 					   :show-confirm-bar="false"
-					   placeholder="添加教辅材料"
+					   placeholder="添加教辅材料(选填)"
 					   autosize
 					   clearable
 					   clear-trigger="always"
@@ -78,7 +78,7 @@
 			
 			<!-- 步骤 -->
 			<view class="guide-edit-step" v-for="(item, index) in guideInfo.body.steps" :key="index">
-				<view class="guide-edit-form-title">步骤{{index+1}}</view>
+				<view class="guide-edit-form-title">卷{{index+1}}</view>
 				<van-icon name="close" color="#7F7F7F" size="34rpx" class="guide-edit-step-delete" @click.native="deleteStep(index)" />
 				<guide-edit-step-item :index="index" :step="item" :screenWidth="screenWidth"
 				@addURL="addURL" @deleteURL="deleteURL" @updateStep="updateStep" @updateStepLinks="updateStepLinks" 
@@ -86,7 +86,7 @@
 				@showStepItemImg="showStepItemImg" @deleteStepItemImg="deleteStepItemImg"></guide-edit-step-item>
 			</view>
 			<view class="guide-edit-add-btn-box guide-edit-add-btn-box-step">
-				<van-button plain class="guide-edit-add-btn-wrap" custom-class="guide-edit-add-btn" @click="addStep">增加步骤</van-button>
+				<van-button plain class="guide-edit-add-btn-wrap" custom-class="guide-edit-add-btn" @click="addStep">增加章节</van-button>
 			</view>
 			
 			<!-- 小贴士 -->

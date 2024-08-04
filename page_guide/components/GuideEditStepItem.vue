@@ -9,7 +9,7 @@
 			custom-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;" />
 
 		<!-- 步骤说明 -->
-		<van-field :value="step.body" type="textarea" :show-confirm-bar="false" placeholder="添加步骤说明" autosize :border="false" @change.native="changeStepBody"
+		<van-field :value="step.body" type="textarea" :show-confirm-bar="false" placeholder="添加章节说明" autosize :border="false" @change.native="changeStepBody"
 			placeholder-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;"
 			custom-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;" />
 
@@ -23,7 +23,7 @@
 					<img class="guide-edit-step-item-url-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/linkIcon.png" alt="">
 				</view>
 			</van-field>
-			<van-field :value="link.url" placeholder="添加链接" class="guide-edit-step-item-url-url"
+			<van-field :value="link.url" placeholder="添加链接(选填)" class="guide-edit-step-item-url-url"
 				:border="false" use-button-slot @change.native="changeLinkUrl($event, index)"
 				placeholder-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;"
 				custom-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;">

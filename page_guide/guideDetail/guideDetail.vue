@@ -9,9 +9,9 @@
 				@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect" :showMoreIcon="from === 'mine'"
 				@clickMore="clickMore" :showWholeTitle="true"></guide-item-card>
 				
-				<!-- 材料 -->
+				<!-- 教辅材料 -->
 				<view class="guide-detail-material" v-if="showReferences">
-					<view class="guide-detail-material-title">材料</view>
+					<view class="guide-detail-material-title">教辅</view>
 					<view class="guide-detail-material-content">
 						<view class="guide-detail-material-item" v-for="(item, index) in referencesList" :key="index">
 							<view class="guide-detail-material-item-box" v-if="item">

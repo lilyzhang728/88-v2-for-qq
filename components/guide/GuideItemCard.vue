@@ -26,7 +26,7 @@
 					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/matetialIcon.png" alt="" class="guide-item-card-right-book-item-icon" v-if="guideItem.body.references">
 					<text class="guide-item-card-right-book-item" v-if="guideItem.body.references">教辅*{{guideItem.body.references.length}}</text>
 					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/stepIcon.png" alt="" class="guide-item-card-right-book-item-icon" v-if="guideItem.body.steps">
-					<text class="guide-item-card-right-book-item" v-if="guideItem.body.steps">步骤*{{guideItem.body.steps.length}}</text>
+					<text class="guide-item-card-right-book-item" v-if="guideItem.body.steps">章节*{{guideItem.body.steps.length}}</text>
 				</view>
 				<view class="guide-item-card-right-books-right">
 					<text class="guide-item-card-right-books-right-time" v-if="tabIndex!==2 && guideItem.timestamp">{{timestamp}}</text>

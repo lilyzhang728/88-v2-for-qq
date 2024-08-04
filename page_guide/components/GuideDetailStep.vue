@@ -2,7 +2,7 @@
 <template>
 	<view class="guide-detail-step">
 		<view class="guide-detail-step-title">
-			步骤{{index + 1}}
+			卷{{index + 1}}
 			<!-- <text class="guide-detail-step-title-tip">建议用时： 1h</text> -->
 		</view>
 		<view class="guide-detail-step-content">
