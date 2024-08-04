@@ -65,7 +65,7 @@
 			
 			<!-- 发布按钮 -->
 			<view class="view-btn-box">
-				<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="!postVal" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
+				<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="!allowSendAjax || (!postVal && postImgList.length<1)" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
 			</view>
 		</view>
 		
@@ -115,7 +115,8 @@
 				cloud_path: '',	//上传至对象存储的地址（单张）
 				cloud_path_split: '',	//上传至对象存储的地址-截断（单张）
 				fileID_list: [],	//上传至对象存储的地址（多张）
-				fileID_list_split: []	//上传至对象存储的地址-截断（多张）
+				fileID_list_split: [],	//上传至对象存储的地址-截断（多张）
+				allowSendAjax: true
 			}
 		},
 		computed: {
@@ -193,6 +194,7 @@
 			
 			//before-read 事件可以在上传前进行校验，调用 callback 方法传入 true 表示校验通过，传入 false 表示校验失败。
 			beforeRead(event) {
+				this.allowSendAjax = false
 				const {
 					file,
 					callback
@@ -209,6 +211,7 @@
 			},
 			async afterRead(event) {
 				try {
+					this.allowSendAjax = false
 					const file = event.detail.file
 					console.log('原图大小', file[0].size/1024)
 					// 1. 压缩，返回 file_list / file
@@ -243,6 +246,7 @@
 							
 							resolve(file)
 						}).catch(err => {
+							this.allowSendAjax = true
 							reject()
 						})
 					} else {
@@ -250,6 +254,7 @@
 							file.tmp_url = result
 							resolve(file)
 						}).catch(err => {
+							this.allowSendAjax = true
 							reject()
 						})
 					}
@@ -362,6 +367,7 @@
 							// 上传失败，从本地文件列表中删除
 							const newArrayLength = this.postImgList.length - file.length
 							this.postImgList = this.postImgList.slice(0, newArrayLength)
+							this.allowSendAjax = true
 							reject()
 						})
 					} else {
@@ -374,6 +380,7 @@
 							// 上传失败，从本地文件列表中删除
 							const newArrayLength = this.postImgList.length - 1
 							this.postImgList = this.postImgList.slice(0, newArrayLength)
+							this.allowSendAjax = true
 							reject()
 						})
 					}
@@ -432,6 +439,7 @@
 							wx.cloud.deleteFile({
 							  fileList: this.fileID_list, // 对象存储文件ID列表，最多50个，从上传文件接口或者控制台获取
 							})
+							this.allowSendAjax = true
 							resolve(false)
 						})
 					} else {
@@ -452,6 +460,7 @@
 							wx.cloud.deleteFile({
 							  fileList: [this.cloud_path], // 对象存储文件ID列表，最多50个，从上传文件接口或者控制台获取
 							})
+							this.allowSendAjax = true
 							resolve(false)
 						})
 					}
@@ -476,7 +485,7 @@
 						}
 					}
 				}
-				
+				this.allowSendAjax = true
 			},
 			// 点击预览的x号，将图片删除
 			deleteImg(event) {
@@ -505,7 +514,7 @@
 			},
 			//发帖
 			send() {
-				if(this.postVal) {
+				if(this.postVal || this.postImgList.length) {
 					addGuide({
 						'title': 'title',
 						'body': {
