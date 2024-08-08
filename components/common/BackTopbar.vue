@@ -2,7 +2,7 @@
 <template>
 	<view class="back-topbar" :style="{height: customBar+'px', paddingTop: customBarTop+'px', position: 'relative', boxSizing: 'border-box'}">
 		<view class="back-topbar-icon" :style="{position: 'absolute', left: '25rpx', bottom: customBarIconBottom+'px'}" @click.native="handleBack"><van-icon name="arrow-left" size="22px" /></view>
-		<view class="back-topbar-title" :style="{height: customBarHeight+'px', lineHeight: customBarHeight+'px', width: '100%', textAlign: 'center', fontSize: '18px', fontWeight: 'bold'}">{{title}}</view>
+		<view class="back-topbar-title" :style="{height: customBarHeight+'px', lineHeight: customBarHeight+'px', width: '100%', textAlign: 'center', fontSize: '38rpx', fontWeight: 'bold'}">{{title}}</view>
 	</view>
 </template>
 

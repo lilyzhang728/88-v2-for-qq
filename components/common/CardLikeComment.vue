@@ -152,6 +152,7 @@
 			align-items: center;
 			.card-operate-like-num {
 				margin-left: 16rpx;
+				margin-top: 2rpx;
 				width: 50rpx;
 			}
 		}
@@ -161,8 +162,9 @@
 			align-items: center;
 			.card-operate-comment-num {
 				margin-left: 16rpx;
+				margin-top: 2rpx;
 				width: 50rpx;
-				margin-bottom: 4rpx;
+				// margin-bottom: 4rpx;
 			}
 		}
 	}
