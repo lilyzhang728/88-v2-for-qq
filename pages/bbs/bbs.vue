@@ -1,5 +1,5 @@
 <template>
-	<view class="bbs"  :style="{backgroundImage: 'url('+backgroundImgUrl+')',backgroundSize: '100% '+backgroundImgHeight,backgroundColor: '#f8f8f8',backgroundRepeat: 'no-repeat'}">
+	<view class="bbs"  :style="{backgroundImage: 'url('+backgroundImgUrl+')',backgroundSize: '100% '+backgroundImgHeight,backgroundColor: backgroundColor,backgroundRepeat: 'no-repeat'}">
 		<z-paging-swiper :swiper-style="{'top': statusBar + 'px'}">
 			<template #top>
 				<!-- 顶层tab -->
@@ -63,6 +63,9 @@
 				let height = Number(this.statusBar) + 44 + (58-25/2)
 				// return this.active === 2 ? (height+44) + 'px' : height + 'px'
 				return height + 'px'
+			},
+			backgroundColor() {
+				return this.active ? '#ffffff' : '#f8f8f8'
 			}
 		},
 		onShow() {
