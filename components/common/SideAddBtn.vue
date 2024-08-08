@@ -22,7 +22,7 @@
 			height: 80rpx;
 			position: fixed;
 			right: 0;
-			top: 1000rpx;
+			bottom: 40rpx;
 		}
 	}
 </style>

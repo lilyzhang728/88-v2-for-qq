@@ -1,6 +1,6 @@
 <!-- 问答页，包括：问答，人脉，2个子tab -->
 <template>
-	<view class="qa" :style="{backgroundImage: 'url('+backgroundImgUrl+')',backgroundSize: '100% '+backgroundImgHeight,backgroundColor: '#f2f4f8',backgroundRepeat: 'no-repeat'}">
+	<view class="qa" :style="{backgroundImage: 'url('+backgroundImgUrl+')',backgroundSize: '100% '+backgroundImgHeight,backgroundColor: '#f8f8f8',backgroundRepeat: 'no-repeat'}">
 		<z-paging-swiper :swiper-style="{'top': statusBar + 'px'}">
 			<template #top>
 				<!-- 顶层tab -->

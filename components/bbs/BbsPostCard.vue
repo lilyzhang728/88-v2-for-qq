@@ -149,6 +149,8 @@
 				// flex: 1;
 				width: calc((100vw - 12px - 12px - 30rpx - 30rpx - 10rpx - 10rpx) / 3);
 				margin-right: 10rpx;
+				border-radius: 8rpx;
+				overflow: hidden;
 				&:last-child {
 					margin-right: 0;
 				}

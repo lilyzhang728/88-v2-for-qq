@@ -94,6 +94,7 @@
 			height: 70rpx;
 			margin-right:20rpx;
 			border-radius: 50%;
+			box-shadow: 4rpx 8rpx 10rpx 0 rgba(0,0,0,0.1);
 		}
 		.card-user-right {
 			flex: 1;
