@@ -25,7 +25,7 @@
 						<homepage-radar :userId="userId"></homepage-radar>
 					</view>
 				</view>
-				<view class="homepage-split">
+				<view class="homepage-split" v-if="showBadge || dataList.length">
 					<view class="homepage-split-left"></view>
 					<view class="homepage-split-center"></view>
 					<view class="homepage-split-right"></view>
@@ -205,6 +205,7 @@
 	width: 100%;
 	height: 100%;
 	.homepage-content {
+		margin-top: 20rpx;
 		background-color: #fff;
 		box-shadow: 0rpx 0rpx 15rpx 0rpx rgba(81,211,184,0.1);
 		border-radius: 22rpx;
@@ -277,9 +278,12 @@
 				}
 			}
 			.homepage-user-info-about-me {
-				margin-top: 10rpx;
+				margin-top: 12rpx;
+				padding: 12rpx 30rpx;
+				background: #F9F9F9;
+				border-radius: 8rpx;
 				.homepage-user-info-about-me-text {
-					font-size: 26rpx;
+					font-size: 24rpx;
 					color: #000;
 					line-height: 30rpx;
 					overflow: hidden;

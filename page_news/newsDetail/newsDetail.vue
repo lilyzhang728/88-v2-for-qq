@@ -519,7 +519,7 @@
 		}
 	}
 	.bbs-post-detail-comment {
-		margin-top: 80rpx;
+		margin-top: 60rpx;
 		.bbs-post-detail-comment-total {
 			font-size: 24rpx;
 			color: rgba(0,0,0,0.5);
