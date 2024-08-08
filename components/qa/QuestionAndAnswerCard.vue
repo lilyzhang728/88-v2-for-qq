@@ -113,7 +113,7 @@
 			.bbs-post-content {
 				margin-top: 20rpx;
 				border-radius: 8rpx;
-				border: 20rpx solid #fff;
+				border-top: 20rpx solid #fff;
 				font-size: 30rpx;
 				color: #000;
 				// line-height: 45rpx;
@@ -136,7 +136,7 @@
 					color: rgba(0, 0, 0, 0.4);
 					font-size: 30rpx;
 					// line-height: 34rpx;
-					margin-bottom: 10rpx;
+					// margin-bottom: 10rpx;
 					display: -webkit-box;
 					-webkit-box-orient: vertical;
 					-webkit-line-clamp: 2;

@@ -133,7 +133,7 @@
 		.bbs-post-content {
 			// margin-top: 20rpx;
 			border-radius: 8rpx;
-			border: 20rpx solid #fff;
+			border-top: 20rpx solid #fff;
 			font-size: 30rpx;
 			color: #000;
 			line-height: 48rpx;
@@ -145,6 +145,7 @@
 		.bbs-post-img-box {
 			display: flex;
 			height: 200rpx;
+			margin-top: 10rpx;
 			.bbs-post-img-item {
 				// flex: 1;
 				width: calc((100vw - 12px - 12px - 30rpx - 30rpx - 10rpx - 10rpx) / 3);
