@@ -442,7 +442,7 @@
 	}
 	.news-detail-content {
 		margin-top: 35rpx;
-		font-size: 32rpx;
+		font-size: 34rpx;
 		color: #000000;
 		line-height: 56rpx;
 		white-space: pre-line;

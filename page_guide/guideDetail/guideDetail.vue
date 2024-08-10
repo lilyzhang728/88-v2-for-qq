@@ -302,7 +302,7 @@
 					// margin-top: 20rpx;
 					font-size: 34rpx;
 					color: #000;
-					line-height: 54rpx;
+					line-height: 56rpx;
 					
 					.guide-detail-material-item-box {
 						display: flex;

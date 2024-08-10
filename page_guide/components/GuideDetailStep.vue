@@ -111,12 +111,12 @@
 			.guide-detail-step-subtitle {
 				font-size: 36rpx;
 				color: #000;
-				line-height: 44rpx;
+				line-height: 56rpx;
 				font-weight: 500;
 			}
 			.guide-detail-step-desc {
 				color: rgba(0,0,0,0.8);
-				line-height: 54rpx;
+				line-height: 56rpx;
 				font-size: 34rpx;
 				margin-top: 18rpx;
 				white-space: pre-line;

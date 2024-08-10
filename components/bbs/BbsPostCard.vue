@@ -134,9 +134,9 @@
 			// margin-top: 20rpx;
 			border-radius: 8rpx;
 			border-top: 20rpx solid #fff;
-			font-size: 30rpx;
+			font-size: 34rpx;
 			color: #000;
-			line-height: 48rpx;
+			line-height: 56rpx;
 			display: -webkit-box;
 			-webkit-line-clamp: 3;
 			-webkit-box-orient: vertical;

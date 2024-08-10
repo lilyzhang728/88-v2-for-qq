@@ -122,10 +122,10 @@
 				-webkit-box-orient: vertical;
 				overflow: hidden;
 				.question-item-card-content-left-title {
-					font-size: 32rpx;
+					font-size: 34rpx;
 					margin-bottom: 10rpx;
 					color: #000;
-					line-height: 42rpx;
+					line-height: 56rpx;
 					display: -webkit-box;
 					-webkit-box-orient: vertical;
 					-webkit-line-clamp: 2;
@@ -134,8 +134,8 @@
 				}
 				.question-item-card-content-left-infos {
 					color: rgba(0, 0, 0, 0.4);
-					font-size: 30rpx;
-					// line-height: 34rpx;
+					font-size: 32rpx;
+					line-height: 56rpx;
 					// margin-bottom: 10rpx;
 					display: -webkit-box;
 					-webkit-box-orient: vertical;
