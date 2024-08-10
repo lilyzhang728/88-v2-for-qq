@@ -1,8 +1,10 @@
 import App from './App'
+import share from './tools/wxShare.js'
 
 // #ifndef VUE3
 import Vue from 'vue'
 Vue.config.productionTip = false
+Vue.mixin(share)
 App.mpType = 'app'
 const app = new Vue({
     ...App
