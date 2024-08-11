@@ -49,7 +49,7 @@
 			<!-- 教辅材料 -->
 			<view class="guide-edit-material">
 				<view class="guide-edit-form-title">
-					教辅
+					关键词/教辅
 				</view>
 				<view class="guide-edit-material-content">
 					<van-field
@@ -58,7 +58,7 @@
 					   :value="item"
 					   type="textarea"
 					   :show-confirm-bar="false"
-					   placeholder="添加教辅材料(选填)"
+					   placeholder="添加关键词/教辅材料(选填)"
 					   autosize
 					   clearable
 					   clear-trigger="always"

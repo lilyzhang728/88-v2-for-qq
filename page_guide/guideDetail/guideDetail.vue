@@ -11,7 +11,7 @@
 				
 				<!-- 教辅材料 -->
 				<view class="guide-detail-material" v-if="showReferences">
-					<view class="guide-detail-material-title">教辅</view>
+					<view class="guide-detail-material-title">关键词/教辅</view>
 					<view class="guide-detail-material-content">
 						<view class="guide-detail-material-item" v-for="(item, index) in referencesList" :key="index">
 							<view class="guide-detail-material-item-box" v-if="item">
