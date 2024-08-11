@@ -78,7 +78,7 @@
 			
 			<!-- 步骤 -->
 			<view class="guide-edit-step" v-for="(item, index) in guideInfo.body.steps" :key="index">
-				<view class="guide-edit-form-title">卷{{index+1}}</view>
+				<view class="guide-edit-form-title">卷 {{index+1}}</view>
 				<van-icon name="close" color="#7F7F7F" size="34rpx" class="guide-edit-step-delete" @click.native="deleteStep(index)" />
 				<guide-edit-step-item :index="index" :step="item" :screenWidth="screenWidth"
 				@addURL="addURL" @deleteURL="deleteURL" @updateStep="updateStep" @updateStepLinks="updateStepLinks" 
