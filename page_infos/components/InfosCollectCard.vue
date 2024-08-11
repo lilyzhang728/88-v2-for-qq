@@ -6,7 +6,8 @@
 		</view>
 		<view class="infos-collect-card-right">
 			<view class="infos-collect-card-content">
-				<view class="infos-collect-card-content-name" @click.native.stop="toHomepage($event)">{{item.user.name}}</view>
+				<view class="infos-collect-card-content-name">
+					<text @click.native.stop="toHomepage($event)">{{item.user.name}}</text></view>
 				<view class="infos-collect-card-content-infos">
 					<text>收藏了你的{{postType}}</text>
 					<text class="infos-collect-card-content-infos-timestamp">{{timestamp}}</text>

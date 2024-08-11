@@ -6,7 +6,8 @@
 		</view>
 		<view class="infos-like-card-right">
 			<view class="infos-like-card-content">
-				<view class="infos-like-card-content-name" @click.native.stop="toHomepage($event)">{{item.user.name}}</view>
+				<view class="infos-like-card-content-name">
+				<text @click.native.stop="toHomepage($event)">{{item.user.name}}</text></view>
 				<view class="infos-like-card-content-infos">
 					<text>赞了你的{{typeText}}</text>
 					<text class="infos-like-card-content-infos-timestamp">{{timestamp}}</text>

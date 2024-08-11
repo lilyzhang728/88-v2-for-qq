@@ -5,8 +5,8 @@
 			<img :src="avatar" @click.native.stop="toHomepage($event)" alt="" class="infos-comment-card-avatar">
 		</view>
 		<view class="infos-comment-card-content">
-			<view class="infos-comment-card-content-name" @click.native.stop="toHomepage($event)">
-				{{item.author.name}}
+			<view class="infos-comment-card-content-name">
+				<text @click.native.stop="toHomepage($event)">{{item.author.name}}</text>
 			</view>
 			<view class="infos-comment-card-content-time">
 				评论了你的{{postType}} {{timestamp}} 
