@@ -1,4 +1,4 @@
-<!-- 收到的评论card，只有帖子 -->
+<!-- 收到的评论card -->
 <template>
 	<view class="infos-comment-card" @click="toPostDetail">
 		<view class="infos-comment-card-left">

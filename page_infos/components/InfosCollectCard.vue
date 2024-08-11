@@ -1,4 +1,4 @@
-<!-- 收到的收藏card：只有攻略 -->
+<!-- 收到的收藏card -->
 <template>
 	<view class="infos-collect-card" @click="toDetail">
 		<view class="infos-collect-card-left">

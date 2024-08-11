@@ -1,4 +1,4 @@
-<!-- 收到的赞card，攻略 or 帖子 -->
+<!-- 收到的赞card -->
 <template>
 	<view class="infos-like-card" @click="toDetail">
 		<view class="infos-like-card-left">

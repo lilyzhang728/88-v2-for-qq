@@ -62,9 +62,13 @@
 				this.$refs.sideMessageBox.getNewNotifications()
 			},
 			// 删帖后返回刷新
-			backRefresh() {
+			backRefresh(type) {
 				this.active = 1
-				this.$refs.myProduction.active = 0
+				if(type == 'guide') {
+					this.$refs.myProduction.active = 1
+				} else {
+					this.$refs.myProduction.active = 0
+				}
 				this.$refs.myProduction.$refs.paging.reload()
 			}
 		}

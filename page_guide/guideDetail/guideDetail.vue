@@ -163,8 +163,7 @@
 						    success: () => {
 						         let page = getCurrentPages().pop();//跳转页面成功之后
 						         if (page) {
-									 page.$vm.active = 2
-						             page.$vm.$refs.swiperItem[2].$refs.paging.reload()
+						         	page.$vm.backRefresh('guide')
 						         } 
 						    },
 						})
@@ -195,14 +194,8 @@
 						    success: () => {
 						         let page = getCurrentPages().pop();//跳转页面成功之后
 						         if (page) {
-									 if(page.route == "pages/mine/mine") {
-										 // 回到 档案-我的-攻略
-										 page.$vm.$refs.myProduction.active = 1
-										 page.$vm.$refs.myProduction.$refs.paging.reload()
-									 } else {
-										 page.$vm.active = 2
-										 page.$vm.$refs.swiperItem[2].$refs.paging.reload()
-									 }
+									 // 4个入口：1./userful 2./mine 3./infosCollectList 4./infosLikeList
+						         	page.$vm.backRefresh('guide')
 						         } 
 						    },
 						})
@@ -239,29 +232,14 @@
 			},
 			// 删除成功，返回上一页并刷新
 			backRefresh() {
-				if(this.from === 'mine') {
-					uni.navigateBack({
-					    success: () => {
-					         let page = getCurrentPages().pop();//跳转页面成功之后
-					         if (page) {
-								 page.$vm.active = 1
-								 page.$vm.$refs.myProduction.active = 1
-								 page.$vm.$refs.myProduction.$refs.paging.reload()
-					         } 
-					    },
-					})
-				} else {
-					uni.navigateBack({
-					    success: () => {
-					         let page = getCurrentPages().pop();//跳转页面成功之后
-					         if (page) {
-								 page.$vm.active = 1
-					             page.$vm.$refs.guide.$refs.paging.reload()
-					         } 
-					    },
-					})
-				}
-				
+				uni.navigateBack({
+					success: () => {
+						 let page = getCurrentPages().pop();//跳转页面成功之后
+						 if (page) {
+							 page.$vm.backRefresh('guide')
+						 } 
+					},
+				})
 			},
 			clickMore() {
 				// 参数： id, type: 0：帖子，1：评论，2：话题

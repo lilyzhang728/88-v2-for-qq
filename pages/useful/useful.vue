@@ -6,8 +6,8 @@
 				<!-- 顶层tab -->
 				<van-tabs :active="active" animated @change.native="tabsChange" ref="tabs"
 				line-height="8rpx" line-width="60rpx" class="useful-tabs" :swipeable="true">
-					<van-tab title="情报"></van-tab>
 					<van-tab title="攻略"></van-tab>
+					<van-tab title="情报"></van-tab>
 				</van-tabs>
 				
 				<!-- 搜索 -->
@@ -29,10 +29,10 @@
 			<!-- useful列表 -->
 			<swiper class="swiper" :current="active" @animationfinish="swiperAnimationfinish">
 				<swiper-item class="swiper-item">
-					<useful-news ref="news" :subActive="subActive" :currentIndex="active"></useful-news>
+					<useful-guide ref="guide" :subActive="subActive" :currentIndex="active"></useful-guide>
 				</swiper-item>
 				<swiper-item class="swiper-item">
-					<useful-guide ref="guide" :subActive="subActive" :currentIndex="active"></useful-guide>
+					<useful-news ref="news" :subActive="subActive" :currentIndex="active"></useful-news>
 				</swiper-item>
 			</swiper>
 		</z-paging-swiper>
@@ -92,9 +92,9 @@
 			// 更新list
 			reloadList() {
 				if(this.active) {
-					this.$refs.guide.$refs.paging.reload()
-				} else {
 					this.$refs.news.$refs.paging.reload()
+				} else {
+					this.$refs.guide.$refs.paging.reload()
 				}
 			},
 			swiperAnimationfinish(e) {
@@ -102,7 +102,7 @@
 			},
 			toSearch() {
 				//tabIndex: 3-news, 2-guide
-				let tabIndex = this.active ? 2 : 3
+				let tabIndex = this.active ? 3 : 2
 				uni.navigateTo({
 					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=${tabIndex}&searchVal=${this.searchVal}`
 				})
@@ -111,14 +111,14 @@
 			addNewGuide(e) {
 				e.preventDefault();
 				if(this.active) {
-					// 跳转至新增攻略页
-					uni.navigateTo({
-						url: '/page_guide/guideEdit/guideEdit'
-					});
-				} else {
 					// 跳转至新增情报页
 					uni.navigateTo({
 						url: '/page_news/addNews/addNews'
+					});
+				} else {
+					// 跳转至新增攻略页
+					uni.navigateTo({
+						url: '/page_guide/guideEdit/guideEdit'
 					});
 				}
 				
@@ -130,6 +130,11 @@
 					Toast('发布失败')
 				}
 			},
+			// 删帖后返回刷新
+			backRefresh(type) {
+				this.active = type == 'guide' ? 0 : 1
+				this.reloadList()
+			}
 		}
 	}
 </script>

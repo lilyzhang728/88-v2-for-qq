@@ -241,8 +241,7 @@
 						    success: () => {
 						         let page = getCurrentPages().pop();//跳转页面成功之后
 						         if (page) {
-									 page.$vm.active = _active
-						             page.$vm.$refs.swiperItem[_active].$refs.paging.reload()
+									 page.$vm.backRefresh('guide')
 						         } 
 						    },
 						})
@@ -495,15 +494,14 @@
 						if(res.code === 0) {
 							//发布成功，回到列表页，并刷新列表
 							Toast('发布成功！')
+							// 3个入口：1./userful 2. /mine/myProduction 3./guideDetail
 							uni.navigateBack({
-							    success: () => {
-							         let page = getCurrentPages().pop();//跳转页面成功之后
-									 console.log(page)
-							         if (page) {
-										 page.$vm.active = 1
-							             page.$vm.$refs.guide.$refs.paging.reload()
-							         } 
-							    },
+								success: () => {
+									 let page = getCurrentPages().pop();//跳转页面成功之后
+									 if (page) {
+										 page.$vm.backRefresh('guide')
+									 } 
+								},
 							})
 						} else {
 							Toast('发布失败')

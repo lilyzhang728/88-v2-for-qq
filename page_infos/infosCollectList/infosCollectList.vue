@@ -40,6 +40,10 @@
 					console.log('collectList: ', err)
 				})
 			},
+			// 删除成功，刷新
+			backRefresh() {
+				this.$refs.paging.reload()
+			}
 		}
 	}
 </script>
