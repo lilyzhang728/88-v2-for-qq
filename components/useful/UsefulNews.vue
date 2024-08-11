@@ -55,8 +55,14 @@
 			//请求资讯列表-发现
 			getRecNewsList(pageNo, pageSize) {
 				return new Promise((resolve, reject) => {
-					// 0-推荐, 1-考研, 2-找工作, 3-出国, 4-考公/编, 目前先把出国扣除去，考公/编的subActive变成3了，需要手动修正到4
-					let field = Number(this.subActive) > 2 ? Number(this.subActive)+1 : Number(this.subActive)
+					// 0-推荐, 1-考研, 2-找工作, 3-出国, 6-考公/编
+					const fieldMap = {
+						0: 0,
+						1: 1,
+						2: 2,
+						3: 6
+					}
+					let field = fieldMap[Number(this.subActive)]
 					recArticle({
 						'post_type': 2,	//2 :tab3
 						'per_page': pageSize,

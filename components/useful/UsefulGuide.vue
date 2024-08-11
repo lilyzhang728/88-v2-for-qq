@@ -59,8 +59,8 @@
 			//请求攻略列表-发现
 			getRecGuideList(pageNo, pageSize) {
 				return new Promise((resolve, reject) => {
-					// 0-推荐, 1-考研, 2-找工作, 3-出国, 4-考公/编, 目前先把出国扣除去，考公/编的subActive变成3了，需要手动修正到4
-					let field = Number(this.subActive) > 2 ? Number(this.subActive)+1 : Number(this.subActive)
+					// 0-推荐, 1-考研, 2-实习工作, 3-校园指南 4-成绩学术 5-竞赛证书 6-考公/编 7-其他
+					let field = Number(this.subActive)
 					recArticle({
 						'post_type': 1,	//1 :tab2
 						'per_page': pageSize,

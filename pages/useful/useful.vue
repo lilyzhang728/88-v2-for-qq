@@ -18,11 +18,7 @@
 				<!-- 子tab -->
 				<van-tabs :active="subActive" animated @change.native="subTabsChange" ref="subTabs"
 				line-height="0" line-width="0" class="useful-subTabs" :swipeable="false">
-					<van-tab title="推荐"></van-tab>
-					<van-tab title="考研" class="useful-subTab-first"></van-tab>
-					<van-tab title="找工作"></van-tab>
-					<!-- <van-tab title="出国"></van-tab> -->
-					<van-tab title="考公/编"></van-tab>
+					<van-tab :title="item" v-for="(item, index) in subTabList" :key="index"></van-tab>
 				</van-tabs>
 			</template>
 			
@@ -77,6 +73,16 @@
 				//44:父tab， 55:搜索框， 44:子tab
 				let height = Number(this.statusBar) + 44 + 55 + 44
 				return height + 'px'
+			},
+			guideFieldList() {
+				// 0-推荐, 1-考研, 2-实习工作, 3-校园指南 4-成绩学术 5-竞赛证书 6-考公/编 7-其他
+				return ['推荐', '考研', '实习工作', '校园指南', '成绩学术', '竞赛证书', '考公/编', '其他']
+			},
+			newsFieldList() {
+				return ['推荐', '考研', '实习工作', '考公/编']
+			},
+			subTabList() {
+				return this.active ? this.newsFieldList : this.guideFieldList
 			}
 		},
 		methods: {
@@ -180,11 +186,11 @@
 					font-size:24rpx; 
 					border-radius:28rpx; 
 					margin-top:15rpx; 
-					flex-basis: 15% !important;
+					flex-basis: auto !important;
 					padding: 10rpx 15rpx;
 					margin-right: 15rpx;
 					.van-ellipsis {
-						line-height: 24rpx
+						line-height: 24rpx;
 					}
 					
 				}
