@@ -15,15 +15,17 @@ export default {
     // 发送给朋友
     onShareAppMessage(res) {
          return {
-          title: '发送给朋友',
-          path: '/pages/launch/launch'
+          title: '来勾重点，帮你快速攻略大学生活～',
+          path: '/pages/launch/launch',
+		  imageUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/wxShare.jpeg?sign=8246f205e2a343352225b20abb3ec44b&t=1723380900'
         }
     },
     //分享到朋友圈
     onShareTimeline(res) {
          return {
-          title: '分享到朋友圈',
-          path: '/pages/launch/launch'
+          title: '来勾重点，帮你快速攻略大学生活～',
+          path: '/pages/launch/launch',
+          imageUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/wxShare.jpeg?sign=8246f205e2a343352225b20abb3ec44b&t=1723380900'
         }
     }
 }
