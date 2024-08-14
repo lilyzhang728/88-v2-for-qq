@@ -349,7 +349,7 @@
 					flex: 1;
 				}
 				.guide-item-card-right-books-right {
-					width: 106rpx;
+					width: 150rpx;
 					text-align: right;
 					.guide-item-card-right-books-right-time {
 						color: rgba(0,0,0,0.4);
