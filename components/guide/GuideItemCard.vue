@@ -90,6 +90,7 @@
 					collectors_count: 0,
 					likers_count: 0,
 					title: "",
+					in_house: 1,	// 是否为外部链接
 					views: 0,
 					status: 0,		//0:未发布  1：已发布
 					id: '',
@@ -214,9 +215,19 @@
 			//点击事件，跳转攻略详情
 			toGuideDetail() {
 				if(!this.forbiddenClick) {
-					uni.navigateTo({
-						url: `/page_guide/guideDetail/guideDetail?showEditBtn=${this.showEditBtn}&inDraft=${this.inDraft}&id=${this.guideItem.id}&cardIndex=${this.index}&tabIndex=${this.tabIndex}`
-					});
+					if(parseInt(this.guideItem.in_house) === 1 ) {
+						// 跳小程序内部文章
+						uni.navigateTo({
+							url: `/page_guide/guideDetail/guideDetail?showEditBtn=${this.showEditBtn}&inDraft=${this.inDraft}&id=${this.guideItem.id}&cardIndex=${this.index}&tabIndex=${this.tabIndex}`
+						});
+					} else if(parseInt(this.guideItem.in_house) === 0) {
+						// 跳外部公众号文章链接(TODO： url字段待定)
+						if(wx.openOfficialAccountArticle) {
+							wx.openOfficialAccountArticle({
+								url:'https://mp.weixin.qq.com/s/p-URMLjEJZwzu8ewLT8WPA', // 此处填写公众号文章连接
+							})
+						}
+					}
 				}
 			},
 			//长按事件，弹起选项面板，只有“我的创作” 能操作 编辑/删除

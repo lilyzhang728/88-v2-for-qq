@@ -15,6 +15,8 @@
 				success: (e) => {
 					// #ifdef MP-WEIXIN
 					// @ts-ignore
+					// 小程序基础库版本
+					uni.setStorageSync('hostSDKVersion', e.hostSDKVersion)
 					const custom = wx.getMenuButtonBoundingClientRect()
 					uni.setStorageSync('customBar', custom.bottom + custom.top - e.statusBarHeight)	//topbar高度
 					uni.setStorageSync('customBarTop', custom.top)		//topbar的 padding-top

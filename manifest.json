@@ -1,4 +1,4 @@
-{
+	{
     "name" : "student-88-1013",
     "appid" : "__UNI__D012DA0",
     "description" : "",
@@ -62,7 +62,8 @@
         "usingComponents" : true,
 		"optimization": {
 			"subPackages": true			// 开启分包优化
-		}
+		},
+		"libVersion": "latest"
     },
     "mp-alipay" : {
         "usingComponents" : true

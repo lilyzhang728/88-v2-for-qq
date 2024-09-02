@@ -45,6 +45,7 @@
 					collectors_count: 0,
 					likers_count: 0,
 					title: "",
+					in_house: 1,	// 是否为外部链接
 					views: 0,
 					status: 0,		//0:未发布  1：已发布
 					id: '',
@@ -71,9 +72,19 @@
 				this.$emit('checkoutCollect', this.index, status)
 			},
 			toNewsDetail() {
-				uni.navigateTo({
-					url: `/page_news/newsDetail/newsDetail?id=${this.newsItem.id}`
-				});
+				if(parseInt(this.newsItem.in_house) === 1 ) {
+					// 跳小程序内部文章
+					uni.navigateTo({
+						url: `/page_news/newsDetail/newsDetail?id=${this.newsItem.id}`
+					});
+				} else if(parseInt(this.newsItem.in_house) === 0) {
+					// 跳外部公众号文章链接(TODO： url字段待定)
+					if(wx.openOfficialAccountArticle) {
+						wx.openOfficialAccountArticle({
+							url:'https://mp.weixin.qq.com/s/p-URMLjEJZwzu8ewLT8WPA', // 此处填写公众号文章连接
+						})
+					}
+				}
 			},
 			clickMore() {
 				// 参数： id, type: 0：帖子，1：评论，2：话题
