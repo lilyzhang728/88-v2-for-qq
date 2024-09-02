@@ -1,12 +1,12 @@
 <template>
 	<view class="news-item-card" @click.native="toNewsDetail">
 		<!-- 头像、昵称、学校 -->
-		<card-user :item="newsItem" :showMoreIcon="true" @clickMore="clickMore"></card-user>
+		<card-user :item="newsItem" :showMoreIcon="true" @clickMore="clickMore" :ifOfficialAccountLink="ifOfficialAccountLink"></card-user>
 		
 		<view class="news-item-card-content" :class="{'news-item-card-content-haveImg': newsItem.body.urls && newsItem.body.urls.length>0}">
 			<view class="news-item-card-content-left">
 				<view class="news-item-card-content-left-title van-multi-ellipsis--l3">{{newsItem.title}}</view>
-				<view class="news-item-card-content-left-infos" v-if="newsItem.body.body">{{newsItem.body.body}}</view>
+				<view class="news-item-card-content-left-infos" v-if="!ifOfficialAccountLink && newsItem.body.body">{{newsItem.body.body}}</view>
 			</view>
 			<view class="news-item-card-content-right" v-if="newsItem.body.urls && newsItem.body.urls.length > 0">
 				<img :src="newsItem.body.urls[0]" alt="" class="news-item-card-content-right-img">
@@ -62,7 +62,10 @@
 			},
 		},
 		computed: {
-			
+			// 是否为外部公众号链接
+			ifOfficialAccountLink() {
+				return parseInt(this.newsItem.in_house) === 0
+			}
 		},
 		methods: {
 			checkoutLike(status) {
@@ -72,18 +75,18 @@
 				this.$emit('checkoutCollect', this.index, status)
 			},
 			toNewsDetail() {
-				if(parseInt(this.newsItem.in_house) === 1 ) {
+				if(this.ifOfficialAccountLink) {
+					// 跳外部公众号文章链接
+					if(wx.openOfficialAccountArticle) {
+						wx.openOfficialAccountArticle({
+							url: this.newsItem.source_link, // 此处填写公众号文章连接
+						})
+					}
+				} else {
 					// 跳小程序内部文章
 					uni.navigateTo({
 						url: `/page_news/newsDetail/newsDetail?id=${this.newsItem.id}`
 					});
-				} else if(parseInt(this.newsItem.in_house) === 0) {
-					// 跳外部公众号文章链接(TODO： url字段待定)
-					if(wx.openOfficialAccountArticle) {
-						wx.openOfficialAccountArticle({
-							url:'https://mp.weixin.qq.com/s/p-URMLjEJZwzu8ewLT8WPA', // 此处填写公众号文章连接
-						})
-					}
 				}
 			},
 			clickMore() {

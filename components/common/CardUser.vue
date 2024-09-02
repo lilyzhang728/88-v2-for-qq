@@ -5,7 +5,7 @@
 		<view class="card-user-right">
 			<view class="card-user-name-box">
 				<view class="card-user-name"  @click.native.stop="toHomepage($event)">
-					<text :class="{'card-user-name-text': isComment && item.is_post_author === 1}">{{item.author.name}}</text>
+					<text :class="{'card-user-name-text': isComment && item.is_post_author === 1}">{{ifOfficialAccountLink ? item.source : item.author.name}}</text>
 					<text class="card-user-name-author" v-if="isComment && item.is_post_author === 1">楼主</text>
 				</view>
 				<van-icon v-if="showMoreIcon" size="24rpx" color="#808080" name="arrow-down" @click.native.stop="clickMore($event)" />
@@ -54,6 +54,12 @@
 				default: false,
 				required: false
 			},
+			// 是否为外部公众号链接
+			ifOfficialAccountLink: {
+				type: Boolean,
+				default: false,
+				required: false
+			}
 		},
 		computed: {
 			avatar() {
