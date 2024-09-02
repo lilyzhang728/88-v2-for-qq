@@ -37,7 +37,7 @@
 			<!-- 发现、我的收藏显示信息区，我的创作显示但不能点击 -->
 			<view class="guide-item-card-infos" v-if="!hideAuthorLine">
 				<view class="guide-item-card-infos-left"  @click.native.stop="toHomepage($event)">
-					<img :src="guideItem.author.avatar" class="guide-item-card-user-img" alt="" v-if="!ifOfficialAccountLink">
+					<img :src="guideItem.author.avatar" class="guide-item-card-user-img" alt="" >
 					<text class="guide-item-card-user-name">{{ifOfficialAccountLink ? guideItem.source : guideItem.author.name}}</text>
 				</view>
 				<view class="guide-item-card-right-icons">
