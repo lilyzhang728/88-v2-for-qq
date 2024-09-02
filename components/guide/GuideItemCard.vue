@@ -20,13 +20,13 @@
 				<view class="guide-item-card-right-title" :class="{'guide-item-card-right-title-whole': showWholeTitle}">{{guideItem.title}}</view>
 				<van-icon size="24rpx" color="#808080" name="arrow-down" @click.native.stop="clickMore($event)" />
 			</view>
-			<view class="guide-item-card-right-description" :class="{'guide-item-card-right-description-whole': showWholeTitle}" v-if="guideItem.body.summary">{{guideItem.body.summary}}</view>
+			<view class="guide-item-card-right-description" :class="{'guide-item-card-right-description-whole': showWholeTitle}" v-if="!ifOfficialAccountLink && guideItem.body.summary">{{guideItem.body.summary}}</view>
 			<view class="guide-item-card-right-books">
 				<view class="guide-item-card-right-books-left">
-					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/matetialIcon.png" alt="" class="guide-item-card-right-book-item-icon" v-if="guideItem.body.references">
-					<text class="guide-item-card-right-book-item" v-if="guideItem.body.references">教辅*{{guideItem.body.references.length}}</text>
-					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/stepIcon.png" alt="" class="guide-item-card-right-book-item-icon" v-if="guideItem.body.steps">
-					<text class="guide-item-card-right-book-item" v-if="guideItem.body.steps">章节*{{guideItem.body.steps.length}}</text>
+					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/matetialIcon.png" alt="" class="guide-item-card-right-book-item-icon" v-if="!ifOfficialAccountLink && guideItem.body.references">
+					<text class="guide-item-card-right-book-item" v-if="!ifOfficialAccountLink && guideItem.body.references">教辅*{{guideItem.body.references.length}}</text>
+					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/stepIcon.png" alt="" class="guide-item-card-right-book-item-icon" v-if="!ifOfficialAccountLink && guideItem.body.steps">
+					<text class="guide-item-card-right-book-item" v-if="!ifOfficialAccountLink && guideItem.body.steps">章节*{{guideItem.body.steps.length}}</text>
 				</view>
 				<view class="guide-item-card-right-books-right">
 					<text class="guide-item-card-right-books-right-time" v-if="tabIndex!==2 && guideItem.timestamp">{{timestamp}}</text>
@@ -37,8 +37,8 @@
 			<!-- 发现、我的收藏显示信息区，我的创作显示但不能点击 -->
 			<view class="guide-item-card-infos" v-if="!hideAuthorLine">
 				<view class="guide-item-card-infos-left"  @click.native.stop="toHomepage($event)">
-					<img :src="guideItem.author.avatar" class="guide-item-card-user-img" alt="">
-					<text class="guide-item-card-user-name">{{guideItem.author.name}}</text>
+					<img :src="guideItem.author.avatar" class="guide-item-card-user-img" alt="" v-if="!ifOfficialAccountLink">
+					<text class="guide-item-card-user-name">{{ifOfficialAccountLink ? guideItem.source : guideItem.author.name}}</text>
 				</view>
 				<view class="guide-item-card-right-icons">
 					<img v-show="showEditBtn || guideItem.is_like" @click.native.stop="clickLike($event, false)"  src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/likeIcon.png" class="guide-item-card-right-icon-img" alt="">
@@ -142,6 +142,10 @@
 			timestamp() {
 				return this.guideItem.timestamp ? transformTime(this.guideItem.timestamp) : this.guideItem.timestamp
 			},
+			// 是否为外部公众号链接
+			ifOfficialAccountLink() {
+				return parseInt(this.guideItem.in_house) === 0
+			}
 		},
 		methods: {
 			// 点赞、评论 大数单位转化
@@ -215,18 +219,18 @@
 			//点击事件，跳转攻略详情
 			toGuideDetail() {
 				if(!this.forbiddenClick) {
-					if(parseInt(this.guideItem.in_house) === 1 ) {
+					if(this.ifOfficialAccountLink) {
+						// 跳外部公众号文章链接
+						if(wx.openOfficialAccountArticle) {
+							wx.openOfficialAccountArticle({
+								url: this.guideItem.source_link, // 此处填写公众号文章连接
+							})
+						}
+					} else {
 						// 跳小程序内部文章
 						uni.navigateTo({
 							url: `/page_guide/guideDetail/guideDetail?showEditBtn=${this.showEditBtn}&inDraft=${this.inDraft}&id=${this.guideItem.id}&cardIndex=${this.index}&tabIndex=${this.tabIndex}`
 						});
-					} else if(parseInt(this.guideItem.in_house) === 0) {
-						// 跳外部公众号文章链接(TODO： url字段待定)
-						if(wx.openOfficialAccountArticle) {
-							wx.openOfficialAccountArticle({
-								url:'https://mp.weixin.qq.com/s/p-URMLjEJZwzu8ewLT8WPA', // 此处填写公众号文章连接
-							})
-						}
 					}
 				}
 			},
