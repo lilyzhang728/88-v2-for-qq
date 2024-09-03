@@ -7,6 +7,7 @@
 				<van-tabs :active="active" animated @change.native="tabsChange" ref="tabs"
 				line-height="8rpx" line-width="60rpx" class="bbs-tabs" :swipeable="true">
 					<van-tab title="问答"></van-tab>
+					<van-tab title="讲学"></van-tab>
 					<van-tab title="向ta提问"></van-tab>
 				</van-tabs>
 				
@@ -21,6 +22,10 @@
 				<swiper-item class="swiper-item">
 					<!-- 问答 -->
 					<question-and-answer ref="questionAndAnswer" :active="active" @toastMsg="toastMsg"></question-and-answer>	
+				</swiper-item>
+				<swiper-item class="swiper-item">
+					<!-- 讲学 -->
+					<activity-infos ref="activityInfos"></activity-infos>	
 				</swiper-item>
 				<swiper-item class="swiper-item">
 					<!-- 人脉 -->
@@ -41,6 +46,7 @@
 	import PageTabs from '@/components/common/PageTabs.vue'
 	import QuestionAndAnswer from '@/components/qa/QuestionAndAnswer.vue'
 	import Connections from '@/components/qa/Connections.vue'
+	import ActivityInfos from '@/components/qa/ActivityInfos.vue'
 	import Toast from '@/wxcomponents/vant/toast/toast'
 	import SideAddBtn from '@/components/common/SideAddBtn.vue'
 	import TopSearchBox from '@/components/common/TopSearchBox.vue'
@@ -50,7 +56,8 @@
 			QuestionAndAnswer,
 			Connections,
 			SideAddBtn,
-			TopSearchBox
+			TopSearchBox,
+			ActivityInfos
 		},
 		data() {
 			return {

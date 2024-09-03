@@ -342,6 +342,15 @@
                 		"navigationBarTitleText" : "",
                 		"enablePullDownRefresh" : false
                 	}
+                },
+                {
+                	"path" : "activityInfoDetail/activityInfoDetail",
+                	"style" : 
+                	{
+                		"navigationBarTitleText" : "",
+                		"enablePullDownRefresh" : false,
+						"navigationStyle": "custom"
+                	}
                 }
             ]
 		}
