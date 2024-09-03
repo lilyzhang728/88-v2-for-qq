@@ -104,6 +104,12 @@
 									url: `/page_qa/connectionSearchResult/connectionSearchResult?searchVal=${searchVal}&postId=${this.postId}`
 								})
 								break
+							case 7:
+								// 跳转讲学搜索结果页
+								uni.navigateTo({
+									url: `/page_qa/actInfosSearchResult/actInfosSearchResult?searchVal=${searchVal}`
+								})
+								break
 						}
 						break
 					case 1:

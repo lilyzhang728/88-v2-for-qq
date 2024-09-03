@@ -351,6 +351,14 @@
                 		"enablePullDownRefresh" : false,
 						"navigationStyle": "custom"
                 	}
+                },
+                {
+                	"path" : "actInfosSearchResult/actInfosSearchResult",
+                	"style" : 
+                	{
+                		"navigationBarTitleText" : "",
+                		"enablePullDownRefresh" : false
+                	}
                 }
             ]
 		}

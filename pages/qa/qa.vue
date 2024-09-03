@@ -98,9 +98,9 @@
 			},
 			// 搜索帖子
 			toSearch() {
-				// 0:搜索文章  1:搜索徽章  2:搜索话题
-				const searchContentType = 0	
-				let tabIndex = this.active ? 6 : 5
+				const searchContentType = 0		// 0:搜索文章  1:搜索徽章  2:搜索话题
+				const tabIndexMap = [5, 7, 6]	
+				let tabIndex = tabIndexMap[this.active]
 				uni.navigateTo({
 					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=${tabIndex}&searchVal=${this.searchVal}&searchContentType=${searchContentType}`
 				})
