@@ -132,23 +132,11 @@
 		},
 		onLoad(option) {
 			this.id = option.id
+			this.customBar = uni.getStorageSync('customBar')
+			this.getNewsDetail()
 		},
 		onUnload() {
 			this.startGetComment = false
-		},
-		onShow() {
-			uni.getSystemInfo({
-				success: (e) => {
-					// #ifdef MP-WEIXIN
-					this.statusBar = e.statusBarHeight
-					this.windowHeight = e.windowHeight
-					// @ts-ignore
-					const custom = wx.getMenuButtonBoundingClientRect()
-					this.customBar = custom.bottom + custom.top - e.statusBarHeight
-					// #endif
-				}
-			})
-			this.getNewsDetail()
 		},
 		methods: {
 			imgError() {

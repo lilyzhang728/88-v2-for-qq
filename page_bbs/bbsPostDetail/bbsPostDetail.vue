@@ -152,23 +152,11 @@
 			if(option.from) {
 				this.from = option.from
 			}
+			this.customBar = uni.getStorageSync('customBar')
 			this.getPostDetail()
 		},
 		onUnload() {
 			this.startGetComment = false
-		},
-		onShow() {
-			uni.getSystemInfo({
-				success: (e) => {
-					// #ifdef MP-WEIXIN
-					this.statusBar = e.statusBarHeight
-					this.windowHeight = e.windowHeight
-					// @ts-ignore
-					const custom = wx.getMenuButtonBoundingClientRect()
-					this.customBar = custom.bottom + custom.top - e.statusBarHeight
-					// #endif
-				}
-			})
 		},
 		methods: {
 			// 预览图片
