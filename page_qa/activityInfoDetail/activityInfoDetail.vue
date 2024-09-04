@@ -434,7 +434,7 @@
 			font-size: 24rpx;
 			color: rgba(0,0,0,0.5);
 			line-height: 33rpx;
-			width: 320rpx;
+			width: 80%;
 			text-align: left;
 		}
 		.more-icon {
