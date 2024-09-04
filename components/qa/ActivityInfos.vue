@@ -43,7 +43,7 @@
 			getRecNewsList(pageNo, pageSize) {
 				return new Promise((resolve, reject) => {
 					recArticle({
-						'post_type': 2,	//5
+						'post_type': 5,
 						'per_page': pageSize,
 						'page': pageNo,
 					}).then(res => {
