@@ -109,6 +109,10 @@
 			swiperAnimationfinish(e) {
 				this.active = e.detail.current;
 			},
+			backRefresh() {
+				const refList = ['questionAndAnswer', 'activityInfos', 'connections']
+				this.$refs[refList[this.active]].$refs.paging.reload()
+			}
 		}
 	}
 </script>

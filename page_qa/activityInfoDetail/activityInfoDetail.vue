@@ -38,7 +38,7 @@
 			<!-- 评论区 -->
 			<view class="bbs-post-detail-comment">
 				<view class="bbs-post-detail-comment-total">共{{commentNum}}条评论</view>
-				<bbs-post-comment :commentData="dataList" :hideReply="true" 
+				<bbs-post-comment @reply="reply" :commentData="dataList" :hideReply="true" 
 				@checkoutCommentLike="checkoutCommentLike" @commentLongpress="commentLongpress"></bbs-post-comment>
 			</view>
 		</z-paging>
@@ -112,6 +112,10 @@
 				startGetComment: false,	//开始请求评论
 				contentId: '',		// 传给长按面板的内容id （帖子/评论）
 				actionType: 0,		// 长按面板内容类型：0：帖子，1：评论，2：话题
+				curReplyLevel: 0,	//当前回复的评论是1级/2级
+				curReplyId: '',		//当前回复的评论的id
+				curReplyIndex: 0,	//如果回复的是2级评论，2级评论所属1级评论的Index
+				curReplySubIndex: 0,	//如果回复的是2级评论，2级评论的Index
 			}
 		},
 		computed: {
@@ -269,8 +273,18 @@
 			},
 			//点击底部输入框（说点什么……）评论帖子（1级评论）
 			clickInput() {
+				//当前回复的是0级（发1级评论）
+				this.curReplyLevel = 0
 				//打开评论键盘
 				this.showReply = true
+			},
+			//点击某一条评论（2级评论）
+			reply(item, level, index, subIndex) {
+				this.curReplyId = item.id
+				this.curReplyLevel = level
+				this.curReplyIndex = index
+				this.curReplySubIndex = subIndex
+				this.showReply = true				//打开评论键盘
 			},
 			//发送评论（调评论接口）
 			submit(val) {
@@ -278,6 +292,10 @@
 				let params = {
 					body: utf16toEntities(val),
 					post_id: this.actInfoData.id
+				}
+				if(this.curReplyLevel > 0) {
+					//回复评论（当前为2级评论）
+					params.parent_id = this.curReplyId
 				}
 				postComment(params).then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
@@ -292,7 +310,24 @@
 			},
 			// 处理发评论回显：回复0级回显到1级的第1条，回复1级回显到2级的第1条，回复2级回显到回复的评论下面
 			showReplyComment(comment) {
-				this.dataList.unshift(comment)
+				switch (this.curReplyLevel){
+					case 0:
+						this.dataList.unshift(comment)
+						break;
+					case 1:
+						comment.is_first_descend = true
+						if(Object.keys(this.dataList[this.curReplyIndex]).indexOf('descendants') < 0) {
+							this.$set(this.dataList[this.curReplyIndex], 'descendants', [])
+						}
+						this.dataList[this.curReplyIndex].descendants.unshift(comment)
+						break;
+					case 2:
+						comment.is_first_descend = false
+						this.dataList[this.curReplyIndex].descendants.splice(this.curReplySubIndex+1, 0, comment)
+						break;
+					default:
+						break;
+				}
 			},
 			//评论区：（对评论）切换评论点赞状态
 			checkoutCommentLike(index, status) {
@@ -348,6 +383,7 @@
 				this.actionType = 0
 				this.$refs.deleteAndComplaint.handleLongpress()
 			},
+			
 		}
 	}
 </script>
