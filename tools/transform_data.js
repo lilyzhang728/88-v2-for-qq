@@ -124,7 +124,7 @@ export const emergency_value_key_map = {
 
 export const article_type_key_value_map = {
 	1: '攻略',
-	2: '情报',
+	2: '资讯',
 	3: '动态',
 	4: '提问'
 }

@@ -1,9 +1,9 @@
-<!-- 新增情报 -->
+<!-- 新增资讯 -->
 <template>
 	<view class="add-news" :style="{backgroundImage: backgroundImage,backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
 		<z-paging ref="paging" :paging-style="{'top': '0px', 'left': '25rpx', 'right': '25rpx'}">
 			<template #top>
-				<back-topbar title="发布情报" class="add-news-title"></back-topbar>
+				<back-topbar title="发布资讯" class="add-news-title"></back-topbar>
 			</template>
 			
 			<view class="add-new-post-edit">
@@ -33,7 +33,7 @@
 					:value="postVal"
 					type="textarea"
 					:show-confirm-bar="false"
-					placeholder="请输入情报正文"
+					placeholder="请输入资讯正文"
 					autosize
 					:border="false"
 					@change.native="inputPost($event)"
@@ -47,7 +47,7 @@
 					class="add-new-post-edit-title-wrap"
 					input-class="add-new-post-edit-title"
 					:value="urlVal"
-					placeholder="请输入情报链接"
+					placeholder="请输入资讯链接"
 					autosize
 					:border="false"
 					@change.native="inputUrl($event)"
@@ -294,7 +294,7 @@
 						'body': {
 							'body': this.postVal,
 							'urls': this.transformImg(),
-							'source': this.urlVal,	// 情报来源
+							'source': this.urlVal,	// 资讯来源
 						},
 						'post_type': 2,
 						'status': 1

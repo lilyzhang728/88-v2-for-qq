@@ -33,7 +33,7 @@
 			</view>
 			
 			<!-- 链接 -->
-			<view class="news-detail-url-title" v-if="newsData.body.source">情报来源：</view>
+			<view class="news-detail-url-title" v-if="newsData.body.source">资讯来源：</view>
 			<view class="news-detail-url" v-if="newsData.body.source" @click="clickLink">
 				<img class="guide-detail-step-link-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/linkIcon.png" alt="">
 				{{newsData.body.source}}
