@@ -29,8 +29,8 @@
 					<text class="guide-item-card-right-book-item" v-if="!ifOfficialAccountLink && guideItem.body.steps">章节*{{guideItem.body.steps.length}}</text>
 				</view>
 				<view class="guide-item-card-right-books-right">
-					<text class="guide-item-card-right-books-right-time" v-if="tabIndex!==2 && guideItem.timestamp">{{timestamp}}</text>
-					<text class="guide-item-card-right-books-right-status" v-if="tabIndex==2 && (guideItem.status === 0 || guideItem.status === 1)">{{guideItem.status ? '已发布' : '未发布'}}</text>
+					<text class="guide-item-card-right-books-right-time" v-if="!isMine && guideItem.timestamp">{{timestamp}}</text>
+					<text class="guide-item-card-right-books-right-status" v-if="isMine && (guideItem.status === 0 || guideItem.status === 1)">{{guideItem.status ? '已发布' : '未发布'}}</text>
 				</view>
 				
 			</view>
@@ -61,12 +61,6 @@
 	import { transformMaxNum, transformTime } from '@/tools/transform_time.js'
 	export default {
 		props: {
-			//swiper的Index: 0-发现，1-我的收藏，2-我的创作
-			tabIndex: {
-				type: Number,
-				required: true,
-				default: 0
-			},
 			//card的index
 			index: {
 				type: Number,
@@ -124,13 +118,9 @@
 			}
 		},
 		computed: {
-			// 跳转详情页后，是否显示底部btn（编辑|发布）：发现、我的收藏不显示；我的创作显示. 此值为true为我创作的攻略，false为别人的
+			// 跳转详情页后，是否显示底部btn（编辑|发布）：只有我创作的才显示
 			showEditBtn() {
-				return this.tabIndex === 2
-			},
-			// 是否是草稿/未发布状态：跳转详情页后，是否显示底部“发布”按钮：未发布显示；已发布不显示
-			inDraft() {
-				return !this.guideItem.status
+				return this.isMine
 			},
 			bookname() {
 				return this.guideItem.title.substr(0, 3) + '···'
@@ -145,6 +135,11 @@
 			// 是否为外部公众号链接
 			ifOfficialAccountLink() {
 				return parseInt(this.guideItem.in_house) === 0
+			},
+			// 是否是我创作的帖子
+			isMine() {
+				const userId = uni.getStorageSync('userId')
+				return userId === this.guideItem.author.id
 			}
 		},
 		methods: {
@@ -229,14 +224,14 @@
 					} else {
 						// 跳小程序内部文章
 						uni.navigateTo({
-							url: `/page_guide/guideDetail/guideDetail?showEditBtn=${this.showEditBtn}&inDraft=${this.inDraft}&id=${this.guideItem.id}&cardIndex=${this.index}&tabIndex=${this.tabIndex}`
+							url: `/page_guide/guideDetail/guideDetail?showEditBtn=${this.showEditBtn}&id=${this.guideItem.id}&cardIndex=${this.index}`
 						});
 					}
 				}
 			},
 			//长按事件，弹起选项面板，只有“我的创作” 能操作 编辑/删除
 			handleLongpress() {
-				if(!this.forbiddenClick && this.tabIndex === 2) {
+				if(!this.forbiddenClick && this.isMine) {
 					this.$emit('openOptionSheet', this.index, this.guideItem.id, this.guideItem.status)
 				}
 			},

@@ -206,7 +206,7 @@
 					//编辑攻略，请求回显数据
 					this.ifEdit = true
 					this.published = Number(option.status) === 1
-					this.getGuideDetail(option.guideId, option.active)
+					this.getGuideDetail(option.guideId)
 				}
 			}
 		},
@@ -225,9 +225,7 @@
 			})
 		},
 		methods: {
-			//获取攻略详情  active:0-发现 1-收藏 2-我的创作
-			getGuideDetail(id, active) {
-				let _active = active ? active : 0
+			getGuideDetail(id) {
 				guideDetail(id).then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
 						if(res.data.status === 1) {

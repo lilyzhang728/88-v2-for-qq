@@ -137,6 +137,15 @@
                     "enablePullDownRefresh": false
                 }
                 
+                },
+                {
+                	"path" : "guideEditBlank/guideEditBlank",
+                	"style" : 
+                	{
+                		"navigationBarTitleText" : "",
+                		"enablePullDownRefresh" : false,
+						"navigationStyle": "custom"
+                	}
                 }
             ]
 		},{

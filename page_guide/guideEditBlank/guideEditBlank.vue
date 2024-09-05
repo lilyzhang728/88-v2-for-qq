@@ -1,17 +1,17 @@
-<!-- 提问页面 -->
+<!-- 攻略编辑页((无模板) -->
 <template>
-	<view class="ask-question" :style="{backgroundImage: backgroundImage,backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<back-topbar title="发布问题"></back-topbar>
+	<view class="guide-edit-blank" :style="{backgroundImage: backgroundImage,backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
+		<back-topbar :title="ifEdit ? '编辑攻略' : '新建攻略'"></back-topbar>
 		
 		<!-- 编辑 -->
-		<view class="add-new-post-edit">
-			<!-- 问题标题 -->
-			<view class="add-new-post-edit-title">
+		<view class="guide-edit">
+			<!-- 标题 -->
+			<view class="guide-edit-title">
 				<van-field
-					class="add-new-post-edit-title-wrap"
-					input-class="add-new-post-edit-title"
-					:value="title"
-					placeholder="请输入问题"
+					class="guide-edit-title-wrap"
+					input-class="guide-edit-title"
+					:value="guideInfo.title"
+					placeholder="请输入标题"
 					auto-focus
 					:border="false"
 					@change.native="inputTitle($event)"
@@ -22,16 +22,16 @@
 				  />
 			</view>
 			
-			<view class="add-new-post-edit-title-split"></view>
+			<view class="guide-edit-title-split"></view>
 			
-			<!-- 问题正文 -->
+			<!-- 正文 -->
 			<van-field
-				class="add-new-post-edit-textarea-wrap"
-				input-class="add-new-post-edit-textarea"
-				:value="postVal"
+				class="guide-edit-textarea-wrap"
+				input-class="guide-edit-textarea"
+				:value="guideInfo.postVal"
 				type="textarea"
 				:show-confirm-bar="false"
-				placeholder="请输入问题详情"
+				placeholder="请输入攻略正文"
 				autosize
 				:border="false"
 				@change.native="inputPost($event)"
@@ -47,21 +47,19 @@
 			use-before-read @beforeRead.native="beforeRead" multiple
 			@afterRead.native="afterRead" @delete.native="deleteImg">
 			</van-uploader>
+			
+			<view>
+				<van-button color="#35C8A7" round class="bottom-btn-wrap" custom-class="bottom-btn" @click.native="toGuideEdit">使用模板</van-button>
+			</view>
 		</view>
 		
+		<view class="add-new-post-edit-title-split-bottom"></view>
+		
 		<!-- 弹起键盘 -->
-		<view class="add-new-post-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
-			<view class="add-new-post-keyboard-topic" v-if="userName">
-				<!-- <img class="add-new-post-keyboard-topic-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt=""> -->
-				<text class="add-new-post-keyboard-topic-icon">@</text>
-				<text class="add-new-post-keyboard-topic-text">{{userName}}</text>
-				<!-- <van-icon v-if="!selectedTopic" name="arrow" size="20px" color="#d9d9d9" /> -->
-				<!-- <van-icon v-else name="cross" size="20px" color="#d9d9d9" @click.native.stop="clearTopic($event)" /> -->
-			</view>
-			
+		<view class="guide-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
 			<!-- 发布按钮 -->
 			<view class="view-btn-box">
-				<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="!postVal || !title" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
+				<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="disabledPublish" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
 			</view>
 		</view>
 		
@@ -80,29 +78,37 @@
 <script>
 	import BackTopbar from '@/components/common/BackTopbar.vue'
 	import Toast from '@/wxcomponents/vant/toast/toast'
-	import { addGuide } from '@/network/api_guide.js'
+	import { addGuide, guideDetail, editGuide } from '@/network/api_guide.js'
 	import { imgSecCheck } from "@/tools/sec_check.js"
-	import { invideUserAnswer } from '@/network/api_qa.js'
+	const BOOK_IMG_LIST = [
+		'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/book1.png',
+		'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/book2.png',
+		'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/book3.png',
+		'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/book4.png',
+		'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/book5.png',
+		'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/book6.png'
+	]
 	export default {
 		components: {
 			BackTopbar
 		},
 		data() {
 			return {
-				title: '',
-				postVal: '',	//提问内容
+				guideInfo: {
+					title: '',
+					postVal: '',	//提问内容
+				},
 				bottomVal: '0px',	//键盘上话题bottom
 				postImgList: [],	//上传图片list
 				showKeyboard: true,
-				// keyboardHeight: this.userName ? '85px' : '54px',	//键盘上话题height	1行54px，2行85px
-				userName: '',
-				userId: '',
 				w: 0,
 				h: 0,
 				cloud_path: '',	//上传至对象存储的地址（单张）
 				cloud_path_split: '',	//上传至对象存储的地址-截断（单张）
 				fileID_list: [],	//上传至对象存储的地址（多张）
-				fileID_list_split: []	//上传至对象存储的地址-截断（多张）
+				fileID_list_split: []	,//上传至对象存储的地址-截断（多张）
+				timestamp: null,	//时间戳，用于确定该用户创建的这篇攻略的所有图片的唯一文件夹名
+				ifEdit: false,		//true为编辑页，false为新建页
 			}
 		},
 		computed: {
@@ -117,25 +123,63 @@
 				return uni.getStorageSync('screenWidth')
 			},
 			keyboardHeight() {
-				return this.userName ? '85px' : '54px'
+				return '54px'
+			},
+			disabledPublish() {
+				return !(this.guideInfo.postVal && this.guideInfo.title)
+			},
+			cover_url() {
+				let index = Math.floor(Math.random() * 6)
+				return BOOK_IMG_LIST[index]
 			}
 		},
 		onLoad(option) {
-			this.userName = option.userName ? option.userName : ''
-			this.userId = option.userId ? option.userId : ''
+			if(option.guideId) {
+				if(option.guideId) {
+					//编辑攻略，请求回显数据
+					this.ifEdit = true
+					this.guideId = option.guideId
+					this.getGuideDetail(option.guideId)
+				}
+			}
 		},
 		methods: {
+			//获取攻略详情  active:0-发现 1-收藏 2-我的创作
+			getGuideDetail(id) {
+				guideDetail(id).then(res => {
+					if(res.code === 0 && Object.keys(res.data).length) {
+						// if(res.data.status === 1) {
+						// 	//已发布, 不显示“保存草稿”
+						// 	this.published = true
+						// }
+						this.guideInfo.title = res.data.title
+						this.guideInfo.postVal = res.data.body.body
+					} else {
+						//接口返回失败，返回上一页， 并刷新
+						uni.navigateBack({
+						    success: () => {
+						         let page = getCurrentPages().pop();//跳转页面成功之后
+						         if (page) {
+									 page.$vm.backRefresh('guide')
+						         } 
+						    },
+						})
+					}
+				}, err => {
+					console.log('guideDetail: ', err)
+				})
+			},
 			// rpx转px
 			rpxToPx(rpx) {
 			  return (this.screenWidth * Number.parseInt(rpx)) / 750
 			},
 			//输入标题
 			inputTitle(e) {
-				this.title = e.detail
+				this.guideInfo.title = e.detail
 			},
 			//编辑输入帖子
 			inputPost(e) {
-				this.postVal = e.detail
+				this.guideInfo.postVal = e.detail
 			},
 			inputBindFocus(e) {
 				// 获取手机键盘的高度，赋值给input 所在盒子的 bottom 值
@@ -306,7 +350,7 @@
 						Promise.all(path_promise_list).then(res => {
 							this.fileID_list = [...res]
 							let fileID_list_split = res.map((item) => {
-								return item.slice(item.indexOf('qa'))
+								return item.slice(item.indexOf('guide'))
 							})
 							this.fileID_list_split = [...fileID_list_split]
 							
@@ -321,7 +365,7 @@
 						// 上传1张
 						this.uploadToCloud(file).then(res => {
 							this.cloud_path = res
-							this.cloud_path_split = res.slice(item.indexOf('qa'))
+							this.cloud_path_split = res.slice(item.indexOf('guide'))
 							resolve(this.cloud_path_split)
 						}).catch(err => {
 							// 上传失败，从本地文件列表中删除
@@ -338,12 +382,12 @@
 					//回显（显示loading）
 					this.postImgList.push({})
 					this.$set(this.postImgList[this.postImgList.length-1], 'status', 'uploading')
-					// 上传至云存储, 文件路径为 qa/userid/时间戳/随机数.jpg
+					// 上传至云存储, 文件路径为 guide/userid/时间戳/随机数.jpg
 					const userId = uni.getStorageSync('userId')
 					this.timestamp = this.timestamp ? this.timestamp : new Date().getTime()
 					let num = this.generateRandomNumber()
 					wx.cloud.uploadFile({
-					  cloudPath: `qa/${userId}/${this.timestamp}/${num}.jpg`, // 对象存储路径，根路径直接填文件名，文件夹例子 test/文件名，不要 / 开头
+					  cloudPath: `guide/${userId}/${this.timestamp}/${num}.jpg`, // 对象存储路径，根路径直接填文件名，文件夹例子 test/文件名，不要 / 开头
 					  filePath: item.tmp_url, 
 					  config: {
 					    env: 'prod-4gkvfp8b0382845d' // 需要替换成自己的微信云托管环境ID
@@ -459,56 +503,44 @@
 			},
 			//发帖
 			send() {
-				if(this.postVal && this.title) {
-					addGuide({
-						'title': this.title,
+				//只要点发布，无论新建还是编辑，状态都置为1（已发布）
+				if(this.ifEdit) {
+					// 当前为编辑页
+					this.handleEditGuide()
+				} else {
+					// 当前为新增页
+					this.handleAddGuide()
+				}
+			},
+			//调用编辑接口
+			handleEditGuide() {
+				if(this.disabledPublish) {
+					// 未通过必输校验
+					return
+				} else {
+					// 通过必输校验，或者保存草稿箱
+					editGuide({
+						'title': this.guideInfo.title,
 						'body': {
-							'body': this.postVal,
-							'urls': this.transformImg()
+							body: this.guideInfo.postVal,
+							cover_url: this.cover_url,
+							type: 0		//0-自定义，1-模板
 						},
-						'post_type': 4,
-						'status': 1,
-						'topics': this.selectedTopic ? [this.addedTopicContent.id] : []
+						'post_type': 1,
+						'id': this.guideId,
+						'status': 1
 					}).then(res => {
-						if(res.code === 0 && Object.keys(res.data).length) {
-							if(this.userId) {
-								// 关联被邀请人
-								invideUserAnswer({
-									'user_id': this.userId,
-									'id': res.data.id
-								}).then(res2 => {
-									if(res2.code === 0) {
-										//发布成功，回到列表页，并刷新列表
-										uni.navigateBack({
-										    success: () => {
-										         let page = getCurrentPages().pop();//跳转页面成功之后
-										         if (page) {
-													page.$vm.active = 0
-										            page.$vm.$refs.questionAndAnswer.$refs.paging.reload()
-													page.$vm.$refs.questionAndAnswer.toastMsg(true)
-												 } 
-										    },
-										})
-									}  else {
-										Toast('邀请失败')
-									}
-								}, err => {
-									Toast('邀请失败')
-									console.log('invideUserAnswer: ', err)
-								})
-							} else {
-								//发布成功，回到列表页，并刷新列表
-								uni.navigateBack({
-								    success: () => {
-								         let page = getCurrentPages().pop();//跳转页面成功之后
-										 if (page) {
-											page.$vm.active = 0
-								            page.$vm.$refs.questionAndAnswer.$refs.paging.reload()
-											page.$vm.$refs.questionAndAnswer.toastMsg(true)
-										 } 
-								    },
-								})
-							}
+						if(res.code === 0) {
+							//编辑成功，回到上一页
+							Toast('发布成功！')
+							uni.navigateBack({
+							    success: () => {
+							         let page = getCurrentPages().pop();//跳转页面成功之后
+									 if (page) {
+										page.$vm.backRefresh()
+									 } 
+							    },
+							})
 						} else {
 							Toast('发布失败')
 						}
@@ -516,56 +548,110 @@
 						Toast('发布失败')
 						console.log('addGuide: ', err)
 					})
-					// this.$emit("submit",this.val)
-					// this.val = '';
 				}
 			},
+			//调用新建接口
+			handleAddGuide() {
+				if(this.disabledPublish) {
+					// 未通过必输校验
+					return
+				} else {
+					// 通过必输校验，或者保存草稿箱
+					addGuide({
+						'title': this.guideInfo.title,
+						'body': {
+							body: this.guideInfo.postVal,
+							cover_url: this.cover_url,
+							type: 0		//0-自定义，1-模板
+						},
+						'post_type': 1,
+						'status': 1
+					}).then(res => {
+						if(res.code === 0) {
+							//发布成功，回到列表页，并刷新列表
+							Toast('发布成功！')
+							// 3个入口：1./userful 2. /mine/myProduction 3./guideDetail
+							uni.navigateBack({
+								success: () => {
+									 let page = getCurrentPages().pop();//跳转页面成功之后
+									 if (page) {
+										 page.$vm.backRefresh('guide')
+									 } 
+								},
+							})
+						} else {
+							Toast('发布失败')
+						}
+					}, err => {
+						Toast('发布失败')
+						console.log('addGuide: ', err)
+					})
+				}
+			},
+			// 使用模板
+			toGuideEdit() {
+				uni.navigateTo({
+					url: '/page_guide/guideEdit/guideEdit'
+				});
+			}
 		}
 	}
 </script>
 
 <style lang="less" scoped>
-.ask-question {
+.guide-edit-blank {
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
 	padding: 0 25rpx;
-	.add-new-post-edit {
-		.add-new-post-edit-textarea-wrap {
-			/deep/ .add-new-post-edit-textarea{
+	.guide-edit {
+		.guide-edit-textarea-wrap {
+			/deep/ .guide-edit-textarea{
 				min-height: 100px;
 			}
 		}
-		.add-new-post-edit-title-wrap {
-			.add-new-post-edit-title {
+		.guide-edit-title-wrap {
+			.guide-edit-title {
 			}
 		}
-		.add-new-post-edit-title-split {
+		.guide-edit-title-split {
 			height: 1px;
 			border-bottom: 1px solid #EAEAEA;
 			margin: 0 25rpx;
 		}
+		.bottom-btn-wrap {
+			margin-top: 20rpx;
+			/deep/ .bottom-btn {
+				
+			}
+		}
 	}
-	.add-new-post-keyboard {
+	.add-new-post-edit-title-split-bottom {
+		height: 1px;
+		border-bottom: 1px solid transparent;
+		margin: 0 25rpx;
+		margin-bottom: 80rpx;
+	}
+	.guide-keyboard {
 		position: fixed;
 		left: 0;
 		right: 0;
 		box-sizing: border-box;
 		padding: 12px;
 		background-color: #fff;
-		.add-new-post-keyboard-topic {
+		.guide-keyboard-topic {
 			height: 25px;
 			display: flex;
 			margin-bottom: 10px;
 			align-items: center;
-			.add-new-post-keyboard-topic-icon {
+			.guide-keyboard-topic-icon {
 				font-size: 40rpx;
 				color: #35C8A7;
 				font-weight: bold;
 			}
-			.add-new-post-keyboard-topic-text {
+			.guide-keyboard-topic-text {
 				// margin-left: 10px;
 				flex: 1;
 				width: 0;

@@ -5,35 +5,44 @@
 		<z-paging ref="paging" :paging-style="{'top': (customBar) + 'px', 'bottom': pagingBottom, paddingLeft: '25rpx', paddingRight: '25rpx'}">
 			<view @longpress="handleLongpress">
 				<!-- 基本信息 -->
-				<guide-item-card  hideBorder="true" :guideItem="guideData" :index="cardIndex" :forbiddenClick="true" :tabIndex="tabIndex"
+				<guide-item-card  hideBorder="true" :guideItem="guideData" :index="cardIndex" :forbiddenClick="true"
 				@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect" :showMoreIcon="from === 'mine'"
 				@clickMore="clickMore" :showWholeTitle="true"></guide-item-card>
 				
-				<!-- 教辅材料 -->
-				<view class="guide-detail-material" v-if="showReferences">
-					<view class="guide-detail-material-title">关键词/教辅</view>
-					<view class="guide-detail-material-content">
-						<view class="guide-detail-material-item" v-for="(item, index) in referencesList" :key="index">
-							<view class="guide-detail-material-item-box" v-if="item">
-								<view class="guide-detail-material-item-index">{{index+1}}</view>
-								<view class="guide-detail-material-item-text">{{item}}</view>
+				<!-- 以下为非模板创建的 -->
+				<view v-if="isCustomer">
+					<view class="guide-detail-customer-body">{{guideData.body.body}}</view>
+				</view>
+				
+				<!-- 以下为模板创建的 -->
+				<view v-else>
+					<!-- 教辅材料 -->
+					<view class="guide-detail-material" v-if="showReferences">
+						<view class="guide-detail-material-title">关键词/教辅</view>
+						<view class="guide-detail-material-content">
+							<view class="guide-detail-material-item" v-for="(item, index) in referencesList" :key="index">
+								<view class="guide-detail-material-item-box" v-if="item">
+									<view class="guide-detail-material-item-index">{{index+1}}</view>
+									<view class="guide-detail-material-item-text">{{item}}</view>
+								</view>
 							</view>
 						</view>
 					</view>
+					
+					<!-- 步骤 -->
+					<view class="guide-detail-step-box">
+						<guide-detail-step v-for="(item, index) in guideData.body.steps" :key="index" :index="index" :stepData="item"></guide-detail-step>
+					</view>
+					
+					<!-- 小贴士 -->
+					<view class="guide-detail-tip" v-if="guideData.body.tips">
+						<view class="guide-detail-tip-title">
+							<img class="guide-detail-tip-title-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/tipIcon.png" alt="">
+							小贴士</view>
+						<view class="guide-detail-tip-content">{{guideData.body.tips}}</view>
+					</view>
 				</view>
 				
-				<!-- 步骤 -->
-				<view class="guide-detail-step-box">
-					<guide-detail-step v-for="(item, index) in guideData.body.steps" :key="index" :index="index" :stepData="item"></guide-detail-step>
-				</view>
-				
-				<!-- 小贴士 -->
-				<view class="guide-detail-tip" v-if="guideData.body.tips">
-					<view class="guide-detail-tip-title">
-						<img class="guide-detail-tip-title-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/tipIcon.png" alt="">
-						小贴士</view>
-					<view class="guide-detail-tip-content">{{guideData.body.tips}}</view>
-				</view>
 			</view>
 		</z-paging>
 		<!-- 草稿箱里的攻略并排显示2个按钮：发布 | 编辑 -->
@@ -42,7 +51,7 @@
 			<van-button @tap="handleEdit" block icon="edit" class="guide-detail-btn-wrap guide-detail-btn-wrap-plain" custom-class="guide-detail-btn">编辑</van-button>
 			<van-button @tap="handlePublish" block icon="guide-o" class="guide-detail-btn-wrap" custom-class="guide-detail-btn">发布</van-button>
 		</view>
-		<!-- 我的创作跳转过来，并且不在草稿箱里时，只显示”编辑“（因为已经是发布过的了） -->
+		<!-- 是我创作的，并且不在草稿箱里时，只显示”编辑“（因为已经是发布过的了） -->
 		<view class="guide-detail-btn-box guide-detail-btn-box-single" v-if="showEditBtn && !inDraft">
 			<van-button @tap="handleEdit" block icon="edit" class="guide-detail-btn-wrap" custom-class="guide-detail-btn">编辑</van-button>
 		</view>
@@ -72,8 +81,6 @@
 		},
 		data() {
 			return {
-				showEditBtn: true,			//是否显示编辑按钮（发现、我的收藏：不显示btn；我的创作：显示btn）
-				inDraft: false,				//是否是草稿（未发布）
 				customBar: 0,
 				id: '',
 				guideData: {
@@ -84,7 +91,8 @@
 					body: {
 						references: [],
 						steps: [],
-						tips: ''
+						tips: '',
+						type: 0
 					},
 					collectors_count: 0,
 					likers_count: 0,
@@ -96,7 +104,6 @@
 					is_like: false,
 					is_collect: false
 				},
-				tabIndex: 0,	//跳转前card所在的tab:0-发现，1-我的收藏，2-我的创作
 				contentId: '',		// 传给长按面板的内容id （帖子/评论）
 				from: '',			// from==='mine',表示从我的页面跳转过来，需要加more-icon
 			}
@@ -124,31 +131,28 @@
 				} else {
 					return [];
 				}
+			},
+			// 是否显示编辑按钮(只有我创作的才会显示)
+			showEditBtn() {
+				const userId = uni.getStorageSync('userId')
+				return userId == this.guideData.author.id
+			},
+			//是否是草稿（未发布） 是否显示底部“发布”按钮：未发布显示；已发布不显示
+			inDraft() {
+				return !this.guideData.status
+			},
+			// 是否为非模板创建的  body.type区分（0-自定义，1-模板）
+			isCustomer() {
+				return this.guideData.body.type === 0
 			}
 		},
 		onLoad(option) {
-			this.showEditBtn = JSON.parse(option.showEditBtn)
-			this.inDraft = JSON.parse(option.inDraft)
+			this.customBar = uni.getStorageSync('customBar')
 			this.id = option.id
 			this.cardIndex = Number(option.cardIndex)
-			this.tabIndex = Number(option.tabIndex)
 			if(option.from) {
 				this.from = option.from
 			}
-		},
-		onShow() {
-			let that = this
-			uni.getSystemInfo({
-				success: (e) => {
-					// #ifdef MP-WEIXIN
-					this.statusBar = e.statusBarHeight
-					this.windowHeight = e.windowHeight
-					// @ts-ignore
-					const custom = wx.getMenuButtonBoundingClientRect()
-					this.customBar = custom.bottom + custom.top - e.statusBarHeight
-					// #endif
-				}
-			})
 			this.getGuideDetail()
 		},
 		methods: {
@@ -174,9 +178,17 @@
 			},
 			handleEdit() {
 				// 跳转编辑页面，guideId为当前攻略id，用于在编辑页回显数据
-				uni.navigateTo({
-					url: `/page_guide/guideEdit/guideEdit?guideId=${this.guideData.id}&active=${this.tabIndex}$status=${this.guideData.status}`
-				});
+				if(this.isCustomer) {
+					// 非模板
+					uni.navigateTo({
+						url: `/page_guide/guideEditBlank/guideEditBlank?guideId=${this.guideData.id}`
+					});
+				} else {
+					// 模板
+					uni.navigateTo({
+						url: `/page_guide/guideEdit/guideEdit?guideId=${this.guideData.id}&status=${this.guideData.status}`
+					});
+				}
 			},
 			//发布
 			handlePublish() {
@@ -241,7 +253,7 @@
 					},
 				})
 			},
-			clickMore() {
+ 			clickMore() {
 				// 参数： id, type: 0：帖子，1：评论，2：话题
 				this.contentId = this.id
 				this.$refs.deleteAndComplaint.handleLongpress()
@@ -258,6 +270,13 @@
 		left: 0;
 		bottom: 0;
 		padding: 0 25rpx;
+		.guide-detail-customer-body {
+			margin-top: 40rpx;
+			color: rgba(0, 0, 0, 0.8);
+			line-height: 56rpx;
+			font-size: 34rpx;
+			white-space: pre-line;
+		}
 		.guide-detail-material {
 			padding: 20rpx 0 30rpx 0;
 			margin-top: 33rpx;

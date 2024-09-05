@@ -124,7 +124,7 @@
 				} else {
 					// 跳转至新增攻略页
 					uni.navigateTo({
-						url: '/page_guide/guideEdit/guideEdit'
+						url: '/page_guide/guideEditBlank/guideEditBlank'
 					});
 				}
 				
