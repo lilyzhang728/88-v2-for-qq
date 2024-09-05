@@ -593,6 +593,16 @@
 				uni.navigateTo({
 					url: '/page_guide/guideEdit/guideEdit'
 				});
+			},
+			backRefresh() {
+				uni.navigateBack({
+				    success: () => {
+				         let page = getCurrentPages().pop();//跳转页面成功之后
+				         if (page) {
+							 page.$vm.backRefresh('guide')
+				         } 
+				    },
+				})
 			}
 		}
 	}
