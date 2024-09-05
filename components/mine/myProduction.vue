@@ -212,9 +212,18 @@
 				} else {
 					// 编辑，去编辑页
 					let guideId = this.dataList[this.cardIndex].id
-					uni.navigateTo({
-						url: `/page_guide/guideEdit/guideEdit?guideId=${guideId}&active=${this.active}$status=${this.curStatus}`
-					});
+					if(this.dataList[this.cardIndex].body.type === 0) {
+						// 跳转非模板创作
+						uni.navigateTo({
+							url: `/page_guide/guideEditBlank/guideEditBlank?guideId=${guideId}`
+						});
+					} else {
+						uni.navigateTo({
+							url: `/page_guide/guideEdit/guideEdit?guideId=${guideId}&status=${this.curStatus}`
+						});
+					}
+					
+					
 				}
 			},
 			//关闭选项面板
