@@ -222,8 +222,6 @@
 							url: `/page_guide/guideEdit/guideEdit?guideId=${guideId}&status=${this.curStatus}`
 						});
 					}
-					
-					
 				}
 			},
 			//关闭选项面板

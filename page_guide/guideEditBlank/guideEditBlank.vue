@@ -1,77 +1,81 @@
 <!-- 攻略编辑页((无模板) -->
 <template>
 	<view class="guide-edit-blank" :style="{backgroundImage: backgroundImage,backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<back-topbar :title="ifEdit ? '编辑攻略' : '新建攻略'"></back-topbar>
-		
-		<!-- 编辑 -->
-		<view class="guide-edit">
-			<!-- 标题 -->
-			<view class="guide-edit-title">
+		<z-paging ref="paging" :paging-style="{'top': '0px', 'left': '25rpx', 'right': '25rpx'}">
+			<template #top>
+				<back-topbar :title="ifEdit ? '编辑攻略' : '新建攻略'"></back-topbar>
+			</template>
+			
+			<!-- 编辑 -->
+			<view class="guide-edit">
+				<!-- 标题 -->
+				<view class="guide-edit-title">
+					<van-field
+						class="guide-edit-title-wrap"
+						input-class="guide-edit-title"
+						:value="guideInfo.title"
+						placeholder="请输入标题"
+						auto-focus
+						:border="false"
+						@change.native="inputTitle($event)"
+						@focus.native="inputBindFocus"
+						@blur.native="inputBindBlur"
+						maxlength=30
+						clearable
+					  />
+				</view>
+				
+				<view class="guide-edit-title-split"></view>
+				
+				<!-- 正文 -->
 				<van-field
-					class="guide-edit-title-wrap"
-					input-class="guide-edit-title"
-					:value="guideInfo.title"
-					placeholder="请输入标题"
-					auto-focus
+					class="guide-edit-textarea-wrap"
+					input-class="guide-edit-textarea"
+					:value="guideInfo.postVal"
+					type="textarea"
+					:show-confirm-bar="false"
+					placeholder="请输入攻略正文"
+					autosize
 					:border="false"
-					@change.native="inputTitle($event)"
+					@change.native="inputPost($event)"
 					@focus.native="inputBindFocus"
 					@blur.native="inputBindBlur"
-					maxlength=30
 					clearable
 				  />
+				  
+				<!-- uploader -->
+				<van-uploader ref="imgUploader" class="img-uploader"
+				:file-list="postImgList" deletable="true" max-count="3" 
+				:preview-size="imageWidth" image-fit="aspectFit"
+				use-before-read @beforeRead.native="beforeRead" multiple
+				@afterRead.native="afterRead" @delete.native="deleteImg">
+				</van-uploader>
+				
+				<view>
+					<van-button color="#35C8A7" round class="bottom-btn-wrap" custom-class="bottom-btn" @click.native="toGuideEdit">使用模板</van-button>
+				</view>
+				
+				<view class="add-new-post-edit-title-split-bottom"></view>
 			</view>
 			
-			<view class="guide-edit-title-split"></view>
-			
-			<!-- 正文 -->
-			<van-field
-				class="guide-edit-textarea-wrap"
-				input-class="guide-edit-textarea"
-				:value="guideInfo.postVal"
-				type="textarea"
-				:show-confirm-bar="false"
-				placeholder="请输入攻略正文"
-				autosize
-				:border="false"
-				@change.native="inputPost($event)"
-				@focus.native="inputBindFocus"
-				@blur.native="inputBindBlur"
-				clearable
-			  />
-			  
-			<!-- uploader -->
-			<van-uploader ref="imgUploader" class="img-uploader"
-			:file-list="postImgList" deletable="true" max-count="3" 
-			:preview-size="imageWidth" image-fit="aspectFit"
-			use-before-read @beforeRead.native="beforeRead" multiple
-			@afterRead.native="afterRead" @delete.native="deleteImg">
-			</van-uploader>
-			
-			<view>
-				<van-button color="#35C8A7" round class="bottom-btn-wrap" custom-class="bottom-btn" @click.native="toGuideEdit">使用模板</van-button>
+			<!-- 弹起键盘 -->
+			<view class="guide-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
+				<!-- 发布按钮 -->
+				<view class="view-btn-box">
+					<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="disabledPublish" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
+				</view>
 			</view>
-		</view>
-		
-		<view class="add-new-post-edit-title-split-bottom"></view>
-		
-		<!-- 弹起键盘 -->
-		<view class="guide-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
-			<!-- 发布按钮 -->
-			<view class="view-btn-box">
-				<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="disabledPublish" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
+			
+			<!-- toast提示 -->
+			<van-toast id="van-toast" />
+			
+			<!-- 用于压缩上传图片 -->
+			<view class="compress_canvas">
+				<canvas canvas-id="myCanvas-0" :style="{width: w + 'px', height: h + 'px'}"></canvas>
+				<canvas canvas-id="myCanvas-1" :style="{width: w + 'px', height: h + 'px'}"></canvas>
+				<canvas canvas-id="myCanvas-2" :style="{width: w + 'px', height: h + 'px'}"></canvas>
 			</view>
-		</view>
-		
-		<!-- toast提示 -->
-		<van-toast id="van-toast" />
-		
-		<!-- 用于压缩上传图片 -->
-		<view class="compress_canvas">
-			<canvas canvas-id="myCanvas-0" :style="{width: w + 'px', height: h + 'px'}"></canvas>
-			<canvas canvas-id="myCanvas-1" :style="{width: w + 'px', height: h + 'px'}"></canvas>
-			<canvas canvas-id="myCanvas-2" :style="{width: w + 'px', height: h + 'px'}"></canvas>
-		</view>
+		</z-paging>
 	</view>
 </template>
 
@@ -633,6 +637,7 @@
 		}
 		.bottom-btn-wrap {
 			margin-top: 20rpx;
+			margin-bottom: 50rpx;
 			/deep/ .bottom-btn {
 				
 			}
@@ -642,7 +647,7 @@
 		height: 1px;
 		border-bottom: 1px solid transparent;
 		margin: 0 25rpx;
-		margin-bottom: 80rpx;
+		margin-bottom: 150rpx;
 	}
 	.guide-keyboard {
 		position: fixed;
