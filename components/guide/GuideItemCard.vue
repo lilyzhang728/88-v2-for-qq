@@ -30,7 +30,7 @@
 				</view>
 				<view class="guide-item-card-right-books-right">
 					<!-- <text class="guide-item-card-right-books-right-time" v-if="!isMine && guideItem.timestamp">{{timestamp}}</text> -->
-					<text class="guide-item-card-right-books-right-status" v-if="isMine && (guideItem.status === 0 || guideItem.status === 1)">{{guideItem.status ? '已发布' : '未发布'}}</text>
+					<text class="guide-item-card-right-books-right-status" v-if="isMine && (guideItem.status === 0 || guideItem.status === 1)">{{guideItem.status ? '' : '未发布'}}</text>
 				</view>
 				
 			</view>
