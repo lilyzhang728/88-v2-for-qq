@@ -14,7 +14,8 @@
 			<!-- 图片 -->
 			<view class="bbs-post-detail-img-box" v-if="postData.body.urls.length">
 				<van-image width="100%" height="100%" fit="contain" :src="pic"
-				  class="bbs-post-detail-img-item" v-for="(pic, index) in postData.body.urls" :key="index" />
+				  class="bbs-post-detail-img-item" v-for="(pic, index) in postData.body.urls" :key="index"
+				   @click.native="previewImg($event, pic)" />
 			</view>
 			
 			<view class="question-detail-info-box">
@@ -409,7 +410,16 @@
 				         } 
 				    },
 				})
-			}
+			},
+			// 预览图片
+			previewImg(e, url) {
+				//防止冒泡
+				e.preventDefault()
+				uni.previewImage({
+					current: 0,
+					urls: [url]
+				});
+			},
 		}
 	}
 </script>

@@ -15,7 +15,8 @@
 					<!-- 图片 -->
 					<view class="bbs-post-detail-img-box" v-if="guideData.body.urls && guideData.body.urls.length">
 						<van-image width="100%" height="100%" fit="contain" :src="pic"
-						  class="bbs-post-detail-img-item" v-for="(pic, index) in guideData.body.urls" :key="index" />
+						  class="bbs-post-detail-img-item" v-for="(pic, index) in guideData.body.urls" :key="index"
+						  @click.native="previewImg($event, pic)" />
 					</view>
 				</view>
 				
@@ -262,7 +263,16 @@
 				// 参数： id, type: 0：帖子，1：评论，2：话题
 				this.contentId = this.id
 				this.$refs.deleteAndComplaint.handleLongpress()
-			}
+			},
+			// 预览图片
+			previewImg(e, url) {
+				//防止冒泡
+				e.preventDefault()
+				uni.previewImage({
+					current: 0,
+					urls: [url]
+				});
+			},
 		}
 	}
 </script>
