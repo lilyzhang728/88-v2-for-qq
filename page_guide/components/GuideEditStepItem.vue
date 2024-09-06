@@ -6,12 +6,14 @@
 		<van-field :value="step.subtile" type="textarea" :show-confirm-bar="false" placeholder="添加副标题" autosize :border="false"
 			@change.native="changeStepSubtitle"
 			placeholder-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;"
-			custom-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;" />
+			custom-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;"
+			 class="field-input-custom" />
 
 		<!-- 步骤说明 -->
 		<van-field :value="step.body" type="textarea" :show-confirm-bar="false" placeholder="添加章节说明" autosize :border="false" @change.native="changeStepBody"
 			placeholder-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;"
-			custom-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;" />
+			custom-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;"
+			 class="field-input-custom" />
 
 		<!-- urlList -->
 		<view class="guide-edit-step-item-url"  v-for="(link, index) in step.links" :key="index">

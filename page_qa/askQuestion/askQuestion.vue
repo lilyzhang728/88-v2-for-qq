@@ -10,7 +10,7 @@
 				<!-- 问题标题 -->
 				<view class="add-new-post-edit-title">
 					<van-field
-						class="add-new-post-edit-title-wrap"
+						class="add-new-post-edit-title-wrap field-input-custom"
 						input-class="add-new-post-edit-title"
 						:value="title"
 						placeholder="请输入问题"
@@ -28,7 +28,7 @@
 				
 				<!-- 问题正文 -->
 				<van-field
-					class="add-new-post-edit-textarea-wrap"
+					class="add-new-post-edit-textarea-wrap field-input-custom"
 					input-class="add-new-post-edit-textarea"
 					:value="postVal"
 					type="textarea"

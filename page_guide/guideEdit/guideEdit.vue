@@ -27,6 +27,7 @@
 					@change.native="changeTitle"
 					placeholder-style="font-size: 32rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; font-weight: bold; padding-left: 0; padding-right: 0;"
 					custom-style="font-size: 32rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; font-weight: bold; padding-left: 0; padding-right: 0;"
+					class="field-input-custom"
 				  />
 			</view>
 			
@@ -43,6 +44,7 @@
 				   @change.native="changeDesc"
 				   placeholder-style="font-size: 26rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;"
 				   custom-style="font-size: 26rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;"
+				   class="field-input-custom"
 				 />
 			</view>
 			
@@ -68,6 +70,7 @@
 					   @change.native="changeMaterial($event, index)"
 					   placeholder-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;"
 					   custom-style="font-size: 28rpx; background-color: transparent; border-bottom: 1px solid #E8E8E8; padding-left: 0; padding-right: 0;"
+						class="field-input-custom"
 					 >
 					</van-field>
 					<view class="guide-edit-add-btn-box">
@@ -105,6 +108,7 @@
 						@change.native="changeTip"
 						placeholder-style="font-size: 26rpx; background-color: transparent; padding-left: 0; padding-right: 0; padding-top: 0;"
 						custom-style="font-size: 26rpx; background-color: transparent; padding-left: 0; padding-right: 0; padding-top: 0;"
+						class="field-input-custom"
 					  />
 				</view>
 			</view>

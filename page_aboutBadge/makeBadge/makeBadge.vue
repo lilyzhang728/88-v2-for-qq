@@ -13,11 +13,13 @@
 				:error="validator && !form.name"
 				custom-style="background: transparent"
 				maxlength=8
+				class="field-input-custom"
 			/>
 			<van-field
 			  	label="徽章图片"
 			  	required readonly
-				custom-style="background: transparent">
+				custom-style="background: transparent"
+				class="field-input-custom">
 				<view slot="right-icon" @click="beforeRead">
 					<van-uploader :file-list="fileList" disabled
 					max-count="1" preview-full-image="false" @delete.native="deleteImg" />
@@ -37,6 +39,7 @@
 				clearable
 				:error="validator && !form.desc"
 				custom-style="background: transparent"
+				class="field-input-custom"
 			/>
 			<van-field
 			    :value="form.field"
@@ -50,6 +53,7 @@
 				@clickIcon.native="handleClickInput"
 				:error="validator && !form.field"
 				custom-style="background: transparent"
+				class="field-input-custom"
 			/>
 		</van-cell-group>
 		

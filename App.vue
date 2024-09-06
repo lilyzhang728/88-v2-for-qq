@@ -75,5 +75,14 @@
 	}
 
 	/* #endif */
+	
+	.field-input-custom .van-field__control {
+	  font-size: 36rpx;
+	  line-height: 40rpx;
+	}
+	.field-input-custom .van-field__label {
+	  font-size: 34rpx;
+	  line-height: 40rpx;
+	}
 </style>
 

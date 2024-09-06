@@ -24,7 +24,7 @@
 			<!-- 编辑 -->
 			<view class="add-new-post-edit" v-else>
 				<van-field
-					class="add-new-post-edit-textarea-wrap"
+					class="add-new-post-edit-textarea-wrap field-input-custom"
 					input-class="add-new-post-edit-textarea"
 					:value="postVal"
 					type="textarea"

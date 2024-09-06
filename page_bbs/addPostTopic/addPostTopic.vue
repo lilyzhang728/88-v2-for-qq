@@ -21,6 +21,7 @@
 					    @change.native="onChange($event)"
 						maxlength=20
 						clearable
+						class="field-input-custom"
 					  />
 					  
 					<van-button class="add-post-topic-new-topic-btn" color="#35C8A6" block :disabled="!newTopicVal" @click.native="handleAddNewTopic">添加</van-button>

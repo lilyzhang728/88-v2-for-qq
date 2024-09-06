@@ -11,7 +11,7 @@
 				<!-- 标题 -->
 				<view class="guide-edit-title">
 					<van-field
-						class="guide-edit-title-wrap"
+						class="guide-edit-title-wrap field-input-custom"
 						input-class="guide-edit-title"
 						:value="guideInfo.title"
 						placeholder="请输入标题"
@@ -29,7 +29,7 @@
 				
 				<!-- 正文 -->
 				<van-field
-					class="guide-edit-textarea-wrap"
+					class="guide-edit-textarea-wrap field-input-custom"
 					input-class="guide-edit-textarea"
 					:value="guideInfo.postVal"
 					type="textarea"

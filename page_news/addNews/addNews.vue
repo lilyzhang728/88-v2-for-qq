@@ -10,7 +10,7 @@
 				<!-- 标题 -->
 				<view class="add-new-post-edit-title">
 					<van-field
-						class="add-new-post-edit-title-wrap"
+						class="add-new-post-edit-title-wrap field-input-custom"
 						input-class="add-new-post-edit-title"
 						:value="title"
 						placeholder="请输入标题"
@@ -28,7 +28,7 @@
 				
 				<!-- 正文 -->
 				<van-field
-					class="add-new-post-edit-textarea-wrap"
+					class="add-new-post-edit-textarea-wrap field-input-custom"
 					input-class="add-new-post-edit-textarea"
 					:value="postVal"
 					type="textarea"
@@ -44,7 +44,7 @@
 				
 				<!-- 链接 -->
 				<van-field
-					class="add-new-post-edit-title-wrap"
+					class="add-new-post-edit-title-wrap field-input-custom"
 					input-class="add-new-post-edit-title"
 					:value="urlVal"
 					placeholder="请输入资讯链接"
