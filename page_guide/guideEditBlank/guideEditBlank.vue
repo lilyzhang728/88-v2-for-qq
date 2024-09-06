@@ -120,8 +120,8 @@
 				return 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)'
 			},
 			imageWidth() {
-				// 两边padding: 25*2+30*2=110; 图片margin-right:8px 8*3=24; 计算误差多-5
-				return this.screenWidth ? ((this.screenWidth - this.rpxToPx(110) - 24 - 5) / 3) + 'px' : 0
+				// 两边padding: 25*2=50; 图片margin-right:8px 8*3=24; 计算误差多-5
+				return this.screenWidth ? ((this.screenWidth - this.rpxToPx(50) - 24 - 5) / 3) + 'px' : 0
 			},
 			screenWidth() {
 				return uni.getStorageSync('screenWidth')
@@ -158,6 +158,14 @@
 						// }
 						this.guideInfo.title = res.data.title
 						this.guideInfo.postVal = res.data.body.body
+						if(res.data.body.urls && res.data.body.urls.length) {
+							this.postImgList = res.data.body.urls.map(item => {
+								let obj = {
+									url: item
+								}
+								return obj
+							})
+						}
 					} else {
 						//接口返回失败，返回上一页， 并刷新
 						uni.navigateBack({
@@ -528,7 +536,8 @@
 						'body': {
 							body: this.guideInfo.postVal,
 							cover_url: this.cover_url,
-							type: 0		//0-自定义，1-模板
+							type: 0,		//0-自定义，1-模板
+							urls: this.transformImg()
 						},
 						'post_type': 1,
 						'id': this.guideId,
@@ -566,7 +575,8 @@
 						'body': {
 							body: this.guideInfo.postVal,
 							cover_url: this.cover_url,
-							type: 0		//0-自定义，1-模板
+							type: 0,		//0-自定义，1-模板
+							urls: this.transformImg()
 						},
 						'post_type': 1,
 						'status': 1
@@ -591,6 +601,10 @@
 						console.log('addGuide: ', err)
 					})
 				}
+			},
+			//转换图片参数格式
+			transformImg() {
+				return this.postImgList.length ? this.postImgList.map(item => item.url) : []
 			},
 			// 使用模板
 			toGuideEdit() {

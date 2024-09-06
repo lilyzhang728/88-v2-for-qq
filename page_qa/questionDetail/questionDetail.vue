@@ -440,10 +440,10 @@
 		flex-wrap: wrap;
 		.bbs-post-detail-img-item {
 			flex: 1;
-			width: calc((100vw - 40rpx - 50rpx) / 3); 
-			min-width: calc((100vw - 40rpx - 50rpx) / 3);
-			max-width: calc((100vw - 40rpx - 50rpx) / 3);
-			height: calc((100vw - 40rpx - 50rpx) / 3);
+			width: calc((100vw - 40rpx - 24px) / 3); 
+			min-width: calc((100vw - 40rpx - 24px) / 3);
+			max-width: calc((100vw - 40rpx - 24px) / 3);
+			height: calc((100vw - 40rpx - 24px) / 3);
 			margin-right: 20rpx;
 			&:nth-child(3n) {
 				margin-right: 0;

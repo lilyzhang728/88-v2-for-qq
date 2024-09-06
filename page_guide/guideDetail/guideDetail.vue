@@ -12,6 +12,11 @@
 				<!-- 以下为非模板创建的 -->
 				<view v-if="isCustomer">
 					<view class="guide-detail-customer-body">{{guideData.body.body}}</view>
+					<!-- 图片 -->
+					<view class="bbs-post-detail-img-box" v-if="guideData.body.urls && guideData.body.urls.length">
+						<van-image width="100%" height="100%" fit="contain" :src="pic"
+						  class="bbs-post-detail-img-item" v-for="(pic, index) in guideData.body.urls" :key="index" />
+					</view>
 				</view>
 				
 				<!-- 以下为模板创建的 -->
@@ -276,6 +281,22 @@
 			line-height: 56rpx;
 			font-size: 34rpx;
 			white-space: pre-line;
+		}
+		.bbs-post-detail-img-box {
+			margin-top: 40rpx;
+			display: flex;
+			flex-wrap: wrap;
+			.bbs-post-detail-img-item {
+				flex: 1;
+				width: calc((100vw - 40rpx - 50rpx) / 3); 
+				min-width: calc((100vw - 40rpx - 50rpx) / 3);
+				max-width: calc((100vw - 40rpx - 50rpx) / 3);
+				height: calc((100vw - 40rpx - 50rpx) / 3);
+				margin-right: 20rpx;
+				&:nth-child(3n) {
+					margin-right: 0;
+				}
+			}
 		}
 		.guide-detail-material {
 			padding: 20rpx 0 30rpx 0;
