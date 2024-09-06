@@ -12,7 +12,7 @@
 			</view>
 			
 			<view class="card-user-infos">
-				<text class="card-user-time" v-if="!isDetail">{{timestamp}}</text>
+				<text class="card-user-time" v-if="showTime && !isDetail">{{timestamp}}</text>
 				<text class="card-user-infos-text" :class="{'card-user-infos-text-detail': isDetail}" v-if="item.author.school">{{item.author.school}}</text>
 				<text class="card-user-infos-text" v-if="isDetail && item.author.major">{{item.author.major}}</text>
 			</view>
@@ -59,6 +59,12 @@
 				type: Boolean,
 				default: false,
 				required: false
+			},
+			// 用于决定timestamp是否显示：社区、攻略、问答 暂时隐藏timestamp
+			routePath: {
+				type: String,
+				default: '',
+				required: false
 			}
 		},
 		computed: {
@@ -71,6 +77,10 @@
 			// 是否是detail页面
 			isDetail() {
 				return this.parent === 'detail'
+			},
+			// 社区、攻略、问答 暂时隐藏timestamp
+			showTime() {
+				return this.routePath !== 'bbs' && this.routePath !== 'guide' && this.routePath !== 'qa'
 			}
 		},
 		methods: {
@@ -138,9 +148,10 @@
 				white-space: nowrap;
 				text-overflow: ellipsis;
 				.card-user-time {
+					margin-right: 10rpx;
 				}
 				.card-user-infos-text {
-					margin-left: 10rpx;
+					
 				}
 				.card-user-infos-text-detail {
 					margin-left: 0;

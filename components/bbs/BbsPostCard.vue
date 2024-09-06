@@ -2,7 +2,7 @@
 <template>
 	<view class="bbs-post-card">
 		<!-- 头像、昵称、学校 -->
-		<card-user :item="postData" :showMoreIcon="true" @clickMore="clickMore"></card-user>
+		<card-user :item="postData" :showMoreIcon="true" @clickMore="clickMore" routePath="bbs"></card-user>
 		
 		<!-- 帖子所属话题 -->
 		<view class="bbs-post-topic" @click.native.stop="toTopic($event)" v-if="postData.bind_topics && postData.bind_topics.length">

@@ -29,7 +29,7 @@
 					<text class="guide-item-card-right-book-item" v-if="!ifOfficialAccountLink && guideItem.body.steps">章节*{{guideItem.body.steps.length}}</text>
 				</view>
 				<view class="guide-item-card-right-books-right">
-					<text class="guide-item-card-right-books-right-time" v-if="!isMine && guideItem.timestamp">{{timestamp}}</text>
+					<!-- <text class="guide-item-card-right-books-right-time" v-if="!isMine && guideItem.timestamp">{{timestamp}}</text> -->
 					<text class="guide-item-card-right-books-right-status" v-if="isMine && (guideItem.status === 0 || guideItem.status === 1)">{{guideItem.status ? '已发布' : '未发布'}}</text>
 				</view>
 				

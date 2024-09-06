@@ -1,7 +1,7 @@
 <template>
 	<view class="question-item-card" @click="toDetail(item)">
 		<!-- 头像、昵称、学校 -->
-		<card-user :item="item" :showMoreIcon="true" @clickMore="clickMore"></card-user>
+		<card-user :item="item" :showMoreIcon="true" @clickMore="clickMore" routePath="qa"></card-user>
 		
 		<view class="question-item-card-content" :class="{'question-item-card-content-haveImg': item.body.urls.length>0}">
 			<view class="bbs-post-content">
