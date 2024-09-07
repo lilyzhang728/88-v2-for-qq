@@ -4,14 +4,14 @@
 		<!-- 引用别人的评论 -->
 		<view class="reply-post" v-if="showReplyPostBox">
 			<img :src="curReplyAvatar" alt="" class="reply-post-avatar">
-			<text class="reply-post-content">{{curReplyContent}}</text>
-			<van-icon name="clear" size="20px" color="#d9d9d9" />
+			<text class="reply-post-content">{{curReplyContentText}}</text>
+			<!-- <van-icon name="clear" size="20px" color="#d9d9d9" /> -->
 		</view>
 		
 		<!-- 评论输入框 -->
 		<textarea :adjust-position="false" v-model="val" :auto-height="true" maxlength="-1"
-		confirm-type="发送" placeholder="说点什么吧" :show-confirm-bar="false"
-		@confirm="send" :focus="showReply" @focus="inputBindFocus" @blur="inputBindBlur"/>
+		confirm-type="发送" placeholder="说点什么吧" :show-confirm-bar="false" :auto-focus="true"
+		@confirm="send" :focus="showReply" @focus="inputBindFocus" @blur="inputBindBlur" @keyboardheightchange="inputBindFocus"/>
 		
 		<!-- 发布按钮 -->
 		<view class="view-btn-box">
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+	import { utf16toEntities, uncodeUtf16 } from '@/tools/transform_emoji.js'
 	export default {
 		props: {
 			showReply: {
@@ -52,6 +53,12 @@
 				//引用回复的评论高度+margin-bottom=35px
 				let height = 150
 				return this.showReplyPostBox ? height + 'px' : (height - 35) + 'px' 
+			},
+			// 引用的内容（支持显示emoji
+			curReplyContentText() {
+				if(this.curReplyContent) {
+					return uncodeUtf16(this.curReplyContent)
+				}
 			}
 		},
 		methods: {
@@ -64,13 +71,10 @@
 			inputBindFocus(e) {
 				// 获取手机键盘的高度，赋值给input 所在盒子的 bottom 值
 				// 注意!!! 这里的 px 至关重要!!! 我搜到的很多解决方案都没有说这里要添加 px
-				this.$emit('changeBottomVal' ,  e.detail.height)
-				// console.log(e)
 				this.bottomVal = e.detail.height +  'px'
 			},
 			inputBindBlur() {
 				// input 失去焦点，键盘隐藏，设置 input 所在盒子的 bottom 值为0
-				this.$emit('changeBottomVal', 0)
 				this.bottomVal = 0
 			},
 		},

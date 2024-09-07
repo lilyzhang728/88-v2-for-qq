@@ -118,3 +118,10 @@ export function complaintComments(params) {
 		path: `/api/comments/${params}/complaint`
 	})
 }
+
+// 请求实时榜单
+export function rankingListApi(params) {
+	return getRequest({
+		path: `/api/ranking_list`
+	})
+}

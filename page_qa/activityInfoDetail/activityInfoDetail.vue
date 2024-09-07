@@ -56,7 +56,7 @@
 		<!-- 回复键盘 -->
 		<van-overlay :show="showReply" @click.native="onClickHide" :custom-style="'z-index:0;height:auto;bottom:0;'" />
 		<bbs-comment-keyboard :showReply="showReply" 
-		@submit="submit" @changeBottomVal="changeBottomVal"></bbs-comment-keyboard>
+		@submit="submit"></bbs-comment-keyboard>
 		
 		<!-- 举报面板 -->
 		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" :type="actionType"
@@ -107,7 +107,6 @@
 					is_collect: false
 				},
 				showReply: false,	//是否打开键盘
-				bottomVal: '115px',	//打开键盘后遮罩bottom（150：引用别人评论，115：不引用别人评论（发表1级评论））
 				dataList: [],		//评论数据
 				startGetComment: false,	//开始请求评论
 				contentId: '',		// 传给长按面板的内容id （帖子/评论）
@@ -253,11 +252,6 @@
 			//关闭评论键盘
 			onClickHide() {
 				this.showReply = false
-			},
-			//计算遮罩bottom（val为键盘弹起后高度）
-			changeBottomVal(val) {
-				let height = 150-35
-				this.bottomVal = (height + val) + 'px'
 			},
 			//点击底部输入框（说点什么……）评论帖子（1级评论）
 			clickInput() {

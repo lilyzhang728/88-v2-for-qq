@@ -19,6 +19,7 @@
 						:border="false"
 						@change.native="inputTitle($event)"
 						@focus.native="inputBindFocus"
+						@keyboardheightchange.native="inputBindFocus"
 						@blur.native="inputBindBlur"
 						maxlength=30
 						clearable

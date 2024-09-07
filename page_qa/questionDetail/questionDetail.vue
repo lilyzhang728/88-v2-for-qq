@@ -79,7 +79,7 @@
 		<!-- 回复键盘 -->
 		<van-overlay :show="showReply" @click.native="onClickHide" :custom-style="'z-index:0;height:auto;bottom:0;'" />
 		<bbs-comment-keyboard :showReply="showReply" 
-		@submit="submit" @changeBottomVal="changeBottomVal"></bbs-comment-keyboard>
+		@submit="submit"></bbs-comment-keyboard>
 	
 		<!-- 邀请用户列表弹窗 -->
 		<invite-user-list :postId="postData.id" ref="inviteUserList" @closePopup="closePopup" v-if="showInviteUserList"></invite-user-list>
@@ -141,7 +141,6 @@
 					id: ''
 				},
 				showReply: false,	//是否打开键盘
-				bottomVal: '115px',	//打开键盘后遮罩bottom（150：引用别人评论，115：不引用别人评论（发表1级评论））
 				curGetCommentUrl: '',	//获取评论接口URL
 				startGetComment: false,	//开始请求评论
 				dataList: [],		//评论数据
@@ -289,11 +288,6 @@
 			//关闭评论键盘
 			onClickHide() {
 				this.showReply = false
-			},
-			//计算遮罩bottom（val为键盘弹起后高度）
-			changeBottomVal(val) {
-				let height = 150-35
-				this.bottomVal = (height + val) + 'px'
 			},
 			//禁止手机键盘的弹出
 			noBomBox(Event) {

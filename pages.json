@@ -245,6 +245,14 @@
                     "enablePullDownRefresh": false
                 }
                 
+                },
+                {
+                	"path" : "rankingList/rankingList",
+                	"style" : 
+                	{
+                		"navigationBarTitleText" : "",
+                		"enablePullDownRefresh" : false
+                	}
                 }
             ]
 		},

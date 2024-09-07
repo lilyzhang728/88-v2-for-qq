@@ -53,7 +53,7 @@
 		<van-overlay :show="showReply" @click.native="onClickHide" :custom-style="'z-index:0;height:auto;bottom: 0;'" />
 		<bbs-comment-keyboard :showReply="showReply" :showReplyPostBox="showReplyPostBox" 
 		:curReplyAvatar="curReplyAvatar" :curReplyContent="curReplyContent"
-		@submit="submit" @changeBottomVal="changeBottomVal"></bbs-comment-keyboard>
+		@submit="submit"></bbs-comment-keyboard>
 		
 		<!-- 举报面板 -->
 		<delete-and-complaint ref="deleteAndComplaint" :itemId="contentId" type="1"
@@ -83,7 +83,6 @@ export default {
 			id: '',
 			commentData: {},
 			showReply: false,	//是否打开键盘
-			bottomVal: this.showReplyPostBox ? '150px' : '115px',	//打开键盘后遮罩bottom（150：引用别人评论，115：不引用别人评论（发表1级评论））
 			curReplyId: '',		//当前回复的评论的id
 			// curReplyLevel: 1,	//当前回复的评论是1级/2级
 			// curReplyIndex: 0,	//如果回复的是2级评论，2级评论所属1级评论的Index
@@ -200,11 +199,6 @@ export default {
 		//关闭评论键盘
 		onClickHide() {
 			this.showReply = false
-		},
-		//计算遮罩bottom（val为键盘弹起后高度）
-		changeBottomVal(val) {
-			let height = this.showReplyPostBox ? 150 : (150-35)
-			this.bottomVal = (height + val) + 'px'
 		},
 		//发送评论（调评论接口）
 		submit(val) {

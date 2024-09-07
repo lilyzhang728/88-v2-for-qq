@@ -3,15 +3,15 @@
 	<view class="bbs-rec">
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'left': '25rpx', 'right': '25rpx'}">
 			<!-- 热门话题 -->
-			<view class="bbs-rec-topic" v-if="topicList.length">
+			<view class="bbs-rec-topic" v-if="rankingList.length">
 				<view class="bbs-rec-topic-title">
-					<text class="bbs-rec-topic-title-text">#推荐话题</text>
-					<text class="bbs-rec-topic-title-more" @click="toTopicList">
-						更多推荐内容<van-icon size="25rpx" name="arrow" class="bbs-rec-topic-title-more-icon"/>
-					</text>
+					<text class="bbs-rec-topic-title-text">#有奖创作-实时榜单</text>
+					<!-- <text class="bbs-rec-topic-title-more" @click="toTopicList">
+						更多内容<van-icon size="25rpx" name="arrow" class="bbs-rec-topic-title-more-icon"/>
+					</text> -->
 				</view>
 				<view class="bbs-rec-topic-list">
-					<view class="bbs-rec-topic-item" v-for="(item, index) in topicList" :key="index" @click="toTopicDetail(item)">
+					<view class="bbs-rec-topic-item" v-for="(item, index) in rankingList" :key="index" @click="toRankingList(item)">
 						<img class="bbs-rec-topic-item-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
 						<text class="bbs-rec-topic-item-text">{{item.body}}</text>
 					</view>
@@ -34,7 +34,7 @@
 
 <script>
 	import BbsPostCard from "@/components/bbs/BbsPostCard.vue"
-	import { topicList } from '@/network/api_bbs.js'
+	import { topicList, rankingListApi } from '@/network/api_bbs.js'
 	import { recArticle } from '@/network/api_guide.js'
 	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	export default {
@@ -46,11 +46,13 @@
 			return {
 				dataList: [],
 				topicList: [],
-				contentId: ''
+				contentId: '',
+				rankingList: [],	// 实时榜单
 			}
 		},
 		created() {
-			this.getTopicList()
+			// this.getTopicList()
+			this.getRankingList()
 		},
 		methods: {
 			queryList(pageNo, pageSize) {
@@ -78,17 +80,34 @@
 				})
 			},
 			//获取话题列表
-			getTopicList() {
-				topicList({
-					'per_page': 3,
+			// getTopicList() {
+			// 	topicList({
+			// 		'per_page': 4,
+			// 		'page': 1
+			// 	}).then(res => {
+			// 		if(res.code === 0 && Object.keys(res.data).length) {
+			// 			this.topicList = res.data.items
+			// 		}
+			// 	}, err => {
+			// 		console.log('topicList: ', err)
+			// 	})
+			// },
+			getRankingList() {
+				rankingListApi({
+					'per_page': 4,
 					'page': 1
 				}).then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
-						this.topicList = res.data.items
+						this.rankingList = res.data.items
 					}
 				}, err => {
 					console.log('topicList: ', err)
 				})
+			},
+			toRankingList(item) {
+				uni.navigateTo({
+					url: `/page_bbs/rankingList/rankingList?link=${item.link.path}&post_type=${item.link.post_type}&page=${item.link.page}&per_page=${item.link.per_page}&rankId=${item.id}`
+				});
 			},
 			toPostDetail(id, index) {
 				uni.navigateTo({
