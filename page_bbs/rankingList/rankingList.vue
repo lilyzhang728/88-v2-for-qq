@@ -1,7 +1,8 @@
 <!-- 实时榜单 -->
 <template>
 	<view class="ranking-list">
-		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'left': '25rpx', 'right': '25rpx'}">
+		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'left': '25rpx', 'right': '25rpx'}"
+		:loading-more-enabled="false" :to-bottom-loading-more-enabled="false">
 			<ranking-card v-for="(item,index) in dataList" :key="index" :index="index" :rankingData="item" :rankId="rankId"></ranking-card>
 		</z-paging>
 	</view>
