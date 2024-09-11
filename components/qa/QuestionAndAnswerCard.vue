@@ -141,6 +141,7 @@
 					-webkit-box-orient: vertical;
 					-webkit-line-clamp: 2;
 					overflow: hidden;
+					white-space: pre-line;
 				}
 			}
 			.bbs-post-img-box {

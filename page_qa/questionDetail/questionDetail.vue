@@ -437,6 +437,7 @@
 		font-size: 34rpx;
 		color: rgba(0,0,0,0.7);
 		line-height: 56rpx;
+		white-space: pre-line;
 	}
 	.bbs-post-detail-img-box {
 		margin-top: 40rpx;

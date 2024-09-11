@@ -21,7 +21,7 @@
 				curLink: '',
 				post_type: 3,
 				page: 1,
-				per_page: 10,
+				per_page: 30,
 				rankId: ''
 			}
 		},
@@ -37,6 +37,11 @@
 				this.page = option.page,
 				this.per_page = option.per_page
 				this.rankId = option.rankId
+			}
+			if(option.title) {
+				uni.setNavigationBarTitle({
+				  title: option.title
+				});
 			}
 		},
 		methods: {

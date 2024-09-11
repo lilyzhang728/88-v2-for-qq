@@ -78,7 +78,7 @@
 	
 	.field-input-custom .van-field__control {
 	  font-size: 36rpx;
-	  line-height: 40rpx;
+	  line-height: 50rpx;
 	}
 	.field-input-custom .van-field__label {
 	  font-size: 34rpx;

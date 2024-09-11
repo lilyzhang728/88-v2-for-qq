@@ -151,7 +151,7 @@
 					margin-right: 10rpx;
 				}
 				.card-user-infos-text {
-					
+					margin-right: 10rpx;
 				}
 				.card-user-infos-text-detail {
 					margin-left: 0;

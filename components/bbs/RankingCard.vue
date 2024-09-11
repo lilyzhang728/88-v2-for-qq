@@ -11,11 +11,12 @@
 				<text class="ranking-card-left-info-text">点赞数 {{rankingData.likers_count}}</text>
 			</view>
 		</view>
-		<view class="ranking-card-right">{{index+1}}</view>
+		<view class="ranking-card-right" :style="{'color': index < 5 ? activeCollectColor : activeColor}">{{index+1}}</view>
 	</view>
 </template>
 
 <script>
+	import { themeColor, collectColor } from '@/common/common.less'
 	export default {
 		props: {
 			rankingData: {
@@ -38,6 +39,13 @@
 				type: Number,
 				default: 0,
 				required: false
+			}
+		},
+		data() {
+			return {
+				activeColor: themeColor,
+				activeCollectColor: collectColor
+				
 			}
 		},
 		computed: {
@@ -96,10 +104,11 @@
 			}
 		}
 		.ranking-card-right {
-			width: 15rpx;
+			width: 22rpx;
 			display: flex;
 			align-items: center;
-			color: #949494;
+			font-weight: 700;
 		}
+		
 	}
 </style>

@@ -105,8 +105,9 @@
 				})
 			},
 			toRankingList(item) {
+				let title = item.body ? item.body.split(' ')[1] : ''
 				uni.navigateTo({
-					url: `/page_bbs/rankingList/rankingList?link=${item.link.path}&post_type=${item.link.post_type}&page=${item.link.page}&per_page=${item.link.per_page}&rankId=${item.id}`
+					url: `/page_bbs/rankingList/rankingList?link=${item.link.path}&post_type=${item.link.post_type}&page=${item.link.page}&per_page=${item.link.per_page}&rankId=${item.id}&title=${title}`
 				});
 			},
 			toPostDetail(id, index) {
