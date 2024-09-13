@@ -7,7 +7,7 @@
 				<van-tabs :active="active" animated @change.native="tabsChange" ref="tabs"
 				line-height="8rpx" line-width="60rpx" class="bbs-tabs" :swipeable="true">
 					<van-tab title="问答"></van-tab>
-					<van-tab title="讲学"></van-tab>
+					<van-tab title="卧谈会"></van-tab>
 					<van-tab title="向ta提问"></van-tab>
 				</van-tabs>
 				
@@ -24,7 +24,7 @@
 					<question-and-answer ref="questionAndAnswer" :active="active" @toastMsg="toastMsg"></question-and-answer>	
 				</swiper-item>
 				<swiper-item class="swiper-item">
-					<!-- 讲学 -->
+					<!-- 卧谈会 -->
 					<activity-infos ref="activityInfos"></activity-infos>	
 				</swiper-item>
 				<swiper-item class="swiper-item">

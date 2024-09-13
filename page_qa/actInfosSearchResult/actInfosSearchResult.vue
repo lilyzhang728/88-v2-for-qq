@@ -1,4 +1,4 @@
-<!-- 讲学搜索结果页 -->
+<!-- 卧谈会搜索结果页 -->
 <template>
 	<view class="act-infos-search-result">
 		<!-- 搜索框 -->

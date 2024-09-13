@@ -105,7 +105,7 @@
 								})
 								break
 							case 7:
-								// 跳转讲学搜索结果页
+								// 跳转卧谈会搜索结果页
 								uni.navigateTo({
 									url: `/page_qa/actInfosSearchResult/actInfosSearchResult?searchVal=${searchVal}`
 								})

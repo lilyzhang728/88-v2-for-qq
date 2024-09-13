@@ -1,4 +1,4 @@
-<!-- 讲学详情 -->
+<!-- 卧谈会详情 -->
 <template>
 	<view class="activity-info-detail" :style="{backgroundImage: 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)',backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
 		<back-topbar :isWxShare="isWxShare"></back-topbar>
