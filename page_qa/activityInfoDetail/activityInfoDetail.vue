@@ -1,7 +1,7 @@
 <!-- 讲学详情 -->
 <template>
 	<view class="activity-info-detail" :style="{backgroundImage: 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)',backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<back-topbar></back-topbar>
+		<back-topbar :isWxShare="isWxShare"></back-topbar>
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': (customBar+20) + 'px', 'bottom': '66px', paddingLeft: '25rpx', paddingRight: '25rpx'}">
 			<!-- 标题 -->
 			<view class="activity-info-detail-title">{{actInfoData.title}}</view>
@@ -74,6 +74,7 @@
 	import { getRequest } from '@/network/https.js'
 	import BbsPostComment from '@/components/common/PostComment.vue'
 	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
+	import aboutLogin from '@/mixins/aboutLogin.js'
 	export default {
 		components: {
 			BackTopbar,
@@ -81,6 +82,7 @@
 			BbsPostComment,
 			DeleteAndComplaint
 		},
+		mixins: [aboutLogin],
 		data() {
 			return {
 				customBar: 0,
@@ -115,6 +117,7 @@
 				curReplyId: '',		//当前回复的评论的id
 				curReplyIndex: 0,	//如果回复的是2级评论，2级评论所属1级评论的Index
 				curReplySubIndex: 0,	//如果回复的是2级评论，2级评论的Index
+				isWxShare: false,	// 是否在微信分享里打开的，左上角返回替换为首页按钮
 			}
 		},
 		computed: {
@@ -132,6 +135,12 @@
 		onLoad(option) {
 			this.id = option.id
 			this.customBar = uni.getStorageSync('customBar')
+			if(option.scene === 'wxShare') {
+				// 是在微信分享里打开的，左上角返回替换为首页按钮
+				this.isWxShare = true
+				// 获取token信息
+				this.login()
+			}
 			this.getNewsDetail()
 		},
 		onUnload() {
@@ -365,7 +374,22 @@
 				this.actionType = 0
 				this.$refs.deleteAndComplaint.handleLongpress()
 			},
-			
+			onShareAppMessage() {
+				// 返回该页面的分享内容
+				return {
+				  title: `${this.actInfoData.title}`,
+				  path: `/page_qa/activityInfoDetail/activityInfoDetail?id=${this.id}&scene=wxShare`,
+				  imageUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/wxShare2.jpeg?sign=d7b13487dab94a8562db69b924e3283b&t=1726141442'
+				};
+			},
+			onShareTimeline() {
+				// 返回该页面的分享到朋友圈的内容
+				return {
+				  title: `${this.actInfoData.title}`,
+				  path: `/page_qa/activityInfoDetail/activityInfoDetail?id=${this.id}&scene=wxShare`,
+				  imageUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/wxShare2.jpeg?sign=d7b13487dab94a8562db69b924e3283b&t=1726141442'
+				};
+			},			
 		}
 	}
 </script>
