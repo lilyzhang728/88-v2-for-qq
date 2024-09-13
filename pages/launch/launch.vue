@@ -77,7 +77,6 @@
 	import { login, characterList, achievementsList, collectCharacterList } from "@/network/api_login.js"
 	import { updateProfile } from "@/network/api_index.js"
 	import { addToMyBadge } from '@/network/api_badge.js'
-	import { compareVersion } from '@/tools/about_wx.js'
 	export default {
 		data() {
 			return {
@@ -144,24 +143,9 @@
 			}
 		},
 		onLoad() {
-			const hostSDKVersion = uni.getStorageSync('hostSDKVersion')
-			if(compareVersion(hostSDKVersion, '3.4.8') < 0) {
-				// 基础库低于3.4.8，无法打开外链公众号
-				wx.showModal({
-					title: '提示',
-					content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。',
-					complete(res) {
-						// 退出小程序
-						if(wx.exitMiniProgram) {
-							wx.exitMiniProgram()
-						}
-					} 
-				})
-			} else {
-				this.screenHeight = uni.getSystemInfoSync().windowHeight//获取当前页面的高度
-				this.login()
-				this.getCharacterList()
-			}
+			this.screenHeight = uni.getSystemInfoSync().windowHeight//获取当前页面的高度
+			this.login()
+			this.getCharacterList()
 		},
 		methods: {
 			login() {
