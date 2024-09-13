@@ -1,7 +1,7 @@
 <!-- 问题详情 -->
 <template>
 	<view class="question-detail" :style="{backgroundImage: 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)',backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<back-topbar></back-topbar>
+		<back-topbar :isWxShare="isWxShare"></back-topbar>
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': (customBar+20) + 'px', 'bottom': '64px', paddingLeft: '25rpx', paddingRight: '25rpx'}">
 			<!-- 问题标题 -->
 			<view class="question-detail-title">
@@ -109,6 +109,7 @@
 	import InviteUserList from '@/page_qa/components/InviteUserList.vue'
 	import Toast from '@/wxcomponents/vant/toast/toast'
 	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
+	import aboutLogin from '@/mixins/aboutLogin.js'
 	export default {
 		components: {
 			BbsPostComment,
@@ -117,6 +118,7 @@
 			InviteUserList,
 			DeleteAndComplaint
 		},
+		mixins: [aboutLogin],
 		data() {
 			return {
 				customBar: 0,
@@ -148,6 +150,7 @@
 				contentId: '',		// 传给长按面板的内容id （帖子/评论）
 				actionType: 0,		// 长按面板内容类型：0：帖子，1：评论，2：话题
 				from: '',			// from==='mine',表示从我的页面跳转过来，需要加more-icon
+				isWxShare: false,	// 是否在微信分享里打开的，左上角返回替换为首页按钮
 			}
 		},
 		computed: {
@@ -173,6 +176,12 @@
 			}
 			if(option.from) {
 				this.from = option.from
+			}
+			if(option.scene === 'wxShare') {
+				// 是在微信分享里打开的，左上角返回替换为首页按钮
+				this.isWxShare = true
+				// 获取token信息
+				this.login()
 			}
 		},
 		onUnload() {
@@ -413,6 +422,22 @@
 					current: 0,
 					urls: [url]
 				});
+			},
+			onShareAppMessage() {
+				// 返回该页面的分享内容
+				return {
+				  title: `${this.postData.title}`,
+				  path: `/page_qa/questionDetail/questionDetail?id=${this.id}&scene=wxShare`,
+				  imageUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/wxShare2.jpeg?sign=d7b13487dab94a8562db69b924e3283b&t=1726141442'
+				};
+			},
+			onShareTimeline() {
+				// 返回该页面的分享到朋友圈的内容
+				return {
+				  title: `${this.postData.title}`,
+				  path: `/page_qa/questionDetail/questionDetail?id=${this.id}&scene=wxShare`,
+				  imageUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/wxShare2.jpeg?sign=d7b13487dab94a8562db69b924e3283b&t=1726141442'
+				};
 			},
 		}
 	}
