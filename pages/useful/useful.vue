@@ -48,7 +48,6 @@
 	import TopSearchBox from '@/components/common/TopSearchBox.vue'
 	import SideAddBtn from '@/components/common/SideAddBtn.vue'
 	import Toast from '@/wxcomponents/vant/toast/toast'
-	import { compareVersion } from '@/tools/about_wx.js'
 	export default {
 		components: {
 			PageTabs,
@@ -84,22 +83,6 @@
 			},
 			subTabList() {
 				return this.active ? this.newsFieldList : this.guideFieldList
-			}
-		},
-		onLoad() {
-			const hostSDKVersion = uni.getStorageSync('hostSDKVersion')
-			if(compareVersion(hostSDKVersion, '3.4.8') < 0) {
-				// 基础库低于3.4.8，无法打开外链公众号
-				wx.showModal({
-					title: '提示',
-					content: '当前微信版本过低，请升级到最新微信版本后重试。如在QQ遇到该问题，请使用微信打开。',
-					complete(res) {
-						// 退出小程序
-						if(wx.exitMiniProgram) {
-							wx.exitMiniProgram()
-						}
-					} 
-				})
 			}
 		},
 		methods: {
