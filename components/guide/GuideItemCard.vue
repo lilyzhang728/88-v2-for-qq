@@ -214,33 +214,33 @@
 			},
 			//点击事件，跳转攻略详情
 			toGuideDetail() {
-				if(compareVersion(hostSDKVersion, '3.4.8') < 0) {
-					// 基础库低于3.4.8，无法打开外链公众号
-					wx.showModal({
-						title: '提示',
-						content: '当前微信版本过低，请升级到最新微信版本后重试。如在QQ遇到该问题，请使用微信打开。',
-						complete(res) {
-							// 退出小程序
-							if(wx.exitMiniProgram) {
-								wx.exitMiniProgram()
-							}
-						} 
-					})
-				} else {
-					if(!this.forbiddenClick) {
-						if(this.ifOfficialAccountLink) {
-							// 跳外部公众号文章链接
+				if(!this.forbiddenClick) {
+					if(this.ifOfficialAccountLink) {
+						// 跳外部公众号文章链接
+						if(compareVersion(hostSDKVersion, '3.4.8') < 0) {
+							// 基础库低于3.4.8，无法打开外链公众号
+							wx.showModal({
+								title: '提示',
+								content: '当前微信版本过低，请升级到最新微信版本后重试。如在QQ遇到该问题，请使用微信打开。',
+								complete(res) {
+									// 退出小程序
+									// if(wx.exitMiniProgram) {
+									// 	wx.exitMiniProgram()
+									// }
+								} 
+							})
+						} else {
 							if(wx.openOfficialAccountArticle) {
 								wx.openOfficialAccountArticle({
 									url: this.guideItem.source_link, // 此处填写公众号文章连接
 								})
 							}
-						} else {
-							// 跳小程序内部文章
-							uni.navigateTo({
-								url: `/page_guide/guideDetail/guideDetail?showEditBtn=${this.showEditBtn}&id=${this.guideItem.id}&cardIndex=${this.index}`
-							});
 						}
+					} else {
+						// 跳小程序内部文章
+						uni.navigateTo({
+							url: `/page_guide/guideDetail/guideDetail?showEditBtn=${this.showEditBtn}&id=${this.guideItem.id}&cardIndex=${this.index}`
+						});
 					}
 				}
 			},
