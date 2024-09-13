@@ -51,7 +51,6 @@
 					<view class="guide-item-card-right-icon-num guide-item-card-right-icon-num-last">{{handleTransform(guideItem.collectors_count)}}</view>
 				</view>
 			</view>
-			
 		</view>
 	</view>
 </template>

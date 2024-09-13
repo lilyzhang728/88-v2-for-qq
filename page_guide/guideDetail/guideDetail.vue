@@ -1,7 +1,7 @@
 <!-- 攻略详情页 -->
 <template>
 	<view class="guide-detail" :style="{backgroundImage: 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)',backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<back-topbar title="攻略详情"></back-topbar>
+		<back-topbar title="攻略详情" :isWxShare="isWxShare"></back-topbar>
 		<z-paging ref="paging" :paging-style="{'top': (customBar) + 'px', 'bottom': pagingBottom, paddingLeft: '25rpx', paddingRight: '25rpx'}">
 			<view @longpress="handleLongpress">
 				<!-- 基本信息 -->
@@ -78,6 +78,7 @@
 	import { guideDetail, editGuide, likeGuide, disLikeGuide, collectGuide, unCollectGuide } from '@/network/api_guide.js'
 	import Toast from '@/wxcomponents/vant/toast/toast'
 	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
+	import aboutLogin from '@/mixins/aboutLogin.js'
 	export default {
 		components: {
 			GuideItemCard,
@@ -85,6 +86,7 @@
 			BackTopbar,
 			DeleteAndComplaint
 		},
+		mixins: [aboutLogin],
 		data() {
 			return {
 				customBar: 0,
@@ -112,6 +114,7 @@
 				},
 				contentId: '',		// 传给长按面板的内容id （帖子/评论）
 				from: '',			// from==='mine',表示从我的页面跳转过来，需要加more-icon
+				isWxShare: false,	// 是否在微信分享里打开的，左上角返回替换为首页按钮
 			}
 		},
 		computed: {
@@ -158,6 +161,12 @@
 			this.cardIndex = Number(option.cardIndex)
 			if(option.from) {
 				this.from = option.from
+			}
+			if(option.scene === 'wxShare') {
+				// 是在微信分享里打开的，左上角返回替换为首页按钮
+				this.isWxShare = true
+				// 获取token信息
+				this.login()
 			}
 			this.getGuideDetail()
 		},
@@ -272,6 +281,22 @@
 					current: 0,
 					urls: [url]
 				});
+			},
+			onShareAppMessage() {
+				// 返回该页面的分享内容
+				return {
+				  title: `${this.guideData.title}`,
+				  path: `/page_guide/guideDetail/guideDetail?id=${this.id}&cardIndex=${this.cardIndex}&scene=wxShare`,
+				  imageUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/wxShare2.jpeg?sign=d7b13487dab94a8562db69b924e3283b&t=1726141442'
+				};
+			},
+			onShareTimeline() {
+				// 返回该页面的分享到朋友圈的内容
+				return {
+				  title: `${this.guideData.title}`,
+				  path: `/page_guide/guideDetail/guideDetail?id=${this.id}&cardIndex=${this.cardIndex}&scene=wxShare`,
+				  imageUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/wxShare2.jpeg?sign=d7b13487dab94a8562db69b924e3283b&t=1726141442'
+				};
 			},
 		}
 	}

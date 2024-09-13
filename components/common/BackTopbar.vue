@@ -1,8 +1,9 @@
 <!-- 自定义返回头 -->
 <template>
 	<view class="back-topbar" :style="{height: customBar+'px', paddingTop: customBarTop+'px', position: 'relative', boxSizing: 'border-box'}">
-		<view class="back-topbar-icon" :style="{position: 'absolute', left: '25rpx', bottom: customBarIconBottom+'px'}" @click.native="handleBack"><van-icon name="arrow-left" size="22px" /></view>
-		<view class="back-topbar-title" :style="{height: customBarHeight+'px', lineHeight: customBarHeight+'px', width: '100%', textAlign: 'center', fontSize: '38rpx', fontWeight: 'bold'}">{{title}}</view>
+		<view class="back-topbar-icon" v-if="!isWxShare" :style="{position: 'absolute', left: '25rpx', bottom: customBarIconBottom+'px'}" @click.native="handleBack"><van-icon name="arrow-left" size="22px" /></view>
+		<van-button v-if="isWxShare" size="small" @click.native="toHome" icon="wap-home-o"  round>首页</van-button>
+		<view v-if="!isWxShare" class="back-topbar-title" :style="{height: customBarHeight+'px', lineHeight: customBarHeight+'px', width: '100%', textAlign: 'center', fontSize: '38rpx', fontWeight: 'bold'}">{{title}}</view>
 	</view>
 </template>
 
@@ -28,6 +29,11 @@
 			tabIndex: {
 				type: String,
 				required: false
+			},
+			isWxShare: {
+				type: Boolean,
+				required: false,
+				default: false
 			}
 		},
 		data() {
@@ -56,6 +62,11 @@
 						 }
 				    }
 				})
+			},
+			toHome() {
+				uni.navigateTo({
+					url: '/pages/launch/launch'
+				});
 			}
 		}
 	}
