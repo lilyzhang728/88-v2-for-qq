@@ -2,7 +2,7 @@
 <template>
 	<view class="ranking-list">
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'left': '25rpx', 'right': '25rpx'}"
-		:loading-more-enabled="false" :to-bottom-loading-more-enabled="false">
+		:loading-more-enabled="false" :to-bottom-loading-more-enabled="false" empty-view-text="现在还没有人上榜哦~">
 			<ranking-card v-for="(item,index) in dataList" :key="index" :index="index" :rankingData="item" :rankId="rankId"></ranking-card>
 		</z-paging>
 	</view>

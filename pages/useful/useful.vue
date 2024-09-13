@@ -92,7 +92,7 @@
 				// 基础库低于3.4.8，无法打开外链公众号
 				wx.showModal({
 					title: '提示',
-					content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。',
+					content: '当前微信版本过低，请升级到最新微信版本后重试。如在QQ遇到该问题，请使用微信打开。',
 					complete(res) {
 						// 退出小程序
 						if(wx.exitMiniProgram) {
