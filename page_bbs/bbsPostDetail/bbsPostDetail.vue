@@ -416,7 +416,6 @@
 				return {
 				  title: `${title}`,
 				  path: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.id}&postIndex=${this.postIndex}&scene=wxShare`,
-				  imageUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/wxShare2.jpeg?sign=d7b13487dab94a8562db69b924e3283b&t=1726141442'
 				};
 			},
 			onShareTimeline() {
@@ -426,6 +425,11 @@
 				} else {
 					title = '图片消息'
 				}
+				// 返回该页面的分享内容
+				return {
+				  title: `${title}`,
+				  path: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.id}&postIndex=${this.postIndex}&scene=wxShare`,
+				};
 			},
 		}
 	}
