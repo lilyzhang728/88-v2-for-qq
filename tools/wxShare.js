@@ -20,10 +20,10 @@ export default {
         }
     },
     //分享到朋友圈
-    onShareTimeline(res) {
-         return {
-          title: '来勾重点，帮你快速攻略大学生活～',
-          path: '/pages/launch/launch',
-        }
-    }
+    // onShareTimeline(res) {
+    //      return {
+    //       title: '来勾重点，帮你快速攻略大学生活～',
+    //       path: '/pages/launch/launch',
+    //     }
+    // }
 }

@@ -430,13 +430,13 @@
 				  path: `/page_qa/questionDetail/questionDetail?id=${this.id}&scene=wxShare`,
 				};
 			},
-			onShareTimeline() {
-				// 返回该页面的分享到朋友圈的内容
-				return {
-				  title: `${this.postData.title}`,
-				  path: `/page_qa/questionDetail/questionDetail?id=${this.id}&scene=wxShare`,
-				};
-			},
+			// onShareTimeline() {
+			// 	// 返回该页面的分享到朋友圈的内容
+			// 	return {
+			// 	  title: `${this.postData.title}`,
+			// 	  path: `/page_qa/questionDetail/questionDetail?id=${this.id}&scene=wxShare`,
+			// 	};
+			// },
 		}
 	}
 </script>

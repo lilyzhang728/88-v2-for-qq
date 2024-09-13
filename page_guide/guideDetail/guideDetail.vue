@@ -289,13 +289,13 @@
 				  path: `/page_guide/guideDetail/guideDetail?id=${this.id}&cardIndex=${this.cardIndex}&scene=wxShare`,
 				};
 			},
-			onShareTimeline() {
-				// 返回该页面的分享到朋友圈的内容
-				return {
-				  title: `${this.guideData.title}`,
-				  path: `/page_guide/guideDetail/guideDetail?id=${this.id}&cardIndex=${this.cardIndex}&scene=wxShare`,
-				};
-			},
+			// onShareTimeline() {
+			// 	// 返回该页面的分享到朋友圈的内容
+			// 	return {
+			// 	  title: `${this.guideData.title}`,
+			// 	  path: `/page_guide/guideDetail/guideDetail?id=${this.id}&cardIndex=${this.cardIndex}&scene=wxShare`,
+			// 	};
+			// },
 		}
 	}
 </script>

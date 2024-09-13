@@ -418,19 +418,19 @@
 				  path: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.id}&postIndex=${this.postIndex}&scene=wxShare`,
 				};
 			},
-			onShareTimeline() {
-				let title
-				if(this.postData.body.body) {
-					title = this.postData.body.body.length > 30 ? this.postData.body.body.slice(0, 30) + '...' : this.postData.body.body
-				} else {
-					title = '图片消息'
-				}
-				// 返回该页面的分享内容
-				return {
-				  title: `${title}`,
-				  path: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.id}&postIndex=${this.postIndex}&scene=wxShare`,
-				};
-			},
+			// onShareTimeline() {
+			// 	let title
+			// 	if(this.postData.body.body) {
+			// 		title = this.postData.body.body.length > 30 ? this.postData.body.body.slice(0, 30) + '...' : this.postData.body.body
+			// 	} else {
+			// 		title = '图片消息'
+			// 	}
+			// 	// 返回该页面的分享内容
+			// 	return {
+			// 	  title: `${title}`,
+			// 	  path: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.id}&postIndex=${this.postIndex}&scene=wxShare`,
+			// 	};
+			// },
 		}
 	}
 </script>
