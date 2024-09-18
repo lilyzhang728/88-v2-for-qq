@@ -26,10 +26,8 @@
 			    placeholder="请输入学校"
 			    @change.native="onChange($event, 'school')"
 				label="学校"
-				required
 				name="school"
 				clearable
-				:error="validator && !userInfo.school"
 				custom-style="background: transparent"
 				maxlength=15
 			/>
@@ -38,10 +36,8 @@
 			    placeholder="请输入专业"
 			    @change.native="onChange($event, 'major')"
 				label="专业"
-				required
 				name="major"
 				clearable
-				:error="validator && !userInfo.major"
 				custom-style="background: transparent"
 				maxlength=15
 			/>
@@ -49,39 +45,33 @@
 			    :value="userInfo.startDay"
 			    placeholder="请选择入学时间"
 				label="入学时间"
-				required
 				name="startDay"
 				right-icon="arrow"
 				readonly
 				@clickInput="clickDate('start')"
 				@clickIcon.native="clickDate('start')"
-				:error="validator && !userInfo.startDay"
 				custom-style="background: transparent"
 			/>
 			<van-field
 			    :value="userInfo.graduateDay"
 			    placeholder="请选择毕业时间"
 				label="毕业时间"
-				required
 				name="graduateDay"
 				right-icon="arrow"
 				readonly
 				@clickInput="clickDate('end')"
 				@clickIcon.native="clickDate('end')"
-				:error="validator && !userInfo.graduateDay"
 				custom-style="background: transparent"
 			/>
 			<van-field
 			    :value="userInfo.target"
 			    placeholder="请选择目标"
 				label="目标"
-				required
 				name="target"
 				right-icon="arrow"
 				readonly
 				@clickInput="clickTarget"
 				@clickIcon.native="clickTarget"
-				:error="validator && !userInfo.target"
 				custom-style="background: transparent"
 			/>
 			<van-field
@@ -190,9 +180,9 @@
 				const { start_year, start_month, graduate_year, graduate_month } = this.userInfo
 				return { start_year, start_month, graduate_year, graduate_month }
 			},
-			// 除了个性签名都必输
+			// 只有昵称必输
 			btnDisabled() {
-				return !this.userInfo.name || !this.userInfo.school || !this.userInfo.major || !this.userInfo.start_year || !this.userInfo.start_month || !this.userInfo.graduate_year || !this.userInfo.graduate_month || !this.userInfo.target
+				return !this.userInfo.name
 			}
 		},
 		watch: {
@@ -554,15 +544,19 @@
 			// 保存
 			handleSave() {
 				this.validator = true
-				if(this.userInfo.avatar && this.userInfo.name && this.userInfo.school && this.userInfo.major && this.userInfo.start_year && this.userInfo.start_month && this.userInfo.graduate_year && this.userInfo.graduate_month && this.userInfo.target) {
-					// 校验时间
-					if (new Date(this.userInfo.startDay).getTime() > new Date(this.userInfo.graduateDay).getTime()) {
-						Toast.fail('入学时间不能超过毕业时间');
-						return
+				if(this.userInfo.name) {
+					if(this.userInfo.startDay && this.userInfo.graduateDay) {
+						// 校验时间
+						if (new Date(this.userInfo.startDay).getTime() > new Date(this.userInfo.graduateDay).getTime()) {
+							Toast.fail('入学时间不能超过毕业时间');
+							return
+						}
 					}
 					// let params = Object.assign(this.userInfo, {target: target_key_value_map[this.userInfo.target]})
 					let params = JSON.parse(JSON.stringify(this.userInfo))
-					params.target = target_key_value_map[this.userInfo.target]
+					if(this.userInfo.target) {
+						params.target = target_key_value_map[this.userInfo.target]
+					}
 					//校验通过：提交
 					updateProfile(params).then(res => {
 						if(res.code === 0) {

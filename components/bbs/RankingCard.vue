@@ -9,6 +9,7 @@
 			<view class="ranking-card-left-info">
 				<text class="ranking-card-left-info-text">{{rankingData.author.name}}</text>
 				<text class="ranking-card-left-info-text">点赞数 {{rankingData.likers_count}}</text>
+				<text class="ranking-card-left-info-text">{{timestamp}}</text>
 			</view>
 		</view>
 		<view class="ranking-card-right" :style="{'color': index < 5 ? activeCollectColor : activeColor}">{{index+1}}</view>
@@ -17,6 +18,7 @@
 
 <script>
 	import { themeColor, collectColor } from '@/common/common.less'
+	import { convertDateFormat } from '@/tools/transform_time.js'
 	export default {
 		props: {
 			rankingData: {
@@ -59,6 +61,13 @@
 					return this.rankingData.body.body
 				} else {
 					return this.rankingData[id_map[this.rankId]]
+				}
+			},
+			timestamp() {
+				if(this.rankingData.timestamp) {
+					return convertDateFormat(this.rankingData.timestamp)
+				} else {
+					return ''
 				}
 			}
 		},
