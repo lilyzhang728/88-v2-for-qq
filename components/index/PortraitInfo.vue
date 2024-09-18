@@ -57,7 +57,7 @@
 					school: "",
 					target: "",
 					id: "",
-					avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',
+					avatar: '',
 				},
 				w: 0,
 				h: 0,
@@ -96,6 +96,10 @@
 					if (res.code == 0 && Object.keys(res.data).length) {
 						this.userInfo = res.data
 						this.$emit('getTimeRange', res.data.start_year, res.data.graduate_year)
+						if(!res.data.avatar) {
+							// 如返回头像为空，设置默认头像
+							this.userInfo.avatar = this.default_avatar
+						}
 					}
 				}, err => {
 					console.log('profile', err)
