@@ -24,6 +24,7 @@
 					uni.setStorageSync('customBarIconBottom', custom.bottom - e.statusBarHeight - custom.height)	//topbar的icon的bottom
 					uni.setStorageSync('statusBar', e.statusBarHeight)
 					uni.setStorageSync('screenWidth', e.screenWidth)
+					uni.setStorageSync('platform', e.platform)
 					// #endif
 				}
 			})

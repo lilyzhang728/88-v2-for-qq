@@ -1,7 +1,7 @@
 <!-- 发布新帖子 -->
 <template>
 	<view class="add-new-post" :style="{backgroundImage: backgroundImage,backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<z-paging ref="paging" :paging-style="{'top': '0px', 'left': '25rpx', 'right': '25rpx'}">
+		<z-paging ref="paging" :paging-style="pagingStyle">
 			<template #top>
 				<back-topbar title="发布帖子"></back-topbar>
 			</template>
@@ -37,6 +37,7 @@
 					@focus.native="inputBindFocus"
 					@blur.native="inputBindBlur"
 					clearable
+					:adjust-position="platform !== 'android'"
 				  />
 				  
 				<!-- uploader -->
@@ -93,6 +94,7 @@
 	import Toast from '@/wxcomponents/vant/toast/toast'
 	import { guideDetail, addGuide, editGuide } from '@/network/api_guide.js'
 	import { imgSecCheck } from "@/tools/sec_check.js"
+import { watch } from "vue"
 	export default {
 		components: {
 			BackTopbar
@@ -122,7 +124,9 @@
 				cloud_path_split: '',	//上传至对象存储的地址-截断（单张）
 				fileID_list: [],	//上传至对象存储的地址（多张）
 				fileID_list_split: [],	//上传至对象存储的地址-截断（多张）
-				allowSendAjax: true
+				allowSendAjax: true,
+				keyboardHeightVal: 0,
+				platform: uni.getStorageSync('platform')
 			}
 		},
 		computed: {
@@ -132,12 +136,34 @@
 			imageWidth() {
 				// 两边padding: 25*2+30*2=110; 图片margin-right:8px 8*3=24; 计算误差多-5
 				return this.screenWidth ? ((this.screenWidth - this.rpxToPx(110) - 24 - 5) / 3) + 'px' : 0
+			},
+			pagingStyle() {
+				if(this.platform === 'android') {
+					let pagingBottom = (this.keyboardHeightVal + 85) + 'px'
+					return {'top': '0px', 'left': '25rpx', 'right': '25rpx', 'bottom': pagingBottom}
+				} else {
+					return {'top': '0px', 'left': '25rpx', 'right': '25rpx'}
+				}
+			}
+		},
+		watch: {
+			platform(val) {
+				if(val === 'android') {
+					uni.onKeyboardHeightChange(res => {
+					    this.keyboardHeightVal = res.height; //软键盘高度 
+					})
+				}
 			}
 		},
 		onLoad(option) {
 			if(option.topicInfo) {
 				this.addedTopicContent = JSON.parse(decodeURIComponent(option.topicInfo))
 				this.selectedTopic = true
+			}
+			if(this.platform === 'android') {
+				uni.onKeyboardHeightChange(res => {
+				    this.keyboardHeightVal = res.height; //软键盘高度 
+				})
 			}
 		},
 		onShow() {
