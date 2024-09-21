@@ -1,37 +1,40 @@
 <!-- 写答案 -->
 <template>
 	<view class="write-answer">
-		<view class="write-answer-title">{{title}}</view>
-		
-		<view class="add-new-post-edit-title-split"></view>
-		
-		<view class="write-answer-content">
-			<van-field
-				class="add-new-post-edit-textarea-wrap field-input-custom"
-				input-class="add-new-post-edit-textarea"
-				:value="answerVal"
-				type="textarea"
-				:show-confirm-bar="false"
-				placeholder="请输入回答内容"
-				autosize
-				:border="false"
-				@change.native="inputAnswer($event)"
-				@focus.native="inputBindFocus"
-				@blur.native="inputBindBlur"
-				clearable
-			  />
-		</view>
-		
-		<!-- 弹起键盘 -->
-		<view class="add-new-post-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
-			<!-- 发布按钮 -->
-			<view class="view-btn-box">
-				<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="!answerVal" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
+		<z-paging ref="paging" :paging-style="pagingStyle">
+			<view class="write-answer-title">{{title}}</view>
+			
+			<view class="add-new-post-edit-title-split"></view>
+			
+			<view class="write-answer-content">
+				<van-field
+					class="add-new-post-edit-textarea-wrap field-input-custom"
+					input-class="add-new-post-edit-textarea"
+					:value="answerVal"
+					type="textarea"
+					:show-confirm-bar="false"
+					placeholder="请输入回答内容"
+					autosize
+					:border="false"
+					@change.native="inputAnswer($event)"
+					@focus.native="inputBindFocus"
+					@blur.native="inputBindBlur"
+					clearable
+					:adjust-position="platform !== 'android'"
+				  />
 			</view>
-		</view>
-		
-		<!-- toast提示 -->
-		<van-toast id="van-toast" />
+			
+			<!-- 弹起键盘 -->
+			<view class="add-new-post-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
+				<!-- 发布按钮 -->
+				<view class="view-btn-box">
+					<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="!answerVal" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
+				</view>
+			</view>
+			
+			<!-- toast提示 -->
+			<van-toast id="van-toast" />
+		</z-paging>
 	</view>
 </template>
 
@@ -48,6 +51,27 @@
 				bottomVal: '0px',	//键盘上话题bottom
 				showKeyboard: true,
 				keyboardHeight: '54px',	//键盘上话题height	1行54px，2行85px
+				keyboardHeightVal: 0,
+				platform: uni.getStorageSync('platform')
+			}
+		},
+		computed: {
+			pagingStyle() {
+				if(this.platform === 'android') {
+					let pagingBottom = (this.keyboardHeightVal + 54) + 'px'
+					return {'top': '0px', 'left': '25rpx', 'right': '25rpx', 'bottom': pagingBottom}
+				} else {
+					return {'top': '0px', 'left': '25rpx', 'right': '25rpx'}
+				}
+			}
+		},
+		watch: {
+			platform(val) {
+				if(val === 'android') {
+					uni.onKeyboardHeightChange(res => {
+						this.keyboardHeightVal = res.height; //软键盘高度 
+					})
+				}
 			}
 		},
 		onLoad(option) {
@@ -60,6 +84,11 @@
 				    success: () => {
 				         let page = getCurrentPages().pop();//跳转页面成功之后
 				    }
+				})
+			}
+			if(this.platform === 'android') {
+				uni.onKeyboardHeightChange(res => {
+					this.keyboardHeightVal = res.height; //软键盘高度 
 				})
 			}
 		},
@@ -105,6 +134,7 @@
 		padding: 25rpx;
 		.write-answer-title {
 			margin: 0 15px;
+			margin-top: 15px;
 			font-size: 38rpx;
 			font-weight: 600;
 			color: #000000;
