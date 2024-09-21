@@ -40,7 +40,7 @@
 					@focus.native="inputBindFocus"
 					@blur.native="inputBindBlur"
 					clearable
-					:adjust-position="platform !== 'android'"
+					:adjust-position="false"
 				  />
 				  
 				<!-- uploader -->
@@ -51,6 +51,9 @@
 				@afterRead.native="afterRead" @delete.native="deleteImg">
 				</van-uploader>
 				
+				<!-- 解决ios键盘遮挡输入内容的问题 -->
+				<view class="iosBottomBox" v-if="platform === 'ios'"></view>
+								
 				<view class="add-new-post-edit-title-split-bottom"></view>
 			</view>
 			
@@ -129,7 +132,8 @@
 			},
 			pagingStyle() {
 				if(this.platform === 'android') {
-					let pagingBottom = (this.keyboardHeightVal + 85) + 'px'
+					let keyboardHeight = this.userName ? 85 : 54
+					let pagingBottom = (this.keyboardHeightVal + keyboardHeight) + 'px'
 					return {'top': '0px', 'left': '25rpx', 'right': '25rpx', 'bottom': pagingBottom}
 				} else {
 					return {'top': '0px', 'left': '25rpx', 'right': '25rpx'}
@@ -629,6 +633,9 @@
     position: absolute;
     left: -99999px;
     top:-99999px;
+}
+.iosBottomBox {
+	height: 480px;
 }
 .add-new-post-edit-title-split-bottom {
 		height: 1px;

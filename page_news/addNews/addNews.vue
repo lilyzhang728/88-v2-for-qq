@@ -39,7 +39,7 @@
 					@change.native="inputPost($event)"
 					@focus.native="inputBindFocus"
 					@blur.native="inputBindBlur"
-					:adjust-position="platform !== 'android'"
+					:adjust-position="false"
 				  />
 				
 				
@@ -55,6 +55,9 @@
 					@focus.native="inputBindFocus"
 					@blur.native="inputBindBlur"
 				/>
+				
+				<!-- 解决ios键盘遮挡输入内容的问题 -->
+				<view class="iosBottomBox" v-if="platform === 'ios'"></view>
 				
 				<view class="add-new-post-edit-title-split add-new-post-edit-title-split-bottom"></view>
 				  
@@ -127,7 +130,7 @@
 			},
 			pagingStyle() {
 				if(this.platform === 'android') {
-					let pagingBottom = (this.keyboardHeightVal + 85) + 'px'
+					let pagingBottom = (this.keyboardHeightVal + 54) + 'px'
 					return {'top': '0px', 'left': '25rpx', 'right': '25rpx', 'bottom': pagingBottom}
 				} else {
 					return {'top': '0px', 'left': '25rpx', 'right': '25rpx'}
@@ -370,6 +373,9 @@
 		.add-new-post-edit-title-wrap {
 			.add-new-post-edit-title {
 			}
+		}
+		.iosBottomBox {
+			height: 480px;
 		}
 		.add-new-post-edit-title-split {
 			height: 1px;

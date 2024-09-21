@@ -42,7 +42,7 @@
 					@focus.native="inputBindFocus"
 					@blur.native="inputBindBlur"
 					clearable
-					:adjust-position="platform !== 'android'"
+					:adjust-position="false"
 				  />
 				  
 				<!-- uploader -->
@@ -56,6 +56,9 @@
 				<view>
 					<van-button color="#35C8A7" round class="bottom-btn-wrap" custom-class="bottom-btn" @click.native="toGuideEdit">使用模板</van-button>
 				</view>
+				
+				<!-- 解决ios键盘遮挡输入内容的问题 -->
+				<view class="iosBottomBox" v-if="platform === 'ios'"></view>
 				
 				<view class="add-new-post-edit-title-split-bottom"></view>
 			</view>
@@ -142,7 +145,7 @@
 			},
 			pagingStyle() {
 				if(this.platform === 'android') {
-					let pagingBottom = (this.keyboardHeightVal + 85) + 'px'
+					let pagingBottom = (this.keyboardHeightVal + 54) + 'px'
 					return {'top': '0px', 'left': '25rpx', 'right': '25rpx', 'bottom': pagingBottom}
 				} else {
 					return {'top': '0px', 'left': '25rpx', 'right': '25rpx'}
@@ -682,6 +685,9 @@
 				
 			}
 		}
+	}
+	.iosBottomBox {
+		height: 480px;
 	}
 	.add-new-post-edit-title-split-bottom {
 		height: 1px;

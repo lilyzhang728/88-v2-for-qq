@@ -20,9 +20,12 @@
 					@focus.native="inputBindFocus"
 					@blur.native="inputBindBlur"
 					clearable
-					:adjust-position="platform !== 'android'"
+					:adjust-position="false"
 				  />
 			</view>
+			
+			<!-- 解决ios键盘遮挡输入内容的问题 -->
+			<view class="iosBottomBox" v-if="platform === 'ios'"></view>
 			
 			<!-- 弹起键盘 -->
 			<view class="add-new-post-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
@@ -152,7 +155,9 @@
 				}
 			}
 		}
-		
+		.iosBottomBox {
+			height: 480px;
+		}
 		.add-new-post-keyboard {
 			position: fixed;
 			left: 0;
