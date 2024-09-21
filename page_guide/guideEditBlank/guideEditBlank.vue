@@ -1,7 +1,7 @@
 <!-- 攻略编辑页((无模板) -->
 <template>
 	<view class="guide-edit-blank" :style="{backgroundImage: backgroundImage,backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<z-paging ref="paging" :paging-style="{'top': '0px', 'left': '25rpx', 'right': '25rpx'}">
+		<z-paging ref="paging" :paging-style="pagingStyle">
 			<template #top>
 				<back-topbar :title="ifEdit ? '编辑攻略' : '新建攻略'"></back-topbar>
 			</template>
@@ -42,6 +42,7 @@
 					@focus.native="inputBindFocus"
 					@blur.native="inputBindBlur"
 					clearable
+					:adjust-position="platform !== 'android'"
 				  />
 				  
 				<!-- uploader -->
@@ -114,6 +115,8 @@
 				fileID_list_split: []	,//上传至对象存储的地址-截断（多张）
 				timestamp: null,	//时间戳，用于确定该用户创建的这篇攻略的所有图片的唯一文件夹名
 				ifEdit: false,		//true为编辑页，false为新建页
+				keyboardHeightVal: 0,
+				platform: uni.getStorageSync('platform')
 			}
 		},
 		computed: {
@@ -136,6 +139,23 @@
 			cover_url() {
 				let index = Math.floor(Math.random() * 6)
 				return BOOK_IMG_LIST[index]
+			},
+			pagingStyle() {
+				if(this.platform === 'android') {
+					let pagingBottom = (this.keyboardHeightVal + 85) + 'px'
+					return {'top': '0px', 'left': '25rpx', 'right': '25rpx', 'bottom': pagingBottom}
+				} else {
+					return {'top': '0px', 'left': '25rpx', 'right': '25rpx'}
+				}
+			}
+		},
+		watch: {
+			platform(val) {
+				if(val === 'android') {
+					uni.onKeyboardHeightChange(res => {
+						this.keyboardHeightVal = res.height; //软键盘高度 
+					})
+				}
 			}
 		},
 		onLoad(option) {
@@ -146,6 +166,11 @@
 					this.guideId = option.guideId
 					this.getGuideDetail(option.guideId)
 				}
+			}
+			if(this.platform === 'android') {
+				uni.onKeyboardHeightChange(res => {
+					this.keyboardHeightVal = res.height; //软键盘高度 
+				})
 			}
 		},
 		methods: {

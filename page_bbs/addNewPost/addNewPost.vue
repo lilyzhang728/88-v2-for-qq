@@ -94,7 +94,6 @@
 	import Toast from '@/wxcomponents/vant/toast/toast'
 	import { guideDetail, addGuide, editGuide } from '@/network/api_guide.js'
 	import { imgSecCheck } from "@/tools/sec_check.js"
-import { watch } from "vue"
 	export default {
 		components: {
 			BackTopbar
