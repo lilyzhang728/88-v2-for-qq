@@ -1,7 +1,7 @@
 <!-- 新增资讯 -->
 <template>
 	<view class="add-news" :style="{backgroundImage: backgroundImage,backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<z-paging ref="paging" :paging-style="{'top': '0px', 'left': '25rpx', 'right': '25rpx'}">
+		<z-paging ref="paging" :paging-style="pagingStyle">
 			<template #top>
 				<back-topbar title="发布资讯" class="add-news-title"></back-topbar>
 			</template>
@@ -39,6 +39,7 @@
 					@change.native="inputPost($event)"
 					@focus.native="inputBindFocus"
 					@blur.native="inputBindBlur"
+					:adjust-position="platform !== 'android'"
 				  />
 				
 				
@@ -109,6 +110,8 @@
 				userName: '',
 				userId: '',
 				customBarTop: uni.getStorageSync('customBarTop') ? uni.getStorageSync('customBarTop') : 0,
+				keyboardHeightVal: 0,
+				platform: uni.getStorageSync('platform')
 			}
 		},
 		computed: {
@@ -121,11 +124,33 @@
 			},
 			screenWidth() {
 				return uni.getStorageSync('screenWidth')
+			},
+			pagingStyle() {
+				if(this.platform === 'android') {
+					let pagingBottom = (this.keyboardHeightVal + 85) + 'px'
+					return {'top': '0px', 'left': '25rpx', 'right': '25rpx', 'bottom': pagingBottom}
+				} else {
+					return {'top': '0px', 'left': '25rpx', 'right': '25rpx'}
+				}
+			}
+		},
+		watch: {
+			platform(val) {
+				if(val === 'android') {
+					uni.onKeyboardHeightChange(res => {
+						this.keyboardHeightVal = res.height; //软键盘高度 
+					})
+				}
 			}
 		},
 		onLoad(option) {
 			this.userName = option.userName ? option.userName : ''
 			this.userId = option.userId ? option.userId : ''
+			if(this.platform === 'android') {
+				uni.onKeyboardHeightChange(res => {
+					this.keyboardHeightVal = res.height; //软键盘高度 
+				})
+			}
 		},
 		methods: {
 			// rpx转px

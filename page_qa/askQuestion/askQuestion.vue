@@ -1,7 +1,7 @@
 <!-- 提问页面 -->
 <template>
 	<view class="ask-question" :style="{backgroundImage: backgroundImage,backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<z-paging ref="paging" :paging-style="{'top': '0px', 'left': '25rpx', 'right': '25rpx'}">
+		<z-paging ref="paging" :paging-style="pagingStyle">
 			<template #top>
 				<back-topbar title="发布问题"></back-topbar>
 			</template>
@@ -40,6 +40,7 @@
 					@focus.native="inputBindFocus"
 					@blur.native="inputBindBlur"
 					clearable
+					:adjust-position="platform !== 'android'"
 				  />
 				  
 				<!-- uploader -->
@@ -107,7 +108,9 @@
 				cloud_path: '',	//上传至对象存储的地址（单张）
 				cloud_path_split: '',	//上传至对象存储的地址-截断（单张）
 				fileID_list: [],	//上传至对象存储的地址（多张）
-				fileID_list_split: []	//上传至对象存储的地址-截断（多张）
+				fileID_list_split: [],	//上传至对象存储的地址-截断（多张）
+				keyboardHeightVal: 0,
+				platform: uni.getStorageSync('platform')
 			}
 		},
 		computed: {
@@ -123,11 +126,33 @@
 			},
 			keyboardHeight() {
 				return this.userName ? '85px' : '54px'
+			},
+			pagingStyle() {
+				if(this.platform === 'android') {
+					let pagingBottom = (this.keyboardHeightVal + 85) + 'px'
+					return {'top': '0px', 'left': '25rpx', 'right': '25rpx', 'bottom': pagingBottom}
+				} else {
+					return {'top': '0px', 'left': '25rpx', 'right': '25rpx'}
+				}
+			}
+		},
+		watch: {
+			platform(val) {
+				if(val === 'android') {
+					uni.onKeyboardHeightChange(res => {
+						this.keyboardHeightVal = res.height; //软键盘高度 
+					})
+				}
 			}
 		},
 		onLoad(option) {
 			this.userName = option.userName ? option.userName : ''
 			this.userId = option.userId ? option.userId : ''
+			if(this.platform === 'android') {
+				uni.onKeyboardHeightChange(res => {
+					this.keyboardHeightVal = res.height; //软键盘高度 
+				})
+			}
 		},
 		methods: {
 			// rpx转px
