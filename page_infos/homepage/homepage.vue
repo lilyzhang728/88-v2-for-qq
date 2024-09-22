@@ -25,13 +25,12 @@
 						<homepage-radar :userId="userId"></homepage-radar>
 					</view>
 				</view>
-				<view class="homepage-split" v-if="showBadge || dataList.length">
+				<!-- <view class="homepage-split" v-if="showBadge || dataList.length">
 					<view class="homepage-split-left"></view>
 					<view class="homepage-split-center"></view>
 					<view class="homepage-split-right"></view>
-				</view>
-				<view class="homepage-achivement">
-					<!-- 获得的徽章 -->
+				</view> -->
+				<!-- <view class="homepage-achivement">
 					<view class="homepage-achivement-badge" v-if="showBadge">
 						<view class="homepage-achivement-title">
 							<view class="homepage-achivement-title-icon"></view>徽章墙
@@ -40,7 +39,6 @@
 							<homepage-badge :userId="userId" :badgeList="badgeList" @showBadgeDetail="showBadgeDetail"></homepage-badge>
 						</view>
 					</view>
-					<!-- 发表的帖子 -->
 					<view class="homepage-achivement-guide" v-if="dataList.length">
 						<view class="homepage-achivement-title homepage-achivement-title-post">
 							<view class="homepage-achivement-title-icon"></view>发表的动态
@@ -49,7 +47,7 @@
 							<homepage-post :userId="userId" :dataList="dataList" @checkoutLike="checkoutLike"></homepage-post>
 						</view>
 					</view>
-				</view>
+				</view> -->
 				
 				<!-- 分享按钮 -->
 				<!-- <view class="homepage-user-info-share" @click.native.stop="handleShare($event)">
