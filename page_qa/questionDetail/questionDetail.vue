@@ -31,6 +31,12 @@
 			<!-- 发布时间 -->
 			<view class="bbs-post-detail-edit-info">编辑于{{postData.timestamp}}</view>
 			
+			<!-- 跳转到有奖问答 -->
+			<view v-if="postData.id!=='122723b14c0611ef85995254009327f0'" class="toActivity" @click.native="toActivity">
+				<img class="toActivity-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
+				【有奖问答】火热进行中
+			</view>
+			
 			<van-divider />
 			
 			<!-- 邀请回答 -->
@@ -437,6 +443,11 @@
 			// 	  path: `/page_qa/questionDetail/questionDetail?id=${this.id}&scene=wxShare`,
 			// 	};
 			// },
+			toActivity() {
+				uni.navigateTo({
+					url: `/page_qa/questionDetail/questionDetail?id=122723b14c0611ef85995254009327f0`
+				})
+			}
 		}
 	}
 </script>
@@ -512,6 +523,21 @@
 		color: rgba(0,0,0,0.5);
 		line-height: 33rpx;
 		text-align: left;
+	}
+	.toActivity {
+		margin-top: 20rpx;
+		font-size: 28rpx;
+		color: #35C8A7;
+		line-height: 33rpx;
+		font-weight: 500;
+		text-decoration: underline;
+		display: flex;
+		align-items: center;
+		.toActivity-img {
+			height: 32rpx;
+			width: 32rpx;
+			margin-right: 10rpx;
+		}
 	}
 	.question-detail-btns {
 		display: flex;

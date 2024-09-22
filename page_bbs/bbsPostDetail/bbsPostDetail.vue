@@ -26,6 +26,12 @@
 				<!-- 编辑时间 -->
 				<view class="bbs-post-detail-edit-info">编辑于{{postData.timestamp}}</view>
 				
+				<!-- 跳转到水贴大赛 -->
+				<view v-if="postData.id!=='122723b14c0611ef85995254009327f9'" class="toActivity" @click.native="toActivity">
+					<img class="toActivity-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
+					【水贴大赛】火热进行中
+				</view>
+				
 				<van-divider />
 			
 				<!-- 评论区 -->
@@ -431,6 +437,11 @@
 			// 	  path: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.id}&postIndex=${this.postIndex}&scene=wxShare`,
 			// 	};
 			// },
+			toActivity() {
+				uni.navigateTo({
+					url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=122723b14c0611ef85995254009327f9&postIndex=0`
+				});
+			}
 		}
 	}
 </script>
@@ -502,6 +513,21 @@
 			font-size: 26rpx;
 			color: rgba(0,0,0,0.5);
 			line-height: 33rpx;
+		}
+		.toActivity {
+			margin-top: 20rpx;
+			font-size: 28rpx;
+			color: #35C8A7;
+			line-height: 33rpx;
+			font-weight: 500;
+			text-decoration: underline;
+			display: flex;
+			align-items: center;
+			.toActivity-img {
+				height: 32rpx;
+				width: 32rpx;
+				margin-right: 10rpx;
+			}
 		}
 		.bbs-post-detail-comment {
 			.bbs-post-detail-comment-total {
