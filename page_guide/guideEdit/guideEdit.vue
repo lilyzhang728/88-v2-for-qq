@@ -4,14 +4,14 @@
 		<back-topbar :title="ifEdit ? '编辑攻略' : '新建攻略'"></back-topbar>
 		<z-paging ref="paging" :paging-style="{'top': (customBar) + 'px', 'bottom': '66px', paddingLeft: '25rpx', paddingRight: '25rpx'}">
 			<!-- 封面图 -->
-			<view class="guide-edit-img">
+			<!-- <view class="guide-edit-img">
 				<van-image width="100%"
 				  height="100%"
 				  fit="contain"
 				  :src="guideInfo.body.cover_url"
 				/>
 				<view class="guide-edit-img-change" @click="changeImg">更换封面</view>
-			</view>
+			</view> -->
 			
 			<!-- 标题 -->
 			<view class="guide-edit-title">
@@ -49,7 +49,7 @@
 			</view>
 			
 			<!-- 教辅材料 -->
-			<view class="guide-edit-material">
+			<!-- <view class="guide-edit-material">
 				<view class="guide-edit-form-title">
 					关键词/教辅
 				</view>
@@ -77,7 +77,7 @@
 						<van-button plain class="guide-edit-add-btn-wrap" custom-class="guide-edit-add-btn" @click="addMaterial">增加材料</van-button>
 					</view>
 				</view>
-			</view>
+			</view> -->
 			
 			<!-- 步骤 -->
 			<view class="guide-edit-step" v-for="(item, index) in guideInfo.body.steps" :key="index">

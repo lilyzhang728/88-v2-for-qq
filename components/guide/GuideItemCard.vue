@@ -3,7 +3,7 @@
 <template>
 	<view class="guide-item-card" :class="{'guide-item-card-noBorder': hideBorder, 'guide-item-card-mine': from==='mine'}" 
 	@click.native="toGuideDetail" @longpress="handleLongpress" v-if="guideItem.status">
-		<view class="guide-item-card-left">
+		<!-- <view class="guide-item-card-left">
 			<view class="guide-item-card-left-img-box">
 				<van-image width="183rpx"
 				  height="243rpx"
@@ -14,14 +14,14 @@
 					<view class="guide-item-card-left-bookname-text">{{bookname}}</view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<view class="guide-item-card-right">
 			<view class="guide-item-card-right-title-box">
 				<view class="guide-item-card-right-title" :class="{'guide-item-card-right-title-whole': showWholeTitle}">{{guideItem.title}}</view>
 				<van-icon size="24rpx" color="#808080" name="arrow-down" @click.native.stop="clickMore($event)" />
 			</view>
 			<view class="guide-item-card-right-description" :class="{'guide-item-card-right-description-whole': showWholeTitle}" v-if="!ifOfficialAccountLink && guideItem.body.summary">{{guideItem.body.summary}}</view>
-			<view class="guide-item-card-right-books">
+			<!-- <view class="guide-item-card-right-books">
 				<view class="guide-item-card-right-books-left">
 					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/matetialIcon.png" alt="" class="guide-item-card-right-book-item-icon" v-if="!ifOfficialAccountLink && guideItem.body.references">
 					<text class="guide-item-card-right-book-item" v-if="!ifOfficialAccountLink && guideItem.body.references">教辅*{{guideItem.body.references.length}}</text>
@@ -29,11 +29,10 @@
 					<text class="guide-item-card-right-book-item" v-if="!ifOfficialAccountLink && guideItem.body.steps">章节*{{guideItem.body.steps.length}}</text>
 				</view>
 				<view class="guide-item-card-right-books-right">
-					<!-- <text class="guide-item-card-right-books-right-time" v-if="!isMine && guideItem.timestamp">{{timestamp}}</text> -->
 					<text class="guide-item-card-right-books-right-status" v-if="isMine && (guideItem.status === 0 || guideItem.status === 1)">{{guideItem.status ? '' : '未发布'}}</text>
 				</view>
-				
-			</view>
+			</view> -->
+			
 			<!-- 发现、我的收藏显示信息区，我的创作显示但不能点击 -->
 			<view class="guide-item-card-infos" v-if="!hideAuthorLine">
 				<view class="guide-item-card-infos-left"  @click.native.stop="toHomepage($event)">
@@ -269,53 +268,54 @@
 
 <style lang="less" scoped>
 	.guide-item-card {
-		display: flex;
+		// display: flex;
 		background-color: #fff;
 		padding-right: 30rpx;
 		box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.15);
 		border-radius: 20rpx;
 		margin: 20rpx 0 0 0;
-		.guide-item-card-left {
-			width: 32%;
-			padding: 0 24rpx;
-			box-sizing: border-box;
-			display: flex;
-			align-items: center;
-			.guide-item-card-left-img-box {
-				width: 183rpx;
-				height: 243rpx;
-				position: relative;
-				.guide-item-card-left-bookname {
-					width: 38rpx;
-					height: 110rpx;
-					background: #F1D8B4;
-					position: absolute;
-					right: 40rpx;
-					top: 40rpx;
-					writing-mode:vertical-rl;
-					font-size: 22rpx;
-					padding: 8rpx;
-					box-sizing: border-box;
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-					.guide-item-card-left-bookname-text {
-						overflow: hidden;
-						white-space: nowrap;
-						text-align: center;
-						display: flex;
-						flex-direction: column;
-						justify-content: center;
-						color: rgba(0,0,0,0.5);
-						font-weight: bold;
-					}
-				}
-			}
-		}
+		// .guide-item-card-left {
+		// 	width: 32%;
+		// 	padding: 0 24rpx;
+		// 	box-sizing: border-box;
+		// 	display: flex;
+		// 	align-items: center;
+		// 	.guide-item-card-left-img-box {
+		// 		width: 183rpx;
+		// 		height: 243rpx;
+		// 		position: relative;
+		// 		.guide-item-card-left-bookname {
+		// 			width: 38rpx;
+		// 			height: 110rpx;
+		// 			background: #F1D8B4;
+		// 			position: absolute;
+		// 			right: 40rpx;
+		// 			top: 40rpx;
+		// 			writing-mode:vertical-rl;
+		// 			font-size: 22rpx;
+		// 			padding: 8rpx;
+		// 			box-sizing: border-box;
+		// 			display: flex;
+		// 			flex-direction: column;
+		// 			justify-content: center;
+		// 			.guide-item-card-left-bookname-text {
+		// 				overflow: hidden;
+		// 				white-space: nowrap;
+		// 				text-align: center;
+		// 				display: flex;
+		// 				flex-direction: column;
+		// 				justify-content: center;
+		// 				color: rgba(0,0,0,0.5);
+		// 				font-weight: bold;
+		// 			}
+		// 		}
+		// 	}
+		// }
 		.guide-item-card-right {
-			flex: 1;
+			// flex: 1;
 			padding-top: 28rpx;
 			padding-bottom: 30rpx;
+			padding-left: 30rpx;
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
@@ -333,6 +333,7 @@
 					-webkit-box-orient: vertical;
 					-webkit-line-clamp: 2;
 					overflow: hidden;
+					font-weight: 500;
 				}
 				.guide-item-card-right-title-whole {
 					display: block;
@@ -341,8 +342,8 @@
 			
 			.guide-item-card-right-description {
 				color: rgba(0,0,0,0.4);
-				font-size: 22rpx;
-				line-height: 30rpx;
+				font-size: 30rpx;
+				line-height: 48rpx;
 				margin-bottom: 10rpx;
 				display: -webkit-box;
 				-webkit-box-orient: vertical;
