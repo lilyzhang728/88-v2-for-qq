@@ -168,7 +168,8 @@
 				.van-tab {
 					font-size: 36rpx;
 					color: #fff;
-					padding: 0 25rpx;
+					padding: 0;
+					padding-left: calc(25rpx + 15px);
 					text-align: left;
 				}
 				.van-tab--active {
