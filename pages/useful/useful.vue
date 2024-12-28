@@ -6,8 +6,8 @@
 				<!-- 顶层tab -->
 				<van-tabs :active="active" animated @change.native="tabsChange" ref="tabs"
 				line-height="8rpx" line-width="60rpx" class="useful-tabs" :swipeable="true">
-					<van-tab title="攻略"></van-tab>
-					<van-tab title="资讯"></van-tab>
+					<van-tab title="攻略 / 资讯"></van-tab>
+					<!-- <van-tab title="资讯"></van-tab> -->
 				</van-tabs>
 				
 				<!-- 搜索 -->
@@ -27,9 +27,9 @@
 				<swiper-item class="swiper-item">
 					<useful-guide ref="guide" :subActive="subActive" :currentIndex="active"></useful-guide>
 				</swiper-item>
-				<swiper-item class="swiper-item">
+				<!-- <swiper-item class="swiper-item">
 					<useful-news ref="news" :subActive="subActive" :currentIndex="active"></useful-news>
-				</swiper-item>
+				</swiper-item> -->
 			</swiper>
 		</z-paging-swiper>
 		
@@ -160,14 +160,16 @@
 				width: 50%;
 				// margin-left: 25rpx;
 				.van-tabs__line {
-					background: #fff;
-					bottom: 5px;
+					// background: #fff;
+					// bottom: 5px;
+					display: none;
 				}
 	
 				.van-tab {
 					font-size: 36rpx;
 					color: #fff;
-					padding: 0;
+					padding: 0 25rpx;
+					text-align: left;
 				}
 				.van-tab--active {
 					color: #fff;
