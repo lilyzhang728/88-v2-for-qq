@@ -16,7 +16,8 @@ export function transformTime(val) {
 		cur_minute = now.getMinutes(),
 		cur_second = now.getSeconds()
 	if(cur_year > year) {
-		return (cur_year - year) + '年前'
+		// return (cur_year - year) + '年前'
+		return year + '-' + month + '-' + day
 	}
 	if(cur_month > month) {
 		return month + '-' + day
