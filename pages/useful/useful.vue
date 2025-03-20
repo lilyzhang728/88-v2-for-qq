@@ -6,7 +6,7 @@
 				<!-- 顶层tab -->
 				<van-tabs :active="active" animated @change.native="tabsChange" ref="tabs"
 				line-height="8rpx" line-width="60rpx" class="useful-tabs" :swipeable="true">
-					<van-tab title="攻略 / 资讯"></van-tab>
+					<van-tab title="资讯"></van-tab>
 					<!-- <van-tab title="资讯"></van-tab> -->
 				</van-tabs>
 				
@@ -82,7 +82,8 @@
 				return ['推荐', '考研', '实习工作', '考公/编']
 			},
 			subTabList() {
-				return this.active ? this.newsFieldList : this.guideFieldList
+				// return this.active ? this.newsFieldList : this.guideFieldList
+				return this.newsFieldList
 			}
 		},
 		methods: {

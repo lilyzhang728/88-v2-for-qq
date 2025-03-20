@@ -407,7 +407,7 @@
 			"pagePath": "pages/useful/useful",
 			"iconPath": "static/img/tabbar/tabIcon2.png",
 			"selectedIconPath": "static/img/tabbar/tabIcon2Active.png",
-			"text": "干货"
+			"text": "资讯"
 		},{
 			"pagePath": "pages/qa/qa",
 			"iconPath": "static/img/tabbar/tabIcon3.png",

@@ -60,7 +60,9 @@
 			getRecGuideList(pageNo, pageSize) {
 				return new Promise((resolve, reject) => {
 					// 0-推荐, 1-考研, 2-实习工作, 3-校园指南 4-成绩学术 5-竞赛证书 6-考公/编 7-其他
-					let field = Number(this.subActive)
+					// 临时加的逻辑：因为改成只展示：0-推荐, 1-考研, 2-实习工作,  6-考公/编，为了保证上送参数field正确加的映射数组
+					const FIELD_MAP = [0, 1, 2, 6]
+					let field = FIELD_MAP[Number(this.subActive)]
 					recArticle({
 						'post_type': 1,	//1 :tab2
 						'per_page': pageSize,

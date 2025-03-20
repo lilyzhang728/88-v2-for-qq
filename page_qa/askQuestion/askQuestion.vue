@@ -3,7 +3,7 @@
 	<view class="ask-question" :style="{backgroundImage: backgroundImage,backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
 		<z-paging ref="paging" :paging-style="pagingStyle">
 			<template #top>
-				<back-topbar title="发布问题"></back-topbar>
+				<back-topbar title="发布问题/经验"></back-topbar>
 			</template>
 			<!-- 编辑 -->
 			<view class="add-new-post-edit">
@@ -13,7 +13,7 @@
 						class="add-new-post-edit-title-wrap field-input-custom"
 						input-class="add-new-post-edit-title"
 						:value="title"
-						placeholder="请输入问题"
+						placeholder="请输入标题"
 						auto-focus
 						:border="false"
 						@change.native="inputTitle($event)"
@@ -33,7 +33,7 @@
 					:value="postVal"
 					type="textarea"
 					:show-confirm-bar="false"
-					placeholder="请输入问题详情"
+					placeholder="请输入正文"
 					autosize
 					:border="false"
 					@change.native="inputPost($event)"
