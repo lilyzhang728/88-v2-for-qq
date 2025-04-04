@@ -97,7 +97,6 @@
 						body: '',
 						summary: ''
 					},
-					bind_topics: [],
 					collectors_count: 0,
 					likers_count: 0,
 					title: "",
@@ -491,49 +490,7 @@
 			margin-right: 10rpx;
 		}
 	}
-	.activity-info-detail-rec-topic {
-		margin-top: 40rpx;
-		.activity-info-detail-rec-topic-title {
-			line-height: 36rpx;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: 5rpx;
-			.activity-info-detail-rec-topic-title-text {
-				font-size: 30rpx;
-				font-weight: 600;
-				color: #000000;
-			}
-			.activity-info-detail-rec-topic-title-more {
-				font-size: 22rpx;
-				color: rgba(0,0,0,0.6);
-				.activity-info-detail-rec-topic-title-more-icon {
-					margin-left: 10rpx;
-				}
-			}
-		}
-		.activity-info-detail-rec-topic-list {
-			.activity-info-detail-rec-topic-item {
-				font-size: 26rpx;
-				color: #000000;
-				line-height: 37rpx;
-				display: flex;
-				align-items: center;
-				margin-top: 25rpx;
-				.activity-info-detail-rec-topic-item-img {
-					height: 30rpx;
-					width: 30rpx;
-					margin-right: 10rpx;
-				}
-				.activity-info-detail-rec-topic-item-text {
-					flex: 1;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-				}
-			}
-		}
-	}
+	
 	.bbs-post-detail-comment {
 		margin-top: 60rpx;
 		.bbs-post-detail-comment-total {

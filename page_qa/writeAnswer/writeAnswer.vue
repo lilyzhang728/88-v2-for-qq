@@ -165,26 +165,6 @@
 			box-sizing: border-box;
 			padding: 12px;
 			background-color: #fff;
-			.add-new-post-keyboard-topic {
-				height: 25px;
-				display: flex;
-				margin-bottom: 10px;
-				align-items: center;
-				.add-new-post-keyboard-topic-icon {
-					height: 20px;
-					width: 20px;
-				}
-				.add-new-post-keyboard-topic-text {
-					margin-left: 10px;
-					flex: 1;
-					width: 0;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					font-size: 16px;
-					color: #000;
-					white-space: nowrap;
-				}
-			}
 			.view-btn-box{
 				margin-top: 10px;
 				text-align: right;

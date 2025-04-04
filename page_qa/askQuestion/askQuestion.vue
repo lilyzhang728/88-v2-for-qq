@@ -60,11 +60,8 @@
 			<!-- 弹起键盘 -->
 			<view class="add-new-post-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
 				<view class="add-new-post-keyboard-topic" v-if="userName">
-					<!-- <img class="add-new-post-keyboard-topic-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt=""> -->
 					<text class="add-new-post-keyboard-topic-icon">@</text>
 					<text class="add-new-post-keyboard-topic-text">{{userName}}</text>
-					<!-- <van-icon v-if="!selectedTopic" name="arrow" size="20px" color="#d9d9d9" /> -->
-					<!-- <van-icon v-else name="cross" size="20px" color="#d9d9d9" @click.native.stop="clearTopic($event)" /> -->
 				</view>
 				
 				<!-- 发布按钮 -->
@@ -502,7 +499,7 @@
 						},
 						'post_type': 4,
 						'status': 1,
-						'topics': this.selectedTopic ? [this.addedTopicContent.id] : []
+						'topics': []
 					}).then(res => {
 						if(res.code === 0 && Object.keys(res.data).length) {
 							if(this.userId) {

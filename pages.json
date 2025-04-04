@@ -191,16 +191,6 @@
 			    
 			}
 			,{
-			    "path" : "bbsTopicDetail/bbsTopicDetail",
-			    "style" :                                                                                    
-			    {
-			        "navigationBarTitleText": "",
-					"navigationStyle": "custom",
-			        "enablePullDownRefresh": false
-			    }
-			    
-			}
-			,{
 			    "path" : "bbsCommentReply/bbsCommentReply",
 			    "style" :                                                                                    
 			    {
@@ -220,15 +210,6 @@
 			    
 			}
 			,{
-			    "path" : "addPostTopic/addPostTopic",
-			    "style" :                                                                                    
-			    {
-			        "navigationBarTitleText": "",
-					"navigationStyle": "custom",
-			        "enablePullDownRefresh": false
-			    }
-			    
-			}    ,{
                     "path" : "bbsSearchResult/bbsSearchResult",
                     "style" :                                                                                    
                 {
@@ -237,23 +218,7 @@
                 }
                 
                 }
-                ,{
-                    "path" : "bbsSearchTopicResult/bbsSearchTopicResult",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                },
-                {
-                	"path" : "rankingList/rankingList",
-                	"style" : 
-                	{
-                		"navigationBarTitleText" : "",
-                		"enablePullDownRefresh" : false
-                	}
-                }
+               
             ]
 		},
 		{

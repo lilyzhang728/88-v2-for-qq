@@ -6,8 +6,6 @@
 				<van-tabs :active="active" animated @change.native="tabsChange" ref="tabs"
 				line-height="8rpx" line-width="60rpx" class="bbs-tabs" :swipeable="true">
 					<van-tab title="发现"></van-tab>
-					<van-tab title="话题广场"></van-tab>
-					<van-tab title="关注"></van-tab>
 				</van-tabs>
 				
 				<!-- 搜索 -->
@@ -17,13 +15,7 @@
 			</template>
 			<swiper class="swiper" :current="active" @animationfinish="swiperAnimationfinish">
 				<swiper-item class="swiper-item">
-					<bbs-rec ref="bbsRec" @toTopicList="toTopicList"></bbs-rec>
-				</swiper-item>
-				<swiper-item class="swiper-item">
-					<bbs-topic ref="bbsTopic"></bbs-topic>
-				</swiper-item>
-				<swiper-item class="swiper-item">
-					<bbs-focus ref="bbsFocus"></bbs-focus>
+					<bbs-rec ref="bbsRec"></bbs-rec>
 				</swiper-item>
 			</swiper>
 		</z-paging-swiper>
@@ -38,20 +30,15 @@
 	import TopSearchBox from '@/components/common/TopSearchBox.vue'
 	import SideAddBtn from '@/components/common/SideAddBtn.vue'
 	import BbsRec from "@/components/bbs/BbsRec.vue"
-	import BbsFocus from "@/components/bbs/BbsFocus.vue"
-	import BbsTopic from "@/components/bbs/BbsTopic.vue"
 	export default {
 		components: {
 			TopSearchBox,
 			SideAddBtn,
 			BbsRec,
-			BbsFocus,
-			BbsTopic
 		},
 		data() {
 			return {
 				backgroundImgUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/bbs/bbsBg.png?sign=c0f613e91ba42b583649b23d7922d3b2&t=1689556699',
-				tabList: ["发现", "收藏", "话题广场"],
 				statusBar: 0,
 				active: 0,
 				searchVal: '',
@@ -91,17 +78,13 @@
 					url: '/page_bbs/addNewPost/addNewPost'
 				});
 			},
-			//切到话题列表
-			toTopicList() {
-				this.active = 1
-			},
 			// 搜索帖子
 			toSearch() {
 				// 0:搜索文章  1:搜索徽章  2:搜索话题
-				const searchContentType = this.active ? 2 : 0	
+				// const searchContentType = this.active ? 2 : 0	
 				//tabIndex: 1-tab1, 2-tab2, 3-tab3, 4-tab4
 				uni.navigateTo({
-					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=4&searchVal=${this.searchVal}&searchContentType=${searchContentType}`
+					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=4&searchVal=${this.searchVal}&searchContentType=0`
 				})
 			},
 			// 删帖后返回刷新
@@ -125,17 +108,20 @@
 			background: transparent;
 			.van-tabs__nav {
 				background: transparent;
-				width: 70%;
+				width: 50%;
 				// margin-left: 25rpx;
 				.van-tabs__line {
-					background: #fff;
-					bottom: 5px;
+					// background: #fff;
+					// bottom: 5px;
+					display: none;
 				}
 	
 				.van-tab {
 					font-size: 36rpx;
 					color: #fff;
 					padding: 0;
+					padding-left: calc(25rpx + 15px);
+					text-align: left;
 				}
 				.van-tab--active {
 					color: #fff;

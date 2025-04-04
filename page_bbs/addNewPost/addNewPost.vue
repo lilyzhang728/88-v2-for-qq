@@ -11,7 +11,6 @@
 					<text class="add-new-post-header-title">新的动态</text>
 					<!-- <van-button size="small" class="add-new-post-header-btn-wrap" custom-class="add-new-post-header-btn">发布</van-button> -->
 				</view>
-				<view class="add-new-post-topic" @click="editAddTopic">#{{selectedTopic && addedTopicContent.body ? addedTopicContent.body : '试试添加话题'}}</view>
 				<view class="add-new-post-content" @click="handleInput">
 					<view class="add-new-post-content-line">
 						<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg" class="add-new-post-content-avatar" alt="">
@@ -56,23 +55,6 @@
 			
 			<!-- 弹起键盘 -->
 			<view class="add-new-post-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
-				<view class="add-new-post-keyboard-topic" @click.native="addTopic">
-					<img class="add-new-post-keyboard-topic-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
-					<text class="add-new-post-keyboard-topic-text">{{selectedTopic ? (addedTopicContent.body ? addedTopicContent.body : '') : topicPlaceholder}}</text>
-					<van-icon v-if="!selectedTopic" name="arrow" size="20px" color="#d9d9d9" />
-					<van-icon v-else name="cross" size="20px" color="#d9d9d9" @click.native.stop="clearTopic($event)" />
-				</view>
-				<!-- <view class="add-new-post-keyboard-img">
-					<van-uploader ref="imgUploader" v-if="showUploader" class="img-uploader" 
-					:file-list="postImgList" deletable="true" max-count="9" 
-					:preview-size="imageWidth" image-fit="aspectFit"
-					use-before-read @beforeRead.native="beforeRead"
-					@afterRead.native="afterRead" @delete.native="deleteImg">
-						<van-icon name="photo-o" size="30px" color="#6d6d6d" />
-					</van-uploader>
-					<van-icon v-else name="photo-o" size="30px" color="#6d6d6d" />
-				</view> -->
-				
 				<!-- 发布按钮 -->
 				<view class="view-btn-box">
 					<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="!allowSendAjax || (!postVal && postImgList.length<1)" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
@@ -107,17 +89,7 @@
 				postVal: '',		//发帖内容
 				showKeyboard: false,	//是否显示键盘上的话题
 				bottomVal: '0px',	//键盘上话题bottom
-				keyboardHeight: '85px',	//键盘上话题height	1行54px，2行85px
-				selectedTopic: false,	//是否已经选好话题
-				addedTopicContent: {
-					body: '',
-					field: '',
-					id: '',
-					posts_count: 0,
-					timestamp: '',
-					views: 0
-				},	//选好的话题内容
-				topicPlaceholder: '添加话题',	//默认提示
+				keyboardHeight: '54px',	//键盘上话题height	1行54px，2行85px
 				postImgList: [],	//上传图片list
 				screenWidth: null,		//屏幕宽度
 				w: 0,
@@ -141,7 +113,7 @@
 			},
 			pagingStyle() {
 				if(this.platform === 'android') {
-					let pagingBottom = (this.keyboardHeightVal + 85) + 'px'
+					let pagingBottom = (this.keyboardHeightVal + 54) + 'px'
 					return {'top': '0px', 'left': '25rpx', 'right': '25rpx', 'bottom': pagingBottom}
 				} else {
 					return {'top': '0px', 'left': '25rpx', 'right': '25rpx'}
@@ -158,10 +130,6 @@
 			}
 		},
 		onLoad(option) {
-			if(option.topicInfo) {
-				this.addedTopicContent = JSON.parse(decodeURIComponent(option.topicInfo))
-				this.selectedTopic = true
-			}
 			if(this.platform === 'android') {
 				uni.onKeyboardHeightChange(res => {
 				    this.keyboardHeightVal = res.height; //软键盘高度 
@@ -183,12 +151,7 @@
 			rpxToPx(rpx) {
 			  return (this.screenWidth * Number.parseInt(rpx)) / 750
 			},
-			//切换为编辑页面并跳转添加话题页
-			editAddTopic() {
-				uni.navigateTo({
-					url: '/page_bbs/addPostTopic/addPostTopic?showEdit=1'
-				})
-			},
+			
 			//切换为编辑页面
 			handleInput() {
 				this.showEdit = true
@@ -205,27 +168,6 @@
 			inputBindBlur() {
 				this.bottomVal = 0
 			},
-			//去话题列表页
-			addTopic() {
-				uni.navigateTo({
-					url: '/page_bbs/addPostTopic/addPostTopic'
-				})
-			},
-			//清空已选话题
-			clearTopic(e) {
-				e.preventDefault();
-				this.selectedTopic = false
-				this.addedTopicContent = {
-					body: '',
-					field: '',
-					id: '',
-					posts_count: 0,
-					timestamp: '',
-					views: 0
-				}
-			},
-			
-			
 			//before-read 事件可以在上传前进行校验，调用 callback 方法传入 true 表示校验通过，传入 false 表示校验失败。
 			beforeRead(event) {
 				this.allowSendAjax = false
@@ -557,7 +499,7 @@
 						},
 						'post_type': 3,
 						'status': 1,
-						'topics': this.selectedTopic ? [this.addedTopicContent.id] : []
+						'topics': []
 					}).then(res => {
 						if(res.code === 0) {
 							//发布成功，回到列表页，并刷新列表
@@ -565,16 +507,9 @@
 							uni.navigateBack({
 							    success: () => {
 							         let page = getCurrentPages().pop();//跳转页面成功之后
-									 if (page) {
-										 if(page.route == 'page_bbs/bbsTopicDetail/bbsTopicDetail') {
-											 // 从话题详情跳转过来
-											 page.$vm.$refs.paging.reload()
-										 } else {
-											 // 从社区页跳进来
-											 page.$vm.active = 0
-											 page.$vm.$refs.bbsRec.$refs.paging.reload()
-										 }
-							         } 
+							         // 从社区页跳进来
+							         page.$vm.active = 0
+							         page.$vm.$refs.bbsRec.$refs.paging.reload()
 							    },
 							})
 						} else {
@@ -625,16 +560,7 @@
 			}
 		}
 	}
-	.add-new-post-topic {
-		margin-top: 23rpx;
-		background: #FFFFFF;
-		border-radius: 20rpx;
-		border: 1rpx solid #E1E1E1;
-		padding: 30rpx;
-		color: #000000;
-		line-height: 42rpx;
-		font-size: 30rpx;
-	}
+	
 	.add-new-post-content {
 		margin-top: 30rpx;
 		height: 624rpx;
@@ -685,26 +611,6 @@
 		padding: 12px;
 		background-color: #fff;
 		z-index: 2;
-		.add-new-post-keyboard-topic {
-			height: 25px;
-			display: flex;
-			margin-bottom: 10px;
-			align-items: center;
-			.add-new-post-keyboard-topic-icon {
-				height: 20px;
-				width: 20px;
-			}
-			.add-new-post-keyboard-topic-text {
-				margin-left: 10px;
-				flex: 1;
-				width: 0;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				font-size: 16px;
-				color: #000;
-				white-space: nowrap;
-			}
-		}
 		.view-btn-box{
 			margin-top: 10px;
 			text-align: right;

@@ -118,12 +118,6 @@
 							url: `/page_aboutBadge/badgeSearchResult/badgeSearchResult?searchVal=${searchVal}`
 						})
 						break
-					case 2:
-						// 搜索话题, 跳转话题搜索结果页
-						uni.navigateTo({
-							url: `/page_bbs/bbsSearchTopicResult/bbsSearchTopicResult?searchVal=${searchVal}`
-						})
-						break
 					default:
 						break;
 				}

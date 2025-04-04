@@ -11,7 +11,7 @@
 </template>
 
 <script>
-	import { deletePosts, deleteComments, deleteTopics, complaintComments, complaintPosts, complaintTopics } from "@/network/api_bbs.js"
+	import { deletePosts, deleteComments, complaintComments, complaintPosts } from "@/network/api_bbs.js"
 	export default {
 		props: {
 			itemId: {
@@ -92,10 +92,6 @@
 							// 举报评论
 							this.handleComplaintComments()
 							break;
-						case 2:
-							// 举报话题
-							this.handleComplaintTopics()
-							break;
 						default:
 							break;
 					}
@@ -109,10 +105,6 @@
 						case 1:
 							// 删除评论
 							this.handleDeleteComments()
-							break;
-						case 2:
-							// 删除话题
-							this.handleDeleteTopics()
 							break;
 						default:
 							break;
@@ -143,17 +135,7 @@
 					}
 				})
 			},
-			// 举报话题
-			handleComplaintTopics() {
-				complaintTopics(this.itemId).then(res => {
-					if(res.code === 0) {
-						// 举报成功
-						this.successToast('举报')
-					} else {
-						this.failToast('举报')
-					}
-				})
-			},
+			
 			successToast(msg) {
 				uni.showToast({
 					title: msg + '成功',
@@ -188,17 +170,6 @@
 					}
 				})
 			},
-			// 删除话题
-			handleDeleteTopics() {
-				deleteTopics(this.itemId).then(res => {
-					if(res.code === 0) {
-						// 删除成功
-						this.$emit('backRefresh')
-					} else {
-						this.failToast('删除')
-					}
-				})
-			}
 			
 		},
 	}

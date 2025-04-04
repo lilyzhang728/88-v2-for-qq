@@ -567,26 +567,6 @@
 			}
 		}
 	}
-	.bbs-post-detail-topic {
-		margin-top: 36rpx;
-		font-size: 26rpx;
-		color: #35C8A6;
-		line-height: 37rpx;
-		display: flex;
-		align-items: center;
-		.bbs-post-detail-topic-img {
-			height: 30rpx;
-			width: 30rpx;
-			margin-right: 10rpx;
-		}
-		.bbs-post-detail-topic-text {
-			flex: 1;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-	}
-	
 	
 	.bbs-post-detail-comment {
 		margin-top: 80rpx;

@@ -72,12 +72,6 @@
 			
 			<!-- 弹起键盘 -->
 			<view class="add-new-post-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
-				<!-- <view class="add-new-post-keyboard-topic">
-					<img class="add-new-post-keyboard-topic-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
-					<text class="add-new-post-keyboard-topic-text">{{userName}}</text>
-					<van-icon v-if="!selectedTopic" name="arrow" size="20px" color="#d9d9d9" />
-					<van-icon v-else name="cross" size="20px" color="#d9d9d9" @click.native.stop="clearTopic($event)" />
-				</view> -->
 				
 				<!-- 发布按钮 -->
 				<view class="view-btn-box">
@@ -393,26 +387,7 @@
 		box-sizing: border-box;
 		padding: 12px;
 		background-color: #fff;
-		.add-new-post-keyboard-topic {
-			height: 25px;
-			display: flex;
-			margin-bottom: 10px;
-			align-items: center;
-			.add-new-post-keyboard-topic-icon {
-				height: 20px;
-				width: 20px;
-			}
-			.add-new-post-keyboard-topic-text {
-				margin-left: 10px;
-				flex: 1;
-				width: 0;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				font-size: 16px;
-				color: #000;
-				white-space: nowrap;
-			}
-		}
+		
 		.view-btn-box{
 			margin-top: 10px;
 			text-align: right;

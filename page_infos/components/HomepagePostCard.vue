@@ -4,11 +4,6 @@
 		<!-- 头像、昵称、学校 -->
 		<card-user :item="postData" :showMoreIcon="false" @clickMore="clickMore"></card-user>
 		
-		<!-- 帖子所属话题 -->
-		<view class="homepage-post-topic" @click.native.stop="toTopic($event)" v-if="postData.bind_topics && postData.bind_topics.length">
-			<img class="homepage-post-topic-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
-			<text class="homepage-post-topic-text">{{postData.bind_topics[0].body}}</text>
-		</view>
 		
 		<!-- 正文 -->
 		<view class="homepage-post-content">{{postData.body.body}}</view>
@@ -86,14 +81,6 @@
 			checkoutLike(status) {
 				this.$emit('checkoutLike', this.index, status)
 			},
-			// 跳转话题详情页
-			toTopic(e) {
-				//防止冒泡
-				e.preventDefault()
-				uni.navigateTo({
-					url: `/page_bbs/bbsTopicDetail/bbsTopicDetail?id=${this.postData.bind_topics[0].id}`
-				})
-			},
 			clickMore() {
 				// 参数： id, type: 0：帖子，1：评论，2：话题
 				this.$emit('clickMore', this.postData.id, 0)
@@ -110,26 +97,7 @@
 		box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.15);
 		border-radius: 20rpx;
 		margin-bottom: 20rpx;
-		.homepage-post-topic {
-			font-size: 26rpx;
-			color: #35C8A6;
-			line-height: 37rpx;
-			display: flex;
-			align-items: center;
-			margin-top: 16rpx;
-			margin-left: 11rpx;
-			.homepage-post-topic-icon {
-				height: 30rpx;
-				width: 30rpx;
-				margin-right: 10rpx;
-			}
-			.homepage-post-topic-text {
-				flex: 1;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-			}
-		}
+		
 		.homepage-post-content {
 			// margin-top: 20rpx;
 			border-radius: 8rpx;

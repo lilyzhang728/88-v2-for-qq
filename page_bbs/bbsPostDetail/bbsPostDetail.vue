@@ -7,12 +7,6 @@
 				<!-- 头像、昵称、学校 -->
 				<card-user :item="postData" parent="detail" :showMoreIcon="true" @clickMore="clickMore"></card-user>
 				
-				<!-- 帖子所属话题 -->
-				<view class="bbs-post-detail-topic" v-if="postData.bind_topics && postData.bind_topics.length" @click="toTopicDetail">
-					<img class="bbs-post-detail-topic-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
-					<text class="bbs-post-detail-topic-text">{{postData.bind_topics[0].body}}</text>
-				</view>
-				
 				<!-- 帖子正文 -->
 				<view class="bbs-post-detail-content">{{postBody}}</view>
 				
@@ -382,12 +376,6 @@
 					url: `/page_infos/homepage/homepage?userId=${this.postData.author.id}`
 				})
 			},
-			// 去话题详情
-			toTopicDetail() {
-				uni.navigateTo({
-					url: `/page_bbs/bbsTopicDetail/bbsTopicDetail?id=${this.postData.bind_topics[0].id}`
-				})
-			},
 			// （评论）长按，弹起面板
 			commentLongpress(id) {
 				this.contentId = id
@@ -455,25 +443,6 @@
 		bottom: 0;
 		padding: 0 25rpx;
 		
-		.bbs-post-detail-topic {
-			margin-top: 36rpx;
-			font-size: 28rpx;
-			color: #35C8A6;
-			line-height: 37rpx;
-			display: flex;
-			align-items: center;
-			.bbs-post-detail-topic-img {
-				height: 30rpx;
-				width: 30rpx;
-				margin-right: 10rpx;
-			}
-			.bbs-post-detail-topic-text {
-				flex: 1;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-			}
-		}
 		.bbs-post-detail-content {
 			margin-top: 20rpx;
 			font-size: 34rpx;

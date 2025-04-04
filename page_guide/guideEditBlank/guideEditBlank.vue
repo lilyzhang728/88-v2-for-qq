@@ -702,27 +702,6 @@
 		box-sizing: border-box;
 		padding: 12px;
 		background-color: #fff;
-		.guide-keyboard-topic {
-			height: 25px;
-			display: flex;
-			margin-bottom: 10px;
-			align-items: center;
-			.guide-keyboard-topic-icon {
-				font-size: 40rpx;
-				color: #35C8A7;
-				font-weight: bold;
-			}
-			.guide-keyboard-topic-text {
-				// margin-left: 10px;
-				flex: 1;
-				width: 0;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				font-size: 16px;
-				color: #000;
-				white-space: nowrap;
-			}
-		}
 		.view-btn-box{
 			margin-top: 10px;
 			text-align: right;

@@ -41,22 +41,6 @@
 			
 			<van-divider />
 			
-			<!-- 推荐话题 -->
-			<view class="news-detail-rec-topic" v-if="newsData.bind_topics.length && newsData.bind_topics[0].body">
-				<view class="news-detail-rec-topic-title">
-					<text class="news-detail-rec-topic-title-text">推荐话题</text>
-					<text class="news-detail-rec-topic-title-more">
-						更多推荐内容<van-icon size="25rpx" name="arrow" class="news-detail-rec-topic-title-more-icon"/>
-					</text>
-				</view>
-				<view class="news-detail-rec-topic-list">
-					<view class="news-detail-rec-topic-item">
-						<img class="news-detail-rec-topic-item-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
-						<text class="news-detail-rec-topic-item-text">{{newsData.bind_topics[0].body}}</text>
-					</view>
-				</view>
-			</view>
-			
 			<!-- 评论区 -->
 			<view class="bbs-post-detail-comment">
 				<view class="bbs-post-detail-comment-total">共{{commentNum}}条评论</view>
@@ -117,7 +101,6 @@
 						body: '',
 						summary: ''
 					},
-					bind_topics: [],
 					collectors_count: 0,
 					likers_count: 0,
 					title: "",
@@ -467,49 +450,7 @@
 			margin-right: 10rpx;
 		}
 	}
-	.news-detail-rec-topic {
-		margin-top: 40rpx;
-		.news-detail-rec-topic-title {
-			line-height: 36rpx;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: 5rpx;
-			.news-detail-rec-topic-title-text {
-				font-size: 30rpx;
-				font-weight: 600;
-				color: #000000;
-			}
-			.news-detail-rec-topic-title-more {
-				font-size: 22rpx;
-				color: rgba(0,0,0,0.6);
-				.news-detail-rec-topic-title-more-icon {
-					margin-left: 10rpx;
-				}
-			}
-		}
-		.news-detail-rec-topic-list {
-			.news-detail-rec-topic-item {
-				font-size: 26rpx;
-				color: #000000;
-				line-height: 37rpx;
-				display: flex;
-				align-items: center;
-				margin-top: 25rpx;
-				.news-detail-rec-topic-item-img {
-					height: 30rpx;
-					width: 30rpx;
-					margin-right: 10rpx;
-				}
-				.news-detail-rec-topic-item-text {
-					flex: 1;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-				}
-			}
-		}
-	}
+	
 	.bbs-post-detail-comment {
 		margin-top: 60rpx;
 		.bbs-post-detail-comment-total {
