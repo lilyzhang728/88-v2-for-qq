@@ -120,34 +120,7 @@
 					"enablePullDownRefresh": false
 				}
 
-			}, {
-				"path": "guideEdit/guideEdit",
-				"style": {
-					"navigationBarTitleText": "编辑攻略",
-					"navigationStyle": "custom",
-					"enablePullDownRefresh": false
-				}
-
-			}    
-                ,{
-                    "path" : "guideSearchResult/guideSearchResult",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                },
-                {
-                	"path" : "guideEditBlank/guideEditBlank",
-                	"style" : 
-                	{
-                		"navigationBarTitleText" : "",
-                		"enablePullDownRefresh" : false,
-						"navigationStyle": "custom"
-                	}
-                }
-            ]
+			}]
 		},{
 			"root": "page_news",
 			"pages": [{
@@ -166,15 +139,6 @@
                     "enablePullDownRefresh": false
                 }
                 
-                },
-                {
-                	"path" : "addNews/addNews",
-                	"style" : 
-                	{
-                		"navigationBarTitleText" : "",
-						"navigationStyle": "custom",
-                		"enablePullDownRefresh" : false
-                	}
                 }
             ]
 		},

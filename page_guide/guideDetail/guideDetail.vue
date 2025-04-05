@@ -54,12 +54,12 @@
 		<!-- 草稿箱里的攻略并排显示2个按钮：发布 | 编辑 -->
 		<view class="guide-detail-btn-box" v-if="showEditBtn && inDraft">
 			<!-- 发布（只有在草稿箱里的攻略详情才能直接发布） -->
-			<van-button @tap="handleEdit" block icon="edit" class="guide-detail-btn-wrap guide-detail-btn-wrap-plain" custom-class="guide-detail-btn">编辑</van-button>
+			<!-- <van-button @tap="handleEdit" block icon="edit" class="guide-detail-btn-wrap guide-detail-btn-wrap-plain" custom-class="guide-detail-btn">编辑</van-button> -->
 			<van-button @tap="handlePublish" block icon="guide-o" class="guide-detail-btn-wrap" custom-class="guide-detail-btn">发布</van-button>
 		</view>
 		<!-- 是我创作的，并且不在草稿箱里时，只显示”编辑“（因为已经是发布过的了） -->
 		<view class="guide-detail-btn-box guide-detail-btn-box-single" v-if="showEditBtn && !inDraft">
-			<van-button @tap="handleEdit" block icon="edit" class="guide-detail-btn-wrap" custom-class="guide-detail-btn">编辑</van-button>
+			<!-- <van-button @tap="handleEdit" block icon="edit" class="guide-detail-btn-wrap" custom-class="guide-detail-btn">编辑</van-button> -->
 		</view>
 		
 		<!-- toast -->
@@ -190,20 +190,6 @@
 				}, err => {
 					console.log('guideDetail: ', err)
 				})
-			},
-			handleEdit() {
-				// 跳转编辑页面，guideId为当前攻略id，用于在编辑页回显数据
-				if(this.isCustomer) {
-					// 非模板
-					uni.navigateTo({
-						url: `/page_guide/guideEditBlank/guideEditBlank?guideId=${this.guideData.id}`
-					});
-				} else {
-					// 模板
-					uni.navigateTo({
-						url: `/page_guide/guideEdit/guideEdit?guideId=${this.guideData.id}&status=${this.guideData.status}`
-					});
-				}
 			},
 			//发布
 			handlePublish() {

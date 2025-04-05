@@ -32,9 +32,6 @@
 				</swiper-item> -->
 			</swiper>
 		</z-paging-swiper>
-		
-		<!-- 新增攻略按钮 -->
-		<side-add-btn @addNew="addNewGuide"></side-add-btn>	
 			
 		<!-- toast提示 -->
 		<van-toast id="van-toast" />
@@ -46,15 +43,13 @@
 	import UsefulGuide from '@/components/useful/UsefulGuide.vue'
 	import UsefulNews from '@/components/useful/UsefulNews.vue'
 	import TopSearchBox from '@/components/common/TopSearchBox.vue'
-	import SideAddBtn from '@/components/common/SideAddBtn.vue'
 	import Toast from '@/wxcomponents/vant/toast/toast'
 	export default {
 		components: {
 			PageTabs,
 			UsefulGuide,
 			UsefulNews,
-			TopSearchBox,
-			SideAddBtn
+			TopSearchBox
 		},
 		data() {
 			return {
@@ -98,11 +93,12 @@
 			},
 			// 更新list
 			reloadList() {
-				if(this.active) {
-					this.$refs.news.$refs.paging.reload()
-				} else {
-					this.$refs.guide.$refs.paging.reload()
-				}
+				// if(this.active) {
+				// 	this.$refs.news.$refs.paging.reload()
+				// } else {
+				// 	this.$refs.guide.$refs.paging.reload()
+				// }
+				this.$refs.guide.$refs.paging.reload()
 			},
 			swiperAnimationfinish(e) {
 				this.active = e.detail.current;
@@ -113,22 +109,6 @@
 				uni.navigateTo({
 					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=${tabIndex}&searchVal=${this.searchVal}`
 				})
-			},
-			// 创建guide
-			addNewGuide(e) {
-				e.preventDefault();
-				if(this.active) {
-					// 跳转至新增资讯页
-					uni.navigateTo({
-						url: '/page_news/addNews/addNews'
-					});
-				} else {
-					// 跳转至新增攻略页
-					uni.navigateTo({
-						url: '/page_guide/guideEditBlank/guideEditBlank'
-					});
-				}
-				
 			},
 			toastMsg(type) {
 				if(type) {
