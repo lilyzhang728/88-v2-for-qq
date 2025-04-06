@@ -3,10 +3,11 @@
 	<view class="useful-guide">
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'left': '25rpx', 'right': '25rpx'}">
 			<view class="guide-list">
-				<guide-item-card v-for="(item, index) in dataList" :key="index" :index="index"
+				<!-- <guide-item-card v-for="(item, index) in dataList" :key="index" :index="index"
 				:guideItem="item" :tabIndex="tabIndex" @clickMore="clickMore"
 				@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
-				></guide-item-card>
+				></guide-item-card> -->
+				<common-item-card></common-item-card>
 			</view>
 		</z-paging>
 		
@@ -20,10 +21,12 @@
 	import GuideItemCard from '@/components/guide/GuideItemCard.vue'
 	import { recArticle } from '@/network/api_guide.js'
 	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
+	import CommonItemCard from '@/components/common/CommonItemCard.vue'
 	export default {
 		components: {
 			GuideItemCard,
-			DeleteAndComplaint
+			DeleteAndComplaint,
+			CommonItemCard
 		},
 		props: {
 			// 子类目：考研/找工作……

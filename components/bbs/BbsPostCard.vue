@@ -2,7 +2,7 @@
 <template>
 	<view class="bbs-post-card">
 		<!-- 头像、昵称、学校 -->
-		<card-user :item="postData" :showMoreIcon="true" @clickMore="clickMore" routePath="bbs"></card-user>
+		<card-user :item="postData" :showMoreIcon="true" :showCardType="true" @clickMore="clickMore" routePath="bbs"></card-user>
 		
 		<!-- 正文 -->
 		<view class="bbs-post-content">{{postData.body.body}}</view>
@@ -20,17 +20,20 @@
 		</view>
 		
 		<!-- 卡片底部-点赞|评论 -->
-		<card-like-comment :cardData="postData" @checkoutLike="checkoutLike" :showComment="true"></card-like-comment>
+		<!-- <card-like-comment :cardData="postData" @checkoutLike="checkoutLike" :showComment="true"></card-like-comment> -->
+		<common-item-card-footer :cardData="postData" @checkoutLike="checkoutLike" :showComment="true"></common-item-card-footer>
 	</view>
 </template>
 
 <script>
 	import CardLikeComment from '@/components/common/CardLikeComment.vue'
 	import CardUser from '@/components/common/CardUser.vue'
+	import CommonItemCardFooter from '@/components/common/CommonItemCardFooter.vue'
 	export default {
 		components: {
 			CardLikeComment,
-			CardUser
+			CardUser,
+			CommonItemCardFooter
 		},
 		props: {
 			//帖子的index
@@ -90,8 +93,7 @@
 
 <style lang="less" scoped>
 	.bbs-post-card {
-		padding: 30rpx;
-		padding-bottom: 10rpx;
+		padding: 20rpx;
 		background: #fff;
 		box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.15);
 		border-radius: 20rpx;

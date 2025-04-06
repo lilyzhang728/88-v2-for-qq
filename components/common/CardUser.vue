@@ -13,6 +13,8 @@
 			
 			<view class="card-user-infos">
 				<text class="card-user-time" v-if="showTime && !isDetail">{{timestamp}}</text>
+				<text class="card-user-time-split" v-if="showCardType">|</text>
+				<text class="card-user-infos-type" v-if="showCardType">问答</text>
 				<text class="card-user-infos-text" :class="{'card-user-infos-text-detail': isDetail}" v-if="item.author.school">{{item.author.school}}</text>
 				<text class="card-user-infos-text" v-if="isDetail && item.author.major">{{item.author.major}}</text>
 			</view>
@@ -65,6 +67,12 @@
 				type: String,
 				default: '',
 				required: false
+			},
+			// 是否显示卡片类型（吐槽墙、问答……）
+			showCardType: {
+				type: Boolean,
+				default: false,
+				required: false
 			}
 		},
 		computed: {
@@ -80,7 +88,8 @@
 			},
 			// 社区、攻略、问答 暂时隐藏timestamp
 			showTime() {
-				return this.routePath !== 'bbs' && this.routePath !== 'guide' && this.routePath !== 'qa'
+				// return this.routePath !== 'bbs' && this.routePath !== 'guide' && this.routePath !== 'qa'
+				return true
 			}
 		},
 		methods: {
@@ -149,6 +158,16 @@
 				text-overflow: ellipsis;
 				.card-user-time {
 					margin-right: 10rpx;
+				}
+				.card-user-time-split {
+					height: 22rpx;
+					color: #292d3a;
+					margin-left: 2rpx;
+					margin-right: 12rpx;
+				}
+				.card-user-infos-type {
+					color: #0dae8c;
+					font-weight: 500;
 				}
 				.card-user-infos-text {
 					margin-right: 10rpx;
