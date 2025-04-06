@@ -6,29 +6,15 @@
 			<view class="userInfo" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/userInfoBg.png?sign=ffd748d25d6721cb672e63b6ff4b2625&t=1687599098');background-size: 100% 100%;background-repeat: no-repeat;" >
 				<skill-radar :userId="userId" class="skill-radar" ref="skillRadar"></skill-radar>
 				<portrait-info :userId="userId" :refreshFlag="refreshFlag" class="portrait-info" ref="portraitInfo" @getTimeRange="getTimeRange" @updateWidthHeight="updateWidthHeight"></portrait-info>
-				<img v-if="labelList.length" class="chain-icon chain-icon-left" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
-				<img v-if="labelList.length" class="chain-icon chain-icon-right" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
+				<img class="chain-icon chain-icon-left" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
+				<img class="chain-icon chain-icon-right" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
 			</view>
 			
-			<!-- 我的标签 -->
-			<view class="my-label" v-if="labelList.length">
-				<view class="my-label-title">我的标签</view>
-				<view class="my-label-content">
-					<view class="my-label-item" v-for="(item, index) in labelList" :key="index">{{item.body}}</view>
-				</view>
-			</view>
 			
-			<!-- 徽章 -->
-			<view class="badge">
-				<badge-box ref="badgeBox" :userId="userId" :badgeList="dataList" @showBadgeDetail="showBadgeDetail"></badge-box>
-			</view>
 			
 			
 
 			<!-- 以下为弹窗 -->
-			<!-- 徽章详情 -->
-			<badge-detail ref="badgeDetail"></badge-detail>
-			
 			<!-- dialog提示：点击雷达图提示/删除事件二次确认 -->
 			<van-dialog id="van-dialog" />
 			<!-- toast提示：删除事件 -->
@@ -40,28 +26,22 @@
 <script>
 	import SkillRadar from "@/components/index/SkillRadar.vue"
 	import PortraitInfo from "@/components/index/PortraitInfo.vue"
-	import BadgeBox from "@/components/index/BadgeBox.vue"
-	import BadgeDetail from "@/components/index/BadgeDetail.vue"
 	import Dialog from "@/wxcomponents/vant/dialog/dialog"
 	import Toast from '@/wxcomponents/vant/toast/toast'
 	import { tagsList } from "@/network/api_index.js"	
 	import ZPInterceptor from '@/uni_modules/z-paging/components/z-paging/js/z-paging-interceptor'
-	import { getBadgeList } from "@/network/api_index.js"
 	
 	let _this = null
 	export default {
 		components: {
 			SkillRadar,
 			PortraitInfo,
-			BadgeBox,
-			BadgeDetail
 		},
 		data() {
 			return {
 				dataList: [],	//徽章列表
 				start_year: new Date().getFullYear(),
 				graduate_year: new Date().getFullYear(),
-				labelList: [],
 				refreshFlag: false
 			}
 		},
@@ -84,11 +64,7 @@
 				return [pageNo, pageSize, from];
 			})
 		},
-		// created() {
-		// 	this.getTagsList()
-		// },
 		mounted() {
-			
 			uni.$on('showDialog', function(){
 				_this.showDialog()
 			})
@@ -102,49 +78,11 @@
 				this.$emit('pulldownRefresh')
 				// 通知雷达图和个人信息模块刷新
 				this.refreshFlag = !this.refreshFlag
-				// 请求标签数据
-				this.getTagsList()
-				// 请求徽章数据
-				getBadgeList({
-					'per_page': pageSize,
-					'page': pageNo,
-					'userId': this.userId
-				}).then(res => {
-					if(res.code == 0 && Object.keys(res.data).length) {
-						this.$refs.paging.complete(res.data.items);
-					} else {
-						this.$refs.paging.complete([]);
-					}
-				}, err => {
-					console.log('getBadgeList', err)
-				})
-			},
-			// 获取标签列表
-			getTagsList() {
-				tagsList({
-					'page':1,
-					'per_page':10
-				}).then(res => {
-					if(res.code === 0 && Object.keys(res.data).length) {
-						this.labelList = res.data.items
-					}
-				}, err => {
-					console.log('tagsList: ', err)
-				})
 			},
 			// 刷新个人信息
 			reloadPortraitInfo() {
 				this.$refs.portraitInfo.getUserInfo()
 			},
-			// 刷新徽章
-			// reloadBadge() {
-			// 	this.$refs.badgeBox.getUserBadgeList()
-			// },
-			// 展示徽章详情
-			showBadgeDetail(badgeInfo) {
-				this.$refs.badgeDetail.getBadgeDetail(badgeInfo, 0)
-			},
-			
 			showDialog() {
 				Dialog.alert({
 					title: '标题',
@@ -153,7 +91,6 @@
 					// on close
 				});
 			},
-			
 			toast(type, msg) {
 				Toast({
 				  type: type,
@@ -212,37 +149,8 @@
 				right: 22rpx;
 			}
 		}
-		.badge {
-			margin-top: 50rpx;
-			margin-bottom: 100rpx;
-		}
 		
-		.my-label {
-			margin-top: 20rpx;
-			background: linear-gradient(180deg, #E5FFFC 0%, #FFFFFF 100%);
-			box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(56,201,171,0.15);
-			border-radius: 20rpx;
-			padding: 30rpx 25rpx;
-			.my-label-title {
-				padding: 0 5rpx;
-				font-size: 30rpx;
-				font-weight: 600;
-				color: rgba(0,0,0);
-				line-height: 42rpx;
-			}
-			.my-label-content {
-				.my-label-item {
-					margin-top: 20rpx;
-					display: inline-block;
-					padding: 14rpx 33rpx;
-					font-size: 26rpx;
-					color: rgba(0,0,0,0.8);
-					line-height: 37rpx;
-					border-radius: 33rpx;
-					border: 1rpx solid #D3D3D3;
-					margin-right: 20rpx;
-				}
-			}
-		}
+		
+		
 	}
 </style>
