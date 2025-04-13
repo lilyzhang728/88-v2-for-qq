@@ -34,7 +34,13 @@
 				type: Boolean,
 				required: false,
 				default: false
-			}
+			},
+			// 是否在同一页返回
+			backToCurPage: {
+				type: Boolean,
+				required: false,
+				default: false
+			},
 		},
 		data() {
 			return {
@@ -46,22 +52,27 @@
 		},
 		methods: {
 			handleBack() {
-				uni.navigateBack({
-				    success: () => {
-				         let page = getCurrentPages().pop();//跳转页面成功之后
-				         if (page && this.refName && this.functionName) {
-							 //返回上一页并刷新
-							 if(this.tabIndex) {
-								 page.$vm.$refs[this.refName][Number(this.tabIndex)-1][this.functionName]()
-							 } else {
-								 page.$vm.$refs[this.refName][this.functionName]()
+				if(this.backToCurPage) {
+					// 在同一页内返回
+					this.$emit('handleBack')
+				} else {
+					uni.navigateBack({
+					    success: () => {
+					         let page = getCurrentPages().pop();//跳转页面成功之后
+					         if (page && this.refName && this.functionName) {
+								 //返回上一页并刷新
+								 if(this.tabIndex) {
+									 page.$vm.$refs[this.refName][Number(this.tabIndex)-1][this.functionName]()
+								 } else {
+									 page.$vm.$refs[this.refName][this.functionName]()
+								 }
+					         } else if(page && !this.refName && this.functionName) {
+								 // 直接在上一页调刷新接口（不需要子组件）
+								 page.$vm[this.functionName]()
 							 }
-				         } else if(page && !this.refName && this.functionName) {
-							 // 直接在上一页调刷新接口（不需要子组件）
-							 page.$vm[this.functionName]()
-						 }
-				    }
-				})
+					    }
+					})
+				}
 			},
 			toHome() {
 				uni.navigateTo({

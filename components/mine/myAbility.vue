@@ -10,9 +10,11 @@
 				<img class="chain-icon chain-icon-right" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
 			</view>
 			
+			<my-report-card></my-report-card>
 			
+			<my-report-plan></my-report-plan>
 			
-			
+			<van-button @click.native="ontest">test</van-button>
 
 			<!-- 以下为弹窗 -->
 			<!-- dialog提示：点击雷达图提示/删除事件二次确认 -->
@@ -28,14 +30,16 @@
 	import PortraitInfo from "@/components/index/PortraitInfo.vue"
 	import Dialog from "@/wxcomponents/vant/dialog/dialog"
 	import Toast from '@/wxcomponents/vant/toast/toast'
-	import { tagsList } from "@/network/api_index.js"	
 	import ZPInterceptor from '@/uni_modules/z-paging/components/z-paging/js/z-paging-interceptor'
-	
+	import myReportCard from '@/components/mine/myReportCard.vue'
+	import myReportPlan from '@/components/mine/myReportPlan.vue'
 	let _this = null
 	export default {
 		components: {
 			SkillRadar,
 			PortraitInfo,
+			myReportCard,
+			myReportPlan
 		},
 		data() {
 			return {
@@ -114,6 +118,11 @@
 			},
 			updateWidthHeight(arr) {
 				this.$emit('updateWidthHeight', arr)
+			},
+			ontest() {
+				uni.navigateTo({
+					url: `/page_infos/myEvaluationForm/myEvaluationForm`
+				});
 			}
 		}
 	}

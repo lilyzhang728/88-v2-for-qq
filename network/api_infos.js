@@ -111,3 +111,19 @@ export function getUserPosts(params) {
 		data: params
 	})
 }
+
+// 获取测评问卷
+export function getQuestionnaires(params) {
+	return getRequest({
+		path: `/api/questionnaires/rec`,
+		data: params
+	})
+}
+
+// 提交测评问卷
+export function submitQuestionnaires(params) {
+	return postRequest({
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/questionnaires`,
+		data: params
+	})
+}

@@ -242,6 +242,15 @@
                     "enablePullDownRefresh": false
                 }
                 
+                },
+                {
+                	"path" : "myEvaluationForm/myEvaluationForm",
+                	"style" : 
+                	{
+                		"navigationBarTitleText" : "",
+						"navigationStyle": "custom",
+                		"enablePullDownRefresh" : false
+                	}
                 }
             ]
 		},
