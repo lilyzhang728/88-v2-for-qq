@@ -19,7 +19,12 @@
 			userId: {
 				type: String,
 				default: ''
-			}
+			},
+			cardData: {
+				type: Object,
+				default: {},
+				required: true
+			},
 		},
 		data() {
 			return {
@@ -27,32 +32,29 @@
 				option: {
 					animation: false,
 					// color: ['#1F3EFF', '#FF951F'],
-					color: 'rgba(31, 62, 255, 0.7)',
+					// color: 'rgba(31, 62, 255, 0.7)',
+					color: '#fff',
 					radar: {
 						// shape: 'circle',
 						indicator: [
 							{
-								name: '成绩',
+								name: '知识储备',
 								max: 5
 							},
 							{
-								name: '学术',
+								name: '信息收集',
 								max: 5
 							},
 							{
-								name: '通识',
+								name: '时间管理',
 								max: 5
 							},
 							{
-								name: '专业',
+								name: '风险应对',
 								max: 5
 							},
 							{
-								name: '兴趣',
-								max: 5
-							},
-							{
-								name: '声望',
+								name: '抗压能力',
 								max: 5
 							}
 						],
@@ -98,6 +100,16 @@
 				if(val) {
 					this.showRadar = true
 				}
+			},
+			cardData: {
+				handler(newVal) {
+					if(newVal && newVal.fields && newVal.fields.length > 0) {
+						let value = newVal.fields.map(item => item.content)
+						this.option.series[0].data[0].value = value // 改变数据echarts自动重绘
+						chart.setOption(this.option)
+					}
+				},
+				deep: true
 			}
 		},
 		methods: {
@@ -115,7 +127,7 @@
 				});
 				canvas.setChart(chart);
 				chart.setOption(this.option);
-				this.getChartData()
+				// this.getChartData()
 				//雷达图渲染完成
 				chart.on('finished',_=>{
 					setTimeout(() => {
@@ -127,23 +139,22 @@
 				})
 			},
 			// 获取用户雷达图
-			getChartData() {
-				rating(this.userId).then(res => {
-					if (res.code == 0 && Object.keys(res.data).length) {
-						this.transformValue(res.data)
-					} else {
-						this.option.series[0].data[0].value = []
-					}
-					chart.setOption(this.option);
-				})
-			},
+			// getChartData() {
+			// 	rating(this.userId).then(res => {
+			// 		if (res.code == 0 && Object.keys(res.data).length) {
+			// 			this.transformValue(res.data)
+			// 		} else {
+			// 			this.option.series[0].data[0].value = []
+			// 		}
+			// 		chart.setOption(this.option);
+			// 	})
+			// },
 			//转换数据
-			transformValue(data) {
-				let value = []
-				value.push(data.grade, data.academic, data.skill, data.practice, data.interest, data.reputation)
-				
-				this.option.series[0].data[0].value = value // 改变数据echarts自动重绘
-			}
+			// transformValue(data) {
+			// 	let value = []
+			// 	value.push(data.grade, data.academic, data.skill, data.practice, data.interest, data.reputation)
+			// 	this.option.series[0].data[0].value = value // 改变数据echarts自动重绘
+			// }
 		}
 	}
 </script>
@@ -152,5 +163,6 @@
 	.radar-wrap {
 		height: 100%;
 		width: 100%;
+		padding-top: 20rpx;
 	}
 </style>

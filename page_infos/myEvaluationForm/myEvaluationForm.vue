@@ -9,7 +9,7 @@
 					<view class="my-evaluation-form-content-box-title">{{item.question}}</view>
 					<view class="my-evaluation-form-content-box-form">
 						<div class="my-evaluation-form-content-box-form-item" v-for="(subItem, subIndex) in item.answers" :key="subIndex">
-							<van-checkbox :value="subItem.is_select" shape="square" @change.native="changeCheckbox($event, item.index, subIndex)">{{subItem.name}}</van-checkbox>
+							<van-checkbox :value="subItem.is_select" shape="square" icon-size="16px" @change.native="changeCheckbox($event, item.index, subIndex)">{{subItem.name}}</van-checkbox>
 						</div>
 					</view>
 				</view>
@@ -19,7 +19,7 @@
 						<view class="my-evaluation-form-content-box-title">{{item.question}}</view>
 						<view class="my-evaluation-form-content-box-form">
 							<div class="my-evaluation-form-content-box-form-item" v-for="(subItem, subIndex) in item.answers" :key="subIndex">
-								<van-checkbox :value="subItem.is_select" shape="square" @change.native="changeCheckbox($event, item.index, subIndex)">{{subItem.name}}</van-checkbox>
+								<van-checkbox :value="subItem.is_select" shape="square" icon-size="16px" @change.native="changeCheckbox($event, item.index, subIndex)">{{subItem.name}}</van-checkbox>
 							</div>
 						</view>
 					</view>
@@ -31,12 +31,21 @@
 				<van-button color="#74d9c7" block round class="my-evaluation-form-btn-wrap" custom-class="my-evaluation-form-btn" @click.native="clickSubmit" v-if="curPage>1 && curPage==totalPageNum">提交</van-button>
 			</view>
 		</z-paging>
+		<van-overlay :show="showLoading">
+		  <view class="loading-wrapper">
+		    <van-loading type="spinner" />
+		  </view>
+		</van-overlay>
+		
+		<van-dialog id="van-dialog" />
+
 	</view>
 </template>
 
 <script>
 	import { getQuestionnaires, submitQuestionnaires } from '@/network/api_infos.js'
 	import BackTopbar from '@/components/common/BackTopbar.vue'
+	import Dialog from "@/wxcomponents/vant/dialog/dialog"
 	export default {
 		components: {
 			BackTopbar
@@ -47,6 +56,7 @@
 				formData: [],
 				curPage: 1,		// 当前页数
 				groupSize: 5,
+				showLoading: false
 			}
 		},
 		computed: {
@@ -146,10 +156,25 @@
 			// 提交
 			clickSubmit() {
 				if(!this.page1Disabled && !this.otherPageDisabled) {
+					this.showLoading = true
 					submitQuestionnaires({
 						questionnaire: this.formData
 					}).then(res => {}, err => {
 						console.log('submitQuestionnaires err: ', err)
+					}).finally(() => {
+						this.showLoading = false
+						Dialog.alert({
+						  message: '提交成功！请5分钟后刷新页面查看测评报告',
+						}).then(() => {
+						   uni.navigateBack({
+						       success: () => {
+						            let page = getCurrentPages().pop();//跳转页面成功之后
+						   		 if(page) {
+						   			 page.$vm.$refs.myAbility.backRefresh()
+						   		 }
+						       }
+						   })
+						})
 					})
 				}
 			},
@@ -162,10 +187,21 @@
 				this.formData[index].answers[subIndex].is_select = event.detail
 			},
 			handleBack() {
-				this.curPage--
-				this.$refs.paging.scrollToTop()
-				if(this.curPage == 1) {
-					this.formData.splice(3)
+				if(this.curPage > 1) {
+					this.curPage--
+					this.$refs.paging.scrollToTop()
+					if(this.curPage == 1) {
+						this.formData.splice(3)
+					}
+				} else {
+					uni.navigateBack({
+					    success: () => {
+					         let page = getCurrentPages().pop();//跳转页面成功之后
+							 if(page) {
+								 page.$vm.$refs.myAbility.backRefresh()
+							 }
+					    }
+					})
 				}
 			}
 		}
@@ -214,6 +250,12 @@
 					line-height: 40rpx;
 				}
 			}
+		}
+		.loading-wrapper {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
 		}
 	}
 

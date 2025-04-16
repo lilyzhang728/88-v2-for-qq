@@ -127,3 +127,10 @@ export function submitQuestionnaires(params) {
 		data: params
 	})
 }
+
+// 获取个人档案信息（新接口）
+export function getConclusion() {
+	return getRequest({
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/questionnaires`
+	})
+}
