@@ -1,5 +1,6 @@
 <!-- 我发布的-攻略item -->
 <!-- 此组件被myProduction.vue引用 -->
+<!-- 待删除？TODO -->
 <template>
 	<view class="guide-item-card" @click.native="toGuideDetail" @longpress="handleLongpress">
 		<view class="guide-item-card-left">

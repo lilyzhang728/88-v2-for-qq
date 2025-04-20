@@ -217,7 +217,7 @@
 				background-color: #ffffff;
 				border-radius: 48rpx;
 				.my-evaluation-form-content-box-title {
-					color: #111111;
+					color: #52c1ac;
 					font-size: 32rpx;
 					line-height: 48rpx;
 				}

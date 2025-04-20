@@ -1,5 +1,6 @@
 <!-- 攻略列表一项（左边带图片） -->
 <!-- 此组件被攻略列表页、攻略详情页、我的页面、攻略搜索结果页 复用 -->
+<!-- 待删除？TODO -->
 <template>
 	<view class="guide-item-card" :class="{'guide-item-card-noBorder': hideBorder, 'guide-item-card-mine': from==='mine'}" 
 	@click.native="toGuideDetail" @longpress="handleLongpress" v-if="guideItem.status">

@@ -2,9 +2,9 @@
 <template>
 	<view class="common-item-card-footer" :style="{'justifyContent': showLeft ? 'space-around' : 'flex-end'}">
 		<!-- 来源 -->
-		<view class="common-item-card-footer-left" v-if="showLeft">
-			<img class="common-item-card-footer-left-avatar" :src="defaultAvatar" alt="">
-			<view class="common-item-card-footer-left-name">来源：国聘</view>
+		<view class="common-item-card-footer-left" v-if="showLeft" @click.native.stop="toHomepage($event)">
+			<img class="common-item-card-footer-left-avatar" :src="footerAvatar" alt="">
+			<view class="common-item-card-footer-left-name">{{cardData.author.name}}</view>
 		</view>
 		
 		<view class="common-item-card-footer-right">
@@ -37,11 +37,33 @@
 		props: {
 			cardData: {
 				type: Object,
+				required: true,
 				default: {
-					id: '',
-					is_like: false,
+					author: {
+						avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',		//默认头像
+						name: '',
+						id: ''
+					},
+					body: {
+						body: "",
+						cover_url: '',
+						key_info: {
+							core_analysis: [],
+							rec_reason: '',
+							value_assessment: []
+						}
+					},
+					collectors_count: 0,
 					likers_count: 0,
-					comments_count: 0
+					title: "",
+					in_house: 1,	// 是否为外部链接
+					views: 0,
+					status: 0,		//0:未发布  1：已发布
+					id: '',
+					is_collect: false,
+					is_like: false,
+					source: '',
+					post_type: 1
 				}
 			},
 			// 是否显示左侧头像+来源
@@ -65,6 +87,11 @@
 				activeColor: themeColor,
 				activeCollectColor: collectColor,
 				defaultAvatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',
+			}
+		},
+		computed: {
+			footerAvatar() {
+				return this.cardData.author.avatar ? this.cardData.author.avatar : this.defaultAvatar
 			}
 		},
 		methods: {
@@ -138,6 +165,14 @@
 					})
 				}
 				
+			},
+			// 点击头像，去个人主页
+			toHomepage(e) {
+				//防止冒泡
+				e.preventDefault()
+				uni.navigateTo({
+					url: `/page_infos/homepage/homepage?userId=${this.cardData.author.id}`
+				})
 			},
 		}
 	}

@@ -105,9 +105,9 @@
 			},
 			toSearch() {
 				//tabIndex: 3-news, 2-guide
-				let tabIndex = this.active ? 3 : 2
+				// let tabIndex = this.active ? 3 : 2
 				uni.navigateTo({
-					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=${tabIndex}&searchVal=${this.searchVal}`
+					url: `/page_editPersonalInfo/commonSearch/commonSearch?tabIndex=2&searchVal=${this.searchVal}`
 				})
 			},
 			toastMsg(type) {

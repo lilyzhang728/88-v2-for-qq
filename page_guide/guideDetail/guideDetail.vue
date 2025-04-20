@@ -1,4 +1,5 @@
 <!-- 攻略详情页 -->
+<!-- 待删除？TODO -->
 <template>
 	<view class="guide-detail" :style="{backgroundImage: 'url(https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/formBg.png?sign=d0afe929ec7678f0a5c5f6e3eeb88dd5&t=1687659923)',backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
 		<back-topbar title="攻略详情" :isWxShare="isWxShare"></back-topbar>

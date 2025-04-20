@@ -93,11 +93,11 @@
 
 <style lang="less" scoped>
 	.bbs-post-card {
-		padding: 20rpx;
+		padding: 30rpx;
 		background: #fff;
 		box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.15);
 		border-radius: 20rpx;
-		margin-bottom: 20rpx;
+		margin-top: 20rpx;
 		.bbs-post-content {
 			// margin-top: 20rpx;
 			border-radius: 8rpx;

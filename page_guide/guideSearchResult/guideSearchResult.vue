@@ -8,10 +8,14 @@
 		<!-- 搜索结果列表 -->
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '40px', 'padding': '0 25rpx'}" 
 		loading-more-default-text="点击加载更多" loading-more-no-more-text="没有更多了" :auto-show-system-loading="true">
-			<guide-item-card v-for="(item, index) in dataList" :key="index" :index="index"
+			<!-- <guide-item-card v-for="(item, index) in dataList" :key="index" :index="index"
 				:guideItem="item" tabIndex="0" @clickMore="clickMore"
 				@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
-			></guide-item-card>
+			></guide-item-card> -->
+			<common-item-card v-for="(item, index) in dataList" :key="index" :index="index"
+			:cardItem="item" @clickMore="clickMore" @click.native="toCardDetail(item, index)"
+			@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
+			:showStar="true" :showLeft="true"></common-item-card>
 		</z-paging>
 		
 		<!-- 更多面板 -->
@@ -23,13 +27,17 @@
 <script>
 	import FakeSearchBox from "@/components/common/FakeSearchBox.vue"
 	import GuideItemCard from '@/components/guide/GuideItemCard.vue'
-	import { searchArticle } from '@/network/api_index.js'
+	import { searchArticle, searchArticleNew } from '@/network/api_index.js'
 	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
+	import CommonItemCard from '@/components/common/CommonItemCard.vue'
+	const hostSDKVersion = uni.getStorageSync('hostSDKVersion')
+	import { compareVersion } from '@/tools/about_wx.js'
 	export default {
 		components: {
 			FakeSearchBox,
 			GuideItemCard,
-			DeleteAndComplaint
+			DeleteAndComplaint,
+			CommonItemCard
 		},
 		data() {
 			return {
@@ -50,7 +58,10 @@
 		},
 		methods: {
 			queryList(pageNo, pageSize) {
-				this.handleSearchArticle(pageNo, pageSize).then(res => {
+				// this.handleSearchArticle(pageNo, pageSize).then(res => {
+				// 	this.$refs.paging.complete(res);
+				// })
+				this.getCommonCardNew(pageNo, pageSize).then(res => {
 					this.$refs.paging.complete(res);
 				})
 			},
@@ -71,6 +82,26 @@
 					}, err => {
 						resolve([])
 						console.log('searchArticle: ', err)
+					})
+				})
+			},
+			// 获取列表数据（新版）
+			getCommonCardNew(pageNo, pageSize) {
+				return new Promise((resolve, reject) => {
+					commonCardNew({
+						'es_query': this.searchVal,
+						'post_types': ['1'],
+						'per_page': pageSize,
+						'page': pageNo,
+					}).then(res => {
+						if(res.code === 0 && Object.keys(res.data).length) {
+							resolve(res.data.items)
+						} else {
+							resolve([])
+						}
+					}, err => {
+						resolve([])
+						console.log('commonCardNew err: ', err)
 					})
 				})
 			},
@@ -115,7 +146,36 @@
 			// 删除成功，刷新
 			backRefresh() {
 				this.$refs.paging.reload()
-			}
+			},
+			// 去资讯详情
+			toCardDetail(item, index) {
+				if(this.ifOfficialAccountLink(item)) {
+					// 跳外部公众号文章链接
+					if(compareVersion(hostSDKVersion, '3.4.8') < 0) {
+						// 基础库低于3.4.8，无法打开外链公众号
+						wx.showModal({
+							title: '提示',
+							content: '当前微信版本过低，请升级到最新微信版本后重试。',
+							complete(res) {
+								// 退出小程序
+								// if(wx.exitMiniProgram) {
+								// 	wx.exitMiniProgram()
+								// }
+							} 
+						})
+					} else {
+						if(wx.openOfficialAccountArticle) {
+							wx.openOfficialAccountArticle({
+								url: item.source_link, // 此处填写公众号文章连接
+							})
+						}
+					}
+				}
+			},
+			// 是否为外部公众号链接
+			ifOfficialAccountLink(item) {
+				return parseInt(item.in_house) === 0
+			},
 		}
 	}
 </script>

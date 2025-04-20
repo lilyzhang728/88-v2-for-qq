@@ -1,3 +1,4 @@
+<!-- 待删除？TODO -->
 <template>
 	<view class="question-item-card" @click="toDetail(item)">
 		<!-- 头像、昵称、学校 -->

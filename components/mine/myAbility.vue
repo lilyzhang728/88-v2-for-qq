@@ -155,7 +155,7 @@
 		width: 100%;
 		height: 100%;
 		.userInfo {
-			height: 697rpx;
+			height: 670rpx;
 			position: relative;
 			.skill-radar {
 				display: block;
@@ -163,8 +163,7 @@
 			}
 			.portrait-info {
 				display: block;
-				margin: 30rpx 35rpx;
-				
+				margin: 0rpx 35rpx;
 				height: 216rpx;
 			}
 			.chain-icon {

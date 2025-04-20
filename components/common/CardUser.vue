@@ -13,8 +13,8 @@
 			
 			<view class="card-user-infos">
 				<text class="card-user-time" v-if="showTime && !isDetail">{{timestamp}}</text>
-				<text class="card-user-time-split" v-if="showCardType">|</text>
-				<text class="card-user-infos-type" v-if="showCardType">问答</text>
+				<text class="card-user-time-split" v-if="showCardType && item.post_type">|</text>
+				<text class="card-user-infos-type" v-if="showCardType && item.post_type">{{postTypeMap[item.post_type]}}</text>
 				<text class="card-user-infos-text" :class="{'card-user-infos-text-detail': isDetail}" v-if="item.author.school">{{item.author.school}}</text>
 				<text class="card-user-infos-text" v-if="isDetail && item.author.major">{{item.author.major}}</text>
 			</view>
@@ -75,6 +75,11 @@
 				required: false
 			}
 		},
+		data() {
+			return {
+				postTypeMap: ['', '资讯', '经验', '吐槽墙', '问答', '资料', '活动']
+			}
+		},
 		computed: {
 			avatar() {
 				return this.item.author.avatar ?  this.item.author.avatar : DEFAULT_AVATAR
@@ -90,7 +95,7 @@
 			showTime() {
 				// return this.routePath !== 'bbs' && this.routePath !== 'guide' && this.routePath !== 'qa'
 				return true
-			}
+			},
 		},
 		methods: {
 			// 点击头像，去个人主页

@@ -133,6 +133,15 @@ export function searchArticle(params) {
 	})
 }
 
+//搜索-文章（tab2,3,4的文章）新
+export function searchArticleNew(params) {
+	return postRequest({
+		path: `/api/posts/${userId ? userId : uni.getStorageSync('userId')}/search`,
+		data: params
+	})
+}
+
+
 //搜索-徽章
 export function searchBadge(params) {
 	return getRequest({

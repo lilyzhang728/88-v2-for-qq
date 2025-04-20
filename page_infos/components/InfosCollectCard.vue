@@ -63,20 +63,21 @@
 		methods: {
 			toDetail() {
 				switch (this.item.post.post_type){
-					case 1:
-						//1-跳转攻略详情
-						uni.navigateTo({
-							url: `/page_guide/guideDetail/guideDetail?showEditBtn=true&inDraft=false&id=${this.item.post.id}&tabIndex=2`
-						})
-						break;
+					// case 1:
+					// 	1-跳转资讯
+					// 	uni.navigateTo({
+					// 		url: `/page_guide/guideDetail/guideDetail?showEditBtn=true&inDraft=false&id=${this.item.post.id}&tabIndex=2`
+					// 	})
+					// 	break;
+					// case 2:
+					// 	//2-攻略TODO
+					// 	uni.navigateTo({
+					// 		url: `/page_news/newsDetail/newsDetail?id=${this.item.post.id}`
+					// 	});
+					// 	break;
 					case 2:
-						//2-资讯
-						uni.navigateTo({
-							url: `/page_news/newsDetail/newsDetail?id=${this.item.post.id}`
-						});
-						break;
 					case 4:
-						//4-问题
+						//2-攻略|4-问题
 						uni.navigateTo({
 							url: `/page_qa/questionDetail/questionDetail?id=${this.item.post.id}`
 						})

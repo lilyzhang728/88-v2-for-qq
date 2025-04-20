@@ -9,7 +9,7 @@
 				</view>
 			</view>
 			<view class="my-production-list">
-				<view class="my-production-list-count">{{dataList.length}}篇内容</view>
+				<view class="my-production-list-count">{{dataList && dataList.length}}篇内容</view>
 				<view class="my-production-list-content">
 					<!-- 我的动态 -->
 					<view class="bbs" v-if="active === 0">
@@ -18,23 +18,32 @@
 						@clickMore="clickMore"></bbs-post-card>
 					</view>
 					
-					<!-- 我的问答 -->
+					<!-- 我的问答|攻略 -->
 					<view class="qa" v-if="active === 1">
-						<my-question-card v-for="(item,index) in dataList" :key="index" :item="item" 
+						<!-- <my-question-card v-for="(item,index) in dataList" :key="index" :item="item" 
 						@toastMsg="toastMsg" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
-						@clickMore="clickMore" from="mine"></my-question-card>
+						@clickMore="clickMore" from="mine"></my-question-card> -->
+						
+						<common-item-card v-for="(item, index) in dataList" :key="index" :index="index"
+						:cardItem="item" @clickMore="clickMore"  @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
+						:showStar="true" :showLeft="true" @click.native="toCardDetail(item, index)"></common-item-card>
 					</view>
 					
 					<!-- 我的收藏 -->
 					<view class="collect" v-if="active === 2">
 						<view class="collect-item" v-for="(item,index) in dataList" :key="index">
 							<!-- 资讯 -->
-							<news-item-card v-if="item.post_type === 2" :newsItem="item" :index="index"
-							@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect" @clickMore="clickMoreOthers"></news-item-card>
+							<!-- <news-item-card v-if="item.post_type === 2" :newsItem="item" :index="index"
+							@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect" @clickMore="clickMoreOthers"></news-item-card> -->
 							<!-- 问答 -->
-							<my-question-card v-if="item.post_type === 4" :item="item" :index="index" 
+							<!-- <my-question-card v-if="item.post_type === 4" :item="item" :index="index" 
 							@toastMsg="toastMsg" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
-							@clickMoreOthers="clickMoreOthers"></my-question-card>
+							@clickMoreOthers="clickMoreOthers"></my-question-card> -->
+							
+							<common-item-card :index="index"
+							:cardItem="item" @clickMore="clickMore" @click.native="toCollectDetail(item, index)"
+							@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
+							:showStar="true" :showLeft="true"></common-item-card>
 						</view>
 					</view>
 				</view>
@@ -58,12 +67,16 @@
 	import myQuestionCard from './myQuestionCard.vue'
 	import NewsItemCard from '@/components/news/NewsItemCard.vue'
 	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
+	import CommonItemCard from '@/components/common/CommonItemCard.vue'
+	const hostSDKVersion = uni.getStorageSync('hostSDKVersion')
+	import { compareVersion } from '@/tools/about_wx.js'
 	export default {
 		components: {
 			BbsPostCard,
 			myQuestionCard,
 			NewsItemCard,
-			DeleteAndComplaint
+			DeleteAndComplaint,
+			CommonItemCard
 		},
 		data() {
 			return {
@@ -203,6 +216,68 @@
 			// 删除成功，刷新
 			backRefresh() {
 				this.$refs.paging.reload()
+			},
+			// 去问答/攻略详情
+			toCardDetail(item, index) {
+				if(item.in_house) {
+					// 1-内部链接
+					uni.navigateTo({
+						url: `/page_qa/questionDetail/questionDetail?id=${item.id}`
+					})
+				} else {
+					// 0-外部链接
+					this.toWXLink(item)
+				}
+			},
+			// 跳外部链接
+			toWXLink(item) {
+				if(this.ifOfficialAccountLink(item)) {
+					// 跳外部公众号文章链接
+					if(compareVersion(hostSDKVersion, '3.4.8') < 0) {
+						// 基础库低于3.4.8，无法打开外链公众号
+						wx.showModal({
+							title: '提示',
+							content: '当前微信版本过低，请升级到最新微信版本后重试。',
+							complete(res) {
+								// 退出小程序
+								// if(wx.exitMiniProgram) {
+								// 	wx.exitMiniProgram()
+								// }
+							} 
+						})
+					} else {
+						if(wx.openOfficialAccountArticle) {
+							wx.openOfficialAccountArticle({
+								url: item.source_link, // 此处填写公众号文章连接
+							})
+						}
+					}
+				}
+			},
+			// 是否为外部公众号链接
+			ifOfficialAccountLink(item) {
+				return parseInt(item.in_house) === 0
+			},
+			// 跳我的收藏详情
+			toCollectDetail(item, index) {
+				switch (item.post_type){
+					case 1:
+						// 资讯
+						this.toWXLink(item)
+						break;
+					case 2:
+					case 4:
+						// 问答|攻略
+						this.toCardDetail(item)
+						break;
+					case 5:
+					case 6:
+						//外链
+						this.toWXLink(item)
+						break;
+					default:
+						break;
+				}
 			}
 		},
 	}

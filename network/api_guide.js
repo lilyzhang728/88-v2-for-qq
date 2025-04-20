@@ -66,3 +66,11 @@ export function unCollectGuide(params) {
 		path: `/api/posts/${params}/un-collect`
 	})
 }
+
+// 获取新版资讯卡片列表
+export function commonCardNew(params) {
+	return postRequest({
+		path: `/api/posts/${userId ? userId : uni.getStorageSync('userId')}/rec`,
+		data: params
+	})
+}

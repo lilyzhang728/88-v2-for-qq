@@ -64,19 +64,19 @@
 			},
 			//是否显示右边封面图
 			showRightImg() {
-				if(this.item.comment) {
-					// 评论(暂不显示封面)
-					return false
-				} else {
-					if(this.item.post.post_type === 1) {
-						//攻略
-						return this.item.post.body.cover_url
-					} else {
-						//帖子
-						return this.item.post.body.urls && this.item.post.body.urls.length
-					}
-				}
-				
+				// if(this.item.comment) {
+				// 	// 评论(暂不显示封面)
+				// 	return false
+				// } else {
+				// 	if(this.item.post.post_type === 1) {
+				// 		//攻略
+				// 		return this.item.post.body.cover_url
+				// 	} else {
+				// 		//帖子
+				// 		return this.item.post.body.urls && this.item.post.body.urls.length
+				// 	}
+				// }
+				return false
 			},
 			//右边封面图url
 			rightImgUrl() {
@@ -97,32 +97,40 @@
 		methods: {
 			toDetail() {
 				if(this.item.comment) {
-					// 评论被点赞，跳转帖子详情
-					uni.navigateTo({
-						url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.item.comment.post.id}`
-					})
+					if(this.item.post.post_type == 3) {
+						// 社区评论被点赞，跳转帖子详情
+						uni.navigateTo({
+							url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.item.comment.post.id}`
+						})
+					} else if(this.item.post.post_type == 2 || this.item.post.post_type == 4) {
+						// 问答|攻略评论被点赞，跳转详情
+						uni.navigateTo({
+							url: `/page_qa/questionDetail/questionDetail?id=${this.item.comment.post.id}`
+						})
+					}
 				} else {
 					switch (this.item.post.post_type){
-						case 1:
-							//1-跳转攻略详情
-							uni.navigateTo({
-								url: `/page_guide/guideDetail/guideDetail?showEditBtn=true&inDraft=false&id=${this.item.post.id}&tabIndex=2`
-							})
-							break;
-						case 2:
-							//2-资讯
-							uni.navigateTo({
-								url: `/page_news/newsDetail/newsDetail?id=${this.item.post.id}`
-							});
-							break;
+						// case 1:
+						// 	//1-跳转攻略详情
+						// 	uni.navigateTo({
+						// 		url: `/page_guide/guideDetail/guideDetail?showEditBtn=true&inDraft=false&id=${this.item.post.id}&tabIndex=2`
+						// 	})
+						// 	break;
+						// case 2:
+						// 	//2-资讯
+						// 	uni.navigateTo({
+						// 		url: `/page_news/newsDetail/newsDetail?id=${this.item.post.id}`
+						// 	});
+						// 	break;
 						case 3:
 							//3-跳转帖子详情
 							uni.navigateTo({
 								url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.item.post.id}`
 							})
 							break;
+						case 2:
 						case 4:
-							//4-问题
+							//2-攻略|4-问题
 							uni.navigateTo({
 								url: `/page_qa/questionDetail/questionDetail?id=${this.item.post.id}`
 							})
