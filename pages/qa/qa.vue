@@ -8,7 +8,7 @@
 				line-height="8rpx" line-width="60rpx" class="bbs-tabs" :swipeable="true">
 					<van-tab title="问答"></van-tab>
 					<van-tab title="分享会"></van-tab>
-					<van-tab title="向ta提问"></van-tab>
+					<!-- <van-tab title="向ta提问"></van-tab> -->
 				</van-tabs>
 				
 				<!-- 搜索 -->
@@ -27,10 +27,10 @@
 					<!-- 卧谈会 -->
 					<activity-infos ref="activityInfos"></activity-infos>	
 				</swiper-item>
-				<swiper-item class="swiper-item">
+				<!-- <swiper-item class="swiper-item"> -->
 					<!-- 人脉 -->
-					<connections ref="connections" :active="active"></connections>
-				</swiper-item>
+					<!-- <connections ref="connections" :active="active"></connections>
+				</swiper-item> -->
 			</swiper>
 		</z-paging-swiper>
 		
@@ -45,7 +45,7 @@
 <script>
 	import PageTabs from '@/components/common/PageTabs.vue'
 	import QuestionAndAnswer from '@/components/qa/QuestionAndAnswer.vue'
-	import Connections from '@/components/qa/Connections.vue'
+	// import Connections from '@/components/qa/Connections.vue'
 	import ActivityInfos from '@/components/qa/ActivityInfos.vue'
 	import Toast from '@/wxcomponents/vant/toast/toast'
 	import SideAddBtn from '@/components/common/SideAddBtn.vue'
@@ -54,7 +54,7 @@
 		components: {
 			PageTabs,
 			QuestionAndAnswer,
-			Connections,
+			// Connections,
 			SideAddBtn,
 			TopSearchBox,
 			ActivityInfos
@@ -63,7 +63,6 @@
 			return {
 				backgroundImgUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/bbs/bbsBg.png?sign=c0f613e91ba42b583649b23d7922d3b2&t=1689556699',
 				active: 0,
-				titleList: ['问答', '人脉'],
 				slotName: ['questionAndAnswer', 'connections'],
 			}
 		},
