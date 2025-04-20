@@ -46,11 +46,11 @@
 				contentId: ''
 			}
 		},
-		watch: {
-			searchVal(val) {
-				this.reloadList()
-			}
-		},
+		// watch: {
+		// 	searchVal(val) {
+		// 		this.reloadList()
+		// 	}
+		// },
 		onLoad(option) {
 			this.searchVal = option.searchVal
 		},
@@ -86,7 +86,7 @@
 			// 获取列表数据（新版）
 			getCommonCardNew(pageNo, pageSize) {
 				return new Promise((resolve, reject) => {
-					commonCardNew({
+					searchArticleNew({
 						'es_query': this.searchVal,
 						'post_types':  ["2", "4", "5", "6", "7"],
 						'per_page': pageSize,

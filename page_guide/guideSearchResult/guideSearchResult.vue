@@ -48,11 +48,11 @@
 				actionType: 0,		// 长按面板内容类型：0：帖子，1：评论，2：话题
 			}
 		},
-		watch: {
-			searchVal(val) {
-				this.reloadList()
-			}
-		},
+		// watch: {
+		// 	searchVal(val) {
+		// 		this.reloadList()
+		// 	}
+		// },
 		onLoad(option) {
 			this.searchVal = option.searchVal
 		},
@@ -88,7 +88,7 @@
 			// 获取列表数据（新版）
 			getCommonCardNew(pageNo, pageSize) {
 				return new Promise((resolve, reject) => {
-					commonCardNew({
+					searchArticleNew({
 						'es_query': this.searchVal,
 						'post_types': ['1'],
 						'per_page': pageSize,

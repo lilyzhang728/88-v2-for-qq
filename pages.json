@@ -120,6 +120,14 @@
 					"enablePullDownRefresh": false
 				}
 
+			},
+			{
+				"path": "guideSearchResult/guideSearchResult",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+			
 			}]
 		},{
 			"root": "page_news",

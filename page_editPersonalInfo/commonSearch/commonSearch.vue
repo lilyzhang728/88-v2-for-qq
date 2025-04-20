@@ -29,7 +29,7 @@
 			return {
 				searchVal: '',
 				tabIndex: 2,  				//tabIndex: 1-tab1, 2-tab2, 3-tab3, 4-tab4
-				searchContentType: 0,	// 0:搜索文章  1:搜索徽章  2:搜索话题
+				// searchContentType: 0,	// 0:搜索文章  1:搜索徽章  2:搜索话题
 				historyList: ['体育馆预定', '停车泊位', '爱心捐赠', '蚂蚁借呗'],
 				findList: ['体育馆预定', '停车泊位', '爱心捐赠', '蚂蚁借呗', '蚂蚁借呗蚂蚁借呗蚂蚁借呗蚂蚁借呗'],
 				postId: ''
@@ -43,9 +43,9 @@
 			// 	this.searchVal = option.searchVal
 			// }
 			// 徽章或者话题页会传
-			if(option.searchContentType) {
-				this.searchContentType = Number(option.searchContentType)
-			}
+			// if(option.searchContentType) {
+			// 	this.searchContentType = Number(option.searchContentType)
+			// }
 			// 问题详情-邀请回答-搜索，带上了postId，跳转6的时候带上
 			if(option.postId) {
 				this.postId = option.postId
@@ -54,7 +54,7 @@
 		onUnload() {
 			this.searchVal = ''
 			this.tabIndex = 2
-			this.searchContentType = 0
+			// this.searchContentType = 0
 		},
 		methods: {
 			handleSearch(searchVal) {
@@ -70,56 +70,45 @@
 					});
 					return
 				}
-				switch(this.searchContentType) {
-					case 0:
-						// 搜索文章, 跳转文章搜索结果页
-						switch(this.tabIndex) {
-							case 2:
-								// 跳转guide搜索结果页
-								uni.navigateTo({
-									url: `/page_guide/guideSearchResult/guideSearchResult?searchVal=${searchVal}`
-								})
-								break
-							case 3:
-								// 跳转news搜索结果页
-								uni.navigateTo({
-									url: `/page_news/newsSearchResult/newsSearchResult?searchVal=${searchVal}`
-								})
-								break
-							case 4:
-								// 跳转bbs搜索结果页
-								uni.navigateTo({
-									url: `/page_bbs/bbsSearchResult/bbsSearchResult?searchVal=${searchVal}`
-								})
-								break
-							case 5:
-								// 跳转qa搜索结果页
-								uni.navigateTo({
-									url: `/page_qa/qaSearchResult/qaSearchResult?searchVal=${searchVal}`
-								})
-								break
-							case 6:
-								// 跳转人脉搜索结果页
-								uni.navigateTo({
-									url: `/page_qa/connectionSearchResult/connectionSearchResult?searchVal=${searchVal}&postId=${this.postId}`
-								})
-								break
-							case 7:
-								// 跳转卧谈会搜索结果页
-								uni.navigateTo({
-									url: `/page_qa/actInfosSearchResult/actInfosSearchResult?searchVal=${searchVal}`
-								})
-								break
-						}
-						break
-					case 1:
-						// 搜索徽章, 跳转徽章搜索结果页
+				switch(this.tabIndex) {
+					case 2:
+						// 跳转资讯搜索结果页
 						uni.navigateTo({
-							url: `/page_aboutBadge/badgeSearchResult/badgeSearchResult?searchVal=${searchVal}`
+							url: `/page_guide/guideSearchResult/guideSearchResult?searchVal=${searchVal}`
+						})
+						break
+					// case 3:
+					// 	// 跳转news搜索结果页
+					// 	uni.navigateTo({
+					// 		url: `/page_news/newsSearchResult/newsSearchResult?searchVal=${searchVal}`
+					// 	})
+					// 	break
+					case 4:
+						// 跳转bbs搜索结果页
+						uni.navigateTo({
+							url: `/page_bbs/bbsSearchResult/bbsSearchResult?searchVal=${searchVal}`
+						})
+						break
+					case 5:
+						// 跳转qa搜索结果页
+						uni.navigateTo({
+							url: `/page_qa/qaSearchResult/qaSearchResult?searchVal=${searchVal}`
+						})
+						break
+					case 6:
+						// 跳转人脉搜索结果页
+						uni.navigateTo({
+							url: `/page_qa/connectionSearchResult/connectionSearchResult?searchVal=${searchVal}&postId=${this.postId}`
+						})
+						break
+					case 7:
+						// 跳转卧谈会搜索结果页
+						uni.navigateTo({
+							url: `/page_qa/actInfosSearchResult/actInfosSearchResult?searchVal=${searchVal}`
 						})
 						break
 					default:
-						break;
+						break
 				}
 				
 			},

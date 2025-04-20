@@ -47,11 +47,11 @@
 				contentId: ''
 			}
 		},
-		watch: {
-			searchVal(val) {
-				this.reloadList()
-			}
-		},
+		// watch: {
+		// 	searchVal(val) {
+		// 		this.reloadList()
+		// 	}
+		// },
 		onLoad(option) {
 			this.searchVal = option.searchVal
 		},
