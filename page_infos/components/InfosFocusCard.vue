@@ -64,10 +64,10 @@
 			// 点击卡片，去个人主页
 			toHomepage(e) {
 				//防止冒泡
-				e.preventDefault()
-				uni.navigateTo({
-					url: `/page_infos/homepage/homepage?userId=${this.item.post.author.id}`
-				})
+				// e.preventDefault()
+				// uni.navigateTo({
+				// 	url: `/page_infos/homepage/homepage?userId=${this.item.post.author.id}`
+				// })
 			},
 			// 去回答
 			handleFocus() {

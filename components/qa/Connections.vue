@@ -63,10 +63,10 @@
 			// 去个人主页
 			toHomepage(e, id) {
 				//防止冒泡
-				e.preventDefault()
-				uni.navigateTo({
-					url: `/page_infos/homepage/homepage?userId=${id}`
-				})
+				// e.preventDefault()
+				// uni.navigateTo({
+				// 	url: `/page_infos/homepage/homepage?userId=${id}`
+				// })
 			},
 		},
 	}

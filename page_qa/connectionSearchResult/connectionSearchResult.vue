@@ -71,10 +71,10 @@
 			},
 			toHomepage(e, id) {
 				//防止冒泡
-				e.preventDefault()
-				uni.navigateTo({
-					url: `/page_infos/homepage/homepage?userId=${id}`
-				})
+				// e.preventDefault()
+				// uni.navigateTo({
+				// 	url: `/page_infos/homepage/homepage?userId=${id}`
+				// })
 			},
 			//切换like状态
 			checkoutLike(index, status) {

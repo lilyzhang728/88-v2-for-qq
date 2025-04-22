@@ -318,10 +318,10 @@
 			// 点击头像，去个人主页
 			toHomepage(e) {
 				//防止冒泡
-				e.preventDefault()
-				uni.navigateTo({
-					url: `/page_infos/homepage/homepage?userId=${this.newsData.author.id}`
-				})
+				// e.preventDefault()
+				// uni.navigateTo({
+				// 	url: `/page_infos/homepage/homepage?userId=${this.newsData.author.id}`
+				// })
 			},
 			// （评论）长按，弹起面板
 			commentLongpress(id) {

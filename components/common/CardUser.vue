@@ -101,10 +101,10 @@
 			// 点击头像，去个人主页
 			toHomepage(e) {
 				//防止冒泡
-				e.preventDefault()
-				uni.navigateTo({
-					url: `/page_infos/homepage/homepage?userId=${this.item.author.id}`
-				})
+				// e.preventDefault()
+				// uni.navigateTo({
+				// 	url: `/page_infos/homepage/homepage?userId=${this.item.author.id}`
+				// })
 			},
 			clickMore(e) {
 				//防止冒泡
