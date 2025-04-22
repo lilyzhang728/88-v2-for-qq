@@ -1,4 +1,5 @@
 <!-- 干货-新闻资讯 -->
+<!-- 待删除 -->
 <template>
 	<view class="useful-news">
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'left': '25rpx', 'right': '25rpx'}">

@@ -1,3 +1,4 @@
+<!-- 待删除 -->
 <template>
 	<view class="news-item-card" @click.native="toNewsDetail">
 		<!-- 头像、昵称、学校 -->

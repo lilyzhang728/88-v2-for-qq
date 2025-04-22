@@ -1,5 +1,4 @@
 <!-- 个人主页-攻略 -->
-<!-- 待删除？TODO -->
 <template>
 	<view class="homepage-guide">
 		<view class="guide-list">

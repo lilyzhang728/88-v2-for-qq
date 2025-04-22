@@ -35,9 +35,7 @@
 						<view class="homepage-achivement-title">
 							<view class="homepage-achivement-title-icon"></view>徽章墙
 						</view>
-						<view class="homepage-achivement-badge-content">
-							<homepage-badge :userId="userId" :badgeList="badgeList" @showBadgeDetail="showBadgeDetail"></homepage-badge>
-						</view>
+						
 					</view>
 					<view class="homepage-achivement-guide" v-if="dataList.length">
 						<view class="homepage-achivement-title homepage-achivement-title-post">
@@ -56,17 +54,13 @@
 			</view>
 		</z-paging>
 		
-		<!-- 以下为弹窗 -->
-		<!-- 徽章详情 -->
-		<badge-detail ref="badgeDetail"></badge-detail>
+		
 	</view>
 </template>
 
 <script>
 	import BackTopbar from '@/components/common/BackTopbar.vue'
 	import HomepageRadar from '@/page_infos/components/HomepageRadar.vue'
-	import HomepageBadge from '@/page_infos/components/HomepageBadge.vue'
-	import BadgeDetail from "@/components/index/BadgeDetail.vue"
 	import HomepagePost from '@/page_infos/components/HomepagePost.vue'
 	import { profile, ownArticle, getBadgeList, follow, unfollow, getUserPosts } from '@/network/api_infos.js'
 	import { target_value_key_map } from "@/tools/transform_data.js"
@@ -76,8 +70,6 @@
 		components: {
 			BackTopbar,
 			HomepageRadar,
-			HomepageBadge,
-			BadgeDetail,
 			HomepagePost
 		},
 		data() {
@@ -92,8 +84,6 @@
 					avatar: ''
 				},
 				dataList: [],
-				showBadge: false,
-				badgeList: [],
 				defaultAvatar: DEFAULT_AVATAR,
 			}
 		},
@@ -112,7 +102,6 @@
 		onLoad(option) {
 			this.userId = option.userId
 			this.getUserInfo()
-			this.getUserBadgeList()
 		},
 		onUnload() {
 			this.userId = ''
@@ -142,24 +131,7 @@
 					console.log('profile', err)
 				})
 			},
-			// 查询badge
-			getUserBadgeList() {
-				getBadgeList({
-					'per_page': 8,
-					'page': 1,
-					'id': this.userId
-				}).then(res => {
-					if(res.code == 0 && Object.keys(res.data).length) {
-						this.badgeList = res.data.items
-					}
-					this.showBadge = res.data.items.length > 0
-				}, err => {
-					console.log('getBadgeList', err)
-				})
-			},
-			showBadgeDetail(badgeInfo) {
-				this.$refs.badgeDetail.getBadgeDetail(badgeInfo, 0)
-			},
+			
 			queryList(pageNo, pageSize) {
 				getUserPosts({
 					'post_type': 3,	//帖子
@@ -352,10 +324,7 @@
 			.homepage-achivement-title-post {
 				margin-bottom: 25rpx;
 			}
-			.homepage-achivement-badge {
-				.homepage-achivement-badge-content {
-				}
-			}
+			
 		}
 		.homepage-user-info-share {
 			width: 127rpx;

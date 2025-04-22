@@ -1,4 +1,5 @@
 <!-- 攻略详情-第X步 -->
+<!-- 待删除 -->
 <template>
 	<view class="guide-detail-step">
 		<view class="guide-detail-step-title">

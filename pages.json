@@ -74,43 +74,6 @@
             ]
 		},
 		{
-			"root": "page_aboutBadge",
-			"pages": [{
-					"path": "moreBadge/moreBadge",
-					"style": {
-						"navigationBarTitleText": "所有徽章",
-						"enablePullDownRefresh": false
-					}
-
-				},
-				{
-					"path": "myBadgeAndBadgeLibrary/myBadgeAndBadgeLibrary",
-					"style": {
-						"navigationBarTitleText": "待定",
-						"navigationStyle": "custom",
-						"enablePullDownRefresh": false
-					}
-
-				}, {
-					"path": "makeBadge/makeBadge",
-					"style": {
-						"navigationBarTitleText": "制作徽章",
-						"enablePullDownRefresh": false,
-						"navigationStyle": "custom"
-					}
-
-				}
-			    ,{
-                    "path" : "badgeSearchResult/badgeSearchResult",
-                    "style" :  {
-						"navigationBarTitleText": "",
-						"enablePullDownRefresh": false
-					}
-                
-                }
-            ]
-		},
-		{
 			"root": "page_guide",
 			"pages": [{
 				"path": "guideDetail/guideDetail",

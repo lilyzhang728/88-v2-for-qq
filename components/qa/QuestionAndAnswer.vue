@@ -3,10 +3,6 @@
 	<view class="question-and-answer">
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'left': '25rpx', 'right': '25rpx'}">
 			<view class="question-list">
-				<!-- <question-and-answer-card v-for="(item,index) in dataList" :key="index"
-				 :item="item" :index="index" @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
-				 @clickMore="clickMore"></question-and-answer-card> -->
-				 
 				 <common-item-card v-for="(item, index) in dataList" :key="index" :index="index" 
 				 :cardItem="item" @clickMore="clickMore"  @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
 				 :showStar="true" :showLeft="true" @click.native="toCardDetail(item, index)"></common-item-card>
@@ -22,14 +18,12 @@
 <script>
 	import { recArticle, commonCardNew } from '@/network/api_guide.js'
 	import { transformTime } from '@/tools/transform_time.js'
-	import QuestionAndAnswerCard from './QuestionAndAnswerCard.vue'
 	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	import CommonItemCard from '@/components/common/CommonItemCard.vue'
 	const hostSDKVersion = uni.getStorageSync('hostSDKVersion')
 	import { compareVersion } from '@/tools/about_wx.js'
 	export default {
 		components: {
-			QuestionAndAnswerCard,
 			DeleteAndComplaint,
 			CommonItemCard
 		},

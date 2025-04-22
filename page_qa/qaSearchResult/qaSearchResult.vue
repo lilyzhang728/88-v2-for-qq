@@ -9,10 +9,6 @@
 		<!-- 搜索结果列表 -->
 		<z-paging ref="paging" v-model="dataList" @query="queryList" :paging-style="{'top': '40px', 'padding': '0 25rpx'}" 
 		loading-more-default-text="点击加载更多" loading-more-no-more-text="没有更多了" :auto-show-system-loading="true">
-			<!-- <question-and-answer-card v-for="(item, index) in dataList" :key="index" :item="item" :index="index"
-			@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
-			@clickMore="clickMore"></question-and-answer-card> -->
-			
 			<common-item-card v-for="(item, index) in dataList" :key="index" :index="index"
 			:cardItem="item" @clickMore="clickMore"  @checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect"
 			:showStar="true" :showLeft="true" @click.native="toCardDetail(item, index)"></common-item-card>
@@ -26,7 +22,6 @@
 
 <script>
 	import FakeSearchBox from "@/components/common/FakeSearchBox.vue"
-	import QuestionAndAnswerCard from '@/components/qa/QuestionAndAnswerCard.vue'
 	import { searchArticle, searchArticleNew } from '@/network/api_index.js'
 	import DeleteAndComplaint from '@/components/common/DeleteAndComplaint.vue'
 	import CommonItemCard from '@/components/common/CommonItemCard.vue'
@@ -35,7 +30,6 @@
 	export default {
 		components: {
 			FakeSearchBox,
-			QuestionAndAnswerCard,
 			DeleteAndComplaint,
 			CommonItemCard
 		},
