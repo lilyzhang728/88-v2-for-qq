@@ -18,7 +18,7 @@
 		<view class="my-report-card-content" :class="{'my-report-card-content-arr': item.content.length>1}" v-for="(item, index) in cardData && cardData.fields" :key="index">
 			<view class="my-report-card-content-key">{{item.field}}: </view>
 			<view v-if="item.content.length < 2">
-				<view class="my-report-card-content-value">{{item.content}}</view>
+				<view class="my-report-card-content-value">{{item.content[0]}}</view>
 			</view>
 			<view v-else>
 				<view class="my-report-card-content-value" v-for="(content, index) in item.content" :key="index">◆ {{content}}</view>
