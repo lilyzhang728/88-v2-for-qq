@@ -14,7 +14,7 @@
 			
 				<common-item-card v-else :index="index" :cardItem="item"
 				@clickMore="clickMore" @click.native="toCardDetail(item, index)" @checkoutLike="checkoutLike"
-				:showComment="true" :showLeft="true"></common-item-card>
+				@checkoutCollect="checkoutCollect" :showComment="true" :showStar="true" :showLeft="true"></common-item-card>
 			</view>
 		</z-paging>
 		
@@ -169,6 +169,15 @@
 					this.dataList[cardIndex].likers_count++
 				} else {
 					this.dataList[cardIndex].likers_count--
+				}
+			},
+			//切换collect状态
+			checkoutCollect(index, status) {
+				this.dataList[index].is_collect = status
+				if(status) {
+					this.dataList[index].collectors_count++
+				} else {
+					this.dataList[index].collectors_count = this.dataList[index].collectors_count ? this.dataList[index].collectors_count-1 : 0
 				}
 			},
 			reloadList() {

@@ -509,6 +509,7 @@
 							         let page = getCurrentPages().pop();//跳转页面成功之后
 							         // 从社区页跳进来
 							         page.$vm.active = 0
+									 page.$vm.hasPublished = true
 							         page.$vm.$refs.bbsRec.$refs.paging.reload()
 							    },
 							})

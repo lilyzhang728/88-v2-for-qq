@@ -6,7 +6,7 @@
 				<!-- 顶层tab -->
 				<van-tabs :active="active" animated @change.native="tabsChange" ref="tabs"
 				line-height="8rpx" line-width="60rpx" class="bbs-tabs" :swipeable="true">
-					<van-tab title="问答"></van-tab>
+					<van-tab title="经验/问答"></van-tab>
 					<van-tab title="分享会"></van-tab>
 					<!-- <van-tab title="向ta提问"></van-tab> -->
 				</van-tabs>

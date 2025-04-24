@@ -15,7 +15,7 @@
 			</template>
 			<swiper class="swiper" :current="active" @animationfinish="swiperAnimationfinish">
 				<swiper-item class="swiper-item">
-					<bbs-rec ref="bbsRec"></bbs-rec>
+					<bbs-rec ref="bbsRec" :hasPublished="hasPublished" @resetHasPublished="resetHasPublished"></bbs-rec>
 				</swiper-item>
 			</swiper>
 		</z-paging-swiper>
@@ -42,6 +42,7 @@
 				statusBar: 0,
 				active: 0,
 				searchVal: '',
+				hasPublished: false,	// true 为刚发完贴，（请求列表传参用，下次请求列表刚发的贴展示在第一位
 			}
 		},
 		computed: {
@@ -91,6 +92,9 @@
 			backRefresh(postIndex) {
 				this.active = 0
 				this.$refs.bbsRec.deleteSinglePost(postIndex)
+			},
+			resetHasPublished() {
+				this.hasPublished = false
 			}
 		}
 	}

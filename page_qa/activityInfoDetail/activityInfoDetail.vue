@@ -39,7 +39,8 @@
 			<view class="bbs-post-detail-comment">
 				<view class="bbs-post-detail-comment-total">共{{commentNum}}条评论</view>
 				<bbs-post-comment @reply="reply" :commentData="dataList" :hideReply="true" 
-				@checkoutCommentLike="checkoutCommentLike" @commentLongpress="commentLongpress"></bbs-post-comment>
+				@checkoutCommentLike="checkoutCommentLike" @commentLongpress="commentLongpress"
+				@checkoutCommentLikeLevel2="checkoutCommentLikeLevel2"></bbs-post-comment>
 			</view>
 		</z-paging>
 		
@@ -326,6 +327,15 @@
 					this.dataList[index].likers_count++
 				} else {
 					this.dataList[index].likers_count--
+				}
+			},
+			// 2级评论点赞切换
+			checkoutCommentLikeLevel2(index, subIndex, status) {
+				this.dataList[index].descendants[subIndex].is_like = status
+				if(status) {
+					this.dataList[index].descendants[subIndex].likers_count++
+				} else {
+					this.dataList[index].descendants[subIndex].likers_count--
 				}
 			},
 			// 点击复制链接

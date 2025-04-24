@@ -11,7 +11,7 @@
 				
 					<common-item-card v-else :index="index" :cardItem="item"
 					@clickMore="clickMore" @click.native="toCardDetail(item, index)" @checkoutLike="checkoutLike"
-					:showComment="true" :showLeft="true"></common-item-card>
+					@checkoutCollect="checkoutCollect" :showComment="true" :showStar="true" :showLeft="true"></common-item-card>
 				</view>
 				
 			</view>
@@ -36,6 +36,13 @@
 			DeleteAndComplaint,
 			CommonItemCard
 		},
+		props: {
+			hasPublished: {
+				type: Boolean,
+				default: false,
+				required: false
+			}
+		},
 		data() {
 			return {
 				dataList: [],
@@ -48,6 +55,9 @@
 				// 	this.$refs.paging.complete(res);
 				// })
 				this.getCommonCardNew(pageNo, pageSize).then(res => {
+					if(this.hasPublished) {
+						this.$emit('resetHasPublished')
+					}
 					this.$refs.paging.complete(res);
 				})
 			},
@@ -77,7 +87,8 @@
 						'post_types': ['1', '2', '3', '4', '5', '6', '7'],
 						'per_page': pageSize,
 						'page': pageNo,
-						'fields': ['1', '2', '3', '4', '5', '6', '7']
+						'fields': ['1', '2', '3', '4', '5', '6', '7'],
+						'has_published': this.hasPublished
 					}).then(res => {
 						if(res.code === 0 && Object.keys(res.data).length) {
 							resolve(res.data.items)
@@ -155,6 +166,15 @@
 					this.dataList[cardIndex].likers_count++
 				} else {
 					this.dataList[cardIndex].likers_count--
+				}
+			},
+			//切换collect状态
+			checkoutCollect(index, status) {
+				this.dataList[index].is_collect = status
+				if(status) {
+					this.dataList[index].collectors_count++
+				} else {
+					this.dataList[index].collectors_count = this.dataList[index].collectors_count ? this.dataList[index].collectors_count-1 : 0
 				}
 			},
 			// 删除成功，刷新

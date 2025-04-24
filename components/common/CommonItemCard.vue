@@ -62,7 +62,7 @@
 		</view>
 		
 		<view class="common-item-card-footer">
-			<common-item-card-footer :cardData="cardItem" :showComment="showComment" :showStar="showStar" :showLeft="showLeft"
+			<common-item-card-footer :cardData="cardItem" :showComment="showFooterComment" :showStar="showFooterStar" :showLeft="showLeft"
 			@checkoutLike="checkoutLike" @checkoutCollect="checkoutCollect" :index="index"></common-item-card-footer>
 		</view>
 	</view>
@@ -133,6 +133,16 @@
 				progressColor: ['#2ca1ae', '#d47b38', '#7047a2'],
 				tagColor: ['#f8f2e0', '#e7f9ff', '#dcddfb'],
 				postTypeMap: ['', '资讯', '经验', '吐槽墙', '问答', '资料', '活动']
+			}
+		},
+		computed: {
+			showFooterComment() {
+				// 社区卡片显示评论
+				return this.showComment && this.cardItem.post_type == 3
+			},
+			showFooterStar() {
+				// 问答卡片、资讯卡片显示收藏
+				return this.showStar && (this.cardItem.post_type != 3)
 			}
 		},
 		methods: {

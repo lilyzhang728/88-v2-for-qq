@@ -13,7 +13,7 @@
 				<view class="comment-content-footer">
 					<view class="comment-content-footer-left">{{transformTimestamp(item)}}</view>
 					<view class="comment-content-footer-right">
-						<view class="comment-content-footer-right-like" @click="getLike(index, !item.is_like)">
+						<view class="comment-content-footer-right-like" @click="getLike($event, index, !item.is_like)">
 							<van-icon v-if="!item.is_like" name="good-job" size="40rpx" color="#D7D7D7"></van-icon>
 							<van-icon v-if="item.is_like" name="good-job" size="40rpx" :color="activeColor"></van-icon>
 							<view class="num" :style="{'color': item.is_like ? activeColor : '#00000099'}">{{ handleTransform(item.likers_count) }}</view>
@@ -37,7 +37,7 @@
 					<view class="comment-content-footer">
 						<view class="comment-content-footer-left">{{transformTimestamp(reply)}}</view>
 						<view class="comment-content-footer-right">
-							<view class="comment-content-footer-right-like" @click="getLikeLevel2(index, subIndex, !reply.is_like)">
+							<view class="comment-content-footer-right-like" @click="getLikeLevel2($event, index, subIndex, !reply.is_like)">
 								<van-icon v-if="!reply.is_like" name="good-job" size="40rpx" color="#D7D7D7"></van-icon>
 								<van-icon v-if="reply.is_like" name="good-job" size="40rpx" :color="activeColor"></van-icon>
 								<view class="num" :style="{'color': reply.is_like ? activeColor : '#00000099'}">{{ handleTransform(reply.likers_count) }}</view>
@@ -106,23 +106,25 @@
 				});
 			},
 			// 点赞,index为1级评论的index
-			getLike(index, status) {
+			getLike(e, index, status) {
+				//防止冒泡
+				e.preventDefault()
 				if(status) {
 					//unlike ——> like
+					this.$emit('checkoutCommentLike', index, status)
 					likeComment(this.commentData[index].id).then(res => {
 						if(res.code === 0) {
 							//点赞成功，改变icon状态
-							this.$emit('checkoutCommentLike', index, status)
 						}
 					}, err => {
 						console.log('likeGuide: ', err)
 					})
 				} else {
 					//like ——> unlike
+					this.$emit('checkoutCommentLike', index, status)
 					disLikeComment(this.commentData[index].id).then(res => {
 						if(res.code === 0) {
 							//取消点赞成功，改变icon状态
-							this.$emit('checkoutCommentLike', index, status)
 						}
 					}, err => {
 						console.log('disLikeGuide: ', err)
@@ -130,7 +132,9 @@
 				}
 			},
 			// 点赞,index为1级评论的index, subIndex为2级评论的index
-			getLikeLevel2(index, subIndex, status) {
+			getLikeLevel2(e, index, subIndex, status) {
+				//防止冒泡
+				e.preventDefault()
 				if(status) {
 					this.$emit('checkoutCommentLikeLevel2', index, subIndex, status)
 					//unlike ——> like

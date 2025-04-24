@@ -8,7 +8,7 @@
 					<text :class="{'card-user-name-text': isComment && item.is_post_author === 1}">{{ifOfficialAccountLink ? item.source : item.author.name}}</text>
 					<text class="card-user-name-author" v-if="isComment && item.is_post_author === 1">楼主</text>
 				</view>
-				<van-icon v-if="showMoreIcon" size="24rpx" color="#808080" name="arrow-down" @click.native.stop="clickMore($event)" />
+				<!-- <van-icon v-if="showMoreIcon" size="24rpx" color="#808080" name="arrow-down" @click.native.stop="clickMore($event)" /> -->
 			</view>
 			
 			<view class="card-user-infos">
