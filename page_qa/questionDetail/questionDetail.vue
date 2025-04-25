@@ -40,11 +40,10 @@
 			<van-divider />
 			
 			<!-- 邀请回答 -->
-			<view class="question-detail-btns">
+			<!-- <view class="question-detail-btns">
 				<van-button @click.native="invideUser" class="question-detail-btn-wrap" custom-class="question-detail-btn">邀请回答</van-button>
-				<!-- <van-button  class="question-detail-btn-wrap" custom-class="question-detail-btn-2">好问题</van-button> -->
 				<van-icon size="24rpx" color="#808080" name="arrow-down" @click.native.stop="handleLongpress" />
-			</view>
+			</view> -->
 		
 			<!-- 评论区 -->
 			<view class="bbs-post-detail-comment">

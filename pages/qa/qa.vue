@@ -21,7 +21,8 @@
 			<swiper class="swiper" :current="active" @animationfinish="swiperAnimationfinish">
 				<swiper-item class="swiper-item">
 					<!-- 问答 -->
-					<question-and-answer ref="questionAndAnswer" :active="active" @toastMsg="toastMsg"></question-and-answer>	
+					<question-and-answer ref="questionAndAnswer" :active="active" @toastMsg="toastMsg"
+					:hasPublished="hasPublished" @resetHasPublished="resetHasPublished"></question-and-answer>	
 				</swiper-item>
 				<swiper-item class="swiper-item">
 					<!-- 卧谈会 -->
@@ -64,6 +65,7 @@
 				backgroundImgUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/bbs/bbsBg.png?sign=c0f613e91ba42b583649b23d7922d3b2&t=1689556699',
 				active: 0,
 				slotName: ['questionAndAnswer', 'connections'],
+				hasPublished: false,	// true 为刚发完贴，（请求列表传参用，下次请求列表刚发的贴展示在第一位
 			}
 		},
 		computed: {
@@ -111,6 +113,9 @@
 			backRefresh() {
 				const refList = ['questionAndAnswer', 'activityInfos', 'connections']
 				this.$refs[refList[this.active]].$refs.paging.reload()
+			},
+			resetHasPublished() {
+				this.hasPublished = false
 			}
 		}
 	}

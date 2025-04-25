@@ -32,6 +32,11 @@
 				type: Number,
 				default: 0
 			},
+			hasPublished: {
+				type: Boolean,
+				default: false,
+				required: false
+			}
 		},
 		data() {
 			return {
@@ -56,6 +61,9 @@
 				// 	console.log('recArticle: ', err)
 				// })
 				this.getCommonCardNew(pageNo, pageSize).then(res => {
+					if(this.hasPublished) {
+						this.$emit('resetHasPublished')
+					}
 					this.$refs.paging.complete(res);
 				})
 			},
@@ -66,7 +74,8 @@
 						'post_types':  ["2", "4", "5", "6", "7"],
 						'per_page': pageSize,
 						'page': pageNo,
-						'fields': ["1", "2", "3", "4", "5", "6", "7"]
+						'fields': ["1", "2", "3", "4", "5", "6", "7"],
+						'has_published': this.hasPublished
 					}).then(res => {
 						if(res.code === 0 && Object.keys(res.data).length) {
 							resolve(res.data.items)
