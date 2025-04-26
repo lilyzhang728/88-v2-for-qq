@@ -11,8 +11,10 @@
 						<div class="my-evaluation-form-content-box-form-item" v-for="(subItem, subIndex) in item.answers" :key="subIndex">
 							<van-checkbox :value="subItem.is_select" shape="square" icon-size="16px" @change.native="changeCheckbox($event, item.index, subIndex)">{{subItem.name}}</van-checkbox>
 						</div>
+	
 					</view>
 				</view>
+
 				
 				<!-- 第2页-最后一页 -->
 				<view v-for="(gourp, index) in groupedData" :key="index" v-if="index+2 == curPage">
@@ -25,6 +27,23 @@
 						</view>
 					</view>
 				</view>
+				
+				<div class="my-evaluation-form-content-box-form-item-textarea" v-if="curPage>1 && curPage==totalPageNum">
+					<view class="my-evaluation-form-content-box-form-item-textarea-title">由于上述问题可能没法完全描述您的具体情况，您可以在这里做补充(选填)~</view>
+					<view class="my-evaluation-form-content-box-form-item-textarea-form">
+						<van-field
+							class="my-evaluation-form-content-box-form-item-textarea-form-item"
+						    :value="userDesc"
+						    label=""
+						    type="textarea"
+						    placeholder="您的描述越详细,结论会越准确\n\n示例:本科211, 通信专业, 目前正在准备跨考某校计算机\n现在刚刚开始准备, 距离初式还有半年多...\n目前遇到的困境是..."
+						    :autosize="autosizeData"
+						    :border="false"
+							:clearable="true"
+							custom-style="padding:2px"
+						  />
+					</view>
+				</div>
 			</view>
 			<view class="my-evaluation-form-btn-box">
 				<van-button color="#74d9c7" :disabled="page1Disabled" block round class="my-evaluation-form-btn-wrap" custom-class="my-evaluation-form-btn" @click.native="clickStart" v-if="curPage<2">开始评测</van-button>
@@ -57,7 +76,10 @@
 				formData: [],
 				curPage: 1,		// 当前页数
 				groupSize: 5,
-				showLoading: false
+				showLoading: false,
+				userDesc: '',
+				autosizeData: { minHeight: 100 },
+				customClass: 'my-evaluation-form-content-box-form-item-textarea-form-item'
 			}
 		},
 		computed: {
@@ -159,9 +181,11 @@
 			// 提交
 			clickSubmit() {
 				if(!this.page1Disabled && !this.otherPageDisabled) {
-					// this.showLoading = true
+					let userDescription = {
+						user_description: this.userDesc
+					}
 					submitQuestionnaires({
-						questionnaire: this.formData
+						questionnaire: this.formData.concat(userDescription)
 					}).then(res => {}, err => {
 						console.log('submitQuestionnaires err: ', err)
 					})
@@ -233,6 +257,32 @@
 					.my-evaluation-form-content-box-form-item {
 						line-height: 40rpx;
 						margin-top: 16rpx;
+					}
+				}
+			}
+			.my-evaluation-form-content-box-form-item-textarea {
+				margin-top: 55rpx;
+				padding: 30rpx;
+				background-color: #ffffff;
+				border-radius: 48rpx;
+				.my-evaluation-form-content-box-form-item-textarea-title {
+					color: #52c1ac;
+					font-size: 32rpx;
+					line-height: 48rpx;
+				}
+				.my-evaluation-form-content-box-form-item-textarea-form {
+					margin-top: 20rpx;
+					color: #111111;
+					font-size: 28rpx;
+					.my-evaluation-form-content-box-form-item-textarea-form-item {
+						/deep/ .van-cell__title {
+							display: none !important;
+						}
+						/deep/ .van-field__control--textarea  {
+							word-wrap: break-word !important;
+							white-space: pre-line !important;
+						}
+					
 					}
 				}
 			}
