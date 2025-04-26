@@ -157,6 +157,7 @@
 		}
 	}
 	.my-report-card-0 {
+		margin-top: 20rpx !important;
 		.my-report-card-top-right-title-text {
 			color: #74d9c7;
 		}
@@ -194,6 +195,7 @@
 		}
 	}
 	.my-report-card-3 {
+		margin-bottom: 20rpx !important;
 		.my-report-card-top-right-title-text {
 			color: #bfa0ff;
 		}

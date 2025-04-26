@@ -60,7 +60,7 @@
 		box-sizing: border-box;
 		position: fixed;
 		right: 0;
-		top: 1000rpx;
+		top: 1050rpx;
 		.side-message-box-icon {
 			width: 50rpx;
 			height: 40rpx;

@@ -14,9 +14,10 @@
 					</view>
 				</view>
 				
+				<!-- 第2页-最后一页 -->
 				<view v-for="(gourp, index) in groupedData" :key="index" v-if="index+2 == curPage">
 					<view class="my-evaluation-form-content-box" v-for="(item) in gourp" :key="item.index">
-						<view class="my-evaluation-form-content-box-title">{{item.question}}</view>
+						<view class="my-evaluation-form-content-box-title">{{item.question}}{{item.type=='多选'?'（多选）':''}}</view>
 						<view class="my-evaluation-form-content-box-form">
 							<div class="my-evaluation-form-content-box-form-item" v-for="(subItem, subIndex) in item.answers" :key="subIndex">
 								<van-checkbox :value="subItem.is_select" shape="square" icon-size="16px" @change.native="changeCheckbox($event, item.index, subIndex)">{{subItem.name}}</van-checkbox>
@@ -28,7 +29,7 @@
 			<view class="my-evaluation-form-btn-box">
 				<van-button color="#74d9c7" :disabled="page1Disabled" block round class="my-evaluation-form-btn-wrap" custom-class="my-evaluation-form-btn" @click.native="clickStart" v-if="curPage<2">开始评测</van-button>
 				<van-button color="#74d9c7" :disabled="otherPageDisabled" block round class="my-evaluation-form-btn-wrap" custom-class="my-evaluation-form-btn" @click.native="clickNextStep" v-if="curPage>1 && curPage<totalPageNum">下一页（{{curPage-1}}/{{totalPageNum}})</van-button>
-				<van-button color="#74d9c7" block round class="my-evaluation-form-btn-wrap" custom-class="my-evaluation-form-btn" @click.native="clickSubmit" v-if="curPage>1 && curPage==totalPageNum">提交</van-button>
+				<van-button color="#74d9c7" :disabled="otherPageDisabled" block round class="my-evaluation-form-btn-wrap" custom-class="my-evaluation-form-btn" @click.native="clickSubmit" v-if="curPage>1 && curPage==totalPageNum">提交</van-button>
 			</view>
 		</z-paging>
 		<van-overlay :show="showLoading">
@@ -60,10 +61,11 @@
 			}
 		},
 		computed: {
+			// 第一页表单内容
 			formData1() {
 				return this.formData && this.formData.length > 0 ? this.formData.slice(0, 3) : [] 
 			},
-			// 将数据分组
+			// 第2页-最后一页表单内容分组，groups里每一项是表单的一页
 			groupedData() {
 				let groups = [];
 				let formData2 = this.formData && this.formData.length > 0 ? this.formData.slice(3) : []
@@ -119,6 +121,7 @@
 				if(this.curPage < 2) {
 					param_id = 'base_info'
 				} else {
+					// 根据第一页第3题选择的项确定param_id参数值
 					let selectedIndex = this.formData[2].answers.findIndex(item => item.is_select === true)
 					const paramMap = ['xiaozhao_base', 'kaoyan_base', 'kaogong_base']
 					if(selectedIndex > -1) {
@@ -156,25 +159,24 @@
 			// 提交
 			clickSubmit() {
 				if(!this.page1Disabled && !this.otherPageDisabled) {
-					this.showLoading = true
+					// this.showLoading = true
 					submitQuestionnaires({
 						questionnaire: this.formData
 					}).then(res => {}, err => {
 						console.log('submitQuestionnaires err: ', err)
-					}).finally(() => {
-						this.showLoading = false
-						Dialog.alert({
-						  message: '提交成功！请5分钟后刷新页面查看测评报告',
-						}).then(() => {
-						   uni.navigateBack({
-						       success: () => {
-						            let page = getCurrentPages().pop();//跳转页面成功之后
-						   		 if(page) {
-						   			 page.$vm.$refs.myAbility.backRefresh()
-						   		 }
-						       }
-						   })
-						})
+					})
+					// 因为会超时，接口400，索性直接提示用户返回，不用等待了
+					Dialog.alert({
+					  message: '提交成功！请1-2分钟后刷新页面查看测评报告',
+					}).then(() => {
+					   uni.navigateBack({
+					       success: () => {
+					            let page = getCurrentPages().pop();//跳转页面成功之后
+					   		 if(page) {
+					   			 page.$vm.$refs.myAbility.backRefresh()
+					   		 }
+					       }
+					   })
 					})
 				}
 			},
@@ -194,6 +196,7 @@
 						this.formData.splice(3)
 					}
 				} else {
+					// 返回我的，并刷新页面
 					uni.navigateBack({
 					    success: () => {
 					         let page = getCurrentPages().pop();//跳转页面成功之后
@@ -211,6 +214,7 @@
 <style lang="less" scoped>
 	.my-evaluation-form {
 		.my-evaluation-form-content {
+			margin-bottom: 30rpx;
 			.my-evaluation-form-content-box {
 				margin-top: 55rpx;
 				padding: 30rpx;

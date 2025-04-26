@@ -23,7 +23,7 @@
 </template>
 
 <script>
-	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+	// const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
 	import { transformTime } from '@/tools/transform_time.js'
 	export default {
 		props: {
@@ -82,7 +82,7 @@
 		},
 		computed: {
 			avatar() {
-				return this.item.author.avatar ?  this.item.author.avatar : DEFAULT_AVATAR
+				return this.item.author.avatar
 			},
 			timestamp() {
 				return this.item.timestamp ? transformTime(this.item.timestamp) : this.item.timestamp

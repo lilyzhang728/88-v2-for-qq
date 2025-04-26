@@ -185,6 +185,9 @@
 				guideDetail(this.id).then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
 						this.postData = res.data
+						if(!res.data.author.avatar) {
+							this.postData.author.avatar = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+						}
 						//获取评论区数据
 						if(res.data._links.comments) {
 							this.curGetCommentUrl = res.data._links.comments
