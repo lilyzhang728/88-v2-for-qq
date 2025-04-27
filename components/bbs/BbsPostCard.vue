@@ -2,7 +2,7 @@
 <template>
 	<view class="bbs-post-card">
 		<!-- 头像、昵称、学校 -->
-		<card-user :item="postData" :showMoreIcon="true" :showCardType="true" @clickMore="clickMore" routePath="bbs"></card-user>
+		<card-user :item="postData" :showMoreIcon="false" :showCardType="true" @clickMore="clickMore" routePath="bbs"></card-user>
 		
 		<!-- 正文 -->
 		<view class="bbs-post-content">{{postData.body.body}}</view>

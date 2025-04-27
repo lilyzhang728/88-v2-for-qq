@@ -41,11 +41,12 @@
 						    :border="false"
 							:clearable="true"
 							custom-style="padding:2px"
+							@change.native="onChange($event)"
 						  />
 					</view>
 				</div>
 			</view>
-			<view class="my-evaluation-form-btn-box">
+			<view class="my-evaluation-form-btn-box" slot="bottom">
 				<van-button color="#74d9c7" :disabled="page1Disabled" block round class="my-evaluation-form-btn-wrap" custom-class="my-evaluation-form-btn" @click.native="clickStart" v-if="curPage<2">开始评测</van-button>
 				<van-button color="#74d9c7" :disabled="otherPageDisabled" block round class="my-evaluation-form-btn-wrap" custom-class="my-evaluation-form-btn" @click.native="clickNextStep" v-if="curPage>1 && curPage<totalPageNum">下一页（{{curPage-1}}/{{totalPageNum}})</van-button>
 				<van-button color="#74d9c7" :disabled="otherPageDisabled" block round class="my-evaluation-form-btn-wrap" custom-class="my-evaluation-form-btn" @click.native="clickSubmit" v-if="curPage>1 && curPage==totalPageNum">提交</van-button>
@@ -158,7 +159,6 @@
 					if(res.code === 0 && Object.keys(res.data).length) {
 						this.formData.push(...res.data.questionnaire_info)
 					}
-					console.log(this.formData)
 				}, err => {
 					console.log('getQuestionnaires err: ', err)
 				})
@@ -230,7 +230,10 @@
 					    }
 					})
 				}
-			}
+			},
+			onChange(e) {
+				this.userDesc = e.detail
+			},
 		}
 	}
 </script>

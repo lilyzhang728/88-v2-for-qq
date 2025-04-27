@@ -6,6 +6,7 @@
 				<van-tabs :active="active" animated @change.native="tabsChange" ref="tabs"
 				line-height="8rpx" line-width="60rpx" class="bbs-tabs" :swipeable="true">
 					<van-tab title="发现"></van-tab>
+					<van-tab title="订阅"></van-tab>
 				</van-tabs>
 				
 				<!-- 搜索 -->
@@ -17,11 +18,14 @@
 				<swiper-item class="swiper-item">
 					<bbs-rec ref="bbsRec" :hasPublished="hasPublished" @resetHasPublished="resetHasPublished"></bbs-rec>
 				</swiper-item>
+				<swiper-item class="swiper-item">
+					<my-subscribe ref="mySubscribe"></my-subscribe>
+				</swiper-item>
 			</swiper>
 		</z-paging-swiper>
 		
 		<!-- 新增攻略按钮 -->
-		<side-add-btn @addNew="addNewPost"></side-add-btn>
+		<side-add-btn @addNew="addNewPost" v-if="active==0"></side-add-btn>
 	
 	</view>
 </template>
@@ -30,11 +34,13 @@
 	import TopSearchBox from '@/components/common/TopSearchBox.vue'
 	import SideAddBtn from '@/components/common/SideAddBtn.vue'
 	import BbsRec from "@/components/bbs/BbsRec.vue"
+	import MySubscribe from "@/components/bbs/MySubscribe.vue"
 	export default {
 		components: {
 			TopSearchBox,
 			SideAddBtn,
 			BbsRec,
+			MySubscribe
 		},
 		data() {
 			return {

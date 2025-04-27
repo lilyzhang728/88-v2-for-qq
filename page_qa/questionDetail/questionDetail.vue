@@ -26,6 +26,7 @@
 						<view class="bbs-post-detail-author-text-name">{{postData.author.name}}</view>
 					</view>
 				</view>
+				<van-icon size="24rpx" color="#808080" name="arrow-down" @click.native.stop="handleLongpress" />
 			</view>
 			
 			<!-- 发布时间 -->
@@ -500,6 +501,8 @@
 	}
 	.question-detail-info-box {
 		margin-top: 40rpx;
+		display: flex;
+		justify-content: space-between;
 		.bbs-post-detail-author {
 			height: 50rpx;
 			display: flex;

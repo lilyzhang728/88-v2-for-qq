@@ -74,3 +74,25 @@ export function commonCardNew(params) {
 		data: params
 	})
 }
+
+// 获取订阅列表
+export function subscribeList() {
+	return getRequest({
+		path: `/api/user/${userId ? userId : uni.getStorageSync('userId')}/keywords`,
+	})
+}
+
+// 添加订阅关键词
+export function addSubscribe(params) {
+	return postRequest({
+		path: `/api/keywords`,
+		data: params
+	})
+}
+
+// 删除订阅关键词
+export function deleteSubscribe(param) {
+	return deleteRequest({
+		path: `/api/keywords/${param}`,
+	})
+}

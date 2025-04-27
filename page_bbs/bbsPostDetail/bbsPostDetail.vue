@@ -23,7 +23,7 @@
 				<!-- 跳转到水贴大赛 -->
 				<view v-if="postData.id!=='122723b14c0611ef85995254009327f9'" class="toActivity" @click.native="toActivity">
 					<img class="toActivity-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
-					【水贴大赛】火热进行中
+					【有奖】招募天使用户啦~
 				</view>
 				
 				<van-divider />
