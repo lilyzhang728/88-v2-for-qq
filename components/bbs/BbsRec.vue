@@ -108,24 +108,16 @@
 			},
 			// 去详情
 			toCardDetail(item, index) {
-				switch (item.post_type){
-					case 1:
-						// 资讯
-						this.toGuideDetail(item)
-						break;
-					case 2:
-					case 4:
-					case 5:
-					case 6:
-						// 经验|问答|资料|活动
-						this.toQaDetail(item)
-						break;
-					default:
-						break;
+				if(item.in_house) {
+					// 1-内部链接: 经验|问答|资料|活动
+					this.toQaDetail(item)
+				} else {
+					// 0-外部链接
+					this.toWXLink(item)
 				}
 			},
 			// 跳转至资讯详情
-			toGuideDetail(item) {
+			toWXLink(item) {
 				if(this.ifOfficialAccountLink(item)) {
 					// 跳外部公众号文章链接
 					if(compareVersion(hostSDKVersion, '3.4.8') < 0) {

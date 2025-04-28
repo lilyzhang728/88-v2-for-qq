@@ -39,7 +39,8 @@
 							cover_url: '',
 						},
 						id: '',
-						post_type: 1
+						post_type: 1,
+						in_house: 1
 					},
 					timestamp: ''
 				}
@@ -62,29 +63,10 @@
 		},
 		methods: {
 			toDetail() {
-				switch (this.item.post.post_type){
-					// case 1:
-					// 	1-跳转资讯
-					// 	uni.navigateTo({
-					// 		url: `/page_guide/guideDetail/guideDetail?showEditBtn=true&inDraft=false&id=${this.item.post.id}&tabIndex=2`
-					// 	})
-					// 	break;
-					// case 2:
-					// 	//2-攻略TODO
-					// 	uni.navigateTo({
-					// 		url: `/page_news/newsDetail/newsDetail?id=${this.item.post.id}`
-					// 	});
-					// 	break;
-					case 2:
-					case 4:
-						//2-攻略|4-问题
-						uni.navigateTo({
-							url: `/page_qa/questionDetail/questionDetail?id=${this.item.post.id}`
-						})
-						break;
-					default:
-						break;
-				}
+				//2-攻略|4-问题
+				uni.navigateTo({
+					url: `/page_qa/questionDetail/questionDetail?id=${this.item.post.id}`
+				})
 			},
 			// 点击头像，去个人主页
 			toHomepage(e) {

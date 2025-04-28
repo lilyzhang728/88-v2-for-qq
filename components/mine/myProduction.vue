@@ -260,23 +260,12 @@
 			},
 			// 跳我的收藏详情
 			toCollectDetail(item, index) {
-				switch (item.post_type){
-					case 1:
-						// 资讯
-						this.toWXLink(item)
-						break;
-					case 2:
-					case 4:
-						// 问答|攻略
-						this.toCardDetail(item)
-						break;
-					case 5:
-					case 6:
-						//外链
-						this.toWXLink(item)
-						break;
-					default:
-						break;
+				if(item.in_house) {
+					// 1-内部链接: 问答|攻略
+					this.toCardDetail(item)
+				} else {
+					// 0-外部链接
+					this.toWXLink(item)
 				}
 			}
 		},

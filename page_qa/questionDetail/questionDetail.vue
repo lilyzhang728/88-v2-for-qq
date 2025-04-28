@@ -49,7 +49,7 @@
 			<!-- 评论区 -->
 			<view class="bbs-post-detail-comment">
 				<view class="bbs-post-detail-comment-total">共{{commentNum}}个回答</view>
-				<bbs-post-comment :commentData="dataList" :hideReply="true" 
+				<bbs-post-comment :commentData="dataList" :hideReply="true" @reply="reply"
 				@checkoutCommentLike="checkoutCommentLike" @commentLongpress="commentLongpress"
 				@checkoutCommentLikeLevel2="checkoutCommentLikeLevel2"></bbs-post-comment>
 			</view>
@@ -85,7 +85,8 @@
 		
 		<!-- 回复键盘 -->
 		<van-overlay :show="showReply" @click.native="onClickHide" :custom-style="'z-index:0;height:auto;bottom:0;'" />
-		<bbs-comment-keyboard :showReply="showReply" 
+		<bbs-comment-keyboard :showReply="showReply" :showReplyPostBox="showReplyPostBox"
+		:curReplyAvatar="curReplyAvatar" :curReplyContent="curReplyContent"
 		@submit="submit"></bbs-comment-keyboard>
 	
 		<!-- 邀请用户列表弹窗 -->
@@ -158,6 +159,13 @@
 				actionType: 0,		// 长按面板内容类型：0：帖子，1：评论，2：话题
 				from: '',			// from==='mine',表示从我的页面跳转过来，需要加more-icon
 				isWxShare: false,	// 是否在微信分享里打开的，左上角返回替换为首页按钮
+				curReplyId: '',		//当前回复的评论的id
+				curReplyLevel: 1,	//当前回复的评论是1级/2级
+				curReplyIndex: 0,	//如果回复的是2级评论，2级评论所属1级评论的Index
+				curReplySubIndex: 0,	//如果回复的是2级评论，2级评论的Index
+				curReplyAvatar: '',		//当前回复的评论的头像
+				curReplyContent: '',	//当前回复的评论的内容
+				showReplyPostBox: false,	//是否显示引用评论
 			}
 		},
 		computed: {
@@ -288,10 +296,16 @@
 					body: utf16toEntities(val),
 					post_id: this.postData.id
 				}
+				if(this.showReplyPostBox) {
+					//回复评论（当前为2级评论）
+					params.parent_id = this.curReplyId
+				}
 				postComment(params).then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
 						//评论成功，1级回显到第1条，2级回显到回复的评论下面
 						this.showReplyComment(res.data)
+						//评论数+1
+						this.postData.comments_count++
 					}
 				}, err => {
 					console.log('postComment: ', err)
@@ -299,7 +313,24 @@
 			},
 			// 处理发评论回显：回复0级回显到1级的第1条，回复1级回显到2级的第1条，回复2级回显到回复的评论下面
 			showReplyComment(comment) {
-				this.dataList.unshift(comment)
+				switch (this.curReplyLevel){
+					case 0:
+						this.dataList.unshift(comment)
+						break;
+					case 1:
+						comment.is_first_descend = true
+						if(Object.keys(this.dataList[this.curReplyIndex]).indexOf('descendants') < 0) {
+							this.$set(this.dataList[this.curReplyIndex], 'descendants', [])
+						}
+						this.dataList[this.curReplyIndex].descendants.unshift(comment)
+						break;
+					case 2:
+						comment.is_first_descend = false
+						this.dataList[this.curReplyIndex].descendants.splice(this.curReplySubIndex+1, 0, comment)
+						break;
+					default:
+						break;
+				}
 			},
 			//关闭评论键盘
 			onClickHide() {
@@ -457,7 +488,21 @@
 				uni.navigateTo({
 					url: `/page_qa/questionDetail/questionDetail?id=122723b14c0611ef85995254009327f0`
 				})
-			}
+			},
+			//点击某一条评论（2级评论）
+			reply(item, level, index, subIndex) {
+				//当前回复的评论的位置（用于评论成功后即时回显）
+				this.curReplyId = item.id
+				this.curReplyLevel = level
+				this.curReplyIndex = index
+				this.curReplySubIndex = subIndex
+				this.curReplyAvatar = item.author.avatar ? item.author.avatar : DEFAULT_AVATAR
+				this.curReplyContent = item.body
+				//显示引用的评论
+				this.showReplyPostBox = true
+				//打开评论键盘
+				this.showReply = true
+			},
 		}
 	}
 </script>

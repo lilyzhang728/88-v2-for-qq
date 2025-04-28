@@ -106,43 +106,16 @@
 			},
 			//跳转帖子详情
 			toPostDetail() {
-				switch (this.item.post.post_type){
-					// case 2:
-					// 	//2-资讯
-					// 	uni.navigateTo({
-					// 		url: `/page_news/newsDetail/newsDetail?id=${this.item.post.id}`
-					// 	});
-					// 	break;
-					// case 3:
-					// 	//3-跳转帖子详情
-					// 	uni.navigateTo({
-					// 		url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.item.post.id}`
-					// 	})
-					// 	break;
-					// case 4:
-					// 	//4-问题
-					// 	uni.navigateTo({
-					// 		url: `/page_qa/questionDetail/questionDetail?id=${this.item.post.id}`
-					// 	})
-					// 	break;
-					// default:
-					// 	break;
-						
-					case 3:
-						//3-跳转帖子详情
-						uni.navigateTo({
-							url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.item.post.id}`
-						})
-						break;
-					case 2:
-					case 4:
-						//2-攻略|4-问题
-						uni.navigateTo({
-							url: `/page_qa/questionDetail/questionDetail?id=${this.item.post.id}`
-						})
-						break;
-					default:
-						break;
+				if(this.item.post.post_type == 3) {
+					//3-跳转帖子详情
+					uni.navigateTo({
+						url: `/page_bbs/bbsPostDetail/bbsPostDetail?id=${this.item.post.id}`
+					})
+				} else {
+					//2-攻略|4-问题
+					uni.navigateTo({
+						url: `/page_qa/questionDetail/questionDetail?id=${this.item.post.id}`
+					})
 				}
 			},
 			// 点击头像，去个人主页

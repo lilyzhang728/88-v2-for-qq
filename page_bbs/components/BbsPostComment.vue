@@ -12,7 +12,7 @@
 				<view class="comment-content-footer">
 					<view class="comment-content-footer-left">{{transformTimestamp(item)}}</view>
 					<view class="comment-content-footer-right">
-						<view class="comment-content-footer-right-like" @click="getLike(index, !item.is_like)">
+						<view class="comment-content-footer-right-like" @click="getLike($event, index, !item.is_like)">
 							<view class="comment-content-footer-right-like-num" :style="{'color': item.is_like ? activeColor : '#00000099'}">{{ handleTransform(item.likers_count) }}</view>
 							<van-icon v-if="!item.is_like" name="good-job" size="40rpx" color="#D7D7D7"></van-icon>
 							<van-icon v-if="item.is_like" name="good-job" size="40rpx" :color="activeColor"></van-icon>
@@ -27,7 +27,7 @@
 				<view class="comment-content-level2" v-for="(reply, subIndex) in item.descendants" :key="subIndex">
 					<!-- 第2层: 头像、昵称、学校 -->
 					<card-user :item="reply" :isComment="true" parent="detail"></card-user>
-					<view class="comment-content-level2-content">
+					<!-- <view class="comment-content-level2-content"> -->
 						<!-- 第2层: 评论内容 -->
 						<view class="comment-content-body" @click="handleReply(reply, 2, index, subIndex)" @longpress="handleLongpress(reply.id)">
 							<text v-if="!reply.is_first_descend">回复 <text style="color: #999999;">{{reply.parent_author}}</text>：</text>
@@ -37,7 +37,7 @@
 						<view class="comment-content-footer">
 							<view class="comment-content-footer-left">{{transformTimestamp(reply)}}</view>
 							<view class="comment-content-footer-right">
-								<view class="comment-content-footer-right-like" @click="getLikeLevel2(index, subIndex, !reply.is_like)">
+								<view class="comment-content-footer-right-like" @click="getLikeLevel2($event, index, subIndex, !reply.is_like)">
 									<view class="comment-content-footer-right-like-num" :style="{'color': reply.is_like ? activeColor : '#00000099'}">{{ handleTransform(reply.likers_count) }}</view>
 									<van-icon v-if="!reply.is_like" name="good-job" size="40rpx" color="#D7D7D7"></van-icon>
 									<van-icon v-if="reply.is_like" name="good-job" size="40rpx" :color="activeColor"></van-icon>
@@ -47,7 +47,7 @@
 								</view> -->
 							</view>
 						</view>
-					</view>
+					<!-- </view> -->
 				</view>
 				
 				<!-- 更多 -->
@@ -107,23 +107,27 @@
 				});
 			},
 			// 点赞,index为1级评论的index
-			getLike(index, status) {
+			getLike(e, index, status) {
+				//防止冒泡
+				e.preventDefault()
 				if(status) {
 					//unlike ——> like
+					//改变icon状态
+					this.$emit('checkoutCommentLike', index, status)
 					likeComment(this.commentData[index].id).then(res => {
 						if(res.code === 0) {
-							//点赞成功，改变icon状态
-							this.$emit('checkoutCommentLike', index, status)
+							//点赞成功
 						}
 					}, err => {
 						console.log('likeGuide: ', err)
 					})
 				} else {
 					//like ——> unlike
+					//改变icon状态
+					this.$emit('checkoutCommentLike', index, status)
 					disLikeComment(this.commentData[index].id).then(res => {
 						if(res.code === 0) {
-							//取消点赞成功，改变icon状态
-							this.$emit('checkoutCommentLike', index, status)
+							//取消点赞成功
 						}
 					}, err => {
 						console.log('disLikeGuide: ', err)
@@ -131,7 +135,9 @@
 				}
 			},
 			// 点赞,index为1级评论的index, subIndex为2级评论的index
-			getLikeLevel2(index, subIndex, status) {
+			getLikeLevel2(e, index, subIndex, status) {
+				//防止冒泡
+				e.preventDefault()
 				if(status) {
 					this.$emit('checkoutCommentLikeLevel2', index, subIndex, status)
 					//unlike ——> like

@@ -3,6 +3,12 @@
 <!-- 评论/回复别人评论-键盘弹起 -->
 <template>
 	<view class="bbs-comment-keyboard" v-if="showReply" :style="{bottom: bottomVal}">
+		<!-- 引用别人的评论 -->
+		<view class="reply-post" v-if="showReplyPostBox">
+			<img :src="curReplyAvatar" alt="" class="reply-post-avatar">
+			<text class="reply-post-content">{{curReplyContentText}}</text>
+			<!-- <van-icon name="clear" size="20px" color="#d9d9d9" /> -->
+		</view>
 		
 		<!-- 评论输入框 -->
 		<textarea :adjust-position="false" v-model="val" :auto-height="true" maxlength="-1" 
@@ -18,12 +24,25 @@
 </template>
 
 <script>
+	import { utf16toEntities, uncodeUtf16 } from '@/tools/transform_emoji.js'
 	export default {
 		props: {
 			showReply: {
 				type: Boolean,
 				default: false
 			},
+			showReplyPostBox: {
+				type: Boolean,
+				default: false
+			},
+			curReplyContent: {
+				type: String,
+				default: ''
+			},
+			curReplyAvatar: {
+				type: String,
+				default: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+			}
 		},
 		data() {
 			return {
@@ -36,6 +55,12 @@
 				//引用回复的评论高度+margin-bottom=35px
 				let height = 150
 				return (height - 35) + 'px' 
+			},
+			// 引用的内容（支持显示emoji
+			curReplyContentText() {
+				if(this.curReplyContent) {
+					return uncodeUtf16(this.curReplyContent)
+				}
 			}
 		},
 		methods: {
