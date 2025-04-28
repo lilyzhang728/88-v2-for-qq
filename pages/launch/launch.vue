@@ -145,7 +145,7 @@
 		onLoad() {
 			this.screenHeight = uni.getSystemInfoSync().windowHeight//获取当前页面的高度
 			this.login()
-			this.getCharacterList()
+			// this.getCharacterList()
 		},
 		methods: {
 			login() {
