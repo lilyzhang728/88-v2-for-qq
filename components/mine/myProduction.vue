@@ -113,11 +113,15 @@
 			queryList(pageNo, pageSize) {
 				if(this.active > 1) {
 					this.getMyCollectionList(pageNo, pageSize).then(res => {
-						this.$refs.paging.complete(res);
+						// this.$refs.paging.complete(res);
+						let noMore = !res.length
+						this.$refs.paging.completeByNoMore(res, noMore);
 					})
 				} else {
 					this.getMyProductionList(pageNo, pageSize).then(res => {
-						this.$refs.paging.complete(res);
+						// this.$refs.paging.complete(res);
+						let noMore = !res.length
+						this.$refs.paging.completeByNoMore(res, noMore);
 					})
 				}
 				

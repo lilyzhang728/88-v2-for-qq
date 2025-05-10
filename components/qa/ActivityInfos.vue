@@ -32,20 +32,22 @@
 		},
 		methods: {
 			queryList(pageNo, pageSize) {
-				console.log('开始请求： ', pageNo, pageSize)
 				this.pageNo = pageNo
 				this.pageSize = Number(pageSize)
 				this.getRecNewsList(pageNo, pageSize).then(res => {
-					this.$refs.paging.complete(res);
+					// this.$refs.paging.complete(res);
+					let noMore = !res.length
+					this.$refs.paging.completeByNoMore(res, noMore);
 				})
 			},
 			//请求列表
 			getRecNewsList(pageNo, pageSize) {
 				return new Promise((resolve, reject) => {
 					recArticle({
-						'post_type': 5,
+						'post_type': 7,
 						'per_page': pageSize,
 						'page': pageNo,
+						'fields': ['1', '2', '3', '4', '5', '6', '7']
 					}).then(res => {
 						if(res.code === 0 && Object.keys(res.data).length) {
 							resolve(res.data.items)

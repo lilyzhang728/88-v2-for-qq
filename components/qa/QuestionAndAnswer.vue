@@ -36,7 +36,13 @@
 				type: Boolean,
 				default: false,
 				required: false
-			}
+			},
+			// 子类目：考研/找工作……
+			subActive: {
+				type: Number,
+				required: true,
+				default: 0
+			},
 		},
 		data() {
 			return {
@@ -64,17 +70,22 @@
 					if(this.hasPublished) {
 						this.$emit('resetHasPublished')
 					}
-					this.$refs.paging.complete(res);
+					// this.$refs.paging.complete(res);
+					let noMore = !res.length
+					this.$refs.paging.completeByNoMore(res, noMore);
 				})
 			},
 			// 获取列表数据（新版）
 			getCommonCardNew(pageNo, pageSize) {
+				// 推荐：['1', '2', '3', '4', '5', '6', '7'], 考研：['1'], 实习工作：['2'],  考公/编：['6']
+				const FIELD_MAP = [['1', '2', '3', '4', '5', '6', '7'], ['1'], ['2'], ['6']]
+				let field = FIELD_MAP[Number(this.subActive)]
 				return new Promise((resolve, reject) => {
 					commonCardNew({
 						'post_types':  ["2", "4", "5", "6", "7"],
 						'per_page': pageSize,
 						'page': pageNo,
-						'fields': ["1", "2", "3", "4", "5", "6", "7"],
+						'fields': field,
 						'has_published': this.hasPublished
 					}).then(res => {
 						if(res.code === 0 && Object.keys(res.data).length) {

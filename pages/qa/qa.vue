@@ -13,16 +13,23 @@
 				
 				<!-- 搜索 -->
 				<view class="bbs-search">
-					<top-search-box @toSearch="toSearch"></top-search-box>
+					<top-search-box tabIndex="3" @toSearch="toSearch"></top-search-box>
 				</view>
 				<!-- <van-search :value="searchVal" placeholder="请输入搜索关键词" background="transparent" @click.native="toSearch" 
 				custom-class="bbs-search" class="bbs-search-wrap" placeholder-style="color: rgba(255,255,255,0.6);" /> -->
+			
+				<!-- 子tab -->
+				<van-tabs :active="subActive" animated @change.native="subTabsChange" ref="subTabs"
+				line-height="0" line-width="0" class="useful-subTabs" :swipeable="false" v-if="active<1">
+					<van-tab :title="item" v-for="(item, index) in subTabList" :key="index"></van-tab>
+				</van-tabs>
 			</template>
+			
 			<swiper class="swiper" :current="active" @animationfinish="swiperAnimationfinish">
 				<swiper-item class="swiper-item">
 					<!-- 问答 -->
 					<question-and-answer ref="questionAndAnswer" :active="active" @toastMsg="toastMsg"
-					:hasPublished="hasPublished" @resetHasPublished="resetHasPublished"></question-and-answer>	
+					:hasPublished="hasPublished" @resetHasPublished="resetHasPublished" :subActive="subActive"></question-and-answer>	
 				</swiper-item>
 				<swiper-item class="swiper-item">
 					<!-- 卧谈会 -->
@@ -62,10 +69,11 @@
 		},
 		data() {
 			return {
-				backgroundImgUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/bbs/bbsBg.png?sign=c0f613e91ba42b583649b23d7922d3b2&t=1689556699',
+				backgroundImgUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/news/newsBg.png?sign=8d29dfa78445d34a014f34744b633a8b&t=1688955606',
 				active: 0,
 				slotName: ['questionAndAnswer', 'connections'],
 				hasPublished: false,	// true 为刚发完贴，（请求列表传参用，下次请求列表刚发的贴展示在第一位
+				subActive: 0,
 			}
 		},
 		computed: {
@@ -74,15 +82,31 @@
 				return uni.getStorageSync('statusBar')
 			},
 			backgroundImgHeight() {
-				//44:tab， 58:搜索框，25/2:搜索框margin-bottom, 44:子tab
-				let height = Number(this.statusBar) + 44 + (58-25/2)
-				// return this.active === 2 ? (height+44) + 'px' : height + 'px'
+				//44:父tab， 55:搜索框， 44:子tab
+				let height = Number(this.statusBar) + 44 + 55 + 44
 				return height + 'px'
+			},
+			subTabList() {
+				return this.active ? ['推荐'] : ['推荐', '考研', '实习工作', '考公/编']
 			}
 		},
 		methods: {
 			tabsChange(e) {
 				this.active = e.detail.index
+				this.subActive = 0
+			},
+			subTabsChange(e) {
+				this.subActive = e.detail.index;
+				// 更新list
+				this.reloadList()
+			},
+			// 更新list
+			reloadList() {
+				if(this.active) {
+					this.$refs.activityInfos.$refs.paging.reload()
+				} else {
+					this.$refs.questionAndAnswer.$refs.paging.reload()
+				}
 			},
 			toastMsg(type) {
 				if(type) {
@@ -136,14 +160,17 @@
 					width: 70%;
 					// margin-left: 25rpx;
 					.van-tabs__line {
-						background: #fff;
-						bottom: 5px;
+						// background: #fff;
+						// bottom: 5px;
+						display: none;
 					}
-		
+				
 					.van-tab {
 						font-size: 36rpx;
 						color: #fff;
 						padding: 0;
+						padding-left: calc(25rpx + 15px);
+						text-align: left;
 					}
 					.van-tab--active {
 						color: #fff;
@@ -153,8 +180,35 @@
 		}
 		.bbs-search {
 			margin: 10px 25rpx;
-			/deep/ .top-search-box {
-				box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.35) !important;
+			// /deep/ .top-search-box {
+			// 	box-shadow: 0rpx 0rpx 23rpx 0rpx rgba(81,211,184,0.35) !important;
+			// }
+		}
+		.useful-subTabs {
+			/deep/ .van-tabs__scroll{
+				background: transparent;
+				.van-tabs__nav {
+					background: transparent;
+					padding-left: 25rpx;
+					.van-tab {
+						color:#fff;
+						font-size:24rpx; 
+						border-radius:28rpx; 
+						margin-top:15rpx; 
+						flex-basis: auto !important;
+						padding: 10rpx 15rpx;
+						margin-right: 15rpx;
+						.van-ellipsis {
+							line-height: 24rpx;
+						}
+						
+					}
+					.van-tab--active {
+						color: #fff;
+						background: rgba(255,255,255,0.3);
+						border-radius: 28rpx;
+					}
+				}
 			}
 		}
 		.swiper {

@@ -17,7 +17,9 @@
 		
 		<!-- 时间|卡片类型 -->
 		<view class="common-item-card-time-box">
-			<view class="common-item-card-time">{{cardItem.timestamp}}</view>
+			<view class="common-item-card-time">{{timestamp}}</view>
+			<view class="common-item-card-time-split" v-if="cardItem.source">|</view>
+			<view class="common-item-card-time" v-if="cardItem.source">{{cardItem.source}}</view>
 			<view class="common-item-card-time-split" v-if="cardItem.post_type">|</view>
 			<view class="common-item-card-time-type" v-if="cardItem.post_type">{{postTypeMap[cardItem.post_type]}}</view>
 		</view>
@@ -70,6 +72,7 @@
 
 <script>
 	import CommonItemCardFooter from '@/components/common/CommonItemCardFooter.vue'
+	import { transformTime } from '@/tools/transform_time.js'
 	export default {
 		components: {
 			CommonItemCardFooter
@@ -143,7 +146,10 @@
 			showFooterStar() {
 				// 问答卡片、资讯卡片显示收藏
 				return this.showStar && (this.cardItem.post_type != 3)
-			}
+			},
+			timestamp() {
+				return this.cardItem.timestamp ? transformTime(this.cardItem.timestamp) : this.cardItem.timestamp
+			},
 		},
 		methods: {
 			getPercentage(val) {
@@ -231,6 +237,8 @@
 			font-size: 24rpx;
 			line-height: 32rpx;
 			display: flex;
+			white-space: nowrap;
+			overflow: hidden;
 			.common-item-card-time{
 				color: #292d3a;
 			}

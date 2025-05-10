@@ -32,12 +32,16 @@
 					'page':pageNo
 				}).then(res => {
 					if(res.code === 0 && Object.keys(res.data).length) {
-						this.$refs.paging.complete(res.data.items);
+						// this.$refs.paging.complete(res.data.items);
+						let noMore = !res.data.items.length
+						this.$refs.paging.completeByNoMore(res.data.items, noMore);
 					} else {
-						this.$refs.paging.complete([])
+						// this.$refs.paging.complete([])
+						this.$refs.paging.completeByNoMore([], true);
 					}
 				}, err => {
-					this.$refs.paging.complete([])
+					// this.$refs.paging.complete([])
+					this.$refs.paging.completeByNoMore([], true);
 					console.log('commentList: ', err)
 				})
 			},

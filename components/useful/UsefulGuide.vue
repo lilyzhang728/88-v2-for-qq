@@ -64,7 +64,9 @@
 				// 	this.$refs.paging.complete(res);
 				// })
 				this.getCommonCardNew(pageNo, pageSize).then(res => {
-					this.$refs.paging.complete(res);
+					// this.$refs.paging.complete(res);
+					let noMore = !res.length
+					this.$refs.paging.completeByNoMore(res, noMore);
 				})
 			},
 			//请求攻略列表-发现

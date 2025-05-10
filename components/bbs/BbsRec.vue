@@ -58,7 +58,9 @@
 					if(this.hasPublished) {
 						this.$emit('resetHasPublished')
 					}
-					this.$refs.paging.complete(res);
+					// this.$refs.paging.complete(res);
+					let noMore = !res.length
+					this.$refs.paging.completeByNoMore(res, noMore);
 				})
 			},
 			//获取发现（帖子）列表
