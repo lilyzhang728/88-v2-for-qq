@@ -17,7 +17,7 @@
 			<my-report-card :cardData="conclusionData.core_analysis" cardIndex=2></my-report-card>
 			<my-report-card :cardData="conclusionData.optimization_plan" cardIndex=3></my-report-card>
 			
-		
+			<view class="my-report-tips">本报告仅供参考，具有有限的参考意义，非完全专业，请您谨慎参考</view>
 			
 
 			<!-- 以下为弹窗 -->
@@ -197,7 +197,12 @@
 				z-index: 1000;
 			}
 		}
-		
+		.my-report-tips {
+			color: #999;
+			font-size: 26rpx;
+			padding: 10rpx;
+			padding-top: 0;
+		}
 		
 		
 	}
