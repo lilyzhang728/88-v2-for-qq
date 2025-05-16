@@ -9,11 +9,11 @@
 			{{cardItem.body.body}}
 		</view>
 		
-		<view class="common-item-card-point" v-if="cardItem.body.key_info.rec_reason">
+		<!-- <view class="common-item-card-point" v-if="cardItem.body.key_info.rec_reason">
 			<van-icon name="star" size="32rpx" color="#f7ce46" />
 			<text class="common-item-card-point-label">划重点：</text>
 			<text class="common-item-card-point-content">{{cardItem.body.key_info.rec_reason}}</text>
-		</view>
+		</view> -->
 		
 		<!-- 时间|卡片类型 -->
 		<view class="common-item-card-time-box">
@@ -25,15 +25,14 @@
 		</view>
 		
 		<!-- 3个进度条 -->
-		<view class="common-item-card-progress-bar-box" v-if="cardItem.body.key_info && cardItem.body.key_info.value_assessment && cardItem.body.key_info.value_assessment.length>0">
+		<!-- <view class="common-item-card-progress-bar-box" v-if="cardItem.body.key_info && cardItem.body.key_info.value_assessment && cardItem.body.key_info.value_assessment.length>0">
 			<view class="common-item-card-progress-bar-item" v-for="(item,index) in cardItem.body.key_info.value_assessment" :key="index">
 				<view class="common-item-card-progress-bar-item-text">{{item.field}}</view>
 				<view class="common-item-card-progress-bar-item-progress-bar-box">
 					<van-progress :percentage="getPercentage(item.value)" :color="progressColor[index]" :show-pivot="false" class="common-item-card-progress-bar-item-progress-bar" />
 				</view>
-				<!-- <view class="common-item-card-progress-bar-item-score">{{item.value}}分 / 5.0分</view> -->
 			</view>
-		</view>
+		</view> -->
 		
 		<!-- tag -->
 		<view class="common-item-card-tag-box" v-if="cardItem.body.key_info && cardItem.body.key_info.core_analysis && cardItem.body.key_info.core_analysis.length>0">
