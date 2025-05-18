@@ -29,7 +29,10 @@
 				<swiper-item class="swiper-item">
 					<!-- 问答 -->
 					<question-and-answer ref="questionAndAnswer" :active="active" @toastMsg="toastMsg"
-					:hasPublished="hasPublished" @resetHasPublished="resetHasPublished" :subActive="subActive"></question-and-answer>	
+					:hasPublished="hasPublished" @resetHasPublished="resetHasPublished" :subActive="subActive" @loaded="handleLoaded"></question-and-answer>	
+					<view class="loading-wrapper" v-if="showLoading">
+					  <van-loading type="spinner" color="#35C8A7" />
+					</view>
 				</swiper-item>
 				<swiper-item class="swiper-item">
 					<!-- 卧谈会 -->
@@ -74,6 +77,7 @@
 				slotName: ['questionAndAnswer', 'connections'],
 				hasPublished: false,	// true 为刚发完贴，（请求列表传参用，下次请求列表刚发的贴展示在第一位
 				subActive: 0,
+				showLoading: true
 			}
 		},
 		computed: {
@@ -99,6 +103,7 @@
 				this.subActive = e.detail.index;
 				// 更新list
 				this.reloadList()
+				this.showLoading = true
 			},
 			// 更新list
 			reloadList() {
@@ -140,6 +145,9 @@
 			},
 			resetHasPublished() {
 				this.hasPublished = false
+			},
+			handleLoaded() {
+				this.showLoading = false
 			}
 		}
 	}
@@ -212,6 +220,12 @@
 			}
 		}
 		.swiper {
+			height: 100%;
+		}
+		.loading-wrapper {
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			height: 100%;
 		}
 	}

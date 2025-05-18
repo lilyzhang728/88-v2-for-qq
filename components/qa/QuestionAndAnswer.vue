@@ -73,6 +73,7 @@
 					// this.$refs.paging.complete(res);
 					let noMore = !res.length
 					this.$refs.paging.completeByNoMore(res, noMore);
+					this.$emit('loaded')
 				})
 			},
 			// 获取列表数据（新版）

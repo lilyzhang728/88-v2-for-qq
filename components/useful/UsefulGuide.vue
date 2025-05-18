@@ -67,6 +67,7 @@
 					// this.$refs.paging.complete(res);
 					let noMore = !res.length
 					this.$refs.paging.completeByNoMore(res, noMore);
+					this.$emit('loaded')
 				})
 			},
 			//请求攻略列表-发现

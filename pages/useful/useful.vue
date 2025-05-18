@@ -25,7 +25,10 @@
 			<!-- useful列表 -->
 			<swiper class="swiper" :current="active" @animationfinish="swiperAnimationfinish">
 				<swiper-item class="swiper-item">
-					<useful-guide ref="guide" :subActive="subActive" :currentIndex="active"></useful-guide>
+					<useful-guide ref="guide" :subActive="subActive" :currentIndex="active" @loaded="showLoading=false"></useful-guide>
+					<view class="loading-wrapper" v-if="showLoading">
+					  <van-loading type="spinner" color="#35C8A7" />
+					</view>
 				</swiper-item>
 				<!-- <swiper-item class="swiper-item">
 					<useful-news ref="news" :subActive="subActive" :currentIndex="active"></useful-news>
@@ -57,6 +60,7 @@
 				slotName: ['guide', 'news'],
 				active: 0,
 				subActive: 0,
+				showLoading: true
 			}
 		},
 		computed: {
@@ -90,6 +94,7 @@
 				this.subActive = e.detail.index;
 				// 更新list
 				this.reloadList()
+				this.showLoading = true
 			},
 			// 更新list
 			reloadList() {
@@ -192,6 +197,11 @@
 	.swiper {
 		height: 100%;
 	}
-	
+	.loading-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+	}
 }
 </style>
