@@ -13,6 +13,8 @@
 				</view>
 			</view>
 			<view class="infos-content">
+				<view class="infos-content-text" v-if="showTip">您有新的通知</view>
+				<view class="infos-content-text" v-else>您暂时没有新的通知</view>
 			</view>
 		</z-paging>
 	</view>
@@ -91,6 +93,14 @@
 					return this[this.notification_type[index]]
 				}
 			},
+			showTip() {
+				for(let i=0; i<4; i++) {
+					if(this.getVal(i)>0) {
+						return true
+					}
+				}
+				return false
+			},
 			clickBtn(index) {
 				switch (index){
 					//收到的赞
@@ -167,7 +177,10 @@
 			
 		}
 		.infos-content {
-			margin-top: 55rpx;
+			margin-top: 105rpx;
+			.infos-content-text {
+				text-align: center;
+			}
 		}
 	}
 

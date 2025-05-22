@@ -15,7 +15,7 @@ export default {
     // 发送给朋友
     onShareAppMessage(res) {
          return {
-          title: '来勾重点，帮你快速攻略大学生活～',
+          title: '上岸秘籍×名企直通车，学长学姐带你打破信息差',
           path: '/pages/launch/launch',
         }
     },

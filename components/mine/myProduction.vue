@@ -226,7 +226,7 @@
 				if(item.in_house) {
 					// 1-内部链接
 					uni.navigateTo({
-						url: `/page_qa/questionDetail/questionDetail?id=${item.id}`
+						url: `/page_qa/questionDetail/questionDetail?id=${item.id}&from=mine`
 					})
 				} else {
 					// 0-外部链接
