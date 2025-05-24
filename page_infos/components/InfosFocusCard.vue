@@ -16,7 +16,7 @@
 		</view>
 		
 		<!-- <view class="infos-focus-card-box">
-			<img class="infos-focus-card-avatar" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg" alt="">
+			<img class="infos-focus-card-avatar" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg" alt="">
 			<view class="infos-focus-card-content">
 				<view class="infos-focus-card-content-name" >用户名</view>
 				<view class="infos-focus-card-content-infos">开始关注你了 2023-08-10</view>
@@ -30,7 +30,7 @@
 
 <script>
 	import { transformTime } from '@/tools/transform_time.js'
-	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+	const DEFAULT_AVATAR = 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg'
 	export default {
 		props: {
 			item: {

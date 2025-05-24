@@ -24,9 +24,9 @@
 			<view class="guide-item-card-right-description" :class="{'guide-item-card-right-description-whole': showWholeTitle}" v-if="!ifOfficialAccountLink && guideItem.body.summary">{{guideItem.body.summary}}</view>
 			<!-- <view class="guide-item-card-right-books">
 				<view class="guide-item-card-right-books-left">
-					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/matetialIcon.png" alt="" class="guide-item-card-right-book-item-icon" v-if="!ifOfficialAccountLink && guideItem.body.references">
+					<img src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/matetialIcon.png" alt="" class="guide-item-card-right-book-item-icon" v-if="!ifOfficialAccountLink && guideItem.body.references">
 					<text class="guide-item-card-right-book-item" v-if="!ifOfficialAccountLink && guideItem.body.references">教辅*{{guideItem.body.references.length}}</text>
-					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/stepIcon.png" alt="" class="guide-item-card-right-book-item-icon" v-if="!ifOfficialAccountLink && guideItem.body.steps">
+					<img src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/stepIcon.png" alt="" class="guide-item-card-right-book-item-icon" v-if="!ifOfficialAccountLink && guideItem.body.steps">
 					<text class="guide-item-card-right-book-item" v-if="!ifOfficialAccountLink && guideItem.body.steps">章节*{{guideItem.body.steps.length}}</text>
 				</view>
 				<view class="guide-item-card-right-books-right">
@@ -41,13 +41,13 @@
 					<text class="guide-item-card-user-name">{{ifOfficialAccountLink ? guideItem.source : guideItem.author.name}}</text>
 				</view>
 				<view class="guide-item-card-right-icons">
-					<img v-show="showEditBtn || guideItem.is_like" @click.native.stop="clickLike($event, false)"  src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/likeIcon.png" class="guide-item-card-right-icon-img" alt="">
+					<img v-show="showEditBtn || guideItem.is_like" @click.native.stop="clickLike($event, false)"  src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/likeIcon.png" class="guide-item-card-right-icon-img" alt="">
 					<!-- <van-icon v-else name="like-o" color="#7F7F7F" @click.native.stop="clickLike($event, true)" /> -->
-					<img v-show="!showEditBtn && !guideItem.is_like" @click.native.stop="clickLike($event, true)"  src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/unLike.png" class="guide-item-card-right-icon-img" alt="">
+					<img v-show="!showEditBtn && !guideItem.is_like" @click.native.stop="clickLike($event, true)"  src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/unLike.png" class="guide-item-card-right-icon-img" alt="">
 					<view class="guide-item-card-right-icon-num">{{handleTransform(guideItem.likers_count)}}</view>
-					<img v-show="showEditBtn || guideItem.is_collect" @click.native.stop="clickStar($event, false)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/starIcon.png" class="guide-item-card-right-icon-img" alt="">
+					<img v-show="showEditBtn || guideItem.is_collect" @click.native.stop="clickStar($event, false)" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/starIcon.png" class="guide-item-card-right-icon-img" alt="">
 					<!-- <van-icon v-else name="star-o" color="#7F7F7F" @click.native.stop="clickStar($event, true)" /> -->
-					<img v-show="!showEditBtn && !guideItem.is_collect"  @click.native.stop="clickStar($event, true)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/unStar.png" class="guide-item-card-right-icon-img" alt="">
+					<img v-show="!showEditBtn && !guideItem.is_collect"  @click.native.stop="clickStar($event, true)" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/unStar.png" class="guide-item-card-right-icon-img" alt="">
 					<view class="guide-item-card-right-icon-num guide-item-card-right-icon-num-last">{{handleTransform(guideItem.collectors_count)}}</view>
 				</view>
 			</view>
@@ -73,7 +73,7 @@
 				required: true,
 				default: {
 					author: {
-						avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',		//默认头像
+						avatar: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg',		//默认头像
 						name: '',
 						id: ''
 					},
@@ -221,7 +221,7 @@
 							// 基础库低于3.4.8，无法打开外链公众号
 							wx.showModal({
 								title: '提示',
-								content: '当前微信版本过低，请升级到最新微信版本后重试。',
+								content: '该内容为微信公众号文章，可从“勾重点”微信小程序打开。。',
 								complete(res) {
 									// 退出小程序
 									// if(wx.exitMiniProgram) {

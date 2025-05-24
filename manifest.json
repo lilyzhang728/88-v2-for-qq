@@ -1,11 +1,11 @@
-	{
+{
     "name" : "student-88-1013",
     "appid" : "__UNI__D012DA0",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
-	"lazyCodeLoading": "requiredComponents",
+    "lazyCodeLoading" : "requiredComponents",
     /* 5+App特有相关 */
     "app-plus" : {
         "usingComponents" : true,
@@ -55,15 +55,15 @@
         "setting" : {
             "urlCheck" : false,
             "postcss" : false,
-			"ignoreDevUnusedFiles": false,			// 关闭过滤无依赖文件
-			"ignoreUploadUnusedFiles": false,		// 关闭过滤无依赖文件
-			"checkSiteMap": false
+            "ignoreDevUnusedFiles" : false, // 关闭过滤无依赖文件
+            "ignoreUploadUnusedFiles" : false, // 关闭过滤无依赖文件
+            "checkSiteMap" : false
         },
         "usingComponents" : true,
-		"optimization": {
-			"subPackages": true			// 开启分包优化
-		},
-		"libVersion": "latest"
+        "optimization" : {
+            "subPackages" : true // 开启分包优化
+        },
+        "libVersion" : "latest"
     },
     "mp-alipay" : {
         "usingComponents" : true
@@ -77,5 +77,12 @@
     "uniStatistics" : {
         "enable" : false
     },
-    "vueVersion" : "2"
+    "vueVersion" : "2",
+    "mp-qq" : {
+        "appid" : "1112321837",
+        "usingComponents" : true,
+        "optimization" : {
+            "subPackages" : true // 开启分包优化
+        }
+    }
 }

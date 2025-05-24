@@ -6,8 +6,8 @@
 			<view class="userInfo" style="background-image: url('https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/userInfoBg.png?sign=ffd748d25d6721cb672e63b6ff4b2625&t=1687599098');background-size: 100% 100%;background-repeat: no-repeat;" >
 				<skill-radar :cardData="conclusionData.radar_chart" :userId="userId" class="skill-radar" ref="skillRadar"></skill-radar>
 				<portrait-info :userId="userId" :refreshFlag="refreshFlag" class="portrait-info" ref="portraitInfo" @getTimeRange="getTimeRange" @updateWidthHeight="updateWidthHeight"></portrait-info>
-				<img class="chain-icon chain-icon-left" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
-				<img class="chain-icon chain-icon-right" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/chainIcon.png" alt="">
+				<img class="chain-icon chain-icon-left" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/chainIcon.png" alt="">
+				<img class="chain-icon chain-icon-right" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/chainIcon.png" alt="">
 				<text v-if="showDemo" class="evaluation-tips">样例展示</text>
 				<van-button class="evaluation-btn-wrap" custom-class="evaluation-btn" round size="small" color="#c3f2e1" @click.native="toEvaluationForm">立即评估</van-button>
 			</view>

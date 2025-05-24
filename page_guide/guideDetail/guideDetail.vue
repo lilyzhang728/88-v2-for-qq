@@ -44,7 +44,7 @@
 					<!-- 小贴士 -->
 					<view class="guide-detail-tip" v-if="guideData.body.tips">
 						<view class="guide-detail-tip-title">
-							<img class="guide-detail-tip-title-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/tipIcon.png" alt="">
+							<img class="guide-detail-tip-title-icon" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/tipIcon.png" alt="">
 							小贴士</view>
 						<view class="guide-detail-tip-content">{{guideData.body.tips}}</view>
 					</view>
@@ -94,7 +94,7 @@
 				id: '',
 				guideData: {
 					author: {
-						avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',		//默认头像
+						avatar: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg',		//默认头像
 						name: ''
 					},
 					body: {

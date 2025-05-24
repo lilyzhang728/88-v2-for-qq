@@ -1,39 +1,23 @@
 <!-- 写答案 -->
 <template>
 	<view class="write-answer">
-		<z-paging ref="paging" :paging-style="pagingStyle">
+		<z-paging ref="paging" :paging-style="{'top': '0px', 'left': '25rpx', 'right': '25rpx'}">
+			<template #top>
+				<!-- 顶部发布按钮 -->
+				<view class="view-btn-box">
+					<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="!answerVal" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
+				</view>
+			</template>
+			
 			<view class="write-answer-title">{{title}}</view>
 			
 			<view class="add-new-post-edit-title-split"></view>
 			
 			<view class="write-answer-content">
-				<van-field
-					class="add-new-post-edit-textarea-wrap field-input-custom"
-					input-class="add-new-post-edit-textarea"
-					:value="answerVal"
-					type="textarea"
-					:show-confirm-bar="false"
-					placeholder="请输入回答内容"
-					autosize
-					:border="false"
-					@change.native="inputAnswer($event)"
-					@focus.native="inputBindFocus"
-					@blur.native="inputBindBlur"
-					clearable
-					:adjust-position="false"
-				  />
+				<editor id="myEditor" class="editor" placeholder="请输入回答内容" @input="inputAnswer"></editor>
 			</view>
 			
-			<!-- 解决ios键盘遮挡输入内容的问题 -->
-			<view class="iosBottomBox" v-if="platform === 'ios'"></view>
 			
-			<!-- 弹起键盘 -->
-			<view class="add-new-post-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
-				<!-- 发布按钮 -->
-				<view class="view-btn-box">
-					<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="!answerVal" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
-				</view>
-			</view>
 			
 			<!-- toast提示 -->
 			<van-toast id="van-toast" />
@@ -51,32 +35,11 @@
 				title: '',
 				id: '',
 				answerVal: '',
-				bottomVal: '0px',	//键盘上话题bottom
 				showKeyboard: true,
 				keyboardHeight: '54px',	//键盘上话题height	1行54px，2行85px
-				keyboardHeightVal: 0,
-				platform: uni.getStorageSync('platform')
 			}
 		},
-		computed: {
-			pagingStyle() {
-				if(this.platform === 'android') {
-					let pagingBottom = (this.keyboardHeightVal + 54) + 'px'
-					return {'top': '0px', 'left': '25rpx', 'right': '25rpx', 'bottom': pagingBottom}
-				} else {
-					return {'top': '0px', 'left': '25rpx', 'right': '25rpx'}
-				}
-			}
-		},
-		watch: {
-			platform(val) {
-				if(val === 'android') {
-					uni.onKeyboardHeightChange(res => {
-						this.keyboardHeightVal = res.height; //软键盘高度 
-					})
-				}
-			}
-		},
+		
 		onLoad(option) {
 			if(option.title && option.id) {
 				this.title = option.title
@@ -89,24 +52,14 @@
 				    }
 				})
 			}
-			if(this.platform === 'android') {
-				uni.onKeyboardHeightChange(res => {
-					this.keyboardHeightVal = res.height; //软键盘高度 
-				})
-			}
+			
 		},
 		methods: {
 			//编辑输入帖子
 			inputAnswer(e) {
-				this.answerVal = e.detail
+				this.answerVal = e.detail.text
 			},
-			inputBindFocus(e) {
-				// 获取手机键盘的高度，赋值给input 所在盒子的 bottom 值
-				this.bottomVal = e.detail.height +  'px'
-			},
-			inputBindBlur() {
-				this.bottomVal = 0
-			},
+			
 			send() {
 				if(this.answerVal) {
 					this.showKeyboard = false
@@ -135,9 +88,19 @@
 <style lang="less" scoped>
 	.write-answer {
 		padding: 25rpx;
+		.view-btn-box{
+			margin-top: 30rpx;
+			text-align: right;
+			.view-btn-wrap {
+				/deep/ .view-btn {
+					font-size: 16px;
+					border-radius: 14rpx;
+				}
+			}
+		}
 		.write-answer-title {
 			margin: 0 15px;
-			margin-top: 15px;
+			margin-top: 30rpx;
 			font-size: 38rpx;
 			font-weight: 600;
 			color: #000000;
@@ -148,41 +111,13 @@
 			border-bottom: 1px solid #EAEAEA;
 			margin: 25rpx;
 		}
-		.write-answer-content {
-			.add-new-post-edit-textarea-wrap {
-				/deep/ .add-new-post-edit-textarea{
-					min-height: 100px;
-				}
-			}
-		}
-		.iosBottomBox {
-			height: 480px;
-		}
-		.add-new-post-keyboard {
-			position: fixed;
-			left: 0;
-			right: 0;
-			box-sizing: border-box;
-			padding: 12px;
-			background-color: #fff;
-			.view-btn-box{
-				margin-top: 10px;
-				text-align: right;
-				.view-btn-wrap {
-					/deep/ .view-btn {
-						// color: #ccc;
-						// border: none;
-						font-size: 16px;
-						border-radius: 14rpx;
-					}
-				}
-				.view-btn-wrap-active {
-					/deep/ .view-btn {
-						// color: #35C8A7;
-					}
-				}
-			}
-		}
+		
+		.editor {
+			width: 100%;
+			height: 300px;
+			margin-bottom: 30rpx;
+			padding: 10px 16px;
+		  }
 	}
 
 </style>

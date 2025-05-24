@@ -20,9 +20,9 @@
 			<view class="guide-item-card-right-description" v-if="guideItem.body.summary">{{guideItem.body.summary}}</view>
 			<view class="guide-item-card-right-books">
 				<view class="guide-item-card-right-books-left">
-					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/matetialIcon.png" v-if="guideItem.body.references && guideItem.body.references.length" alt="" class="guide-item-card-right-book-item-icon">
+					<img src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/matetialIcon.png" v-if="guideItem.body.references && guideItem.body.references.length" alt="" class="guide-item-card-right-book-item-icon">
 					<text class="guide-item-card-right-book-item" v-if="guideItem.body.references && guideItem.body.references.length">教辅*{{guideItem.body.references.length}}</text>
-					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/stepIcon.png" v-if="guideItem.body.steps && guideItem.body.steps.length" alt="" class="guide-item-card-right-book-item-icon">
+					<img src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/stepIcon.png" v-if="guideItem.body.steps && guideItem.body.steps.length" alt="" class="guide-item-card-right-book-item-icon">
 					<text class="guide-item-card-right-book-item" v-if="guideItem.body.steps && guideItem.body.steps.length">步骤*{{guideItem.body.steps.length}}</text>
 				</view>
 				<view class="guide-item-card-right-books-right">
@@ -38,13 +38,13 @@
 					<text class="guide-item-card-user-name">{{guideItem.author.name}}</text>
 				</view>
 				<view class="guide-item-card-right-icons">
-					<img v-if="showEditBtn || guideItem.is_like" @click.native.stop="clickLike($event, false)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/likeIcon.png" class="guide-item-card-right-icon-img" alt="">
+					<img v-if="showEditBtn || guideItem.is_like" @click.native.stop="clickLike($event, false)" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/likeIcon.png" class="guide-item-card-right-icon-img" alt="">
 					<!-- <van-icon v-else name="like-o" color="#7F7F7F" @click.native.stop="clickLike($event, true)" /> -->
-					<img v-else @click.native.stop="clickLike($event, true)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/unLike.png" class="guide-item-card-right-icon-img" alt="">
+					<img v-else @click.native.stop="clickLike($event, true)" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/unLike.png" class="guide-item-card-right-icon-img" alt="">
 					<view class="guide-item-card-right-icon-num">{{guideItem.likers_count}}</view>
-					<img v-if="showEditBtn || guideItem.is_collect" @click.native.stop="clickStar($event, false)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/starIcon.png" class="guide-item-card-right-icon-img" alt="">
+					<img v-if="showEditBtn || guideItem.is_collect" @click.native.stop="clickStar($event, false)" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/starIcon.png" class="guide-item-card-right-icon-img" alt="">
 					<!-- <van-icon v-else name="star-o" color="#7F7F7F" @click.native.stop="clickStar($event, true)" /> -->
-					<img v-else  @click.native.stop="clickStar($event, true)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/unStar.png" class="guide-item-card-right-icon-img" alt="">
+					<img v-else  @click.native.stop="clickStar($event, true)" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/unStar.png" class="guide-item-card-right-icon-img" alt="">
 					<view class="guide-item-card-right-icon-num guide-item-card-right-icon-num-last">{{guideItem.collectors_count}}</view>
 				</view>
 			</view>
@@ -74,7 +74,7 @@
 				required: true,
 				default: {
 					author: {
-						avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',		//默认头像
+						avatar: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg',		//默认头像
 						name: '',
 						id: ''
 					},

@@ -10,16 +10,16 @@
 					<view class="launch-gender-img-box">
 						<!-- 女生 -->
 						<view class="launch-gender-img-box-item">
-							<img v-show ="!gender" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/girlSelect.png" class="launch-gender-img" alt="">
-							<img v-show="gender" @click="selectGender(0)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/girlUnSelect.png" class="launch-gender-img" alt="">
-							<img v-show="!gender" class="launch-gender-img-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/iconSelect.png" alt="">
+							<img v-show ="!gender" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/launch/girlSelect.png" class="launch-gender-img" alt="">
+							<img v-show="gender" @click="selectGender(0)" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/launch/girlUnSelect.png" class="launch-gender-img" alt="">
+							<img v-show="!gender" class="launch-gender-img-icon" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/launch/iconSelect.png" alt="">
 						</view>
 						
 						<!-- 男生 -->
 						<view class="launch-gender-img-box-item">
-							<img v-show="gender" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/boySelect.png" class="launch-gender-img" alt="">
-							<img v-show="!gender" @click="selectGender(1)" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/boyUnSelect.png" class="launch-gender-img" alt="">
-							<img v-show="gender" class="launch-gender-img-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/launch/iconSelect.png" alt="">
+							<img v-show="gender" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/launch/boySelect.png" class="launch-gender-img" alt="">
+							<img v-show="!gender" @click="selectGender(1)" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/launch/boyUnSelect.png" class="launch-gender-img" alt="">
+							<img v-show="gender" class="launch-gender-img-icon" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/launch/iconSelect.png" alt="">
 						</view>
 						
 					</view>
@@ -143,8 +143,18 @@
 			}
 		},
 		onLoad() {
+			let _this = this
+			qq.login({
+			  success(res) {
+				if (res.code) {
+					uni.setStorageSync('qqCode', res.code);
+					_this.login()
+				} else {
+				  console.log('登录失败！' + res.errMsg)
+				}
+			  }
+			})
 			this.screenHeight = uni.getSystemInfoSync().windowHeight//获取当前页面的高度
-			this.login()
 			// this.getCharacterList()
 		},
 		methods: {

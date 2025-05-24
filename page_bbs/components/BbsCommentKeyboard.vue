@@ -39,7 +39,7 @@
 			},
 			curReplyAvatar: {
 				type: String,
-				default: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+				default: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg'
 			}
 		},
 		data() {
@@ -61,6 +61,22 @@
 				}
 			}
 		},
+		created() {
+			uni.onKeyboardHeightChange(res => {
+				let keyboardHeight = res.height; //软键盘高度 
+				let platform = uni.getStorageSync('platform')	//机型
+				if(keyboardHeight) {
+					if(platform === 'android') {
+						let statusBar = uni.getStorageSync('statusBar')
+						this.bottomVal = (keyboardHeight - statusBar)+'px'
+					} else {
+						this.bottomVal = (keyboardHeight)+'px'
+					}
+				} else {
+					this.bottomVal = 0
+				}
+			})
+		},
 		methods: {
 			send(){
 				if(this.val) {
@@ -71,11 +87,11 @@
 			inputBindFocus(e) {
 				// 获取手机键盘的高度，赋值给input 所在盒子的 bottom 值
 				// 注意!!! 这里的 px 至关重要!!! 我搜到的很多解决方案都没有说这里要添加 px
-				this.bottomVal = e.detail.height +  'px'
+				// this.bottomVal = e.detail.height +  'px'
 			},
 			inputBindBlur() {
 				// input 失去焦点，键盘隐藏，设置 input 所在盒子的 bottom 值为0
-				this.bottomVal = 0
+				// this.bottomVal = 0
 			},
 		},
 	}

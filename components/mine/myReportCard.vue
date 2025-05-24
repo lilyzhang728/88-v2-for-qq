@@ -39,10 +39,10 @@
 	// const COLOR_BTN_BACKGROUND = ['#d5c9f0', '#dcfdf7', '#dceffd', '#bbecd6']
 	// const COLOR_BTN_FONT = ['#8b0db3', '#39baa3', '#1c3e97', '#119741']
 	const IMG_SRC = [
-		'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/infos/iconReport2.png',
-		'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/infos/iconReport14.png',
-		'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/infos/iconReport13.png',
-		'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/infos/iconReport1.png',
+		'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/infos/iconReport2.png',
+		'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/infos/iconReport14.png',
+		'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/infos/iconReport13.png',
+		'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/infos/iconReport1.png',
 	]
 	export default {
 		props: {

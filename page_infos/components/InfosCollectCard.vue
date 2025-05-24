@@ -23,7 +23,7 @@
 <script>
 	import { transformTime } from '@/tools/transform_time.js'
 	import { article_type_key_value_map } from '@/tools/transform_data.js'
-	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+	const DEFAULT_AVATAR = 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg'
 	export default {
 		props: {
 			item: {

@@ -22,7 +22,7 @@
 				
 				<!-- 跳转到水贴大赛 -->
 				<view v-if="postData.id!=='122723b14c0611ef85995254009327f9'" class="toActivity" @click.native="toActivity">
-					<img class="toActivity-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
+					<img class="toActivity-img" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/news/topicIcon.png" alt="">
 					【有奖】招募天使用户啦~
 				</view>
 				
@@ -72,7 +72,7 @@
 </template>
 
 <script>
-	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+	const DEFAULT_AVATAR = 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg'
 	// import BbsCommentItem from "@/page_bbs/components/BbsCommentItem.vue"
 	import BackTopbar from "@/components/common/BackTopbar.vue"
 	import BbsPostComment from '@/page_bbs/components/BbsPostComment.vue'
@@ -186,7 +186,7 @@
 					if(res.code === 0 && Object.keys(res.data).length) {
 						this.postData = res.data
 						if(!res.data.author.avatar) {
-							this.postData.author.avatar = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+							this.postData.author.avatar = 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg'
 						}
 						//获取评论区数据
 						if(res.data._links.comments) {

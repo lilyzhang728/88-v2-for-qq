@@ -70,7 +70,7 @@
 			return {
 				showDetail: true,
 				dataList: [],
-				defaultAvatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',
+				defaultAvatar: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg',
 				targetMap : target_value_key_map,
 				skillMap: type_value_key_map,
 				skillColorMap: skill_color_map

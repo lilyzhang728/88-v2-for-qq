@@ -1,9 +1,21 @@
 <!-- 发布新帖子 -->
 <template>
 	<view class="add-new-post" :style="{backgroundImage: backgroundImage,backgroundSize: '100%',backgroundColor: '#fff',backgroundRepeat: 'no-repeat'}">
-		<z-paging ref="paging" :paging-style="pagingStyle">
+		<z-paging ref="paging" :paging-style="{'top': '0px', 'left': '25rpx', 'right': '25rpx'}">
 			<template #top>
 				<back-topbar title="发布帖子"></back-topbar>
+				<!-- 顶部发布按钮 -->
+				<view class="add-new-post-keyboard" v-if="showEdit">
+					<view class="add-new-post-keyboard-topic" @click.native="addTopic">
+						<img class="add-new-post-keyboard-topic-icon" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/news/topicIcon.png" alt="">
+						<text class="add-new-post-keyboard-topic-text">{{selectedTopic ? (addedTopicContent.body ? addedTopicContent.body : '') : topicPlaceholder}}</text>
+					</view>
+					
+					<!-- 发布按钮 -->
+					<view class="view-btn-box">
+						<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="!allowSendAjax || (!postVal && postImgList.length<1)" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
+					</view>
+				</view>
 			</template>
 			<!-- 入口 -->
 			<view class="add-new-post-entrance" v-if="!showEdit">
@@ -13,31 +25,16 @@
 				</view>
 				<view class="add-new-post-content" @click="handleInput">
 					<view class="add-new-post-content-line">
-						<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg" class="add-new-post-content-avatar" alt="">
+						<img src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg" class="add-new-post-content-avatar" alt="">
 						<text class="add-new-post-content-placeholder">交流，但不强求共鸣…</text>
 					</view>
-					<img src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/bbs/addImgIcon.png" alt="" class="add-new-post-content-img-icon">
+					<img src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/bbs/addImgIcon.png" alt="" class="add-new-post-content-img-icon">
 				</view>
 			</view>
 			
 			<!-- 编辑 -->
 			<view class="add-new-post-edit" v-else>
-				<van-field
-					class="add-new-post-edit-textarea-wrap field-input-custom"
-					input-class="add-new-post-edit-textarea"
-					:value="postVal"
-					type="textarea"
-					:show-confirm-bar="false"
-					placeholder="说点什么……"
-					autosize
-					auto-focus
-					:border="false"
-					@change.native="inputPost($event)"
-					@focus.native="inputBindFocus"
-					@blur.native="inputBindBlur"
-					clearable
-					:adjust-position="false"
-				  />
+				<editor id="myEditor" class="editor" placeholder="说点什么……" @ready="onEditorReady" @input="inputPost"></editor>
 				  
 				<!-- uploader -->
 				<van-uploader ref="imgUploader" class="img-uploader"
@@ -47,19 +44,12 @@
 				@afterRead.native="afterRead" @delete.native="deleteImg">
 				</van-uploader>
 				
-				<!-- 解决ios键盘遮挡输入内容的问题 -->
-				<view class="iosBottomBox" v-if="platform === 'ios'"></view>
+				
 				
 				<view class="add-new-post-edit-title-split-bottom"></view>
 			</view>
 			
-			<!-- 弹起键盘 -->
-			<view class="add-new-post-keyboard" v-if="showKeyboard" :style="{bottom: bottomVal, height: keyboardHeight}">
-				<!-- 发布按钮 -->
-				<view class="view-btn-box">
-					<van-button icon="guide-o" color="#35C8A7" class="view-btn-wrap" :disabled="!allowSendAjax || (!postVal && postImgList.length<1)" custom-class="view-btn" size="small" @click.native="send">发布</van-button>
-				</view>
-			</view>
+			
 			
 			<!-- toast提示 -->
 			<van-toast id="van-toast" />
@@ -88,10 +78,8 @@
 				showEdit: false,	//是否显示编辑页
 				postVal: '',		//发帖内容
 				showKeyboard: false,	//是否显示键盘上的话题
-				bottomVal: '0px',	//键盘上话题bottom
-				keyboardHeight: '54px',	//键盘上话题height	1行54px，2行85px
 				postImgList: [],	//上传图片list
-				screenWidth: null,		//屏幕宽度
+				screenWidth: uni.getStorageSync('screenWidth'),		//屏幕宽度
 				w: 0,
 				h: 0,
 				cloud_path: '',	//上传至对象存储的地址（单张）
@@ -99,8 +87,7 @@
 				fileID_list: [],	//上传至对象存储的地址（多张）
 				fileID_list_split: [],	//上传至对象存储的地址-截断（多张）
 				allowSendAjax: true,
-				keyboardHeightVal: 0,
-				platform: uni.getStorageSync('platform')
+				editorCtx: null, // editor上下文
 			}
 		},
 		computed: {
@@ -111,42 +98,21 @@
 				// 两边padding: 25*2+30*2=110; 图片margin-right:8px 8*3=24; 计算误差多-5
 				return this.screenWidth ? ((this.screenWidth - this.rpxToPx(110) - 24 - 5) / 3) + 'px' : 0
 			},
-			pagingStyle() {
-				if(this.platform === 'android') {
-					let pagingBottom = (this.keyboardHeightVal + 54) + 'px'
-					return {'top': '0px', 'left': '25rpx', 'right': '25rpx', 'bottom': pagingBottom}
-				} else {
-					return {'top': '0px', 'left': '25rpx', 'right': '25rpx'}
-				}
-			}
+			
 		},
-		watch: {
-			platform(val) {
-				if(val === 'android') {
-					uni.onKeyboardHeightChange(res => {
-					    this.keyboardHeightVal = res.height; //软键盘高度 
-					})
-				}
-			}
-		},
+		
 		onLoad(option) {
-			if(this.platform === 'android') {
-				uni.onKeyboardHeightChange(res => {
-				    this.keyboardHeightVal = res.height; //软键盘高度 
-				})
-			}
+			
 		},
-		onShow() {
-			uni.getSystemInfo({
-				success: (e) => {
-					// #ifdef MP-WEIXIN
-					this.statusBar = e.statusBarHeight
-					this.screenWidth = e.screenWidth
-					// #endif
-				}
-			})
-		},
+		
 		methods: {
+			onEditorReady() {
+				// 获取editor上下文
+				const query = uni.createSelectorQuery();
+				query.select('#myEditor').context((res) => {
+				  this.editorCtx = res.context;
+				}).exec();
+			},
 			// rpx转px
 			rpxToPx(rpx) {
 			  return (this.screenWidth * Number.parseInt(rpx)) / 750
@@ -159,15 +125,9 @@
 			},
 			//编辑输入帖子
 			inputPost(e) {
-				this.postVal = e.detail
+				this.postVal = e.detail.text
 			},
-			inputBindFocus(e) {
-				// 获取手机键盘的高度，赋值给input 所在盒子的 bottom 值
-				this.bottomVal = e.detail.height +  'px'
-			},
-			inputBindBlur() {
-				this.bottomVal = 0
-			},
+			
 			//before-read 事件可以在上传前进行校验，调用 callback 方法传入 true 表示校验通过，传入 false 表示校验失败。
 			beforeRead(event) {
 				this.allowSendAjax = false
@@ -372,14 +332,16 @@
 					const userId = uni.getStorageSync('userId')
 					this.timestamp = this.timestamp ? this.timestamp : new Date().getTime()
 					let num = this.generateRandomNumber()
-					wx.cloud.uploadFile({
+					qq.cloud.uploadFile({
 					  cloudPath: `bbs/${userId}/${this.timestamp}/${num}.jpg`, // 对象存储路径，根路径直接填文件名，文件夹例子 test/文件名，不要 / 开头
 					  filePath: item.tmp_url, 
 					  config: {
-					    env: 'prod-4gkvfp8b0382845d' // 需要替换成自己的微信云托管环境ID
+					    env: 'cloudbase-baas-8g07uffq8068e555' // 需要替换成自己的微信云托管环境ID
 					  }
 					}).then(res => {
-						resolve(res.fileID)
+						let result = res.fileID ? res.fileID.replace('cloud://cloudbase-baas-8g07uffq8068e555.636c-cloudbase-baas-8g07uffq8068e555-1314114854',
+							'https://636c-cloudbase-baas-8g07uffq8068e555-1314114854.tcb.qcloud.la') : ''
+						resolve(result)
 					}).catch(error => {
 						console.error(error)
 						reject('上传失败')
@@ -412,9 +374,9 @@
 							const newArrayLength = this.postImgList.length - this.fileID_list.length
 							this.postImgList = this.postImgList.slice(0, newArrayLength)
 							// 对象存储中同步删除
-							wx.cloud.deleteFile({
-							  fileList: this.fileID_list, // 对象存储文件ID列表，最多50个，从上传文件接口或者控制台获取
-							})
+							// qq.cloud.deleteFile({
+							//   fileList: this.fileID_list, // 对象存储文件ID列表，最多50个，从上传文件接口或者控制台获取
+							// })
 							this.allowSendAjax = true
 							resolve(false)
 						})
@@ -433,9 +395,9 @@
 							const newArrayLength = this.postImgList.length - 1
 							this.postImgList = this.postImgList.slice(0, newArrayLength)
 							// 对象存储中同步删除
-							wx.cloud.deleteFile({
-							  fileList: [this.cloud_path], // 对象存储文件ID列表，最多50个，从上传文件接口或者控制台获取
-							})
+							// qq.cloud.deleteFile({
+							//   fileList: [this.cloud_path], // 对象存储文件ID列表，最多50个，从上传文件接口或者控制台获取
+							// })
 							this.allowSendAjax = true
 							resolve(false)
 						})
@@ -468,21 +430,23 @@
 				const url = event.detail.file.url,
 					  index = event.detail.index
 				this.postImgList[this.postImgList.length-1].status = 'uploading'
-				wx.cloud.deleteFile({
-				  fileList: [url], // 对象存储文件ID列表，最多50个，从上传文件接口或者控制台获取
-				}).then(res => {
-				  this.postImgList[this.postImgList.length-1].status = 'done'
-				  if(res.fileList[0].status === 0) {
-					  //删除成功，同步到提交表单
-					  this.postImgList.splice(index, 1)
-				  } else {
-					  //删除失败，提示
-					  Toast('删除失败，请重试~')
-				  }
-				}).catch(err => {
-					this.postImgList[index].status = 'done'
-					console.error(err)
-				})
+				// qq.cloud.deleteFile({
+				//   fileList: [url], // 对象存储文件ID列表，最多50个，从上传文件接口或者控制台获取
+				// }).then(res => {
+				//   this.postImgList[this.postImgList.length-1].status = 'done'
+				//   if(res.fileList[0].status === 0) {
+				// 	  //删除成功，同步到提交表单
+				// 	  this.postImgList.splice(index, 1)
+				//   } else {
+				// 	  //删除失败，提示
+				// 	  Toast('删除失败，请重试~')
+				//   }
+				// }).catch(err => {
+				// 	this.postImgList[index].status = 'done'
+				// 	console.error(err)
+				// })
+				this.postImgList[this.postImgList.length-1].status = 'done'
+				this.postImgList.splice(index, 1)
 			},
 			//转换图片参数格式
 			transformImg() {
@@ -596,38 +560,46 @@
 	}
 	
 	.add-new-post-edit {
-		.add-new-post-edit-textarea-wrap {
-			/deep/ .add-new-post-edit-textarea{
-				min-height: 100px;
-			}
-		}
-		
+		margin-top: 30rpx;
 	}
 	
 	.add-new-post-keyboard {
-		position: fixed;
-		left: 0;
-		right: 0;
+		margin-top: 30rpx;
 		box-sizing: border-box;
-		padding: 12px;
+		padding: 12px 0;
 		background-color: #fff;
-		z-index: 2;
+		display: flex;
+		align-items: center;
+		height: 25px;
+		.add-new-post-keyboard-topic {
+			flex: 1;
+			display: flex;
+			align-items: center;
+			.add-new-post-keyboard-topic-icon {
+				height: 20px;
+				width: 20px;
+			}
+			.add-new-post-keyboard-topic-text {
+				margin-left: 10px;
+				flex: 1;
+				width: 0;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				font-size: 16px;
+				color: #000;
+				white-space: nowrap;
+			}
+		}
 		.view-btn-box{
-			margin-top: 10px;
+			width: 30%;
 			text-align: right;
 			.view-btn-wrap {
 				/deep/ .view-btn {
-					// color: #ccc;
-					// border: none;
 					font-size: 16px;
 					border-radius: 14rpx;
 				}
 			}
-			.view-btn-wrap-active {
-				/deep/ .view-btn {
-					// color: #35C8A7;
-				}
-			}
+			
 		}
 	}
 }
@@ -636,13 +608,16 @@
     left: -99999px;
     top:-99999px;
 }
-.iosBottomBox {
-	height: 480px;
-}
+
 .add-new-post-edit-title-split-bottom {
 		height: 1px;
 		border-bottom: 1px solid transparent;
 		margin: 0 25rpx;
 		margin-bottom: 150rpx;
 	}
+		.editor {
+		    width: 100%;
+		    height: 300px;
+			margin-bottom: 30rpx;
+		  }
 </style>

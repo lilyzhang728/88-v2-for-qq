@@ -1,7 +1,7 @@
 <!-- 侧边-收信箱 -->
 <template>
 	<view class="side-message-box" @click="toMessage($event)">
-		<img class="side-message-box-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/iconSideMessage.png" alt="">
+		<img class="side-message-box-icon" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/iconSideMessage.png" alt="">
 		<text class="side-message-box-red-dot" v-if="showNotification"></text>
 	</view>
 </template>

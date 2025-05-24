@@ -35,7 +35,7 @@
 			<!-- 链接 -->
 			<view class="news-detail-url-title" v-if="newsData.body.source">资讯来源：</view>
 			<view class="news-detail-url" v-if="newsData.body.source" @click="clickLink">
-				<img class="guide-detail-step-link-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/linkIcon.png" alt="">
+				<img class="guide-detail-step-link-icon" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/linkIcon.png" alt="">
 				{{newsData.body.source}}
 			</view>
 			
@@ -53,10 +53,10 @@
 		<view class="news-detail-btn-box">
 			<view class="bbs-post-detail-operate-left" @click="clickInput">添加评论</view>
 			
-			<img v-show="newsData.is_like" @click="clickLike(false)" class="news-detail-btn-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/likeIcon.png" alt="">
-			<img v-show="!newsData.is_like" @click="clickLike(true)" class="news-detail-btn-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/unLikeIcon.png" alt="">
-			<img v-show="newsData.is_collect" @click="clickStar(false)" class="news-detail-btn-icon news-detail-btn-icon-right" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/collectIcon.png" alt="" >
-			<img v-show="!newsData.is_collect" @click="clickStar(true)" class="news-detail-btn-icon news-detail-btn-icon-right" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/unCollectIcon.png" alt="" >
+			<img v-show="newsData.is_like" @click="clickLike(false)" class="news-detail-btn-icon" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/news/likeIcon.png" alt="">
+			<img v-show="!newsData.is_like" @click="clickLike(true)" class="news-detail-btn-icon" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/news/unLikeIcon.png" alt="">
+			<img v-show="newsData.is_collect" @click="clickStar(false)" class="news-detail-btn-icon news-detail-btn-icon-right" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/news/collectIcon.png" alt="" >
+			<img v-show="!newsData.is_collect" @click="clickStar(true)" class="news-detail-btn-icon news-detail-btn-icon-right" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/news/unCollectIcon.png" alt="" >
 		</view>
 		
 		<!-- 回复键盘 -->
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+	const DEFAULT_AVATAR = 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg'
 	import { guideDetail, likeGuide, disLikeGuide, collectGuide, unCollectGuide } from '@/network/api_guide.js'
 	import BackTopbar from "@/components/common/BackTopbar.vue"
 	import BbsCommentKeyboard from "@/components/common/CommentKeyboard.vue"
@@ -89,7 +89,7 @@
 		},
 		data() {
 			return {
-				customBar: 0,
+				customBar: uni.getStorageSync('customBar'),
 				id: '',
 				newsData: {
 					author: {
@@ -137,17 +137,6 @@
 			this.startGetComment = false
 		},
 		onShow() {
-			uni.getSystemInfo({
-				success: (e) => {
-					// #ifdef MP-WEIXIN
-					this.statusBar = e.statusBarHeight
-					this.windowHeight = e.windowHeight
-					// @ts-ignore
-					const custom = wx.getMenuButtonBoundingClientRect()
-					this.customBar = custom.bottom + custom.top - e.statusBarHeight
-					// #endif
-				}
-			})
 			this.getNewsDetail()
 		},
 		methods: {

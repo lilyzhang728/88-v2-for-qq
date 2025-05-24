@@ -171,7 +171,7 @@
 				h: 0,
 				cloud_path: '',	//上传至对象存储的地址（单张）
 				cloud_path_split: '',	//上传至对象存储的地址-截断（单张）
-				default_avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',
+				default_avatar: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg',
 				tmp_url: ''
 			}
 		},
@@ -390,14 +390,16 @@
 					// 上传至云存储, 文件路径为 bbs/userid/时间戳/随机数.jpg
 					const userId = uni.getStorageSync('userId')
 					this.timestamp = this.timestamp ? this.timestamp : new Date().getTime()
-					wx.cloud.uploadFile({
+					qq.cloud.uploadFile({
 					  cloudPath: `profile_photos/${userId}/avatar-${new Date().getTime()}.jpg`, // 对象存储路径，根路径直接填文件名，文件夹例子 test/文件名，不要 / 开头
 					  filePath: this.tmp_url, 
 					  config: {
-					    env: 'prod-4gkvfp8b0382845d' // 需要替换成自己的微信云托管环境ID
+					    env: 'cloudbase-baas-8g07uffq8068e555' // 需要替换成自己的微信云托管环境ID
 					  }
 					}).then(res => {
-						resolve(res.fileID)
+						let result = res.fileID ? res.fileID.replace('cloud://cloudbase-baas-8g07uffq8068e555.636c-cloudbase-baas-8g07uffq8068e555-1314114854',
+							'https://636c-cloudbase-baas-8g07uffq8068e555-1314114854.tcb.qcloud.la') : ''
+						resolve(result)
 					}).catch(error => {
 						console.error(error)
 						reject('上传失败')

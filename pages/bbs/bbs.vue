@@ -45,7 +45,7 @@
 		data() {
 			return {
 				backgroundImgUrl: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/bbs/bbsBg.png?sign=c0f613e91ba42b583649b23d7922d3b2&t=1689556699',
-				statusBar: 0,
+				statusBar: uni.getStorageSync('statusBar'),
 				active: 0,
 				searchVal: '',
 				hasPublished: false,	// true 为刚发完贴，（请求列表传参用，下次请求列表刚发的贴展示在第一位
@@ -62,15 +62,7 @@
 				return this.active ? '#ffffff' : '#f8f8f8'
 			}
 		},
-		onShow() {
-			uni.getSystemInfo({
-				success: (e) => {
-					// #ifdef MP-WEIXIN
-					this.statusBar = e.statusBarHeight
-					// #endif
-				}
-			})
-		},
+		
 		methods: {
 			tabsChange(e) {
 				this.active = e.detail.index;

@@ -34,7 +34,7 @@
 			
 			<!-- 跳转到有奖问答 -->
 			<view v-if="postData.id!=='122723b14c0611ef85995254009327f0'" class="toActivity" @click.native="toActivity">
-				<img class="toActivity-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/topicIcon.png" alt="">
+				<img class="toActivity-img" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/news/topicIcon.png" alt="">
 				【有奖问答】火热进行中
 			</view>
 			
@@ -104,7 +104,7 @@
 
 <script>
 	const userId = uni.getStorageSync('userId')
-	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+	const DEFAULT_AVATAR = 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg'
 	// import BbsCommentItem from "@/page_bbs/components/BbsCommentItem.vue"
 	import BackTopbar from "@/components/common/BackTopbar.vue"
 	import BbsPostComment from '@/components/common/PostComment.vue'
@@ -129,7 +129,7 @@
 		mixins: [aboutLogin],
 		data() {
 			return {
-				customBar: 0,
+				customBar: uni.getStorageSync('customBar'),
 				id: '',
 				postData: {
 					author: {
@@ -203,17 +203,7 @@
 			this.startGetComment = false
 		},
 		onShow() {
-			uni.getSystemInfo({
-				success: (e) => {
-					// #ifdef MP-WEIXIN
-					this.statusBar = e.statusBarHeight
-					this.windowHeight = e.windowHeight
-					// @ts-ignore
-					const custom = wx.getMenuButtonBoundingClientRect()
-					this.customBar = custom.bottom + custom.top - e.statusBarHeight
-					// #endif
-				}
-			})
+			
 			this.getPostDetail()
 		},
 		methods: {

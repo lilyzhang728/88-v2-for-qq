@@ -1,14 +1,17 @@
 export const getRequest = (options) => {
 	return new Promise((resolve, reject) => {
-		wx.cloud.callContainer({
-			"config": {
-				"env": "prod-4gkvfp8b0382845d"
-			},
-			"path": options.path,
+		// wx.cloud.callContainer({
+		// 	"config": {
+		// 		"env": "prod-4gkvfp8b0382845d"
+		// 	},
+		// 	"path": options.path,
+		qq.request({
+			"url":"https://keypointss.com/"+options.path,
 			"header": {
 				"X-WX-SERVICE": "flask-opfo",
 				"content-type": "application/json",
-				"Authorization": "Bearer " + uni.getStorageSync('token')
+				"Authorization": "Bearer " + uni.getStorageSync('token'),
+				"X-QQ-CODE": uni.getStorageSync('qqCode')
 			},
 			"data": options.data || {},
 			"method": "GET",
@@ -29,15 +32,18 @@ export const getRequest = (options) => {
 
 export const postRequest = (options) => {
 	return new Promise((resolve, reject) => {
-		wx.cloud.callContainer({
-			"config": {
-				"env": "prod-4gkvfp8b0382845d"
-			},
-			"path": options.path,
+		// wx.cloud.callContainer({
+		// 	"config": {
+		// 		"env": "prod-4gkvfp8b0382845d"
+		// 	},
+		// 	"path": options.path,
+		qq.request({
+			"url":"https://keypointss.com/"+options.path,
 			"header": {
 				"X-WX-SERVICE": "flask-opfo",
 				"content-type": "application/json",
-				"Authorization": "Bearer " + uni.getStorageSync('token')
+				"Authorization": "Bearer " + uni.getStorageSync('token'),
+				"X-QQ-CODE": uni.getStorageSync('qqCode')
 			},
 			"data": options.data || {},
 			"method": "POST",
@@ -74,15 +80,18 @@ export const postRequest = (options) => {
 
 export const putRequest = (options) => {
 	return new Promise((resolve, reject) => {
-		wx.cloud.callContainer({
-			"config": {
-				"env": "prod-4gkvfp8b0382845d"
-			},
-			"path": options.path,
+		// wx.cloud.callContainer({
+			// "config": {
+			// 	"env": "prod-4gkvfp8b0382845d"
+			// },
+			// "path": options.path,
+		qq.request({
+			"url":"https://keypointss.com/"+options.path,
 			"header": {
 				"X-WX-SERVICE": "flask-opfo",
 				"content-type": "application/json",
-				"Authorization": "Bearer " + uni.getStorageSync('token')
+				"Authorization": "Bearer " + uni.getStorageSync('token'),
+				"X-QQ-CODE": uni.getStorageSync('qqCode')
 			},
 			"data": options.data || {},
 			"method": "put",
@@ -120,15 +129,18 @@ export const putRequest = (options) => {
 
 export const deleteRequest = (options) => {
 	return new Promise((resolve, reject) => {
-		wx.cloud.callContainer({
-			"config": {
-				"env": "prod-4gkvfp8b0382845d"
-			},
-			"path": options.path,
+		// wx.cloud.callContainer({
+		// 	"config": {
+		// 		"env": "prod-4gkvfp8b0382845d"
+		// 	},
+		// 	"path": options.path,
+		qq.request({
+			"url":"https://keypointss.com/"+options.path,
 			"header": {
 				"X-WX-SERVICE": "flask-opfo",
 				"content-type": "application/json",
-				"Authorization": "Bearer " + uni.getStorageSync('token')
+				"Authorization": "Bearer " + uni.getStorageSync('token'),
+				"X-QQ-CODE": uni.getStorageSync('qqCode')
 			},
 			"data": options.data || {},
 			"method": "delete",

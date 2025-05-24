@@ -2,7 +2,7 @@
 <template>
 	<view class="bbs-comment-item">
 		<view class="bbs-comment-item-left">
-			<img class="bbs-comment-item-left-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg" alt="">
+			<img class="bbs-comment-item-left-img" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg" alt="">
 		</view>
 		<view class="bbs-comment-item-center"></view>
 		<view class="bbs-comment-item-right">

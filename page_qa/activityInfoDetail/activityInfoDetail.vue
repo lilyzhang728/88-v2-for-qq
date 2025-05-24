@@ -48,10 +48,10 @@
 		<view class="activity-info-detail-btn-box">
 			<view class="bbs-post-detail-operate-left" @click="clickInput">添加评论</view>
 			
-			<img v-show="actInfoData.is_like" @click="clickLike(false)" class="activity-info-detail-btn-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/likeIcon.png" alt="">
-			<img v-show="!actInfoData.is_like" @click="clickLike(true)" class="activity-info-detail-btn-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/unLikeIcon.png" alt="">
-			<img v-show="actInfoData.is_collect" @click="clickStar(false)" class="activity-info-detail-btn-icon activity-info-detail-btn-icon-right" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/collectIcon.png" alt="" >
-			<img v-show="!actInfoData.is_collect" @click="clickStar(true)" class="activity-info-detail-btn-icon activity-info-detail-btn-icon-right" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/news/unCollectIcon.png" alt="" >
+			<img v-show="actInfoData.is_like" @click="clickLike(false)" class="activity-info-detail-btn-icon" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/news/likeIcon.png" alt="">
+			<img v-show="!actInfoData.is_like" @click="clickLike(true)" class="activity-info-detail-btn-icon" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/news/unLikeIcon.png" alt="">
+			<img v-show="actInfoData.is_collect" @click="clickStar(false)" class="activity-info-detail-btn-icon activity-info-detail-btn-icon-right" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/news/collectIcon.png" alt="" >
+			<img v-show="!actInfoData.is_collect" @click="clickStar(true)" class="activity-info-detail-btn-icon activity-info-detail-btn-icon-right" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/news/unCollectIcon.png" alt="" >
 		</view>
 		
 		<!-- 回复键盘 -->
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+	const DEFAULT_AVATAR = 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg'
 	import { guideDetail, likeGuide, disLikeGuide, collectGuide, unCollectGuide } from '@/network/api_guide.js'
 	import BackTopbar from "@/components/common/BackTopbar.vue"
 	import BbsCommentKeyboard from "@/components/common/CommentKeyboard.vue"

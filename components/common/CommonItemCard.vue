@@ -82,7 +82,7 @@
 				required: true,
 				default: {
 					author: {
-						avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',		//默认头像
+						avatar: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg',		//默认头像
 						name: '',
 						id: ''
 					},
@@ -131,7 +131,7 @@
 		},
 		data() {
 			return {
-				iconSrc: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/tipIcon.png',
+				iconSrc: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/tipIcon.png',
 				progressColor: ['#2ca1ae', '#d47b38', '#7047a2'],
 				tagColor: ['#f8f2e0', '#e7f9ff', '#dcddfb'],
 				postTypeMap: ['', '资讯', '经验', '吐槽墙', '问答', '资料', '活动']
@@ -156,9 +156,9 @@
 			},
 			getIconSrc(index) {
 				const srcList = [
-					'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/iconCardTag0.png',
-					'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/iconCardTag1.png',
-					'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/iconCardTag2.png'
+					'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/iconCardTag0.png',
+					'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/iconCardTag1.png',
+					'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/iconCardTag2.png'
 				]
 				return srcList[index]
 			},

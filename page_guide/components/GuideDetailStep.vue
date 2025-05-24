@@ -10,7 +10,7 @@
 			<view class="guide-detail-step-subtitle">{{stepData.subtile}}</view>
 			<view class="guide-detail-step-desc">{{stepData.body}}</view>
 			<view class="guide-detail-step-link" v-for="(link, index) in stepData.links" @click="clickLink(link.url)" :key="index" v-if="link.name && link.url">
-				<img class="guide-detail-step-link-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/linkIcon.png" alt="">
+				<img class="guide-detail-step-link-icon" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/linkIcon.png" alt="">
 				<view class="guide-detail-step-link-text">{{link.name}}</view>
 			</view>
 			<!-- <view class="guide-detail-step-tip">辅助说明</view> -->

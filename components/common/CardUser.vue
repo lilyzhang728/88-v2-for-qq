@@ -23,7 +23,7 @@
 </template>
 
 <script>
-	// const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+	// const DEFAULT_AVATAR = 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg'
 	import { transformTime } from '@/tools/transform_time.js'
 	export default {
 		props: {

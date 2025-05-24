@@ -4,8 +4,8 @@
 			console.log('App Launch')
 
 			// 使用 callContainer 前一定要 init 一下，全局执行一次即可
-			wx.cloud.init({
-				env: "prod-4gkvfp8b0382845d"
+			qq.cloud.init({
+				env: "cloudbase-baas-8g07uffq8068e555"
 			})
 		},
 		onShow: function() {
@@ -13,7 +13,6 @@
 			// 计算自定义返回头的样式
 			uni.getSystemInfo({
 				success: (e) => {
-					// #ifdef MP-WEIXIN
 					// @ts-ignore
 					// 小程序基础库版本
 					uni.setStorageSync('hostSDKVersion', e.hostSDKVersion)
@@ -25,7 +24,6 @@
 					uni.setStorageSync('statusBar', e.statusBarHeight)
 					uni.setStorageSync('screenWidth', e.screenWidth)
 					uni.setStorageSync('platform', e.platform)
-					// #endif
 				}
 			})
 		},
@@ -85,5 +83,10 @@
 	  font-size: 34rpx;
 	  line-height: 40rpx;
 	}
+	.ql-editor.ql-blank:before {
+			color: #c0c4cc;
+			font-size: 30rpx;
+			font-style: normal;
+	   }
 </style>
 

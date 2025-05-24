@@ -15,7 +15,7 @@
 				{{commentBody(item.body)}}
 			</view>
 			<view class="infos-comment-card-content-reply">
-				<img class="infos-comment-card-content-reply-icon" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/infos/iconReply.png" alt="">
+				<img class="infos-comment-card-content-reply-icon" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/infos/iconReply.png" alt="">
 				回复</view>
 		</view>
 		<view class="infos-comment-card-right" v-if="showRightImg">
@@ -28,7 +28,7 @@
 	import { transformTime } from '@/tools/transform_time.js'
 	import { article_type_key_value_map } from '@/tools/transform_data.js'
 	import { uncodeUtf16 } from '@/tools/transform_emoji.js'
-	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+	const DEFAULT_AVATAR = 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg'
 	export default {
 		props: {
 			item: {

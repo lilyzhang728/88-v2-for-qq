@@ -1,7 +1,7 @@
 <!-- 侧边-添加按钮 -->
 <template>
 	<view class="side-add-btn">
-		<img class="side-add-btn-img" src="cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/guide/editBtn.png" alt="" @click.stop="addNew($event)">
+		<img class="side-add-btn-img" src="https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/guide/editBtn.png" alt="" @click.stop="addNew($event)">
 	</view>
 </template>
 

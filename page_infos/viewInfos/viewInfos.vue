@@ -29,19 +29,17 @@
 		},
 		data() {
 			return {
-				customBar: 0,
-				pagingTop: 0,
 				btnList: [{
-					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/infos/iconLike.png',
+					url: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/infos/iconLike.png',
 					text: '赞'
 				},{
-					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/infos/iconCollect.png',
+					url: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/infos/iconCollect.png',
 					text: '收藏'
 				},{
-					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/infos/iconComment.png',
+					url: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/infos/iconComment.png',
 					text: '评论'
 				},{
-					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/infos/iconNewFocus.png',
+					url: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/infos/iconNewFocus.png',
 					text: '邀请回答'
 				}],
 				dataList: [],
@@ -54,18 +52,6 @@
 			}
 		},
 		onShow() {
-			uni.getSystemInfo({
-				success: (e) => {
-					// #ifdef MP-WEIXIN
-					this.statusBar = e.statusBarHeight
-					this.windowHeight = e.windowHeight
-					// @ts-ignore
-					const custom = wx.getMenuButtonBoundingClientRect()
-					this.customBar = custom.bottom + custom.top - e.statusBarHeight
-					this.pagingTop = this.customBar - 25 - (this.customBar - this.statusBar - custom.height)
-					// #endif
-				}
-			})
 			this.getNewNotificationNum()
 		},
 		methods: {

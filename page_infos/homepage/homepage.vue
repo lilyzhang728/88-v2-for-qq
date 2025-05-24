@@ -65,7 +65,7 @@
 	import { profile, ownArticle, getBadgeList, follow, unfollow, getUserPosts } from '@/network/api_infos.js'
 	import { target_value_key_map } from "@/tools/transform_data.js"
 	const myId = uni.getStorageSync('userId')
-	const DEFAULT_AVATAR = 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg'
+	const DEFAULT_AVATAR = 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg'
 	export default {
 		components: {
 			BackTopbar,
@@ -74,7 +74,7 @@
 		},
 		data() {
 			return {
-				customBar: 0,
+				customBar: uni.getStorageSync('customBar'),
 				userId: '',
 				userInfo: {
 					name: "",
@@ -106,20 +106,7 @@
 		onUnload() {
 			this.userId = ''
 		},
-		onShow() {
-			let that = this
-			uni.getSystemInfo({
-				success: (e) => {
-					// #ifdef MP-WEIXIN
-					this.statusBar = e.statusBarHeight
-					this.screenWidth = e.screenWidth
-					// @ts-ignore
-					const custom = wx.getMenuButtonBoundingClientRect()
-					this.customBar = custom.bottom + custom.top - e.statusBarHeight
-					// #endif
-				}
-			})
-		},
+		
 		methods: {
 			//查询个人信息
 			getUserInfo() {

@@ -83,21 +83,17 @@
 				dataList: [],
 				active: 0,
 				btnImgList: [{
-					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/iconMyPost.png',
+					url: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/iconMyPost.png',
 					name: '动态'
 				},{
-					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/iconMyQa.png',
+					url: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/iconMyQa.png',
 					name: '提问'
 				},{
-					url: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/static/index/iconMyCollection.png',
+					url: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/static/index/iconMyCollection.png',
 					name: '收藏'
 				}],
 				postTypeVal: article_type_key_value_map,
 				actions: [{
-					name: '编辑',
-					value: 0
-				},
-				{
 					name: '删除',
 					value: 1
 				}],
@@ -241,7 +237,7 @@
 						// 基础库低于3.4.8，无法打开外链公众号
 						wx.showModal({
 							title: '提示',
-							content: '当前微信版本过低，请升级到最新微信版本后重试。',
+							content: '该内容为微信公众号文章，可从“勾重点”微信小程序打开。。',
 							complete(res) {
 								// 退出小程序
 								// if(wx.exitMiniProgram) {

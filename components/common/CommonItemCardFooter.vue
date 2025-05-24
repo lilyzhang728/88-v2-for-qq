@@ -40,7 +40,7 @@
 				required: true,
 				default: {
 					author: {
-						avatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',		//默认头像
+						avatar: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg',		//默认头像
 						name: '',
 						id: ''
 					},
@@ -86,7 +86,7 @@
 			return {
 				activeColor: themeColor,
 				activeCollectColor: collectColor,
-				defaultAvatar: 'cloud://prod-4gkvfp8b0382845d.7072-prod-4gkvfp8b0382845d-1314114854/profile_photos/default/001.jpg',
+				defaultAvatar: 'https://7072-prod-4gkvfp8b0382845d-1314114854.tcb.qcloud.la/profile_photos/default/001.jpg',
 			}
 		},
 		computed: {
